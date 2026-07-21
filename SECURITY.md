@@ -9,10 +9,10 @@ before the first public release.
 
 Do not disclose suspected vulnerabilities in a public issue.
 
-After the public repository is created, use its private vulnerability-reporting
-feature. If that feature is unavailable, use the private maintainer contact
-published in the repository's security settings. A dedicated contact will be
-recorded before external contributions or releases are enabled.
+Use the repository's **Report a vulnerability** action to submit a private
+GitHub security advisory. If private reporting is temporarily unavailable,
+open a public issue asking how to contact the maintainer, but do not include
+vulnerability details in that issue.
 
 Useful reports include affected versions, reproduction steps, expected impact,
 and any suggested mitigation. Do not include secrets or data belonging to
@@ -25,4 +25,3 @@ another person.
 - Generated indexes are treated as sensitive source-derived data.
 - Standard output is reserved for MCP JSON-RPC.
 - Dependencies and release artifacts are pinned, scanned, and attributable.
-

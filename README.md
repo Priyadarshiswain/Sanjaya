@@ -2,9 +2,13 @@
 
 **Codebase vision, grounded in evidence.**
 
-Sanjaya is a local-first Model Context Protocol (MCP) server that helps AI
-agents inspect a repository, navigate its structure, and support conclusions
-with evidence such as repository-relative paths, symbols, and line ranges.
+Sanjaya provides local-first codebase discovery for AI agents, with precise
+navigation and verifiable evidence such as repository-relative paths, symbols,
+and line ranges.
+
+The first delivery is a .NET Model Context Protocol (MCP) server. A portable
+evidence-first code-discovery skill is planned for a later release and is not
+included in the current scaffold.
 
 In the Mahabharata, Sanjaya could perceive events that others could not see
 directly and report them faithfully. This project serves a similar role for AI
@@ -31,7 +35,7 @@ do not publish or present the current scaffold as a functioning server.
 See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 and [privacy](docs/privacy.md) for the proposed public contract.
 
-## Proposed tools
+## Approved v0.1 MCP tools
 
 - `capabilities`
 - `health_check`
@@ -44,8 +48,8 @@ and [privacy](docs/privacy.md) for the proposed public contract.
 - `find_references`
 - `get_source`
 
-These names remain under review until the scaffold is approved for
-implementation.
+These names form the approved scaffold contract. Their implementations have not
+been added yet.
 
 ## Development
 
@@ -56,4 +60,3 @@ The scaffold requires the .NET 8 SDK and Node.js 18 or newer. See the
 
 Sanjaya is licensed under the [Apache License 2.0](LICENSE). Distributed
 third-party components retain their own licenses and notices.
-

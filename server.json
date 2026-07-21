@@ -1,11 +1,11 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "$comment": "Scaffold only. Replace owner, repository, and version before validation or publication.",
-  "name": "io.github.REPLACE_WITH_OWNER/sanjaya",
+  "$comment": "Scaffold only. Replace the development version only during a separately approved publication step.",
+  "name": "io.github.priyadarshiswain/sanjaya",
   "title": "Sanjaya",
-  "description": "Codebase vision and evidence for AI agents.",
+  "description": "Local-first codebase discovery for AI agents, with precise navigation and verifiable evidence.",
   "repository": {
-    "url": "https://github.com/REPLACE_WITH_OWNER/sanjaya",
+    "url": "https://github.com/Priyadarshiswain/Sanjaya",
     "source": "github"
   },
   "version": "0.0.0-development",
@@ -20,4 +20,3 @@
     }
   ]
 }
-

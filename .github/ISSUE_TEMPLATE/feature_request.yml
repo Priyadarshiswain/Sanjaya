@@ -1,0 +1,69 @@
+name: Feature request
+description: Propose a new capability or improvement for Sanjaya
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Sanjaya grows through capability-oriented, evidence-first changes.
+        Describe the user problem before proposing implementation details.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What code-discovery task is difficult or unreliable today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: Describe the smallest useful behavior and who benefits from it.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Capability area
+      options:
+        - Chunking and indexing
+        - File outline
+        - Definitions and references
+        - Source retrieval
+        - Generic file and text discovery
+        - MCP server and transport
+        - Agent workflow or skill
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Expected evidence
+      description: What paths, symbols, line ranges, or capability signals should the result provide?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe existing tools or simpler approaches you considered.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and pull requests for related work.
+          required: true
+        - label: The proposal preserves explicit capability and degradation reporting.
+          required: true
+        - label: Any networked or AI-dependent behavior is identified as opt-in.
+          required: true
