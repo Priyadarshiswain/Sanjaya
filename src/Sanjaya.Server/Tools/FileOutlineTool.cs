@@ -11,14 +11,14 @@ public sealed class FileOutlineTool(FileOutlineService outline)
 {
     [McpServerTool(
         Name = PublicToolNames.FileOutline,
-        Title = "Generic file outline",
+        Title = "File outline",
         ReadOnly = true,
         Destructive = false,
         Idempotent = true,
         OpenWorld = false,
         UseStructuredContent = true,
         OutputSchemaType = typeof(ToolResponse<FileOutlineData>))]
-    [Description("Returns bounded generic metadata and preview lines for one repository-relative readable UTF-8 file.")]
+    [Description("Returns a bounded structural C# outline or generic preview for one repository-relative readable UTF-8 file.")]
     public async Task<CallToolResult> OutlineAsync(
         [Description("Repository-relative file path.")]
         string path,
@@ -26,8 +26,8 @@ public sealed class FileOutlineTool(FileOutlineService outline)
     {
         ToolResponse<FileOutlineData> response = await outline.OutlineAsync(path, cancellationToken).ConfigureAwait(false);
         string summary = response.Data is null
-            ? $"Generic file outline failed: {response.Error!.Code}."
-            : $"Generic outline for {response.Data.Path}: {response.Data.LineCount} lines, {response.Data.ByteCount} bytes.";
+            ? $"File outline failed: {response.Error!.Code}."
+            : $"Outline for {response.Data.Path}: {response.Data.Items.Count} structural items, {response.Data.LineCount} lines.";
         return McpToolResultFactory.Create(response, summary);
     }
 }

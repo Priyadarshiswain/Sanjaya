@@ -52,6 +52,11 @@ Owns Roslyn-backed C# outlines, structural chunks, definitions, references, and
 symbol-addressed source retrieval. v0.1 must describe syntax-based operations
 honestly and must not imply full build or solution semantic resolution.
 
+The current provider parses bounded source text with Roslyn syntax APIs only.
+It implements `IFileOutlineProvider` and `IStructuralChunkProvider`; it does not
+open project files, build a solution, start a subprocess, access the network,
+or write an index.
+
 ### `Sanjaya.Providers.TypeScript`
 
 Owns TypeScript compiler AST integration for TypeScript and JavaScript outlines
@@ -60,10 +65,12 @@ gate in `third_party/typescript/README.md` is satisfied.
 
 ## Extension model
 
-Core exposes a small discovery contract through `ICapabilityProvider`.
-Operation-specific provider interfaces will be added only with their first
-implementation. Dynamic plugin loading and a separately versioned provider SDK
-are deferred beyond v0.1.
+Core exposes provider metadata through `ICapabilityProvider` and validated text
+analysis through small operation contracts. `IFileOutlineProvider` and
+`IStructuralChunkProvider` receive repository-relative paths and source text
+only after Core has enforced containment, regular-file, UTF-8, and size rules.
+Roslyn types never cross the provider boundary. Dynamic plugin loading and a
+separately versioned provider SDK are deferred beyond v0.1.
 
 ## Distribution boundary
 

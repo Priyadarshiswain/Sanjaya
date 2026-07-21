@@ -4,7 +4,9 @@ using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Protocol;
 using Sanjaya.Core.Discovery;
 using Sanjaya.Core.Git;
+using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
+using Sanjaya.Providers.CSharp;
 using Sanjaya.Server;
 using Sanjaya.Server.Configuration;
 using Sanjaya.Server.Diagnostics;
@@ -25,6 +27,10 @@ try
 
     builder.Services
         .AddSingleton(repository)
+        .AddSingleton<CSharpSyntaxProvider>()
+        .AddSingleton<IFileOutlineProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
+        .AddSingleton<IStructuralChunkProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
+        .AddSingleton<ICapabilityProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<SearchTextService>()
         .AddSingleton<FileOutlineService>()
         .AddSingleton<IGitCommandRunner, GitCommandRunner>()

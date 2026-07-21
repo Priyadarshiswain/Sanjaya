@@ -1,10 +1,16 @@
 using Sanjaya.Core.Contracts;
+using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
 
 namespace Sanjaya.Core.Discovery;
 
-public sealed class FileOutlineService(RepositoryScope repository)
+public sealed class FileOutlineService(
+    RepositoryScope repository,
+    IEnumerable<IFileOutlineProvider>? providers = null)
 {
+    private readonly IReadOnlyList<IFileOutlineProvider> providers =
+        (providers ?? []).OrderBy(provider => provider.Id, StringComparer.Ordinal).ToArray();
+
     public async Task<ToolResponse<FileOutlineData>> OutlineAsync(
         string? path,
         CancellationToken cancellationToken)
@@ -42,8 +48,23 @@ public sealed class FileOutlineService(RepositoryScope repository)
             };
         }
 
+        int lineCount = CountLines(file.Text!);
+        IFileOutlineProvider? provider = providers.FirstOrDefault(candidate => candidate.CanHandle(resolved.RelativePath!));
+        if (provider is not null)
+        {
+            return CreateProviderResponse(provider, resolved.RelativePath!, file, lineCount, cancellationToken);
+        }
+
+        return CreateGenericResponse(resolved.RelativePath!, file, lineCount, cancellationToken);
+    }
+
+    private static ToolResponse<FileOutlineData> CreateGenericResponse(
+        string relativePath,
+        TextFileReadResult file,
+        int lineCount,
+        CancellationToken cancellationToken)
+    {
         List<FilePreviewLine> preview = [];
-        int lineCount = 0;
         bool previewTruncated = false;
         using StringReader reader = new(file.Text!);
         string? line;
@@ -54,7 +75,6 @@ public sealed class FileOutlineService(RepositoryScope repository)
                 return Error(ContractValues.ErrorCancelled, "File outline was cancelled.");
             }
 
-            lineCount++;
             if (preview.Count < DiscoveryLimits.MaximumPreviewLines)
             {
                 if (line.Length > DiscoveryLimits.MaximumPreviewCharactersPerLine)
@@ -63,7 +83,7 @@ public sealed class FileOutlineService(RepositoryScope repository)
                 }
 
                 preview.Add(new FilePreviewLine(
-                    lineCount,
+                    preview.Count + 1,
                     line.Length <= DiscoveryLimits.MaximumPreviewCharactersPerLine
                         ? line
                         : line[..DiscoveryLimits.MaximumPreviewCharactersPerLine]));
@@ -74,17 +94,13 @@ public sealed class FileOutlineService(RepositoryScope repository)
             }
         }
 
-        if (file.Text!.Length == 0)
-        {
-            lineCount = 0;
-        }
-
         FileOutlineData data = new(
-            resolved.RelativePath!,
+            relativePath,
             file.ByteCount,
             lineCount,
             preview,
-            previewTruncated);
+            previewTruncated,
+            []);
         int evidenceEndLine = Math.Max(1, Math.Min(lineCount, DiscoveryLimits.MaximumPreviewLines));
 
         return new ToolResponse<FileOutlineData>(
@@ -92,8 +108,83 @@ public sealed class FileOutlineService(RepositoryScope repository)
             PublicToolNames.FileOutline,
             "generic-text",
             data,
-            [new EvidenceLocation(resolved.RelativePath!, 1, evidenceEndLine)],
+            [new EvidenceLocation(relativePath, 1, evidenceEndLine)],
             []);
+    }
+
+    private static ToolResponse<FileOutlineData> CreateProviderResponse(
+        IFileOutlineProvider provider,
+        string relativePath,
+        TextFileReadResult file,
+        int lineCount,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            FileOutlineAnalysis analysis = provider.AnalyzeOutline(
+                relativePath,
+                file.Text!,
+                cancellationToken);
+            List<string> warnings = [];
+            if (analysis.SyntaxDiagnosticCount > 0)
+            {
+                warnings.Add("csharp_syntax_diagnostics");
+            }
+
+            if (analysis.ItemsTruncated)
+            {
+                warnings.Add("outline_item_limit_reached");
+            }
+
+            string status = warnings.Count == 0 ? ContractValues.StatusOk : ContractValues.StatusPartial;
+            int evidenceStartLine = analysis.Items.Count == 0 ? 1 : analysis.Items.Min(item => item.StartLine);
+            int evidenceEndLine = analysis.Items.Count == 0
+                ? Math.Max(1, lineCount)
+                : analysis.Items.Max(item => item.EndLine);
+            FileOutlineData data = new(
+                relativePath,
+                file.ByteCount,
+                lineCount,
+                [],
+                false,
+                analysis.Items,
+                analysis.ItemsTruncated,
+                analysis.SyntaxDiagnosticCount);
+
+            return new ToolResponse<FileOutlineData>(
+                status,
+                PublicToolNames.FileOutline,
+                provider.Id,
+                data,
+                [new EvidenceLocation(relativePath, evidenceStartLine, evidenceEndLine)],
+                warnings);
+        }
+        catch (OperationCanceledException)
+        {
+            return Error(
+                ContractValues.ErrorCancelled,
+                "File outline was cancelled.",
+                provider: provider.Id);
+        }
+    }
+
+    private static int CountLines(string text)
+    {
+        if (text.Length == 0)
+        {
+            return 0;
+        }
+
+        int count = 1;
+        foreach (char character in text)
+        {
+            if (character == '\n')
+            {
+                count++;
+            }
+        }
+
+        return text.EndsWith('\n') ? count - 1 : count;
     }
 
     private static ToolResponse<FileOutlineData> PathError(RepositoryPathError error) => error switch
@@ -110,11 +201,15 @@ public sealed class FileOutlineService(RepositoryScope repository)
         _ => Error(ContractValues.ErrorInvalidPath, "Path must be a valid repository-relative file path."),
     };
 
-    private static ToolResponse<FileOutlineData> Error(string code, string message, string? remediation = null) =>
+    private static ToolResponse<FileOutlineData> Error(
+        string code,
+        string message,
+        string? remediation = null,
+        string provider = "generic-text") =>
         new(
             ContractValues.StatusError,
             PublicToolNames.FileOutline,
-            "generic-text",
+            provider,
             null,
             [],
             [],

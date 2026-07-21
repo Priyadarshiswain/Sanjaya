@@ -19,4 +19,7 @@ public static class DiscoveryLimits
     public const int MaximumSnippetCharacters = 320;
     public const int MaximumPreviewLines = 20;
     public const int MaximumPreviewCharactersPerLine = 240;
+    public const int MaximumOutlineItems = 500;
+    public const int MaximumOutlineDisplayCharacters = 240;
+    public const int MaximumChunkCharacters = 64 * 1024;
 }

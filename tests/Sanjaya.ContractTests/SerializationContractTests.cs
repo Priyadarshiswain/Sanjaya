@@ -103,4 +103,27 @@ public sealed class SerializationContractTests
         Assert.DoesNotContain("diff", json, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("repositoryRoot", json, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public void FileOutlineContractUsesLanguageNeutralBoundedItems()
+    {
+        FileOutlineData data = new(
+            "src/Sample.cs",
+            120,
+            8,
+            [],
+            false,
+            [new OutlineItem("class", "Sample", "public class Sample", "Demo", 2, 8)],
+            false,
+            0);
+
+        using JsonDocument document = JsonDocument.Parse(JsonSerializer.Serialize(data));
+        JsonElement root = document.RootElement;
+
+        Assert.Equal(JsonValueKind.Array, root.GetProperty("items").ValueKind);
+        Assert.Equal("class", root.GetProperty("items")[0].GetProperty("kind").GetString());
+        Assert.Equal("Demo", root.GetProperty("items")[0].GetProperty("container").GetString());
+        Assert.Equal(2, root.GetProperty("items")[0].GetProperty("startLine").GetInt32());
+        Assert.Equal(0, root.GetProperty("syntaxDiagnosticCount").GetInt32());
+    }
 }

@@ -1,7 +1,9 @@
 using System.ComponentModel;
 using ModelContextProtocol.Protocol;
 using ModelContextProtocol.Server;
+using Sanjaya.Core.Capabilities;
 using Sanjaya.Core.Contracts;
+using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
 using Sanjaya.Server.Serialization;
 
@@ -10,7 +12,9 @@ namespace Sanjaya.Server.Tools;
 /// <summary>
 /// Reports the complete approved public surface without claiming deferred work exists.
 /// </summary>
-public sealed class CapabilitiesTool(RepositoryScope repository)
+public sealed class CapabilitiesTool(
+    RepositoryScope repository,
+    IEnumerable<ICapabilityProvider>? capabilityProviders = null)
 {
     [McpServerTool(
         Name = PublicToolNames.Capabilities,
@@ -41,14 +45,32 @@ public sealed class CapabilitiesTool(RepositoryScope repository)
             .Select(CreateAvailability)
             .ToArray();
 
-        ProviderAvailability[] providers =
-        [
-            new("csharp", ["csharp"], ContractValues.AvailabilityUnavailable, ContractValues.ReasonNotImplemented),
-            new("typescript-javascript", ["typescript", "javascript"], ContractValues.AvailabilityUnavailable, ContractValues.ReasonNotImplemented),
-            repository.IsReady
-                ? new("generic", ["text"], ContractValues.AvailabilitySupported)
-                : new("generic", ["text"], ContractValues.AvailabilityUnavailable, ContractValues.ReasonRepositoryRootRequired),
-        ];
+        List<ProviderAvailability> providers = (capabilityProviders ?? [])
+            .GroupBy(provider => provider.Id, StringComparer.Ordinal)
+            .Select(group => CreateProviderAvailability(group.First()))
+            .OrderBy(provider => provider.Id, StringComparer.Ordinal)
+            .ToList();
+        if (providers.All(provider => provider.Id != "csharp-roslyn-syntax"))
+        {
+            providers.Add(CreateDeferredProvider("csharp-roslyn-syntax", ["csharp"]));
+        }
+
+        providers.Add(CreateDeferredProvider("typescript-javascript", ["typescript", "javascript"]));
+        providers.Add(repository.IsReady
+            ? new ProviderAvailability(
+                "generic",
+                ["text"],
+                ContractValues.AvailabilitySupported,
+                [new ProviderCapabilityAvailability("file_outline", ContractValues.AvailabilitySupported)])
+            : new ProviderAvailability(
+                "generic",
+                ["text"],
+                ContractValues.AvailabilityUnavailable,
+                [new ProviderCapabilityAvailability(
+                    "file_outline",
+                    ContractValues.AvailabilityUnavailable,
+                    ContractValues.ReasonRepositoryRootRequired)],
+                ContractValues.ReasonRepositoryRootRequired));
 
         CapabilityReportData data = new(
             SanjayaRuntime.BuildVersion,
@@ -105,5 +127,63 @@ public sealed class CapabilitiesTool(RepositoryScope repository)
 
             return new ToolAvailability(name, ContractValues.AvailabilitySupported);
         }
+
+        ProviderAvailability CreateProviderAvailability(ICapabilityProvider provider)
+        {
+            ProviderCapabilityAvailability[] capabilities = provider.GetCapabilities()
+                .OrderBy(descriptor => descriptor.Capability)
+                .Select(descriptor =>
+                {
+                    if (descriptor.Status == CapabilityStatus.Supported && !repository.IsReady)
+                    {
+                        return new ProviderCapabilityAvailability(
+                            CapabilityName(descriptor.Capability),
+                            ContractValues.AvailabilityUnavailable,
+                            ContractValues.ReasonRepositoryRootRequired);
+                    }
+
+                    return new ProviderCapabilityAvailability(
+                        CapabilityName(descriptor.Capability),
+                        descriptor.Status == CapabilityStatus.Supported
+                            ? ContractValues.AvailabilitySupported
+                            : ContractValues.AvailabilityUnavailable,
+                        descriptor.Reason);
+                })
+                .ToArray();
+            bool supported = repository.IsReady && capabilities.Any(
+                capability => capability.Status == ContractValues.AvailabilitySupported);
+            return new ProviderAvailability(
+                provider.Id,
+                provider.Languages.Order(StringComparer.Ordinal).ToArray(),
+                supported ? ContractValues.AvailabilitySupported : ContractValues.AvailabilityUnavailable,
+                capabilities,
+                supported ? null : repository.IsReady
+                    ? ContractValues.ReasonNotImplemented
+                    : ContractValues.ReasonRepositoryRootRequired);
+        }
+
+        static ProviderAvailability CreateDeferredProvider(string id, IReadOnlyList<string> languages) =>
+            new(
+                id,
+                languages,
+                ContractValues.AvailabilityUnavailable,
+                Enum.GetValues<CapabilityKind>()
+                    .Select(capability => new ProviderCapabilityAvailability(
+                        CapabilityName(capability),
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonNotImplemented))
+                    .ToArray(),
+                ContractValues.ReasonNotImplemented);
+
+        static string CapabilityName(CapabilityKind capability) => capability switch
+        {
+            CapabilityKind.FileOutline => "file_outline",
+            CapabilityKind.StructuralChunking => "structural_chunking",
+            CapabilityKind.Definitions => "definitions",
+            CapabilityKind.References => "references",
+            CapabilityKind.SourceRetrieval => "source_retrieval",
+            CapabilityKind.CallGraph => "call_graph",
+            _ => throw new ArgumentOutOfRangeException(nameof(capability), capability, null),
+        };
     }
 }

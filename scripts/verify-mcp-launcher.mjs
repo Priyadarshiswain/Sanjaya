@@ -6,6 +6,10 @@ import { createInterface } from "node:readline";
 
 const repositoryRoot = mkdtempSync(join(tmpdir(), "sanjaya-launcher-"));
 writeFileSync(join(repositoryRoot, "marker.txt"), "LAUNCHER_UNIQUE_MARKER\n");
+writeFileSync(
+  join(repositoryRoot, "Sample.cs"),
+  "namespace Launcher; public class Sample { public void Run() { } }\n",
+);
 
 const child = spawn(process.execPath, ["bin/sanjaya-mcp.js", "--root", repositoryRoot], {
   cwd: process.cwd(),
@@ -70,6 +74,25 @@ try {
   await send({
     jsonrpc: "2.0",
     id: 4,
+    method: "tools/call",
+    params: { name: "file_outline", arguments: { path: "Sample.cs" } },
+  });
+  const outline = await readMessage();
+  const outlineContent = outline?.result?.structuredContent;
+  if (
+    outlineContent?.provider !== "csharp-roslyn-syntax" ||
+    outlineContent?.data?.items?.[0]?.kind !== "namespace"
+  ) {
+    throw new Error("Launcher did not expose the Roslyn-backed C# outline.");
+  }
+
+  if (JSON.stringify(outline).includes(repositoryRoot)) {
+    throw new Error("C# outline exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 5,
     method: "tools/call",
     params: { name: "recent_changes", arguments: {} },
   });

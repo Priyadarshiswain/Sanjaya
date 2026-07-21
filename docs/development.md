@@ -61,4 +61,7 @@ The current server also registers `file_outline`, `search_text`, and
 initialization, capability reporting, or health checks; discovery returns
 stable setup guidance instead. Local Git evidence additionally requires the
 configured root to be the Git worktree root and an installed Git executable.
-Indexing and language-specific structural providers remain unimplemented.
+C# files use a bounded Roslyn syntax outline; other readable files retain the
+generic preview. The C# structural-chunk provider is implemented as an internal
+foundation, while indexing and TypeScript/JavaScript AST structure remain
+unimplemented.
