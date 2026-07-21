@@ -1,0 +1,28 @@
+{
+  "name": "sanjaya-mcp",
+  "version": "0.0.0-development",
+  "private": true,
+  "description": "Codebase vision and evidence for AI agents.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "sanjaya-mcp": "bin/sanjaya-mcp.js"
+  },
+  "files": [
+    "bin/",
+    "dist/dotnet/",
+    "LICENSE",
+    "NOTICE",
+    "THIRD-PARTY-NOTICES.txt",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "dotnet publish src/Sanjaya.Server/Sanjaya.Server.csproj --configuration Release --self-contained false --output dist/dotnet",
+    "test": "dotnet test Sanjaya.sln --configuration Release",
+    "verify:package": "npm pack --dry-run --cache .npm-cache"
+  },
+  "mcpName": "io.github.REPLACE_WITH_OWNER/sanjaya"
+}

@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Core contracts and repository-safety infrastructure for Sanjaya.</Description>
+  </PropertyGroup>
+</Project>
+

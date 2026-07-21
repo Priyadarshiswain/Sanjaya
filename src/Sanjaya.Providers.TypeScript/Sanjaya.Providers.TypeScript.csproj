@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>TypeScript compiler AST capabilities for TypeScript and JavaScript.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sanjaya.Core\Sanjaya.Core.csproj" />
+  </ItemGroup>
+</Project>
+
