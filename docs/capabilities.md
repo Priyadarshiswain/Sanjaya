@@ -16,12 +16,12 @@ failures.
 
 ## Current development runtime
 
-`capabilities`, `health_check`, `file_outline`, `search_text`, and
-`recent_changes` are registered as MCP tools. Generic discovery and the C#
+`capabilities`, `health_check`, `file_outline`, `search_text`, `recent_changes`,
+and `index_codebase` are registered as MCP tools. Generic discovery and the C#
 syntax provider report `supported` only when the process has a valid root. C#
-currently supports file outlines and the internal structural-chunk contract;
+currently supports file outlines and structural indexing;
 definitions, references, source retrieval, and call graph remain unavailable.
-The TypeScript/JavaScript provider and all five deferred tools remain
+The TypeScript/JavaScript provider and all four deferred tools remain
 unavailable with `not_implemented`. The server uses stdio and performs no
 network access by default.
 
@@ -72,10 +72,38 @@ this fallback until their AST provider ships. Both modes reject absolute,
 traversal, directory, symlink, binary, oversized, missing, and inaccessible
 inputs with stable errors.
 
-The C# provider also implements an internal structural-chunk interface for the
-future index. It produces at most 500 deterministic chunks and bounds each
-chunk to 64 KiB. This capability does not make `index_codebase` available and
-does not write files.
+The C# provider also implements structural chunks for the local index. It
+produces at most 500 deterministic chunks per file and bounds each chunk to 64
+KiB.
+
+## Deterministic structural index
+
+`index_codebase` explicitly rebuilds `.sanjaya/index-v1.json`. It indexes only
+files claimed by an active structural provider, currently C#, and never edits
+source files, Git metadata, or the consumer repository's `.gitignore`. A
+warning is returned unless the root `.gitignore` explicitly contains a direct
+`.sanjaya` rule.
+
+The v0.1 bounds are 5,000 eligible files, 64 MiB readable source, 50,000
+chunks, 2,000 directories, 20,000 filesystem entries, and a 64 MiB serialized
+index. Unsupported files and documented exclusions are counted or skipped.
+Inaccessible eligible source and hard-limit breaches fail the rebuild; no
+knowingly incomplete index is promoted. Recovered syntax diagnostics and
+individually bounded chunk content produce an explicit `partial` response.
+
+The index is canonical UTF-8 JSON with stable ordinal ordering and SHA-256
+content fingerprints and chunk identifiers. It includes format, producer, and
+provider-contract versions but no timestamp, username, hostname, absolute
+path, or Git remote. Identical source and versions produce identical bytes.
+
+An exclusive local lock prevents concurrent writers. The full payload is
+built and validated before a same-directory temporary file is flushed and
+atomically promoted. Cancellation or failure removes the owned temporary file
+and preserves the previous recognized index. Unknown targets, symlinked
+storage, and path conflicts are never overwritten. Rebuild responses classify
+the previous recognized index as `missing`, `current`, `stale`, or
+`incompatible` using provider contracts and eligible-source fingerprints.
+`search_code` remains unavailable.
 
 ## Local Git evidence
 
@@ -112,7 +140,7 @@ and command/parse failure.
 |---|---|---|---|
 | File outline | Roslyn structure | TypeScript AST structure | Generic metadata and preview |
 | Exact text search | Supported | Supported | Supported |
-| Structural indexing | Roslyn chunks | TypeScript AST chunks | Unsupported |
+| Structural indexing | Supported | Planned | Unsupported |
 | Definitions | Syntax-based | Unsupported | Unsupported |
 | References | Syntax-based | Unsupported | Unsupported |
 | Symbol source retrieval | Supported | Unsupported | Unsupported |

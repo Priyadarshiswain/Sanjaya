@@ -53,6 +53,7 @@ public sealed class SerializationContractTests
         Assert.Equal("not_implemented", ContractValues.ReasonNotImplemented);
         Assert.Equal("repository_root_required", ContractValues.ReasonRepositoryRootRequired);
         Assert.Equal("not_git_repository", ContractValues.ReasonNotGitRepository);
+        Assert.Equal("structural_provider_unavailable", ContractValues.ReasonStructuralProviderUnavailable);
     }
 
     [Fact]
@@ -125,5 +126,33 @@ public sealed class SerializationContractTests
         Assert.Equal("Demo", root.GetProperty("items")[0].GetProperty("container").GetString());
         Assert.Equal(2, root.GetProperty("items")[0].GetProperty("startLine").GetInt32());
         Assert.Equal(0, root.GetProperty("syntaxDiagnosticCount").GetInt32());
+    }
+
+    [Fact]
+    public void IndexResponseContractContainsOnlyCompactLifecycleMetadata()
+    {
+        IndexCodebaseData data = new(
+            "1",
+            "ready",
+            ".sanjaya/index-v1.json",
+            "sha256:abc",
+            "missing",
+            [new IndexedProviderSummary("csharp-roslyn-syntax", "1", ["csharp"], 2, 5)],
+            2,
+            3,
+            5,
+            100,
+            0,
+            0);
+
+        string json = JsonSerializer.Serialize(data);
+        using JsonDocument document = JsonDocument.Parse(json);
+        JsonElement root = document.RootElement;
+
+        Assert.Equal(".sanjaya/index-v1.json", root.GetProperty("indexPath").GetString());
+        Assert.Equal(5, root.GetProperty("chunksIndexed").GetInt32());
+        Assert.Equal("1", root.GetProperty("providers")[0].GetProperty("contractVersion").GetString());
+        Assert.DoesNotContain("content", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("absolute", json, StringComparison.OrdinalIgnoreCase);
     }
 }

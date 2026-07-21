@@ -23,7 +23,8 @@ public sealed class ProtocolFoundationToolTests
         Assert.Equal(
             PublicToolNames.ProtocolFoundation
                 .Concat(PublicToolNames.ImmediateDiscovery)
-                .Concat(PublicToolNames.LocalGitEvidence),
+                .Concat(PublicToolNames.LocalGitEvidence)
+                .Concat(PublicToolNames.StructuralIndex),
             response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilitySupported).Select(item => item.Name));
         Assert.All(
             response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilityUnavailable),
@@ -55,6 +56,9 @@ public sealed class ProtocolFoundationToolTests
             ContractValues.ReasonRepositoryRootRequired,
             data.Tools.Single(item => item.Name == PublicToolNames.RecentChanges).Reason);
         Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
+            data.Tools.Single(item => item.Name == PublicToolNames.IndexCodebase).Reason);
+        Assert.Equal(
             ContractValues.ReasonNotImplemented,
             data.Tools.Single(item => item.Name == PublicToolNames.SearchCode).Reason);
         Assert.Equal(
@@ -69,11 +73,23 @@ public sealed class ProtocolFoundationToolTests
     }
 
     [Fact]
+    public void IndexCapabilityRequiresAnActiveStructuralProvider()
+    {
+        CapabilitiesTool tool = new(RepositoryScope.Create(FindRepositoryRoot()), []);
+
+        ToolAvailability index = tool.CreateResponse().Data!.Tools.Single(
+            item => item.Name == PublicToolNames.IndexCodebase);
+
+        Assert.Equal(ContractValues.AvailabilityUnavailable, index.Status);
+        Assert.Equal(ContractValues.ReasonStructuralProviderUnavailable, index.Reason);
+    }
+
+    [Fact]
     public void HealthCheckReportsOnlyImplementedRuntimeChecks()
     {
         HealthReportData data = HealthCheckTool.CreateResponse().Data!;
 
-        Assert.Equal(5, data.RegisteredToolCount);
+        Assert.Equal(6, data.RegisteredToolCount);
         Assert.Equal(["server", "transport", "stdout", "network"], data.Checks.Select(check => check.Name));
         Assert.All(data.Checks, check => Assert.Equal(ContractValues.StatusOk, check.Status));
     }
@@ -86,7 +102,7 @@ public sealed class ProtocolFoundationToolTests
 
         Assert.False(result.IsError);
         TextContentBlock text = Assert.IsType<TextContentBlock>(Assert.Single(result.Content));
-        Assert.Contains("5 of 10", text.Text, StringComparison.Ordinal);
+        Assert.Contains("6 of 10", text.Text, StringComparison.Ordinal);
 
         JsonElement structured = Assert.IsType<JsonElement>(result.StructuredContent);
         Assert.Equal("1", structured.GetProperty("schemaVersion").GetString());

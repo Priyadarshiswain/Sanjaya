@@ -50,7 +50,14 @@ try {
 
   const list = await readMessage();
   const toolNames = list?.result?.tools?.map((tool) => tool.name);
-  const expectedTools = ["capabilities", "file_outline", "health_check", "recent_changes", "search_text"];
+  const expectedTools = [
+    "capabilities",
+    "file_outline",
+    "health_check",
+    "index_codebase",
+    "recent_changes",
+    "search_text",
+  ];
   if (JSON.stringify(toolNames?.sort()) !== JSON.stringify(expectedTools)) {
     throw new Error("Launcher did not expose exactly the implemented tools.");
   }
@@ -93,6 +100,26 @@ try {
   await send({
     jsonrpc: "2.0",
     id: 5,
+    method: "tools/call",
+    params: { name: "index_codebase", arguments: {} },
+  });
+  const index = await readMessage();
+  const indexContent = index?.result?.structuredContent;
+  if (
+    indexContent?.data?.indexPath !== ".sanjaya/index-v1.json" ||
+    indexContent?.data?.filesIndexed !== 1 ||
+    indexContent?.data?.chunksIndexed < 1
+  ) {
+    throw new Error("Launcher did not build the bounded C# structural index.");
+  }
+
+  if (JSON.stringify(index).includes(repositoryRoot)) {
+    throw new Error("Index response exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 6,
     method: "tools/call",
     params: { name: "recent_changes", arguments: {} },
   });

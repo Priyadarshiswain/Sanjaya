@@ -19,9 +19,17 @@ public sealed class StdioProtocolTests
             PublicToolNames.ProtocolFoundation
                 .Concat(PublicToolNames.ImmediateDiscovery)
                 .Concat(PublicToolNames.LocalGitEvidence)
+                .Concat(PublicToolNames.StructuralIndex)
                 .Order(),
             tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()).Order());
         Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
+        JsonElement indexTool = tools.EnumerateArray().Single(
+            tool => tool.GetProperty("name").GetString() == PublicToolNames.IndexCodebase);
+        JsonElement annotations = indexTool.GetProperty("annotations");
+        Assert.False(annotations.GetProperty("readOnlyHint").GetBoolean());
+        Assert.True(annotations.GetProperty("destructiveHint").GetBoolean());
+        Assert.True(annotations.GetProperty("idempotentHint").GetBoolean());
+        Assert.False(annotations.GetProperty("openWorldHint").GetBoolean());
 
         JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
         AssertStructured(capabilities, 3, PublicToolNames.Capabilities, ContractValues.StatusOk, isError: false);
@@ -91,6 +99,14 @@ public sealed class StdioProtocolTests
         Assert.Equal("csharp-roslyn-syntax", csharpStructured.GetProperty("provider").GetString());
         Assert.Equal("class", csharpStructured.GetProperty("data").GetProperty("items")[0].GetProperty("kind").GetString());
         Assert.DoesNotContain(repository.Path, csharpOutline.GetRawText(), StringComparison.Ordinal);
+
+        JsonElement index = await server.CallAsync(7, PublicToolNames.IndexCodebase, "{}", timeout.Token);
+        AssertStructured(index, 7, PublicToolNames.IndexCodebase, ContractValues.StatusOk, isError: false);
+        JsonElement structuredIndex = index.GetProperty("result").GetProperty("structuredContent");
+        Assert.Equal(".sanjaya/index-v1.json", structuredIndex.GetProperty("data").GetProperty("indexPath").GetString());
+        Assert.Equal(1, structuredIndex.GetProperty("data").GetProperty("filesIndexed").GetInt32());
+        Assert.True(File.Exists(System.IO.Path.Combine(repository.Path, ".sanjaya", "index-v1.json")));
+        Assert.DoesNotContain(repository.Path, index.GetRawText(), StringComparison.Ordinal);
 
         JsonElement multiline = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"two\\nlines\"}", timeout.Token);
         AssertStructured(multiline, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);

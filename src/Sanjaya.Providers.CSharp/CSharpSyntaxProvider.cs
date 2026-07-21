@@ -18,6 +18,8 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
 
     public string Id => ProviderId;
 
+    public string ContractVersion => "1";
+
     public IReadOnlyCollection<string> Languages { get; } = ["csharp"];
 
     public bool CanHandle(string relativePath) =>

@@ -16,6 +16,7 @@ public sealed class CSharpSyntaxProviderTests
 
         CapabilityDescriptor[] capabilities = provider.GetCapabilities().ToArray();
 
+        Assert.Equal("1", provider.ContractVersion);
         Assert.Equal(
             [CapabilityKind.FileOutline, CapabilityKind.StructuralChunking],
             capabilities.Where(item => item.Status == CapabilityStatus.Supported).Select(item => item.Capability));
