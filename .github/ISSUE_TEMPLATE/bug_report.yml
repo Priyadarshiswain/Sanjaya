@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a reproducible problem in Sanjaya
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve Sanjaya. Do not include secrets, private
+        source code, or vulnerability details in a public issue.
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Provide a release version or commit SHA.
+      placeholder: 0.1.0 or abc1234
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include your operating system, .NET version, Node.js version, and MCP client when relevant.
+      placeholder: macOS 15, .NET 8.0.x, Node.js 22, VS Code
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest sequence that reliably reproduces the problem.
+      placeholder: |
+        1. Start Sanjaya with ...
+        2. Call ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Additional evidence
+      description: Add sanitized logs, screenshots, or minimal public examples if useful.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues for the same problem.
+          required: true
+        - label: I removed secrets, private source code, and personal information.
+          required: true
+        - label: This is not a security vulnerability report.
+          required: true

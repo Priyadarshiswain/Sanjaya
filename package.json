@@ -2,7 +2,7 @@
   "name": "sanjaya-mcp",
   "version": "0.0.0-development",
   "private": true,
-  "description": "Codebase vision and evidence for AI agents.",
+  "description": "Local-first codebase discovery for AI agents, with precise navigation and verifiable evidence.",
   "license": "Apache-2.0",
   "type": "module",
   "bin": {
@@ -19,10 +19,18 @@
   "engines": {
     "node": ">=18"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Priyadarshiswain/Sanjaya.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Priyadarshiswain/Sanjaya/issues"
+  },
+  "homepage": "https://github.com/Priyadarshiswain/Sanjaya#readme",
   "scripts": {
     "build": "dotnet publish src/Sanjaya.Server/Sanjaya.Server.csproj --configuration Release --self-contained false --output dist/dotnet",
     "test": "dotnet test Sanjaya.sln --configuration Release",
     "verify:package": "npm pack --dry-run --cache .npm-cache"
   },
-  "mcpName": "io.github.REPLACE_WITH_OWNER/sanjaya"
+  "mcpName": "io.github.priyadarshiswain/sanjaya"
 }
