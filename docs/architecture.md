@@ -39,6 +39,13 @@ rejects escapes and file symlinks, and never follows directory symlinks.
 
 Core must not depend on Roslyn, the TypeScript compiler, or network services.
 
+Local Git evidence uses a bounded process runner in Core. The runner starts the
+`git` executable directly with an argument list, an immutable repository-root
+working directory, sanitized Git environment, finite output buffers, timeout,
+and cancellation-driven process-tree termination. A strict parser converts
+NUL-delimited porcelain/log output into public contracts; raw stderr and
+absolute roots never enter tool responses.
+
 ### `Sanjaya.Providers.CSharp`
 
 Owns Roslyn-backed C# outlines, structural chunks, definitions, references, and

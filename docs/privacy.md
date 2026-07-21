@@ -16,6 +16,21 @@ access. Exact search excludes `.git`, `.sanjaya`, common build/package output,
 dependency directories, and recognized generated files. This first slice does
 not claim complete `.gitignore` compatibility.
 
+## Local Git evidence
+
+`recent_changes` launches the installed Git executable locally with fixed,
+read-only arguments. It returns revision hashes, commit timestamps, bounded
+commit subjects, and repository-relative changed paths. Commit subjects and
+filenames can themselves contain sensitive project information, so users
+should treat this output as repository content when choosing an MCP client or
+model.
+
+The tool does not return authors, email addresses, commit bodies, diffs, remote
+URLs, configuration, credentials, or absolute paths. It clears inherited
+`GIT_*` variables that could redirect repository access and disables prompts,
+paging, external diffs, fsmonitor execution, and system/user-global Git
+configuration loading. It never performs a remote or mutating Git operation.
+
 ## Local index
 
 Structural indexing writes source-derived data under `.sanjaya/` in the target

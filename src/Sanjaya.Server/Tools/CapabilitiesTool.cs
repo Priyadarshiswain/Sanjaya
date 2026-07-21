@@ -36,6 +36,7 @@ public sealed class CapabilitiesTool(RepositoryScope repository)
     {
         HashSet<string> implementedTools = new(PublicToolNames.ProtocolFoundation, StringComparer.Ordinal);
         implementedTools.UnionWith(PublicToolNames.ImmediateDiscovery);
+        implementedTools.UnionWith(PublicToolNames.LocalGitEvidence);
         ToolAvailability[] tools = PublicToolNames.All
             .Select(CreateAvailability)
             .ToArray();
@@ -81,6 +82,25 @@ public sealed class CapabilitiesTool(RepositoryScope repository)
                     name,
                     ContractValues.AvailabilityUnavailable,
                     ContractValues.ReasonRepositoryRootRequired);
+            }
+
+            if (string.Equals(name, PublicToolNames.RecentChanges, StringComparison.Ordinal))
+            {
+                if (!repository.IsReady)
+                {
+                    return new ToolAvailability(
+                        name,
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonRepositoryRootRequired);
+                }
+
+                if (!repository.IsGitWorktreeCandidate)
+                {
+                    return new ToolAvailability(
+                        name,
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonNotGitRepository);
+                }
             }
 
             return new ToolAvailability(name, ContractValues.AvailabilitySupported);

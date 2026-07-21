@@ -16,7 +16,10 @@ public sealed class StdioProtocolTests
         await server.InitializeAsync(timeout.Token);
         JsonElement tools = await server.ListToolsAsync(timeout.Token);
         Assert.Equal(
-            PublicToolNames.ProtocolFoundation.Concat(PublicToolNames.ImmediateDiscovery).Order(),
+            PublicToolNames.ProtocolFoundation
+                .Concat(PublicToolNames.ImmediateDiscovery)
+                .Concat(PublicToolNames.LocalGitEvidence)
+                .Order(),
             tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()).Order());
         Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
 
@@ -36,6 +39,31 @@ public sealed class StdioProtocolTests
         await server.CloseAsync(timeout.Token);
         Assert.Equal(0, server.ExitCode);
         Assert.True(string.IsNullOrEmpty(await server.StandardError.ReadToEndAsync(timeout.Token)));
+    }
+
+    [Fact(Timeout = 30000)]
+    public async Task GitRepositoryRootReturnsBoundedRevisionEvidenceWithoutAbsolutePaths()
+    {
+        string repositoryRoot = FindRepositoryRoot();
+        using ServerProcess server = StartServer(repositoryRoot);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
+        await server.InitializeAsync(timeout.Token);
+
+        JsonElement recent = await server.CallAsync(
+            3,
+            PublicToolNames.RecentChanges,
+            "{\"limit\":1,\"includeWorkingTree\":false}",
+            timeout.Token);
+
+        JsonElement result = recent.GetProperty("result");
+        Assert.False(result.GetProperty("isError").GetBoolean());
+        JsonElement structured = result.GetProperty("structuredContent");
+        Assert.Equal(PublicToolNames.RecentChanges, structured.GetProperty("capability").GetString());
+        Assert.Single(structured.GetProperty("data").GetProperty("commits").EnumerateArray());
+        Assert.False(structured.GetProperty("data").GetProperty("workingTree").GetProperty("included").GetBoolean());
+        Assert.DoesNotContain(repositoryRoot, recent.GetRawText(), StringComparison.Ordinal);
+
+        await server.CloseAsync(timeout.Token);
     }
 
     [Fact(Timeout = 30000)]

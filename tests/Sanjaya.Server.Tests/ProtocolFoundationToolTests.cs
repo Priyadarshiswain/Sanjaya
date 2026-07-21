@@ -12,7 +12,7 @@ public sealed class ProtocolFoundationToolTests
     [Fact]
     public void CapabilitiesReportsImplementedToolsAsReadyForValidRoot()
     {
-        CapabilitiesTool tool = new(RepositoryScope.Create(AppContext.BaseDirectory));
+        CapabilitiesTool tool = new(RepositoryScope.Create(FindRepositoryRoot()));
         ToolResponse<CapabilityReportData> response = tool.CreateResponse();
 
         Assert.Equal(ContractValues.StatusOk, response.Status);
@@ -20,7 +20,9 @@ public sealed class ProtocolFoundationToolTests
         Assert.Equal(PublicToolNames.All, response.Data.Tools.Select(item => item.Name));
         Assert.Equal(PublicToolNames.All.Count, response.Data.Tools.Select(item => item.Name).Distinct().Count());
         Assert.Equal(
-            PublicToolNames.ProtocolFoundation.Concat(PublicToolNames.ImmediateDiscovery),
+            PublicToolNames.ProtocolFoundation
+                .Concat(PublicToolNames.ImmediateDiscovery)
+                .Concat(PublicToolNames.LocalGitEvidence),
             response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilitySupported).Select(item => item.Name));
         Assert.All(
             response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilityUnavailable),
@@ -41,6 +43,9 @@ public sealed class ProtocolFoundationToolTests
             ContractValues.ReasonRepositoryRootRequired,
             data.Tools.Single(item => item.Name == PublicToolNames.FileOutline).Reason);
         Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
+            data.Tools.Single(item => item.Name == PublicToolNames.RecentChanges).Reason);
+        Assert.Equal(
             ContractValues.ReasonNotImplemented,
             data.Tools.Single(item => item.Name == PublicToolNames.SearchCode).Reason);
         Assert.Equal(
@@ -56,7 +61,7 @@ public sealed class ProtocolFoundationToolTests
     {
         HealthReportData data = HealthCheckTool.CreateResponse().Data!;
 
-        Assert.Equal(4, data.RegisteredToolCount);
+        Assert.Equal(5, data.RegisteredToolCount);
         Assert.Equal(["server", "transport", "stdout", "network"], data.Checks.Select(check => check.Name));
         Assert.All(data.Checks, check => Assert.Equal(ContractValues.StatusOk, check.Status));
     }
@@ -64,16 +69,27 @@ public sealed class ProtocolFoundationToolTests
     [Fact]
     public void ToolsReturnStructuredContentAndCompactTextFallback()
     {
-        CapabilitiesTool tool = new(RepositoryScope.Create(AppContext.BaseDirectory));
+        CapabilitiesTool tool = new(RepositoryScope.Create(FindRepositoryRoot()));
         CallToolResult result = tool.GetCapabilities();
 
         Assert.False(result.IsError);
         TextContentBlock text = Assert.IsType<TextContentBlock>(Assert.Single(result.Content));
-        Assert.Contains("4 of 10", text.Text, StringComparison.Ordinal);
+        Assert.Contains("5 of 10", text.Text, StringComparison.Ordinal);
 
         JsonElement structured = Assert.IsType<JsonElement>(result.StructuredContent);
         Assert.Equal("1", structured.GetProperty("schemaVersion").GetString());
         Assert.Equal("ok", structured.GetProperty("status").GetString());
         Assert.Equal(10, structured.GetProperty("data").GetProperty("tools").GetArrayLength());
+    }
+
+    private static string FindRepositoryRoot()
+    {
+        DirectoryInfo? directory = new(AppContext.BaseDirectory);
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Sanjaya.sln")))
+        {
+            directory = directory.Parent;
+        }
+
+        return directory?.FullName ?? throw new InvalidOperationException("Could not locate repository root.");
     }
 }

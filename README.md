@@ -19,9 +19,9 @@ with evidence.
 
 Sanjaya has a working, development-only MCP server and has not been released.
 It implements capability reporting, a health check, bounded exact-text search,
-and a generic readable-file outline. Discovery is scoped to one explicit
-repository root per process. The npm package, MCP Registry entry, and
-installation commands do not exist yet.
+a generic readable-file outline, and bounded local Git change evidence.
+Discovery is scoped to one explicit repository root per process. The npm
+package, MCP Registry entry, and installation commands do not exist yet.
 
 ## v0.1 direction
 
@@ -51,9 +51,11 @@ and [privacy](docs/privacy.md) for the proposed public contract.
 - `get_source`
 
 These names form the approved v0.1 contract. The current runtime registers
-`capabilities`, `health_check`, `file_outline`, and `search_text`. Discovery
-tools report `repository_root_required` until the process starts with a valid
-`--root <path>`. Every other approved tool reports `not_implemented`.
+`capabilities`, `health_check`, `file_outline`, `search_text`, and
+`recent_changes`. Discovery tools report `repository_root_required` until the
+process starts with a valid `--root <path>`; local Git evidence also requires
+that root to be a Git worktree root. Every other approved tool reports
+`not_implemented`.
 
 ## Development
 

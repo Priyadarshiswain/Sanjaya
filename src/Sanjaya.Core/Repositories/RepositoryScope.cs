@@ -17,6 +17,32 @@ public sealed class RepositoryScope
 
     public bool IsReady => CanonicalRoot is not null;
 
+    public bool IsGitWorktreeCandidate
+    {
+        get
+        {
+            if (!IsReady)
+            {
+                return false;
+            }
+
+            string metadataPath = Path.Combine(CanonicalRoot!, ".git");
+            try
+            {
+                FileSystemInfo metadata = Directory.Exists(metadataPath)
+                    ? new DirectoryInfo(metadataPath)
+                    : new FileInfo(metadataPath);
+                return metadata.Exists
+                    && metadata.LinkTarget is null
+                    && (metadata.Attributes & FileAttributes.ReparsePoint) == 0;
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+            {
+                return false;
+            }
+        }
+    }
+
     public string? ConfigurationError { get; }
 
     internal string? CanonicalRoot { get; }
