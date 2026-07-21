@@ -1,14 +1,22 @@
 # Capability contract
 
-Sanjaya reports capabilities explicitly. A provider may report a capability as
-`Supported`, `Unavailable`, `Unsupported`, or `Experimental`.
+Sanjaya reports runtime availability explicitly. Stable public responses use
+lowercase string values so clients do not need to infer availability from tool
+failures.
 
-- **Supported** means the capability is ready in the current runtime.
-- **Unavailable** means it is implemented but a runtime dependency is missing.
-- **Unsupported** means the provider does not implement it.
-- **Experimental** means it is opt-in and not part of the stable v0.1 contract.
+- `supported` means the tool is ready in the current runtime.
+- `unavailable` means the tool or provider cannot currently be used. The stable
+  reason `not_implemented` distinguishes approved roadmap work that has not
+  shipped yet.
 
-## Proposed v0.1 matrix
+## Current development runtime
+
+Only `capabilities` and `health_check` are registered as MCP tools. All eight
+discovery tools and the C#, TypeScript/JavaScript, and generic providers report
+`unavailable` with reason `not_implemented`. The server uses stdio and performs
+no network access by default.
+
+## Planned v0.1 matrix
 
 | Capability | C# | TypeScript/JavaScript | Other readable files |
 |---|---|---|---|
@@ -36,8 +44,8 @@ Sanjaya reports capabilities explicitly. A provider may report a capability as
 | `find_references` | Locate C# syntax references | None |
 | `get_source` | Retrieve one C# symbol's source | None |
 
-Every repository tool will accept an optional `repoRoot` and enforce that the
-resolved canonical path belongs to the configured repository or its worktrees.
+Repository-root inputs and canonical path containment are planned but are not
+implemented by the protocol foundation.
 
 ## Response envelope
 
@@ -56,4 +64,3 @@ a compact text fallback. The structured envelope contains:
 Evidence paths are repository-relative. Unsupported operations, missing
 dependencies, missing or stale indexes, ambiguity, invalid paths, cancellation,
 and unexpected failures use distinct stable error codes.
-

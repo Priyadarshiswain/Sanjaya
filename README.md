@@ -8,7 +8,7 @@ and line ranges.
 
 The first delivery is a .NET Model Context Protocol (MCP) server. A portable
 evidence-first code-discovery skill is planned for a later release and is not
-included in the current scaffold.
+included in the current development build.
 
 In the Mahabharata, Sanjaya could perceive events that others could not see
 directly and report them faithfully. This project serves a similar role for AI
@@ -17,9 +17,10 @@ with evidence.
 
 ## Project status
 
-Sanjaya is an implementation scaffold and has not been released. The npm
-package, MCP Registry entry, and installation commands do not exist yet. Please
-do not publish or present the current scaffold as a functioning server.
+Sanjaya has a working, development-only MCP protocol foundation and has not
+been released. It currently implements capability reporting and a health check;
+it does not yet read or search a codebase. The npm package, MCP Registry entry,
+and installation commands do not exist yet.
 
 ## v0.1 direction
 
@@ -48,12 +49,13 @@ and [privacy](docs/privacy.md) for the proposed public contract.
 - `find_references`
 - `get_source`
 
-These names form the approved scaffold contract. Their implementations have not
-been added yet.
+These names form the approved v0.1 contract. The current runtime registers only
+`capabilities` and `health_check`. Every other tool is reported as unavailable
+with the stable reason `not_implemented` until its implementation is reviewed.
 
 ## Development
 
-The scaffold requires the .NET 8 SDK and Node.js 18 or newer. See the
+The development build requires the .NET 8 SDK and Node.js 18 or newer. See the
 [development guide](docs/development.md) for validation commands.
 
 ## License
