@@ -41,6 +41,7 @@ public sealed class CapabilitiesTool(
         HashSet<string> implementedTools = new(PublicToolNames.ProtocolFoundation, StringComparer.Ordinal);
         implementedTools.UnionWith(PublicToolNames.ImmediateDiscovery);
         implementedTools.UnionWith(PublicToolNames.LocalGitEvidence);
+        implementedTools.UnionWith(PublicToolNames.StructuralIndex);
         ToolAvailability[] tools = PublicToolNames.All
             .Select(CreateAvailability)
             .ToArray();
@@ -122,6 +123,25 @@ public sealed class CapabilitiesTool(
                         name,
                         ContractValues.AvailabilityUnavailable,
                         ContractValues.ReasonNotGitRepository);
+                }
+            }
+
+            if (string.Equals(name, PublicToolNames.IndexCodebase, StringComparison.Ordinal))
+            {
+                if (!repository.IsReady)
+                {
+                    return new ToolAvailability(
+                        name,
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonRepositoryRootRequired);
+                }
+
+                if (!(capabilityProviders ?? []).OfType<IStructuralChunkProvider>().Any())
+                {
+                    return new ToolAvailability(
+                        name,
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonStructuralProviderUnavailable);
                 }
             }
 

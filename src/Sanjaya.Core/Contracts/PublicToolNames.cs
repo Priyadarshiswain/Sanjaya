@@ -55,4 +55,12 @@ public static class PublicToolNames
     [
         RecentChanges,
     ];
+
+    /// <summary>
+    /// Explicit repository-local structural index writers implemented by the current runtime.
+    /// </summary>
+    public static IReadOnlyList<string> StructuralIndex { get; } =
+    [
+        IndexCodebase,
+    ];
 }

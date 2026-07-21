@@ -1,4 +1,5 @@
 using System.Text;
+using System.Security.Cryptography;
 
 namespace Sanjaya.Core.Discovery;
 
@@ -70,7 +71,8 @@ internal static class BoundedTextFile
                 return TextFileReadResult.Failure(TextFileReadError.Binary);
             }
 
-            return new TextFileReadResult(text, offset, TextFileReadError.None);
+            string contentHash = $"sha256:{Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant()}";
+            return new TextFileReadResult(text, offset, contentHash, TextFileReadError.None);
         }
         catch (OperationCanceledException)
         {
@@ -91,9 +93,13 @@ internal enum TextFileReadError
     Inaccessible,
 }
 
-internal sealed record TextFileReadResult(string? Text, int ByteCount, TextFileReadError Error)
+internal sealed record TextFileReadResult(
+    string? Text,
+    int ByteCount,
+    string? ContentHash,
+    TextFileReadError Error)
 {
     public bool IsSuccess => Error == TextFileReadError.None;
 
-    public static TextFileReadResult Failure(TextFileReadError error) => new(null, 0, error);
+    public static TextFileReadResult Failure(TextFileReadError error) => new(null, 0, null, error);
 }

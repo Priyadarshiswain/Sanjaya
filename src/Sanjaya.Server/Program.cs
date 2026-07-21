@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Protocol;
 using Sanjaya.Core.Discovery;
 using Sanjaya.Core.Git;
+using Sanjaya.Core.Indexing;
 using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
 using Sanjaya.Providers.CSharp;
@@ -33,6 +34,10 @@ try
         .AddSingleton<ICapabilityProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<SearchTextService>()
         .AddSingleton<FileOutlineService>()
+        .AddSingleton(services => new IndexCodebaseService(
+            repository,
+            services.GetServices<IStructuralChunkProvider>(),
+            SanjayaRuntime.BuildVersion))
         .AddSingleton<IGitCommandRunner, GitCommandRunner>()
         .AddSingleton<RecentChangesService>()
         .AddMcpServer(options =>
@@ -51,7 +56,8 @@ try
         .WithTools<HealthCheckTool>(SanjayaJson.Options)
         .WithTools<FileOutlineTool>(SanjayaJson.Options)
         .WithTools<SearchTextTool>(SanjayaJson.Options)
-        .WithTools<RecentChangesTool>(SanjayaJson.Options);
+        .WithTools<RecentChangesTool>(SanjayaJson.Options)
+        .WithTools<IndexCodebaseTool>(SanjayaJson.Options);
 
     await builder.Build().RunAsync().ConfigureAwait(false);
     return 0;

@@ -39,6 +39,13 @@ rejects escapes and file symlinks, and never follows directory symlinks.
 
 Core must not depend on Roslyn, the TypeScript compiler, or network services.
 
+The local index builder consumes only `IStructuralChunkProvider` contracts. It
+constructs a bounded canonical document before opening temporary output,
+coordinates writers with an exclusive `.sanjaya/index.lock`, and atomically
+promotes `.sanjaya/index-v1.json`. Provider and source fingerprints make
+current, stale, and incompatible states explicit without machine-specific
+metadata.
+
 Local Git evidence uses a bounded process runner in Core. The runner starts the
 `git` executable directly with an argument list, an immutable repository-root
 working directory, sanitized Git environment, finite output buffers, timeout,

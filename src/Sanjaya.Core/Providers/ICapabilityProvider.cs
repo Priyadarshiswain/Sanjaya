@@ -10,6 +10,8 @@ public interface ICapabilityProvider
 {
     string Id { get; }
 
+    string ContractVersion { get; }
+
     IReadOnlyCollection<string> Languages { get; }
 
     IReadOnlyCollection<CapabilityDescriptor> GetCapabilities();

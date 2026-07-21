@@ -14,5 +14,6 @@ public static class SanjayaRuntime
     public static int RegisteredToolCount =>
         PublicToolNames.ProtocolFoundation.Count
         + PublicToolNames.ImmediateDiscovery.Count
-        + PublicToolNames.LocalGitEvidence.Count;
+        + PublicToolNames.LocalGitEvidence.Count
+        + PublicToolNames.StructuralIndex.Count;
 }

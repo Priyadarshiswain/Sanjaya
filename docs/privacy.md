@@ -37,6 +37,13 @@ Structural indexing writes source-derived data under `.sanjaya/` in the target
 repository. This directory may contain plaintext code chunks, symbols,
 signatures, paths, and index metadata.
 
+The current writer owns `.sanjaya/index-v1.json`, a fixed lock, and transient
+same-directory temporary output only. It rejects symlinked storage and unknown
+pre-existing targets, replaces a recognized index atomically, and preserves the
+last good index on failure or cancellation. It never edits the repository's
+`.gitignore`; instead it warns when the root ignore file does not explicitly
+contain a direct `.sanjaya` rule.
+
 Users must treat `.sanjaya/` as sensitive local build data and must not commit
 or distribute it. Sanjaya documentation and generated setup guidance must make
 this explicit.
