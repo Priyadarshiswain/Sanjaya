@@ -15,5 +15,6 @@ public static class SanjayaRuntime
         PublicToolNames.ProtocolFoundation.Count
         + PublicToolNames.ImmediateDiscovery.Count
         + PublicToolNames.LocalGitEvidence.Count
-        + PublicToolNames.StructuralIndex.Count;
+        + PublicToolNames.StructuralIndex.Count
+        + PublicToolNames.StructuralSearch.Count;
 }

@@ -63,4 +63,12 @@ public static class PublicToolNames
     [
         IndexCodebase,
     ];
+
+    /// <summary>
+    /// Read-only tools backed by a current compatible structural index.
+    /// </summary>
+    public static IReadOnlyList<string> StructuralSearch { get; } =
+    [
+        SearchCode,
+    ];
 }

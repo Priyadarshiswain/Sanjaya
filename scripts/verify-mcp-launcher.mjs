@@ -56,6 +56,7 @@ try {
     "health_check",
     "index_codebase",
     "recent_changes",
+    "search_code",
     "search_text",
   ];
   if (JSON.stringify(toolNames?.sort()) !== JSON.stringify(expectedTools)) {
@@ -120,6 +121,22 @@ try {
   await send({
     jsonrpc: "2.0",
     id: 6,
+    method: "tools/call",
+    params: { name: "search_code", arguments: { query: "Run" } },
+  });
+  const codeSearch = await readMessage();
+  const codeMatch = codeSearch?.result?.structuredContent?.data?.matches?.[0];
+  if (codeMatch?.path !== "Sample.cs" || codeMatch?.name !== "Run") {
+    throw new Error("Launcher did not search the current structural index.");
+  }
+
+  if (JSON.stringify(codeSearch).includes(repositoryRoot)) {
+    throw new Error("Indexed search response exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 7,
     method: "tools/call",
     params: { name: "recent_changes", arguments: {} },
   });

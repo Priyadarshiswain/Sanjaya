@@ -44,6 +44,12 @@ last good index on failure or cancellation. It never edits the repository's
 `.gitignore`; instead it warns when the root ignore file does not explicitly
 contain a direct `.sanjaya` rule.
 
+`search_code` reads this plaintext index and re-hashes the bounded eligible
+source set to verify freshness. It performs no writes, subprocess calls, or
+network access and never rebuilds implicitly. Returned chunks and snippets are
+source-derived content and should be treated with the same sensitivity as the
+repository itself.
+
 Users must treat `.sanjaya/` as sensitive local build data and must not commit
 or distribute it. Sanjaya documentation and generated setup guidance must make
 this explicit.

@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using Sanjaya.Core.Contracts;
 using Sanjaya.Core.Discovery;
@@ -16,28 +14,6 @@ public sealed class IndexCodebaseService(
 {
     public const string FormatVersion = "1";
     public const string RelativeIndexPath = ".sanjaya/index-v1.json";
-
-    private static readonly HashSet<string> ExcludedDirectories = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ".git",
-        ".sanjaya",
-        ".vs",
-        ".idea",
-        "bin",
-        "obj",
-        "dist",
-        "build",
-        "coverage",
-        "node_modules",
-        "packages",
-        "vendor",
-    };
-
-    private static readonly JsonSerializerOptions IndexJson = new(JsonSerializerDefaults.Web)
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        WriteIndented = false,
-    };
 
     private readonly IReadOnlyList<IStructuralChunkProvider> providers = structuralProviders
         .GroupBy(provider => provider.Id, StringComparer.Ordinal)
@@ -76,7 +52,7 @@ public sealed class IndexCodebaseService(
             BuildResult build = await BuildAsync(cancellationToken).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
 
-            byte[] payload = JsonSerializer.SerializeToUtf8Bytes(build.Document, IndexJson);
+            byte[] payload = JsonSerializer.SerializeToUtf8Bytes(build.Document, IndexSerialization.Options);
             if (payload.Length + 1 > limits.MaximumOutputBytes)
             {
                 throw Failure(
@@ -127,6 +103,10 @@ public sealed class IndexCodebaseService(
         {
             return Error(failure.Code, failure.Message);
         }
+        catch (IndexSourceScanFailure failure)
+        {
+            return Error(failure.Code, failure.Message);
+        }
         catch (UnauthorizedAccessException)
         {
             return Error(
@@ -147,45 +127,20 @@ public sealed class IndexCodebaseService(
 
     private async Task<BuildResult> BuildAsync(CancellationToken cancellationToken)
     {
-        IndexCounters counters = new();
+        IndexSourceSnapshot snapshot = await new IndexSourceScanner(repository, providers, limits)
+            .CaptureAsync(includeText: true, cancellationToken)
+            .ConfigureAwait(false);
         List<IndexFile> files = [];
         List<IndexChunk> chunks = [];
-        long sourceBytes = 0;
         int syntaxDiagnosticCount = 0;
         int truncatedChunkCount = 0;
 
-        foreach (CandidateFile candidate in EnumerateCandidates(counters, cancellationToken))
+        foreach (IndexSourceFile source in snapshot.Files)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (files.Count >= limits.MaximumEligibleFiles)
-            {
-                throw Failure(
-                    ContractValues.ErrorIndexFileLimit,
-                    $"Eligible source exceeds the {limits.MaximumEligibleFiles}-file index limit.");
-            }
-
-            TextFileReadResult file = await BoundedTextFile.ReadAsync(
-                candidate.FullPath,
-                DiscoveryLimits.MaximumFileBytes,
-                cancellationToken).ConfigureAwait(false);
-            if (!file.IsSuccess)
-            {
-                throw Failure(
-                    ContractValues.ErrorIndexSourceUnreadable,
-                    "An eligible source file is binary, oversized, inaccessible, or changed during indexing.");
-            }
-
-            if (sourceBytes + file.ByteCount > limits.MaximumSourceBytes)
-            {
-                throw Failure(
-                    ContractValues.ErrorIndexSourceLimit,
-                    $"Eligible source exceeds the {limits.MaximumSourceBytes}-byte index limit.");
-            }
-
-            sourceBytes += file.ByteCount;
-            StructuralChunkAnalysis analysis = candidate.Provider.AnalyzeChunks(
-                candidate.RelativePath,
-                file.Text!,
+            StructuralChunkAnalysis analysis = source.Provider.AnalyzeChunks(
+                source.RelativePath,
+                source.Text!,
                 cancellationToken);
             if (analysis.ChunksTruncated)
             {
@@ -204,17 +159,17 @@ public sealed class IndexCodebaseService(
             syntaxDiagnosticCount += analysis.SyntaxDiagnosticCount;
             truncatedChunkCount += analysis.Chunks.Count(chunk => chunk.ContentTruncated);
             files.Add(new IndexFile(
-                candidate.RelativePath,
-                candidate.Provider.Id,
-                file.ContentHash!,
-                file.ByteCount,
+                source.RelativePath,
+                source.Provider.Id,
+                source.ContentHash,
+                source.ByteCount,
                 analysis.SyntaxDiagnosticCount));
-            string language = candidate.Provider.Languages.Order(StringComparer.Ordinal).First();
+            string language = source.Provider.Languages.Order(StringComparer.Ordinal).First();
             chunks.AddRange(analysis.Chunks.Select(chunk => new IndexChunk(
-                CreateChunkId(candidate, chunk),
-                candidate.Provider.Id,
+                IndexFingerprint.CreateChunkId(source.Provider, source.RelativePath, chunk),
+                source.Provider.Id,
                 language,
-                candidate.RelativePath,
+                source.RelativePath,
                 chunk.Kind,
                 chunk.Name,
                 chunk.Container,
@@ -239,7 +194,7 @@ public sealed class IndexCodebaseService(
             provider.Id,
             provider.ContractVersion,
             provider.Languages.Order(StringComparer.Ordinal).ToArray())).ToArray();
-        string fingerprint = CreateRepositoryFingerprint(indexProviders, orderedFiles);
+        string fingerprint = IndexFingerprint.CreateRepository(indexProviders, orderedFiles);
         IndexDocument document = new(
             "sanjaya",
             FormatVersion,
@@ -258,144 +213,10 @@ public sealed class IndexCodebaseService(
         return new BuildResult(
             document,
             summaries,
-            sourceBytes,
+            snapshot.SourceBytes,
             syntaxDiagnosticCount,
             truncatedChunkCount,
-            counters);
-    }
-
-    private IEnumerable<CandidateFile> EnumerateCandidates(
-        IndexCounters counters,
-        CancellationToken cancellationToken)
-    {
-        Stack<string> directories = new();
-        directories.Push(repository.CanonicalRoot!);
-
-        while (directories.Count > 0)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            if (counters.DirectoriesVisited >= limits.MaximumDirectories)
-            {
-                throw Failure(
-                    ContractValues.ErrorIndexTraversalLimit,
-                    "Repository traversal exceeded the directory limit.");
-            }
-
-            string current = directories.Pop();
-            counters.DirectoriesVisited++;
-            FileSystemInfo[] entries;
-            try
-            {
-                entries = new DirectoryInfo(current)
-                    .EnumerateFileSystemInfos()
-                    .OrderBy(entry => entry.Name, StringComparer.Ordinal)
-                    .ToArray();
-            }
-            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
-            {
-                throw Failure(
-                    ContractValues.ErrorIndexSourceUnreadable,
-                    "A repository directory was inaccessible during indexing.");
-            }
-
-            if (counters.FileSystemEntries + entries.Length > limits.MaximumFileSystemEntries)
-            {
-                throw Failure(
-                    ContractValues.ErrorIndexTraversalLimit,
-                    "Repository traversal exceeded the filesystem-entry limit.");
-            }
-
-            counters.FileSystemEntries += entries.Length;
-            for (int index = entries.Length - 1; index >= 0; index--)
-            {
-                FileSystemInfo entry = entries[index];
-                if ((entry.Attributes & FileAttributes.Directory) == 0)
-                {
-                    continue;
-                }
-
-                if ((entry.Attributes & FileAttributes.ReparsePoint) != 0 || entry.LinkTarget is not null)
-                {
-                    counters.SymlinkDirectories++;
-                }
-                else if (ExcludedDirectories.Contains(entry.Name))
-                {
-                    counters.ExcludedDirectories++;
-                }
-                else
-                {
-                    directories.Push(entry.FullName);
-                }
-            }
-
-            foreach (FileSystemInfo entry in entries)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                if ((entry.Attributes & FileAttributes.Directory) != 0)
-                {
-                    continue;
-                }
-
-                if ((entry.Attributes & FileAttributes.ReparsePoint) != 0 || entry.LinkTarget is not null)
-                {
-                    counters.SymlinkFiles++;
-                    continue;
-                }
-
-                if (IsGenerated(entry.Name))
-                {
-                    counters.GeneratedFiles++;
-                    continue;
-                }
-
-                string relativePath = Path.GetRelativePath(repository.CanonicalRoot!, entry.FullName).Replace('\\', '/');
-                IStructuralChunkProvider? provider = providers.FirstOrDefault(
-                    candidate => candidate.CanHandle(relativePath));
-                if (provider is null)
-                {
-                    counters.UnsupportedFiles++;
-                    continue;
-                }
-
-                yield return new CandidateFile(entry.FullName, relativePath, provider);
-            }
-        }
-    }
-
-    private static string CreateChunkId(CandidateFile candidate, StructuralChunk chunk) => Hash(
-        candidate.Provider.Id,
-        candidate.Provider.ContractVersion,
-        candidate.RelativePath,
-        chunk.Kind,
-        chunk.Name,
-        chunk.Container ?? string.Empty,
-        chunk.StartLine.ToString(System.Globalization.CultureInfo.InvariantCulture),
-        chunk.EndLine.ToString(System.Globalization.CultureInfo.InvariantCulture),
-        Hash(chunk.Content));
-
-    private static string CreateRepositoryFingerprint(
-        IReadOnlyList<IndexProvider> providers,
-        IReadOnlyList<IndexFile> files)
-    {
-        List<string> parts = [];
-        foreach (IndexProvider provider in providers)
-        {
-            parts.Add($"provider:{provider.Id}:{provider.ContractVersion}:{string.Join(',', provider.Languages)}");
-        }
-
-        foreach (IndexFile file in files)
-        {
-            parts.Add($"file:{file.Provider}:{file.Path}:{file.ContentHash}");
-        }
-
-        return Hash(parts.ToArray());
-    }
-
-    private static string Hash(params string[] parts)
-    {
-        string canonical = string.Join('\0', parts);
-        byte[] digest = SHA256.HashData(Encoding.UTF8.GetBytes(canonical));
-        return $"sha256:{Convert.ToHexString(digest).ToLowerInvariant()}";
+            snapshot.Counters);
     }
 
     private static void PrepareIndexDirectory(string indexDirectory)
@@ -644,12 +465,6 @@ public sealed class IndexCodebaseService(
         }
     }
 
-    private static bool IsGenerated(string fileName) =>
-        fileName.EndsWith(".min.js", StringComparison.OrdinalIgnoreCase)
-        || fileName.EndsWith(".min.css", StringComparison.OrdinalIgnoreCase)
-        || fileName.EndsWith(".g.cs", StringComparison.OrdinalIgnoreCase)
-        || fileName.EndsWith(".generated.cs", StringComparison.OrdinalIgnoreCase);
-
     private static void Add(List<string> warnings, string code, int count)
     {
         if (count > 0)
@@ -673,11 +488,6 @@ public sealed class IndexCodebaseService(
             [],
             new ErrorDetail(code, message, remediation));
 
-    private sealed record CandidateFile(
-        string FullPath,
-        string RelativePath,
-        IStructuralChunkProvider Provider);
-
     private sealed record ExistingIndexInfo(
         string FormatVersion,
         string RepositoryFingerprint,
@@ -689,83 +499,7 @@ public sealed class IndexCodebaseService(
         long SourceBytes,
         int SyntaxDiagnosticCount,
         int TruncatedChunkCount,
-        IndexCounters Counters);
-
-    private sealed class IndexCounters
-    {
-        public int DirectoriesVisited { get; set; }
-
-        public int FileSystemEntries { get; set; }
-
-        public int UnsupportedFiles { get; set; }
-
-        public int SymlinkDirectories { get; set; }
-
-        public int SymlinkFiles { get; set; }
-
-        public int ExcludedDirectories { get; set; }
-
-        public int GeneratedFiles { get; set; }
-
-        public List<string> CreateWarnings(string repositoryRoot)
-        {
-            List<string> warnings = [];
-            Add(warnings, "symlink_directories_skipped", SymlinkDirectories);
-            Add(warnings, "symlink_files_skipped", SymlinkFiles);
-            Add(warnings, "excluded_directories_skipped", ExcludedDirectories);
-            Add(warnings, "generated_files_skipped", GeneratedFiles);
-            if (!IsExplicitlyIgnored(repositoryRoot))
-            {
-                warnings.Add("index_directory_not_explicitly_ignored");
-            }
-
-            return warnings;
-        }
-
-        private static void Add(List<string> warnings, string code, int count)
-        {
-            if (count > 0)
-            {
-                warnings.Add($"{code}:{count}");
-            }
-        }
-
-        private static bool IsExplicitlyIgnored(string repositoryRoot)
-        {
-            string ignorePath = Path.Combine(repositoryRoot, ".gitignore");
-            try
-            {
-                FileInfo ignore = new(ignorePath);
-                if (!ignore.Exists
-                    || ignore.Length > 256 * 1024
-                    || ignore.LinkTarget is not null
-                    || (ignore.Attributes & FileAttributes.ReparsePoint) != 0)
-                {
-                    return false;
-                }
-
-                bool ignored = false;
-                foreach (string line in File.ReadLines(ignorePath))
-                {
-                    string rule = line.Trim();
-                    if (rule is ".sanjaya" or ".sanjaya/" or "/.sanjaya" or "/.sanjaya/")
-                    {
-                        ignored = true;
-                    }
-                    else if (rule is "!.sanjaya" or "!.sanjaya/" or "!/.sanjaya" or "!/.sanjaya/")
-                    {
-                        ignored = false;
-                    }
-                }
-
-                return ignored;
-            }
-            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
-            {
-                return false;
-            }
-        }
-    }
+        IndexScanCounters Counters);
 
     private sealed class IndexBuildFailure(string code, string message) : Exception(message)
     {

@@ -81,6 +81,36 @@ public sealed class SerializationContractTests
     }
 
     [Fact]
+    public void IndexedSearchContractUsesStableRankedEvidenceFields()
+    {
+        SearchCodeData data = new(
+            "Run",
+            false,
+            "sha256:" + new string('a', 64),
+            [new CodeSearchMatch(
+                "sha256:" + new string('b', 64),
+                "src/Sample.cs",
+                "method",
+                "Run",
+                "Sample",
+                4,
+                7,
+                1000,
+                ["name"],
+                "void Run()")],
+            1,
+            false);
+
+        using JsonDocument document = JsonDocument.Parse(JsonSerializer.Serialize(data));
+        JsonElement match = document.RootElement.GetProperty("matches")[0];
+
+        Assert.Equal("src/Sample.cs", match.GetProperty("path").GetString());
+        Assert.Equal(1000, match.GetProperty("score").GetInt32());
+        Assert.Equal("name", match.GetProperty("matchedFields")[0].GetString());
+        Assert.Equal("sha256:" + new string('a', 64), document.RootElement.GetProperty("indexFingerprint").GetString());
+    }
+
+    [Fact]
     public void RecentChangesContractOmitsAuthorEmailDiffAndAbsoluteRootFields()
     {
         RecentChangesData data = new(

@@ -26,8 +26,12 @@ public sealed class ProtocolFoundationToolTests
                 .Concat(PublicToolNames.LocalGitEvidence)
                 .Concat(PublicToolNames.StructuralIndex),
             response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilitySupported).Select(item => item.Name));
+        Assert.Equal(
+            ContractValues.ReasonIndexMissing,
+            response.Data.Tools.Single(item => item.Name == PublicToolNames.SearchCode).Reason);
         Assert.All(
-            response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilityUnavailable),
+            response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilityUnavailable
+                && item.Name != PublicToolNames.SearchCode),
             item => Assert.Equal(ContractValues.ReasonNotImplemented, item.Reason));
         ProviderAvailability csharp = response.Data.Providers.Single(
             item => item.Id == CSharpSyntaxProvider.ProviderId);
@@ -59,7 +63,7 @@ public sealed class ProtocolFoundationToolTests
             ContractValues.ReasonRepositoryRootRequired,
             data.Tools.Single(item => item.Name == PublicToolNames.IndexCodebase).Reason);
         Assert.Equal(
-            ContractValues.ReasonNotImplemented,
+            ContractValues.ReasonRepositoryRootRequired,
             data.Tools.Single(item => item.Name == PublicToolNames.SearchCode).Reason);
         Assert.Equal(
             ContractValues.ReasonRepositoryRootRequired,
@@ -89,7 +93,7 @@ public sealed class ProtocolFoundationToolTests
     {
         HealthReportData data = HealthCheckTool.CreateResponse().Data!;
 
-        Assert.Equal(6, data.RegisteredToolCount);
+        Assert.Equal(7, data.RegisteredToolCount);
         Assert.Equal(["server", "transport", "stdout", "network"], data.Checks.Select(check => check.Name));
         Assert.All(data.Checks, check => Assert.Equal(ContractValues.StatusOk, check.Status));
     }

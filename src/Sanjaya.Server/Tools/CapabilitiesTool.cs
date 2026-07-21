@@ -3,6 +3,7 @@ using ModelContextProtocol.Protocol;
 using ModelContextProtocol.Server;
 using Sanjaya.Core.Capabilities;
 using Sanjaya.Core.Contracts;
+using Sanjaya.Core.Indexing;
 using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
 using Sanjaya.Server.Serialization;
@@ -42,6 +43,7 @@ public sealed class CapabilitiesTool(
         implementedTools.UnionWith(PublicToolNames.ImmediateDiscovery);
         implementedTools.UnionWith(PublicToolNames.LocalGitEvidence);
         implementedTools.UnionWith(PublicToolNames.StructuralIndex);
+        implementedTools.UnionWith(PublicToolNames.StructuralSearch);
         ToolAvailability[] tools = PublicToolNames.All
             .Select(CreateAvailability)
             .ToArray();
@@ -145,7 +147,52 @@ public sealed class CapabilitiesTool(
                 }
             }
 
+            if (string.Equals(name, PublicToolNames.SearchCode, StringComparison.Ordinal))
+            {
+                if (!(capabilityProviders ?? []).OfType<IStructuralChunkProvider>().Any())
+                {
+                    return new ToolAvailability(
+                        name,
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonStructuralProviderUnavailable);
+                }
+
+                string? reason = GetIndexUnavailabilityReason();
+                if (reason is not null)
+                {
+                    return new ToolAvailability(name, ContractValues.AvailabilityUnavailable, reason);
+                }
+            }
+
             return new ToolAvailability(name, ContractValues.AvailabilitySupported);
+        }
+
+        string? GetIndexUnavailabilityReason()
+        {
+            if (!repository.IsReady)
+            {
+                return ContractValues.ReasonRepositoryRootRequired;
+            }
+
+            RepositoryPathResult index = repository.ResolveFile(IndexCodebaseService.RelativeIndexPath);
+            if (!index.IsSuccess)
+            {
+                return index.Error == RepositoryPathError.NotFound
+                    ? ContractValues.ReasonIndexMissing
+                    : ContractValues.ReasonIndexInvalid;
+            }
+
+            try
+            {
+                long length = new FileInfo(index.FullPath!).Length;
+                return length is <= 0 || length > IndexBuildLimits.Default.MaximumOutputBytes
+                    ? ContractValues.ReasonIndexInvalid
+                    : null;
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+            {
+                return ContractValues.ReasonIndexInvalid;
+            }
         }
 
         ProviderAvailability CreateProviderAvailability(ICapabilityProvider provider)
