@@ -54,10 +54,14 @@ public sealed class RepositoryScopeTests
         string externalTarget = outside.WriteFile("secret.txt", "outside");
         File.CreateSymbolicLink(System.IO.Path.Combine(repository.Path, "internal-link.txt"), internalTarget);
         File.CreateSymbolicLink(System.IO.Path.Combine(repository.Path, "external-link.txt"), externalTarget);
+        File.CreateSymbolicLink(
+            System.IO.Path.Combine(repository.Path, "broken-link.txt"),
+            System.IO.Path.Combine(outside.Path, "missing.txt"));
         RepositoryScope scope = RepositoryScope.Create(repository.Path);
 
         Assert.Equal(RepositoryPathError.Symlink, scope.ResolveFile("internal-link.txt").Error);
         Assert.Equal(RepositoryPathError.OutsideRepository, scope.ResolveFile("external-link.txt").Error);
+        Assert.NotEqual(RepositoryPathError.NotFound, scope.ResolveFile("broken-link.txt").Error);
     }
 
     [Fact]

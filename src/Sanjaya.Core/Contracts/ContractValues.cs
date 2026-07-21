@@ -16,6 +16,8 @@ public static class ContractValues
     public const string ReasonRepositoryRootRequired = "repository_root_required";
     public const string ReasonNotGitRepository = "not_git_repository";
     public const string ReasonStructuralProviderUnavailable = "structural_provider_unavailable";
+    public const string ReasonIndexMissing = "index_missing";
+    public const string ReasonIndexInvalid = "index_invalid";
 
     public const string ErrorRepositoryRootRequired = "repository_root_required";
     public const string ErrorInvalidArgument = "invalid_argument";
@@ -43,4 +45,9 @@ public static class ContractValues
     public const string ErrorIndexOutputLimit = "index_output_limit";
     public const string ErrorIndexSourceUnreadable = "index_source_unreadable";
     public const string ErrorIndexWriteFailed = "index_write_failed";
+    public const string ErrorIndexMissing = "index_missing";
+    public const string ErrorIndexCorrupt = "index_corrupt";
+    public const string ErrorIndexIncompatible = "index_incompatible";
+    public const string ErrorIndexStale = "index_stale";
+    public const string ErrorIndexStateUnverifiable = "index_state_unverifiable";
 }

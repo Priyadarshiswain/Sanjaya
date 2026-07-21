@@ -13,15 +13,19 @@ failures.
   `--root <path>`.
 - `not_git_repository` means local Git evidence is implemented but the selected
   root does not contain top-level Git worktree metadata.
+- `index_missing` means indexed search is implemented but `index_codebase` has
+  not created its repository-local index.
+- `index_invalid` means the expected index path is not a bounded regular local
+  file; invoking `search_code` provides the more specific safe failure.
 
 ## Current development runtime
 
 `capabilities`, `health_check`, `file_outline`, `search_text`, `recent_changes`,
-and `index_codebase` are registered as MCP tools. Generic discovery and the C#
+`index_codebase`, and `search_code` are registered as MCP tools. Generic discovery and the C#
 syntax provider report `supported` only when the process has a valid root. C#
 currently supports file outlines and structural indexing;
 definitions, references, source retrieval, and call graph remain unavailable.
-The TypeScript/JavaScript provider and all four deferred tools remain
+The TypeScript/JavaScript provider and all three deferred tools remain
 unavailable with `not_implemented`. The server uses stdio and performs no
 network access by default.
 
@@ -103,7 +107,24 @@ and preserves the previous recognized index. Unknown targets, symlinked
 storage, and path conflicts are never overwritten. Rebuild responses classify
 the previous recognized index as `missing`, `current`, `stale`, or
 `incompatible` using provider contracts and eligible-source fingerprints.
-`search_code` remains unavailable.
+
+`search_code` is read-only and requires that index to be present, canonical,
+compatible with the active provider contracts, and current for the exact set
+of eligible source files. It re-hashes bounded eligible source on each request
+in v0.1 so stale results are refused rather than silently returned. Distinct
+whitespace-separated query terms are combined with AND semantics across chunk
+name, container, kind, path, and bounded content. Matching is ordinal and
+case-insensitive by default, with an explicit case-sensitive option.
+
+Each term contributes only its best fixed field score: exact name 1000, name
+prefix 800, name substring 600, container 400, kind 300, path 200, or content
+100. Results are then ordered by score and stable source/chunk tie-breaks.
+Queries are limited to one line and 256 characters; responses return 25
+results by default and at most 100, with exact total count, truncation state,
+a snippet of at most 480 characters, and repository-relative line evidence.
+Missing, corrupt, incompatible, stale, and unverifiable index states use
+distinct errors and never trigger an implicit rebuild. Syntax recovery or
+truncated indexed chunk content makes matching evidence explicitly `partial`.
 
 ## Local Git evidence
 

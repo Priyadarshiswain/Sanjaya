@@ -117,11 +117,6 @@ public sealed class RepositoryScope
                     ? new DirectoryInfo(current)
                     : new FileInfo(current);
 
-                if (!entry.Exists)
-                {
-                    return RepositoryPathResult.Failure(RepositoryPathError.NotFound);
-                }
-
                 if (entry.LinkTarget is not null)
                 {
                     FileSystemInfo? target = entry.ResolveLinkTarget(returnFinalTarget: true);
@@ -137,6 +132,11 @@ public sealed class RepositoryScope
                     }
 
                     return RepositoryPathResult.Failure(RepositoryPathError.Symlink);
+                }
+
+                if (!entry.Exists)
+                {
+                    return RepositoryPathResult.Failure(RepositoryPathError.NotFound);
                 }
             }
 

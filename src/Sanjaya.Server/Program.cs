@@ -38,6 +38,9 @@ try
             repository,
             services.GetServices<IStructuralChunkProvider>(),
             SanjayaRuntime.BuildVersion))
+        .AddSingleton(services => new SearchCodeService(
+            repository,
+            services.GetServices<IStructuralChunkProvider>()))
         .AddSingleton<IGitCommandRunner, GitCommandRunner>()
         .AddSingleton<RecentChangesService>()
         .AddMcpServer(options =>
@@ -57,7 +60,8 @@ try
         .WithTools<FileOutlineTool>(SanjayaJson.Options)
         .WithTools<SearchTextTool>(SanjayaJson.Options)
         .WithTools<RecentChangesTool>(SanjayaJson.Options)
-        .WithTools<IndexCodebaseTool>(SanjayaJson.Options);
+        .WithTools<IndexCodebaseTool>(SanjayaJson.Options)
+        .WithTools<SearchCodeTool>(SanjayaJson.Options);
 
     await builder.Build().RunAsync().ConfigureAwait(false);
     return 0;

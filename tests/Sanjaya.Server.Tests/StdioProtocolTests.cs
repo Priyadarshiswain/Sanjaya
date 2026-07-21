@@ -20,6 +20,7 @@ public sealed class StdioProtocolTests
                 .Concat(PublicToolNames.ImmediateDiscovery)
                 .Concat(PublicToolNames.LocalGitEvidence)
                 .Concat(PublicToolNames.StructuralIndex)
+                .Concat(PublicToolNames.StructuralSearch)
                 .Order(),
             tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()).Order());
         Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
@@ -30,6 +31,13 @@ public sealed class StdioProtocolTests
         Assert.True(annotations.GetProperty("destructiveHint").GetBoolean());
         Assert.True(annotations.GetProperty("idempotentHint").GetBoolean());
         Assert.False(annotations.GetProperty("openWorldHint").GetBoolean());
+        JsonElement searchCodeTool = tools.EnumerateArray().Single(
+            tool => tool.GetProperty("name").GetString() == PublicToolNames.SearchCode);
+        JsonElement searchCodeAnnotations = searchCodeTool.GetProperty("annotations");
+        Assert.True(searchCodeAnnotations.GetProperty("readOnlyHint").GetBoolean());
+        Assert.False(searchCodeAnnotations.GetProperty("destructiveHint").GetBoolean());
+        Assert.True(searchCodeAnnotations.GetProperty("idempotentHint").GetBoolean());
+        Assert.False(searchCodeAnnotations.GetProperty("openWorldHint").GetBoolean());
 
         JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
         AssertStructured(capabilities, 3, PublicToolNames.Capabilities, ContractValues.StatusOk, isError: false);
@@ -107,6 +115,30 @@ public sealed class StdioProtocolTests
         Assert.Equal(1, structuredIndex.GetProperty("data").GetProperty("filesIndexed").GetInt32());
         Assert.True(File.Exists(System.IO.Path.Combine(repository.Path, ".sanjaya", "index-v1.json")));
         Assert.DoesNotContain(repository.Path, index.GetRawText(), StringComparison.Ordinal);
+
+        JsonElement indexedCapabilities = await server.CallAsync(
+            8,
+            PublicToolNames.Capabilities,
+            "{}",
+            timeout.Token);
+        JsonElement searchAvailability = indexedCapabilities
+            .GetProperty("result")
+            .GetProperty("structuredContent")
+            .GetProperty("data")
+            .GetProperty("tools")
+            .EnumerateArray()
+            .Single(tool => tool.GetProperty("name").GetString() == PublicToolNames.SearchCode);
+        Assert.Equal(ContractValues.AvailabilitySupported, searchAvailability.GetProperty("status").GetString());
+
+        JsonElement codeSearch = await server.CallAsync(
+            9,
+            PublicToolNames.SearchCode,
+            "{\"query\":\"Run\"}",
+            timeout.Token);
+        AssertStructured(codeSearch, 9, PublicToolNames.SearchCode, ContractValues.StatusOk, isError: false);
+        JsonElement structuredCodeSearch = codeSearch.GetProperty("result").GetProperty("structuredContent");
+        Assert.Equal("Sample.cs", structuredCodeSearch.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
+        Assert.DoesNotContain(repository.Path, codeSearch.GetRawText(), StringComparison.Ordinal);
 
         JsonElement multiline = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"two\\nlines\"}", timeout.Token);
         AssertStructured(multiline, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);

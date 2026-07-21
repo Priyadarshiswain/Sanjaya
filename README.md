@@ -22,7 +22,8 @@ It implements capability reporting, a health check, bounded exact-text search,
 Roslyn syntax outlines for C#, generic readable-file outlines, and bounded local
 Git change evidence. A bounded C# structural-chunk provider powers the
 repository-local deterministic index, which can be rebuilt explicitly with
-`index_codebase`. Structural index search is not yet exposed as a tool.
+`index_codebase` and searched read-only with deterministic lexical ranking via
+`search_code`.
 Discovery is scoped to one explicit repository root per process. The npm
 package, MCP Registry entry, and installation commands do not exist yet.
 
@@ -55,10 +56,11 @@ and [privacy](docs/privacy.md) for the proposed public contract.
 
 These names form the approved v0.1 contract. The current runtime registers
 `capabilities`, `health_check`, `file_outline`, `search_text`, `recent_changes`,
-and `index_codebase`. Discovery tools report `repository_root_required` until the
-process starts with a valid `--root <path>`; local Git evidence also requires
-that root to be a Git worktree root. Every other approved tool reports
-`not_implemented`.
+`index_codebase`, and `search_code`. Discovery tools report
+`repository_root_required` until the process starts with a valid
+`--root <path>`; local Git evidence also requires that root to be a Git
+worktree root, and structural search requires an index created by
+`index_codebase`. Every other approved tool reports `not_implemented`.
 
 ## Development
 

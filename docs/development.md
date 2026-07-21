@@ -57,12 +57,14 @@ can supply the active folder at process launch:
 ```
 
 The current server also registers `file_outline`, `search_text`,
-`recent_changes`, and `index_codebase`. Missing or invalid root configuration
+`recent_changes`, `index_codebase`, and `search_code`. Missing or invalid root
+configuration
 does not prevent MCP initialization, capability reporting, or health checks;
 discovery returns stable setup guidance instead. Local Git evidence
 additionally requires the configured root to be the Git worktree root and an
 installed Git executable.
 C# files use a bounded Roslyn syntax outline; other readable files retain the
 generic preview. The C# structural-chunk provider powers the explicit
-deterministic local index. Structural index search and TypeScript/JavaScript AST
-structure remain unimplemented.
+deterministic local index. After `index_codebase`, `search_code` performs
+read-only deterministic lexical search and refuses a stale or incompatible
+index. TypeScript/JavaScript AST structure remains unimplemented.
