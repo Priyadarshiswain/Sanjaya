@@ -4,7 +4,7 @@ namespace Sanjaya.Core.Providers;
 
 /// <summary>
 /// Common discovery surface for capability-oriented providers.
-/// Operation-specific interfaces will extend this contract as they are implemented.
+/// Operation-specific interfaces extend this contract only when implemented.
 /// </summary>
 public interface ICapabilityProvider
 {
@@ -14,4 +14,3 @@ public interface ICapabilityProvider
 
     IReadOnlyCollection<CapabilityDescriptor> GetCapabilities();
 }
-

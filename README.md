@@ -19,7 +19,9 @@ with evidence.
 
 Sanjaya has a working, development-only MCP server and has not been released.
 It implements capability reporting, a health check, bounded exact-text search,
-a generic readable-file outline, and bounded local Git change evidence.
+Roslyn syntax outlines for C#, generic readable-file outlines, and bounded local
+Git change evidence. A bounded C# structural-chunk provider is ready for the
+future local index, but indexing is not yet exposed as a tool.
 Discovery is scoped to one explicit repository root per process. The npm
 package, MCP Registry entry, and installation commands do not exist yet.
 

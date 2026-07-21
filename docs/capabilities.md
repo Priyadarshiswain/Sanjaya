@@ -17,11 +17,13 @@ failures.
 ## Current development runtime
 
 `capabilities`, `health_check`, `file_outline`, `search_text`, and
-`recent_changes` are registered as MCP tools. Generic discovery reports
-`supported` only when the process has a valid root. The C# and
-TypeScript/JavaScript providers and the five deferred tools remain unavailable
-with `not_implemented`. The server uses stdio and performs no network access by
-default.
+`recent_changes` are registered as MCP tools. Generic discovery and the C#
+syntax provider report `supported` only when the process has a valid root. C#
+currently supports file outlines and the internal structural-chunk contract;
+definitions, references, source retrieval, and call graph remain unavailable.
+The TypeScript/JavaScript provider and all five deferred tools remain
+unavailable with `not_implemented`. The server uses stdio and performs no
+network access by default.
 
 ## Immediate discovery behavior
 
@@ -55,11 +57,25 @@ produce aggregate warnings but do not by themselves make an otherwise complete
 search partial. Cancellation before any match also includes the stable
 `cancelled` error.
 
-`file_outline` is deliberately generic. It accepts one repository-relative
-regular UTF-8 file up to 1 MiB, reports byte and line counts, and returns at
-most 20 preview lines of 240 characters each. It rejects absolute, traversal,
-directory, symlink, binary, oversized, missing, and inaccessible inputs with
-stable errors. It does not claim C# or TypeScript/JavaScript structure.
+`file_outline` accepts one repository-relative regular UTF-8 file up to 1 MiB.
+For `.cs` files, the `csharp-roslyn-syntax` provider returns a deterministic
+flat outline of namespaces, types, delegates, methods, constructors,
+properties, indexers, and operators. Each item contains a kind, name, bounded
+display signature, optional container, and one-based line range. Responses are
+limited to 500 items and 240 display characters per item. Syntax errors return
+bounded recovered structure as a `partial` response with a diagnostic count;
+Sanjaya does not build the project or claim semantic compilation.
+
+Other readable files use `generic-text`: byte and line counts plus at most 20
+preview lines of 240 characters each. TypeScript and JavaScript continue to use
+this fallback until their AST provider ships. Both modes reject absolute,
+traversal, directory, symlink, binary, oversized, missing, and inaccessible
+inputs with stable errors.
+
+The C# provider also implements an internal structural-chunk interface for the
+future index. It produces at most 500 deterministic chunks and bounds each
+chunk to 64 KiB. This capability does not make `index_codebase` available and
+does not write files.
 
 ## Local Git evidence
 

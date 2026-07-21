@@ -34,5 +34,15 @@ public sealed record ProviderAvailability(
     IReadOnlyList<string> Languages,
     [property: JsonPropertyName("status")]
     string Status,
+    [property: JsonPropertyName("capabilities")]
+    IReadOnlyList<ProviderCapabilityAvailability> Capabilities,
+    [property: JsonPropertyName("reason")]
+    string? Reason = null);
+
+public sealed record ProviderCapabilityAvailability(
+    [property: JsonPropertyName("name")]
+    string Name,
+    [property: JsonPropertyName("status")]
+    string Status,
     [property: JsonPropertyName("reason")]
     string? Reason = null);

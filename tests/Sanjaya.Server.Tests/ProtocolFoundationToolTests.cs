@@ -2,6 +2,7 @@ using System.Text.Json;
 using ModelContextProtocol.Protocol;
 using Sanjaya.Core.Contracts;
 using Sanjaya.Core.Repositories;
+using Sanjaya.Providers.CSharp;
 using Sanjaya.Server.Tools;
 using Xunit;
 
@@ -12,7 +13,7 @@ public sealed class ProtocolFoundationToolTests
     [Fact]
     public void CapabilitiesReportsImplementedToolsAsReadyForValidRoot()
     {
-        CapabilitiesTool tool = new(RepositoryScope.Create(FindRepositoryRoot()));
+        CapabilitiesTool tool = new(RepositoryScope.Create(FindRepositoryRoot()), [new CSharpSyntaxProvider()]);
         ToolResponse<CapabilityReportData> response = tool.CreateResponse();
 
         Assert.Equal(ContractValues.StatusOk, response.Status);
@@ -27,12 +28,20 @@ public sealed class ProtocolFoundationToolTests
         Assert.All(
             response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilityUnavailable),
             item => Assert.Equal(ContractValues.ReasonNotImplemented, item.Reason));
+        ProviderAvailability csharp = response.Data.Providers.Single(
+            item => item.Id == CSharpSyntaxProvider.ProviderId);
+        Assert.Equal(ContractValues.AvailabilitySupported, csharp.Status);
+        Assert.Equal(
+            ["file_outline", "structural_chunking"],
+            csharp.Capabilities
+                .Where(item => item.Status == ContractValues.AvailabilitySupported)
+                .Select(item => item.Name));
     }
 
     [Fact]
     public void CapabilitiesDistinguishesImplementationFromMissingRootReadiness()
     {
-        CapabilitiesTool tool = new(RepositoryScope.Create(null));
+        CapabilitiesTool tool = new(RepositoryScope.Create(null), [new CSharpSyntaxProvider()]);
         CapabilityReportData data = tool.CreateResponse().Data!;
 
         Assert.False(data.RepositoryReady);
@@ -51,9 +60,12 @@ public sealed class ProtocolFoundationToolTests
         Assert.Equal(
             ContractValues.ReasonRepositoryRootRequired,
             data.Providers.Single(item => item.Id == "generic").Reason);
-        Assert.All(
-            data.Providers.Where(item => item.Id != "generic"),
-            item => Assert.Equal(ContractValues.ReasonNotImplemented, item.Reason));
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
+            data.Providers.Single(item => item.Id == CSharpSyntaxProvider.ProviderId).Reason);
+        Assert.Equal(
+            ContractValues.ReasonNotImplemented,
+            data.Providers.Single(item => item.Id == "typescript-javascript").Reason);
     }
 
     [Fact]
@@ -69,7 +81,7 @@ public sealed class ProtocolFoundationToolTests
     [Fact]
     public void ToolsReturnStructuredContentAndCompactTextFallback()
     {
-        CapabilitiesTool tool = new(RepositoryScope.Create(FindRepositoryRoot()));
+        CapabilitiesTool tool = new(RepositoryScope.Create(FindRepositoryRoot()), [new CSharpSyntaxProvider()]);
         CallToolResult result = tool.GetCapabilities();
 
         Assert.False(result.IsError);

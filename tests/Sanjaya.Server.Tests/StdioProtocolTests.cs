@@ -85,6 +85,13 @@ public sealed class StdioProtocolTests
         Assert.Equal("marker.txt", outline.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("path").GetString());
         Assert.DoesNotContain(repository.Path, outline.GetRawText(), StringComparison.Ordinal);
 
+        JsonElement csharpOutline = await server.CallAsync(6, PublicToolNames.FileOutline, "{\"path\":\"Sample.cs\"}", timeout.Token);
+        AssertStructured(csharpOutline, 6, PublicToolNames.FileOutline, ContractValues.StatusOk, isError: false);
+        JsonElement csharpStructured = csharpOutline.GetProperty("result").GetProperty("structuredContent");
+        Assert.Equal("csharp-roslyn-syntax", csharpStructured.GetProperty("provider").GetString());
+        Assert.Equal("class", csharpStructured.GetProperty("data").GetProperty("items")[0].GetProperty("kind").GetString());
+        Assert.DoesNotContain(repository.Path, csharpOutline.GetRawText(), StringComparison.Ordinal);
+
         JsonElement multiline = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"two\\nlines\"}", timeout.Token);
         AssertStructured(multiline, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);
         Assert.Equal(
@@ -262,6 +269,7 @@ public sealed class StdioProtocolTests
             Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"sanjaya-process-{Guid.NewGuid():N}");
             Directory.CreateDirectory(Path);
             File.WriteAllText(System.IO.Path.Combine(Path, "marker.txt"), marker);
+            File.WriteAllText(System.IO.Path.Combine(Path, "Sample.cs"), "public class Sample { public void Run() { } }");
         }
 
         public string Path { get; }
