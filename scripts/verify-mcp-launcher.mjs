@@ -1,7 +1,13 @@
 import { spawn } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { createInterface } from "node:readline";
 
-const child = spawn(process.execPath, ["bin/sanjaya-mcp.js"], {
+const repositoryRoot = mkdtempSync(join(tmpdir(), "sanjaya-launcher-"));
+writeFileSync(join(repositoryRoot, "marker.txt"), "LAUNCHER_UNIQUE_MARKER\n");
+
+const child = spawn(process.execPath, ["bin/sanjaya-mcp.js", "--root", repositoryRoot], {
   cwd: process.cwd(),
   stdio: ["pipe", "pipe", "pipe"],
   windowsHide: true,
@@ -40,8 +46,25 @@ try {
 
   const list = await readMessage();
   const toolNames = list?.result?.tools?.map((tool) => tool.name);
-  if (JSON.stringify(toolNames) !== JSON.stringify(["capabilities", "health_check"])) {
-    throw new Error("Launcher did not expose exactly the protocol-foundation tools.");
+  const expectedTools = ["capabilities", "file_outline", "health_check", "search_text"];
+  if (JSON.stringify(toolNames?.sort()) !== JSON.stringify(expectedTools)) {
+    throw new Error("Launcher did not expose exactly the implemented tools.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 3,
+    method: "tools/call",
+    params: { name: "search_text", arguments: { query: "LAUNCHER_UNIQUE_MARKER" } },
+  });
+  const search = await readMessage();
+  const match = search?.result?.structuredContent?.data?.matches?.[0];
+  if (match?.path !== "marker.txt") {
+    throw new Error("Launcher did not forward the explicit repository root.");
+  }
+
+  if (JSON.stringify(search).includes(repositoryRoot)) {
+    throw new Error("Launcher response exposed the absolute repository root.");
   }
 
   child.stdin.end();
@@ -60,6 +83,8 @@ try {
   if (child.exitCode === null) {
     child.kill("SIGTERM");
   }
+
+  rmSync(repositoryRoot, { recursive: true, force: true });
 }
 
 function send(message) {

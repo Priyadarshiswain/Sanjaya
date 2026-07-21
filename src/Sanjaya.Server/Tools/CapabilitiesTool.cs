@@ -2,6 +2,7 @@ using System.ComponentModel;
 using ModelContextProtocol.Protocol;
 using ModelContextProtocol.Server;
 using Sanjaya.Core.Contracts;
+using Sanjaya.Core.Repositories;
 using Sanjaya.Server.Serialization;
 
 namespace Sanjaya.Server.Tools;
@@ -9,7 +10,7 @@ namespace Sanjaya.Server.Tools;
 /// <summary>
 /// Reports the complete approved public surface without claiming deferred work exists.
 /// </summary>
-public sealed class CapabilitiesTool
+public sealed class CapabilitiesTool(RepositoryScope repository)
 {
     [McpServerTool(
         Name = PublicToolNames.Capabilities,
@@ -21,39 +22,38 @@ public sealed class CapabilitiesTool
         UseStructuredContent = true,
         OutputSchemaType = typeof(ToolResponse<CapabilityReportData>))]
     [Description("Reports which approved Sanjaya tools and language providers are currently available.")]
-    public static CallToolResult GetCapabilities()
+    public CallToolResult GetCapabilities()
     {
         ToolResponse<CapabilityReportData> response = CreateResponse();
         int supportedCount = response.Data!.Tools.Count(tool => tool.Status == ContractValues.AvailabilitySupported);
 
         return McpToolResultFactory.Create(
             response,
-            $"Sanjaya protocol foundation is running with {supportedCount} of {response.Data.Tools.Count} approved tools available.");
+            $"Sanjaya is running with {supportedCount} of {response.Data.Tools.Count} approved tools available; repository ready: {response.Data.RepositoryReady.ToString().ToLowerInvariant()}.");
     }
 
-    public static ToolResponse<CapabilityReportData> CreateResponse()
+    public ToolResponse<CapabilityReportData> CreateResponse()
     {
-        HashSet<string> supportedTools = new(PublicToolNames.ProtocolFoundation, StringComparer.Ordinal);
+        HashSet<string> implementedTools = new(PublicToolNames.ProtocolFoundation, StringComparer.Ordinal);
+        implementedTools.UnionWith(PublicToolNames.ImmediateDiscovery);
         ToolAvailability[] tools = PublicToolNames.All
-            .Select(name => supportedTools.Contains(name)
-                ? new ToolAvailability(name, ContractValues.AvailabilitySupported)
-                : new ToolAvailability(
-                    name,
-                    ContractValues.AvailabilityUnavailable,
-                    ContractValues.ReasonNotImplemented))
+            .Select(CreateAvailability)
             .ToArray();
 
         ProviderAvailability[] providers =
         [
             new("csharp", ["csharp"], ContractValues.AvailabilityUnavailable, ContractValues.ReasonNotImplemented),
             new("typescript-javascript", ["typescript", "javascript"], ContractValues.AvailabilityUnavailable, ContractValues.ReasonNotImplemented),
-            new("generic", ["text"], ContractValues.AvailabilityUnavailable, ContractValues.ReasonNotImplemented),
+            repository.IsReady
+                ? new("generic", ["text"], ContractValues.AvailabilitySupported)
+                : new("generic", ["text"], ContractValues.AvailabilityUnavailable, ContractValues.ReasonRepositoryRootRequired),
         ];
 
         CapabilityReportData data = new(
             SanjayaRuntime.BuildVersion,
             SanjayaRuntime.Transport,
             SanjayaRuntime.DefaultNetworkAccess,
+            repository.IsReady,
             tools,
             providers);
 
@@ -64,5 +64,26 @@ public sealed class CapabilitiesTool
             data,
             [],
             []);
+
+        ToolAvailability CreateAvailability(string name)
+        {
+            if (!implementedTools.Contains(name))
+            {
+                return new ToolAvailability(
+                    name,
+                    ContractValues.AvailabilityUnavailable,
+                    ContractValues.ReasonNotImplemented);
+            }
+
+            if (PublicToolNames.ImmediateDiscovery.Contains(name, StringComparer.Ordinal) && !repository.IsReady)
+            {
+                return new ToolAvailability(
+                    name,
+                    ContractValues.AvailabilityUnavailable,
+                    ContractValues.ReasonRepositoryRootRequired);
+            }
+
+            return new ToolAvailability(name, ContractValues.AvailabilitySupported);
+        }
     }
 }

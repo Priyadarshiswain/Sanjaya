@@ -51,5 +51,30 @@ public sealed class SerializationContractTests
         Assert.Equal("supported", ContractValues.AvailabilitySupported);
         Assert.Equal("unavailable", ContractValues.AvailabilityUnavailable);
         Assert.Equal("not_implemented", ContractValues.ReasonNotImplemented);
+        Assert.Equal("repository_root_required", ContractValues.ReasonRepositoryRootRequired);
+    }
+
+    [Fact]
+    public void DiscoveryContractsUseBoundedEvidenceShapes()
+    {
+        ToolResponse<SearchTextData> response = new(
+            ContractValues.StatusOk,
+            PublicToolNames.SearchText,
+            "generic-text",
+            new SearchTextData(
+                "needle",
+                true,
+                [new TextMatch("src/file.txt", 2, 4, "a needle")],
+                1,
+                8,
+                false),
+            [new EvidenceLocation("src/file.txt", 2, 2)],
+            []);
+
+        using JsonDocument document = JsonDocument.Parse(JsonSerializer.Serialize(response));
+        JsonElement root = document.RootElement;
+        Assert.Equal("1", root.GetProperty("schemaVersion").GetString());
+        Assert.Equal("src/file.txt", root.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
+        Assert.Equal(2, root.GetProperty("evidence")[0].GetProperty("startLine").GetInt32());
     }
 }

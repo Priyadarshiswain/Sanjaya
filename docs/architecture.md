@@ -31,6 +31,12 @@ Owns public response contracts, capability descriptions, repository context,
 canonical path containment, evidence models, file guards, deterministic index
 contracts, and provider discovery.
 
+The current server constructs one immutable repository scope from an explicit
+`--root <path>` argument. Missing or invalid roots leave the protocol running
+but make repository discovery unavailable. The ambient working directory is
+never used as a fallback. Traversal canonicalizes existing path components,
+rejects escapes and file symlinks, and never follows directory symlinks.
+
 Core must not depend on Roslyn, the TypeScript compiler, or network services.
 
 ### `Sanjaya.Providers.CSharp`

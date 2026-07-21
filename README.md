@@ -17,10 +17,11 @@ with evidence.
 
 ## Project status
 
-Sanjaya has a working, development-only MCP protocol foundation and has not
-been released. It currently implements capability reporting and a health check;
-it does not yet read or search a codebase. The npm package, MCP Registry entry,
-and installation commands do not exist yet.
+Sanjaya has a working, development-only MCP server and has not been released.
+It implements capability reporting, a health check, bounded exact-text search,
+and a generic readable-file outline. Discovery is scoped to one explicit
+repository root per process. The npm package, MCP Registry entry, and
+installation commands do not exist yet.
 
 ## v0.1 direction
 
@@ -49,9 +50,10 @@ and [privacy](docs/privacy.md) for the proposed public contract.
 - `find_references`
 - `get_source`
 
-These names form the approved v0.1 contract. The current runtime registers only
-`capabilities` and `health_check`. Every other tool is reported as unavailable
-with the stable reason `not_implemented` until its implementation is reviewed.
+These names form the approved v0.1 contract. The current runtime registers
+`capabilities`, `health_check`, `file_outline`, and `search_text`. Discovery
+tools report `repository_root_required` until the process starts with a valid
+`--root <path>`. Every other approved tool reports `not_implemented`.
 
 ## Development
 
