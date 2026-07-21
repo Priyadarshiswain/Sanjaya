@@ -46,7 +46,7 @@ try {
 
   const list = await readMessage();
   const toolNames = list?.result?.tools?.map((tool) => tool.name);
-  const expectedTools = ["capabilities", "file_outline", "health_check", "search_text"];
+  const expectedTools = ["capabilities", "file_outline", "health_check", "recent_changes", "search_text"];
   if (JSON.stringify(toolNames?.sort()) !== JSON.stringify(expectedTools)) {
     throw new Error("Launcher did not expose exactly the implemented tools.");
   }
@@ -65,6 +65,17 @@ try {
 
   if (JSON.stringify(search).includes(repositoryRoot)) {
     throw new Error("Launcher response exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 4,
+    method: "tools/call",
+    params: { name: "recent_changes", arguments: {} },
+  });
+  const recent = await readMessage();
+  if (recent?.result?.structuredContent?.error?.code !== "not_git_repository") {
+    throw new Error("Launcher did not expose stable local Git readiness guidance.");
   }
 
   child.stdin.end();

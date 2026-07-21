@@ -47,4 +47,12 @@ public static class PublicToolNames
         FileOutline,
         SearchText,
     ];
+
+    /// <summary>
+    /// Read-only local Git evidence tools implemented by the current runtime.
+    /// </summary>
+    public static IReadOnlyList<string> LocalGitEvidence { get; } =
+    [
+        RecentChanges,
+    ];
 }

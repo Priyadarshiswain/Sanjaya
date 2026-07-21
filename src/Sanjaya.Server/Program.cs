@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Protocol;
 using Sanjaya.Core.Discovery;
+using Sanjaya.Core.Git;
 using Sanjaya.Core.Repositories;
 using Sanjaya.Server;
 using Sanjaya.Server.Configuration;
@@ -26,6 +27,8 @@ try
         .AddSingleton(repository)
         .AddSingleton<SearchTextService>()
         .AddSingleton<FileOutlineService>()
+        .AddSingleton<IGitCommandRunner, GitCommandRunner>()
+        .AddSingleton<RecentChangesService>()
         .AddMcpServer(options =>
         {
             options.ServerInfo = new Implementation
@@ -41,7 +44,8 @@ try
         .WithTools<CapabilitiesTool>(SanjayaJson.Options)
         .WithTools<HealthCheckTool>(SanjayaJson.Options)
         .WithTools<FileOutlineTool>(SanjayaJson.Options)
-        .WithTools<SearchTextTool>(SanjayaJson.Options);
+        .WithTools<SearchTextTool>(SanjayaJson.Options)
+        .WithTools<RecentChangesTool>(SanjayaJson.Options);
 
     await builder.Build().RunAsync().ConfigureAwait(false);
     return 0;

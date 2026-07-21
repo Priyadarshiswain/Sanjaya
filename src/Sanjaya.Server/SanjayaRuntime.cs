@@ -12,5 +12,7 @@ public static class SanjayaRuntime
     public const bool DefaultNetworkAccess = false;
 
     public static int RegisteredToolCount =>
-        PublicToolNames.ProtocolFoundation.Count + PublicToolNames.ImmediateDiscovery.Count;
+        PublicToolNames.ProtocolFoundation.Count
+        + PublicToolNames.ImmediateDiscovery.Count
+        + PublicToolNames.LocalGitEvidence.Count;
 }

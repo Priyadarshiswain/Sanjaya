@@ -59,4 +59,22 @@ public sealed class RepositoryScopeTests
         Assert.Equal(RepositoryPathError.Symlink, scope.ResolveFile("internal-link.txt").Error);
         Assert.Equal(RepositoryPathError.OutsideRepository, scope.ResolveFile("external-link.txt").Error);
     }
+
+    [Fact]
+    public void GitMetadataCandidateRejectsSymlinks()
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            return;
+        }
+
+        using TemporaryDirectory repository = new();
+        using TemporaryDirectory outside = new();
+        Directory.CreateDirectory(System.IO.Path.Combine(outside.Path, "metadata"));
+        Directory.CreateSymbolicLink(
+            System.IO.Path.Combine(repository.Path, ".git"),
+            System.IO.Path.Combine(outside.Path, "metadata"));
+
+        Assert.False(RepositoryScope.Create(repository.Path).IsGitWorktreeCandidate);
+    }
 }

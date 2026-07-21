@@ -11,13 +11,15 @@ failures.
 - `repository_root_required` means an implemented discovery tool needs the
   process to be restarted with a valid explicit fully qualified
   `--root <path>`.
+- `not_git_repository` means local Git evidence is implemented but the selected
+  root does not contain top-level Git worktree metadata.
 
 ## Current development runtime
 
-`capabilities`, `health_check`, `file_outline`, and `search_text` are registered
-as MCP tools. The two discovery tools and generic text provider report
+`capabilities`, `health_check`, `file_outline`, `search_text`, and
+`recent_changes` are registered as MCP tools. Generic discovery reports
 `supported` only when the process has a valid root. The C# and
-TypeScript/JavaScript providers and the six deferred tools remain unavailable
+TypeScript/JavaScript providers and the five deferred tools remain unavailable
 with `not_implemented`. The server uses stdio and performs no network access by
 default.
 
@@ -58,6 +60,35 @@ regular UTF-8 file up to 1 MiB, reports byte and line counts, and returns at
 most 20 preview lines of 240 characters each. It rejects absolute, traversal,
 directory, symlink, binary, oversized, missing, and inaccessible inputs with
 stable errors. It does not claim C# or TypeScript/JavaScript structure.
+
+## Local Git evidence
+
+`recent_changes` returns the current branch or detached-HEAD state, full HEAD
+revision, bounded recent commit subjects and changed paths, and optionally the
+staged, unstaged, conflicted, and untracked paths in the working tree. It
+defaults to 10 commits and accepts 1 through 50. Working-tree inspection is on
+by default and can be disabled.
+
+The tool returns no author names, email addresses, commit bodies, diffs, remote
+URLs, Git configuration, credentials, or absolute paths. Commit subjects are
+limited to 240 characters, working-tree changes to 200, and changed paths to
+200 per commit. Git stdout is limited to 2 MiB, stderr to 32 KiB, and each
+command to five seconds.
+
+Sanjaya starts the installed `git` executable directly with fixed read-only
+arguments; it never uses a shell or accepts arbitrary Git arguments. Paging,
+terminal prompts, external diffs, fsmonitor execution, optional locks, and
+inherited `GIT_*` redirection variables are disabled; system and user-global
+Git configuration are not loaded. Only worktree-root
+verification, symbolic HEAD/revision lookup, porcelain status, and bounded log
+operations are performed. No fetch, pull, push, hook, credential, checkout,
+staging, commit, or other mutation operation is used.
+
+The selected Sanjaya root must also be the Git worktree root. A normal `.git`
+directory and standard nonsymlink Git worktree metadata file are supported;
+symlinked Git metadata is rejected. Stable failures distinguish missing root,
+non-Git root, root mismatch, missing Git, timeout, output limit, cancellation,
+and command/parse failure.
 
 ## Planned v0.1 matrix
 

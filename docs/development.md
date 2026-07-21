@@ -56,7 +56,9 @@ can supply the active folder at process launch:
 }
 ```
 
-The current server also registers `file_outline` and `search_text`. Missing or
-invalid root configuration does not prevent MCP initialization, capability
-reporting, or health checks; discovery returns stable setup guidance instead.
+The current server also registers `file_outline`, `search_text`, and
+`recent_changes`. Missing or invalid root configuration does not prevent MCP
+initialization, capability reporting, or health checks; discovery returns
+stable setup guidance instead. Local Git evidence additionally requires the
+configured root to be the Git worktree root and an installed Git executable.
 Indexing and language-specific structural providers remain unimplemented.

@@ -52,6 +52,7 @@ public sealed class SerializationContractTests
         Assert.Equal("unavailable", ContractValues.AvailabilityUnavailable);
         Assert.Equal("not_implemented", ContractValues.ReasonNotImplemented);
         Assert.Equal("repository_root_required", ContractValues.ReasonRepositoryRootRequired);
+        Assert.Equal("not_git_repository", ContractValues.ReasonNotGitRepository);
     }
 
     [Fact]
@@ -76,5 +77,30 @@ public sealed class SerializationContractTests
         Assert.Equal("1", root.GetProperty("schemaVersion").GetString());
         Assert.Equal("src/file.txt", root.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
         Assert.Equal(2, root.GetProperty("evidence")[0].GetProperty("startLine").GetInt32());
+    }
+
+    [Fact]
+    public void RecentChangesContractOmitsAuthorEmailDiffAndAbsoluteRootFields()
+    {
+        RecentChangesData data = new(
+            new GitHeadData(new string('a', 40), "main", false),
+            new GitWorkingTreeData(true, false, [new GitWorkingTreeChange("src/file.cs", null, "unchanged", "modified")], false),
+            [new GitCommitData(
+                new string('b', 40),
+                "2026-07-21T12:00:00+05:30",
+                "bounded subject",
+                false,
+                [new GitPathChange("src/file.cs", null, "modified")],
+                false)],
+            false);
+
+        string json = JsonSerializer.Serialize(data);
+
+        Assert.Contains("\"revision\"", json, StringComparison.Ordinal);
+        Assert.Contains("\"path\":\"src/file.cs\"", json, StringComparison.Ordinal);
+        Assert.DoesNotContain("author", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("email", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("diff", json, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("repositoryRoot", json, StringComparison.Ordinal);
     }
 }

@@ -14,6 +14,7 @@ public static class ContractValues
 
     public const string ReasonNotImplemented = "not_implemented";
     public const string ReasonRepositoryRootRequired = "repository_root_required";
+    public const string ReasonNotGitRepository = "not_git_repository";
 
     public const string ErrorRepositoryRootRequired = "repository_root_required";
     public const string ErrorInvalidArgument = "invalid_argument";
@@ -25,4 +26,10 @@ public static class ContractValues
     public const string ErrorFileTooLarge = "file_too_large";
     public const string ErrorFileInaccessible = "file_inaccessible";
     public const string ErrorCancelled = "cancelled";
+    public const string ErrorNotGitRepository = "not_git_repository";
+    public const string ErrorGitRootMismatch = "git_root_mismatch";
+    public const string ErrorGitUnavailable = "git_unavailable";
+    public const string ErrorGitTimeout = "git_timeout";
+    public const string ErrorGitOutputLimit = "git_output_limit";
+    public const string ErrorGitCommandFailed = "git_command_failed";
 }
