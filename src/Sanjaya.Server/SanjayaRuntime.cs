@@ -11,5 +11,6 @@ public static class SanjayaRuntime
     public const string Transport = "stdio";
     public const bool DefaultNetworkAccess = false;
 
-    public static int RegisteredToolCount => PublicToolNames.ProtocolFoundation.Count;
+    public static int RegisteredToolCount =>
+        PublicToolNames.ProtocolFoundation.Count + PublicToolNames.ImmediateDiscovery.Count;
 }

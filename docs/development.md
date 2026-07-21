@@ -33,10 +33,30 @@ separately reviewed and approved.
 
 ## Run from an MCP client
 
-After `npm run build`, the development launcher is `node bin/sanjaya-mcp.js`.
-It communicates using JSON-RPC over stdio, so it should be started by an MCP
-client rather than used as an interactive terminal command.
+After `npm run build`, the development launcher is:
 
-The current server registers only `capabilities` and `health_check`. Repository
-root resolution, file access, search, indexing, and language providers remain
-unimplemented and are not advertised as callable MCP tools.
+```bash
+node bin/sanjaya-mcp.js --root /absolute/path/to/repository
+```
+
+It communicates using JSON-RPC over stdio, so it should be started by an MCP
+client rather than used as an interactive terminal command. The launcher
+forwards `--root` without interpreting it. A VS Code workspace configuration
+can supply the active folder at process launch:
+
+```json
+{
+  "servers": {
+    "sanjaya": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/path/to/sanjaya/bin/sanjaya-mcp.js", "--root", "${workspaceFolder}"]
+    }
+  }
+}
+```
+
+The current server also registers `file_outline` and `search_text`. Missing or
+invalid root configuration does not prevent MCP initialization, capability
+reporting, or health checks; discovery returns stable setup guidance instead.
+Indexing and language-specific structural providers remain unimplemented.

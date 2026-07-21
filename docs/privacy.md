@@ -4,10 +4,17 @@ Sanjaya's default v0.1 contract is local-first and network-free.
 
 ## Repository access
 
-The server reads files inside one configured repository and recognized
-worktrees. Canonical path validation must reject paths and symlink targets that
-escape this boundary. Binary and oversized-file guards must run before parsing
-or indexing.
+The server reads files inside one explicitly configured repository root per
+process. Canonical path validation rejects traversal, absolute tool inputs,
+prefix collisions, file symlinks, and symlink targets that escape this
+boundary. Search traversal does not follow directory symlinks. Binary and
+oversized-file guards run before text is returned, and public evidence and
+diagnostics use repository-relative paths.
+
+Immediate discovery performs no writes, subprocess execution, or network
+access. Exact search excludes `.git`, `.sanjaya`, common build/package output,
+dependency directories, and recognized generated files. This first slice does
+not claim complete `.gitignore` compatibility.
 
 ## Local index
 
@@ -33,4 +40,3 @@ content may be transmitted to it.
 Errors and logs must avoid credentials, environment-variable values, local
 absolute paths when relative paths suffice, and source content unrelated to the
 requested evidence.
-

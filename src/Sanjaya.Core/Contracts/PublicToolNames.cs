@@ -31,11 +31,20 @@ public static class PublicToolNames
     ];
 
     /// <summary>
-    /// Tools implemented by the protocol-foundation release.
+    /// Tools implemented independently of repository-root readiness.
     /// </summary>
     public static IReadOnlyList<string> ProtocolFoundation { get; } =
     [
         Capabilities,
         HealthCheck,
+    ];
+
+    /// <summary>
+    /// Discovery tools implemented by the current runtime when a repository root is ready.
+    /// </summary>
+    public static IReadOnlyList<string> ImmediateDiscovery { get; } =
+    [
+        FileOutline,
+        SearchText,
     ];
 }

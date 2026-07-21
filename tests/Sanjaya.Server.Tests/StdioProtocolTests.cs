@@ -8,10 +8,117 @@ namespace Sanjaya.Server.Tests;
 public sealed class StdioProtocolTests
 {
     [Fact(Timeout = 30000)]
-    public async Task ServerCompletesProtocolHandshakeAndExposesOnlyImplementedTools()
+    public async Task MissingRootStillInitializesAndReturnsStructuredDiscoveryGuidance()
+    {
+        using ServerProcess server = StartServer(root: null);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
+
+        await server.InitializeAsync(timeout.Token);
+        JsonElement tools = await server.ListToolsAsync(timeout.Token);
+        Assert.Equal(
+            PublicToolNames.ProtocolFoundation.Concat(PublicToolNames.ImmediateDiscovery).Order(),
+            tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()).Order());
+        Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
+
+        JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
+        AssertStructured(capabilities, 3, PublicToolNames.Capabilities, ContractValues.StatusOk, isError: false);
+        Assert.False(capabilities.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("repositoryReady").GetBoolean());
+
+        JsonElement health = await server.CallAsync(4, PublicToolNames.HealthCheck, "{}", timeout.Token);
+        AssertStructured(health, 4, PublicToolNames.HealthCheck, ContractValues.StatusOk, isError: false);
+
+        JsonElement search = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"marker\"}", timeout.Token);
+        AssertStructured(search, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);
+        Assert.Equal(
+            ContractValues.ErrorRepositoryRootRequired,
+            search.GetProperty("result").GetProperty("structuredContent").GetProperty("error").GetProperty("code").GetString());
+
+        await server.CloseAsync(timeout.Token);
+        Assert.Equal(0, server.ExitCode);
+        Assert.True(string.IsNullOrEmpty(await server.StandardError.ReadToEndAsync(timeout.Token)));
+    }
+
+    [Fact(Timeout = 30000)]
+    public async Task ValidRootSupportsDirectStdioSearchAndOutlineWithoutAbsolutePathLeakage()
+    {
+        using TemporaryRepository repository = new("own-marker");
+        using ServerProcess server = StartServer(repository.Path);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
+        await server.InitializeAsync(timeout.Token);
+
+        JsonElement search = await server.CallAsync(3, PublicToolNames.SearchText, "{\"query\":\"own-marker\"}", timeout.Token);
+        AssertStructured(search, 3, PublicToolNames.SearchText, ContractValues.StatusOk, isError: false);
+        JsonElement structuredSearch = search.GetProperty("result").GetProperty("structuredContent");
+        Assert.Equal("marker.txt", structuredSearch.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
+        Assert.DoesNotContain(repository.Path, search.GetRawText(), StringComparison.Ordinal);
+
+        JsonElement outline = await server.CallAsync(4, PublicToolNames.FileOutline, "{\"path\":\"marker.txt\"}", timeout.Token);
+        AssertStructured(outline, 4, PublicToolNames.FileOutline, ContractValues.StatusOk, isError: false);
+        Assert.Equal("marker.txt", outline.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("path").GetString());
+        Assert.DoesNotContain(repository.Path, outline.GetRawText(), StringComparison.Ordinal);
+
+        JsonElement multiline = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"two\\nlines\"}", timeout.Token);
+        AssertStructured(multiline, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);
+        Assert.Equal(
+            ContractValues.ErrorInvalidArgument,
+            multiline.GetProperty("result").GetProperty("structuredContent").GetProperty("error").GetProperty("code").GetString());
+
+        await server.CloseAsync(timeout.Token);
+    }
+
+    [Fact(Timeout = 30000)]
+    public async Task InvalidRootStillCompletesProtocolHandshake()
+    {
+        string invalid = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"missing-{Guid.NewGuid():N}");
+        using ServerProcess server = StartServer(invalid);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
+
+        await server.InitializeAsync(timeout.Token);
+        JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
+        Assert.False(capabilities.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("repositoryReady").GetBoolean());
+        Assert.DoesNotContain(invalid, capabilities.GetRawText(), StringComparison.Ordinal);
+        await server.CloseAsync(timeout.Token);
+    }
+
+    [Fact(Timeout = 30000)]
+    public async Task TwoServerProcessesKeepRepositoryScopesIsolated()
+    {
+        using TemporaryRepository firstRepository = new("FIRST_UNIQUE_MARKER");
+        using TemporaryRepository secondRepository = new("SECOND_UNIQUE_MARKER");
+        using ServerProcess first = StartServer(firstRepository.Path);
+        using ServerProcess second = StartServer(secondRepository.Path);
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
+        await Task.WhenAll(first.InitializeAsync(timeout.Token), second.InitializeAsync(timeout.Token));
+
+        JsonElement firstOwn = await first.CallAsync(3, PublicToolNames.SearchText, "{\"query\":\"FIRST_UNIQUE_MARKER\"}", timeout.Token);
+        JsonElement firstOther = await first.CallAsync(4, PublicToolNames.SearchText, "{\"query\":\"SECOND_UNIQUE_MARKER\"}", timeout.Token);
+        JsonElement secondOwn = await second.CallAsync(3, PublicToolNames.SearchText, "{\"query\":\"SECOND_UNIQUE_MARKER\"}", timeout.Token);
+        JsonElement secondOther = await second.CallAsync(4, PublicToolNames.SearchText, "{\"query\":\"FIRST_UNIQUE_MARKER\"}", timeout.Token);
+
+        Assert.Single(firstOwn.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("matches").EnumerateArray());
+        Assert.Empty(firstOther.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("matches").EnumerateArray());
+        Assert.Single(secondOwn.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("matches").EnumerateArray());
+        Assert.Empty(secondOther.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("matches").EnumerateArray());
+
+        await first.CloseAsync(timeout.Token);
+        Assert.Equal(0, first.ExitCode);
+        JsonElement stillRunning = await second.CallAsync(5, PublicToolNames.HealthCheck, "{}", timeout.Token);
+        AssertStructured(stillRunning, 5, PublicToolNames.HealthCheck, ContractValues.StatusOk, isError: false);
+        await second.CloseAsync(timeout.Token);
+
+        string allResponses = string.Concat(
+            firstOwn.GetRawText(),
+            firstOther.GetRawText(),
+            secondOwn.GetRawText(),
+            secondOther.GetRawText());
+        Assert.DoesNotContain(firstRepository.Path, allResponses, StringComparison.Ordinal);
+        Assert.DoesNotContain(secondRepository.Path, allResponses, StringComparison.Ordinal);
+    }
+
+    private static ServerProcess StartServer(string? root)
     {
         string repositoryRoot = FindRepositoryRoot();
-        string serverAssembly = Path.Combine(
+        string serverAssembly = System.IO.Path.Combine(
             repositoryRoot,
             "src",
             "Sanjaya.Server",
@@ -21,58 +128,9 @@ public sealed class StdioProtocolTests
             "Sanjaya.Server.dll");
         Assert.True(File.Exists(serverAssembly), $"Server assembly was not built: {serverAssembly}");
 
-        using Process process = StartServer(serverAssembly, repositoryRoot);
-        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
-
-        try
+        ProcessStartInfo startInfo = new(Environment.ProcessPath!)
         {
-            await SendAsync(
-                process,
-                """{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"sanjaya-tests","version":"1.0"}}}""");
-            JsonElement initialize = await ReadResponseAsync(process, timeout.Token);
-            Assert.Equal(1, initialize.GetProperty("id").GetInt32());
-            Assert.Equal("sanjaya", initialize.GetProperty("result").GetProperty("serverInfo").GetProperty("name").GetString());
-
-            await SendAsync(process, """{"jsonrpc":"2.0","method":"notifications/initialized"}""");
-            await SendAsync(process, """{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}""");
-            JsonElement list = await ReadResponseAsync(process, timeout.Token);
-            JsonElement tools = list.GetProperty("result").GetProperty("tools");
-            Assert.Equal(PublicToolNames.ProtocolFoundation, tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()));
-            Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
-
-            await SendAsync(process, """{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"capabilities","arguments":{}}}""");
-            JsonElement capabilities = await ReadResponseAsync(process, timeout.Token);
-            AssertStructuredSuccess(capabilities, 3, PublicToolNames.Capabilities);
-
-            await SendAsync(process, """{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"health_check","arguments":{}}}""");
-            JsonElement health = await ReadResponseAsync(process, timeout.Token);
-            AssertStructuredSuccess(health, 4, PublicToolNames.HealthCheck);
-
-            await SendAsync(process, """{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"search_code","arguments":{}}}""");
-            JsonElement unknown = await ReadResponseAsync(process, timeout.Token);
-            Assert.Equal(5, unknown.GetProperty("id").GetInt32());
-            Assert.True(
-                unknown.TryGetProperty("error", out _)
-                || unknown.GetProperty("result").GetProperty("isError").GetBoolean());
-
-            process.StandardInput.Close();
-            await process.WaitForExitAsync(timeout.Token);
-            Assert.Equal(0, process.ExitCode);
-        }
-        finally
-        {
-            if (!process.HasExited)
-            {
-                process.Kill(entireProcessTree: true);
-            }
-        }
-    }
-
-    private static Process StartServer(string serverAssembly, string repositoryRoot)
-    {
-        ProcessStartInfo startInfo = new("dotnet")
-        {
-            WorkingDirectory = repositoryRoot,
+            WorkingDirectory = System.IO.Path.GetTempPath(),
             RedirectStandardInput = true,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
@@ -80,47 +138,106 @@ public sealed class StdioProtocolTests
             CreateNoWindow = true,
         };
         startInfo.ArgumentList.Add(serverAssembly);
+        if (root is not null)
+        {
+            startInfo.ArgumentList.Add("--root");
+            startInfo.ArgumentList.Add(root);
+        }
 
-        return Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start the Sanjaya server process.");
+        return new ServerProcess(Process.Start(startInfo) ?? throw new InvalidOperationException("Could not start server."));
     }
 
-    private static async Task SendAsync(Process process, string message)
-    {
-        await process.StandardInput.WriteLineAsync(message);
-        await process.StandardInput.FlushAsync();
-    }
-
-    private static async Task<JsonElement> ReadResponseAsync(Process process, CancellationToken cancellationToken)
-    {
-        string? line = await process.StandardOutput.ReadLineAsync(cancellationToken);
-        Assert.False(string.IsNullOrWhiteSpace(line));
-
-        using JsonDocument document = JsonDocument.Parse(line);
-        return document.RootElement.Clone();
-    }
-
-    private static void AssertStructuredSuccess(JsonElement response, int id, string capability)
+    private static void AssertStructured(JsonElement response, int id, string capability, string status, bool isError)
     {
         Assert.Equal(id, response.GetProperty("id").GetInt32());
         JsonElement result = response.GetProperty("result");
-        Assert.False(result.GetProperty("isError").GetBoolean());
+        Assert.Equal(isError, result.GetProperty("isError").GetBoolean());
         Assert.Equal("text", result.GetProperty("content")[0].GetProperty("type").GetString());
         JsonElement structured = result.GetProperty("structuredContent");
         Assert.Equal("1", structured.GetProperty("schemaVersion").GetString());
-        Assert.Equal("ok", structured.GetProperty("status").GetString());
+        Assert.Equal(status, structured.GetProperty("status").GetString());
         Assert.Equal(capability, structured.GetProperty("capability").GetString());
-        Assert.Equal(JsonValueKind.Null, structured.GetProperty("error").ValueKind);
     }
 
     private static string FindRepositoryRoot()
     {
         DirectoryInfo? directory = new(AppContext.BaseDirectory);
-        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Sanjaya.sln")))
+        while (directory is not null && !File.Exists(System.IO.Path.Combine(directory.FullName, "Sanjaya.sln")))
         {
             directory = directory.Parent;
         }
 
-        return directory?.FullName
-            ?? throw new InvalidOperationException("Could not locate the Sanjaya repository root.");
+        return directory?.FullName ?? throw new InvalidOperationException("Could not locate repository root.");
+    }
+
+    private sealed class ServerProcess(Process process) : IDisposable
+    {
+        public StreamReader StandardError => process.StandardError;
+
+        public int ExitCode => process.ExitCode;
+
+        public async Task InitializeAsync(CancellationToken cancellationToken)
+        {
+            await SendAsync("{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2025-06-18\",\"capabilities\":{},\"clientInfo\":{\"name\":\"sanjaya-tests\",\"version\":\"1.0\"}}}");
+            JsonElement initialize = await ReadAsync(cancellationToken);
+            Assert.Equal("sanjaya", initialize.GetProperty("result").GetProperty("serverInfo").GetProperty("name").GetString());
+            await SendAsync("{\"jsonrpc\":\"2.0\",\"method\":\"notifications/initialized\"}");
+        }
+
+        public async Task<JsonElement> ListToolsAsync(CancellationToken cancellationToken)
+        {
+            await SendAsync("{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/list\",\"params\":{}}");
+            return (await ReadAsync(cancellationToken)).GetProperty("result").GetProperty("tools").Clone();
+        }
+
+        public async Task<JsonElement> CallAsync(int id, string tool, string arguments, CancellationToken cancellationToken)
+        {
+            await SendAsync($"{{\"jsonrpc\":\"2.0\",\"id\":{id},\"method\":\"tools/call\",\"params\":{{\"name\":\"{tool}\",\"arguments\":{arguments}}}}}");
+            return await ReadAsync(cancellationToken);
+        }
+
+        public async Task CloseAsync(CancellationToken cancellationToken)
+        {
+            process.StandardInput.Close();
+            await process.WaitForExitAsync(cancellationToken);
+        }
+
+        public void Dispose()
+        {
+            if (!process.HasExited)
+            {
+                process.Kill(entireProcessTree: true);
+            }
+
+            process.Dispose();
+        }
+
+        private async Task SendAsync(string message)
+        {
+            await process.StandardInput.WriteLineAsync(message);
+            await process.StandardInput.FlushAsync();
+        }
+
+        private async Task<JsonElement> ReadAsync(CancellationToken cancellationToken)
+        {
+            string? line = await process.StandardOutput.ReadLineAsync(cancellationToken);
+            Assert.False(string.IsNullOrWhiteSpace(line));
+            using JsonDocument document = JsonDocument.Parse(line);
+            return document.RootElement.Clone();
+        }
+    }
+
+    private sealed class TemporaryRepository : IDisposable
+    {
+        public TemporaryRepository(string marker)
+        {
+            Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"sanjaya-process-{Guid.NewGuid():N}");
+            Directory.CreateDirectory(Path);
+            File.WriteAllText(System.IO.Path.Combine(Path, "marker.txt"), marker);
+        }
+
+        public string Path { get; }
+
+        public void Dispose() => Directory.Delete(Path, recursive: true);
     }
 }

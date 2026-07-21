@@ -2,13 +2,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Protocol;
+using Sanjaya.Core.Discovery;
+using Sanjaya.Core.Repositories;
 using Sanjaya.Server;
+using Sanjaya.Server.Configuration;
 using Sanjaya.Server.Diagnostics;
 using Sanjaya.Server.Serialization;
 using Sanjaya.Server.Tools;
 
 try
 {
+    RepositoryScope repository = RepositoryScope.Create(RootConfiguration.Parse(args));
     HostApplicationBuilder builder = new(new HostApplicationBuilderSettings
     {
         // Avoid ambient configuration and default console providers in the MCP process.
@@ -19,6 +23,9 @@ try
     builder.Logging.ClearProviders();
 
     builder.Services
+        .AddSingleton(repository)
+        .AddSingleton<SearchTextService>()
+        .AddSingleton<FileOutlineService>()
         .AddMcpServer(options =>
         {
             options.ServerInfo = new Implementation
@@ -32,7 +39,9 @@ try
         })
         .WithStdioServerTransport()
         .WithTools<CapabilitiesTool>(SanjayaJson.Options)
-        .WithTools<HealthCheckTool>(SanjayaJson.Options);
+        .WithTools<HealthCheckTool>(SanjayaJson.Options)
+        .WithTools<FileOutlineTool>(SanjayaJson.Options)
+        .WithTools<SearchTextTool>(SanjayaJson.Options);
 
     await builder.Build().RunAsync().ConfigureAwait(false);
     return 0;

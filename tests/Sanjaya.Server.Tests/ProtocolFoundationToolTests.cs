@@ -1,6 +1,7 @@
 using System.Text.Json;
 using ModelContextProtocol.Protocol;
 using Sanjaya.Core.Contracts;
+using Sanjaya.Core.Repositories;
 using Sanjaya.Server.Tools;
 using Xunit;
 
@@ -9,39 +10,45 @@ namespace Sanjaya.Server.Tests;
 public sealed class ProtocolFoundationToolTests
 {
     [Fact]
-    public void CapabilitiesReportsEveryApprovedToolExactlyOnce()
+    public void CapabilitiesReportsImplementedToolsAsReadyForValidRoot()
     {
-        ToolResponse<CapabilityReportData> response = CapabilitiesTool.CreateResponse();
+        CapabilitiesTool tool = new(RepositoryScope.Create(AppContext.BaseDirectory));
+        ToolResponse<CapabilityReportData> response = tool.CreateResponse();
 
         Assert.Equal(ContractValues.StatusOk, response.Status);
-        Assert.Equal(PublicToolNames.All, response.Data!.Tools.Select(tool => tool.Name));
-        Assert.Equal(PublicToolNames.All.Count, response.Data.Tools.Select(tool => tool.Name).Distinct().Count());
-
-        ToolAvailability[] supported = response.Data.Tools
-            .Where(tool => tool.Status == ContractValues.AvailabilitySupported)
-            .ToArray();
-        Assert.Equal(PublicToolNames.ProtocolFoundation, supported.Select(tool => tool.Name));
-
-        ToolAvailability[] unavailable = response.Data.Tools
-            .Where(tool => tool.Status == ContractValues.AvailabilityUnavailable)
-            .ToArray();
-        Assert.Equal(PublicToolNames.All.Count - PublicToolNames.ProtocolFoundation.Count, unavailable.Length);
-        Assert.All(unavailable, tool => Assert.Equal(ContractValues.ReasonNotImplemented, tool.Reason));
+        Assert.True(response.Data!.RepositoryReady);
+        Assert.Equal(PublicToolNames.All, response.Data.Tools.Select(item => item.Name));
+        Assert.Equal(PublicToolNames.All.Count, response.Data.Tools.Select(item => item.Name).Distinct().Count());
+        Assert.Equal(
+            PublicToolNames.ProtocolFoundation.Concat(PublicToolNames.ImmediateDiscovery),
+            response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilitySupported).Select(item => item.Name));
+        Assert.All(
+            response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilityUnavailable),
+            item => Assert.Equal(ContractValues.ReasonNotImplemented, item.Reason));
     }
 
     [Fact]
-    public void CapabilitiesReportsDeferredProvidersAsUnavailable()
+    public void CapabilitiesDistinguishesImplementationFromMissingRootReadiness()
     {
-        CapabilityReportData data = CapabilitiesTool.CreateResponse().Data!;
+        CapabilitiesTool tool = new(RepositoryScope.Create(null));
+        CapabilityReportData data = tool.CreateResponse().Data!;
 
-        Assert.Equal(["csharp", "typescript-javascript", "generic"], data.Providers.Select(provider => provider.Id));
-        Assert.All(data.Providers, provider =>
-        {
-            Assert.Equal(ContractValues.AvailabilityUnavailable, provider.Status);
-            Assert.Equal(ContractValues.ReasonNotImplemented, provider.Reason);
-        });
-        Assert.False(data.DefaultNetworkAccess);
-        Assert.Equal("stdio", data.Transport);
+        Assert.False(data.RepositoryReady);
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
+            data.Tools.Single(item => item.Name == PublicToolNames.SearchText).Reason);
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
+            data.Tools.Single(item => item.Name == PublicToolNames.FileOutline).Reason);
+        Assert.Equal(
+            ContractValues.ReasonNotImplemented,
+            data.Tools.Single(item => item.Name == PublicToolNames.SearchCode).Reason);
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
+            data.Providers.Single(item => item.Id == "generic").Reason);
+        Assert.All(
+            data.Providers.Where(item => item.Id != "generic"),
+            item => Assert.Equal(ContractValues.ReasonNotImplemented, item.Reason));
     }
 
     [Fact]
@@ -49,7 +56,7 @@ public sealed class ProtocolFoundationToolTests
     {
         HealthReportData data = HealthCheckTool.CreateResponse().Data!;
 
-        Assert.Equal(2, data.RegisteredToolCount);
+        Assert.Equal(4, data.RegisteredToolCount);
         Assert.Equal(["server", "transport", "stdout", "network"], data.Checks.Select(check => check.Name));
         Assert.All(data.Checks, check => Assert.Equal(ContractValues.StatusOk, check.Status));
     }
@@ -57,11 +64,12 @@ public sealed class ProtocolFoundationToolTests
     [Fact]
     public void ToolsReturnStructuredContentAndCompactTextFallback()
     {
-        CallToolResult result = CapabilitiesTool.GetCapabilities();
+        CapabilitiesTool tool = new(RepositoryScope.Create(AppContext.BaseDirectory));
+        CallToolResult result = tool.GetCapabilities();
 
         Assert.False(result.IsError);
         TextContentBlock text = Assert.IsType<TextContentBlock>(Assert.Single(result.Content));
-        Assert.Contains("2 of 10", text.Text, StringComparison.Ordinal);
+        Assert.Contains("4 of 10", text.Text, StringComparison.Ordinal);
 
         JsonElement structured = Assert.IsType<JsonElement>(result.StructuredContent);
         Assert.Equal("1", structured.GetProperty("schemaVersion").GetString());

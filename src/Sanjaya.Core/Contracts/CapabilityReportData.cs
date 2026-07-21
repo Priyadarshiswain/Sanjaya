@@ -12,6 +12,8 @@ public sealed record CapabilityReportData(
     string Transport,
     [property: JsonPropertyName("defaultNetworkAccess")]
     bool DefaultNetworkAccess,
+    [property: JsonPropertyName("repositoryReady")]
+    bool RepositoryReady,
     [property: JsonPropertyName("tools")]
     IReadOnlyList<ToolAvailability> Tools,
     [property: JsonPropertyName("providers")]

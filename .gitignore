@@ -25,3 +25,4 @@ dist/
 
 # Local project coordination; never publish this file
 PROJECT_STATUS.md
+docs/local/

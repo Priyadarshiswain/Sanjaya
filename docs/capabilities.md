@@ -8,13 +8,56 @@ failures.
 - `unavailable` means the tool or provider cannot currently be used. The stable
   reason `not_implemented` distinguishes approved roadmap work that has not
   shipped yet.
+- `repository_root_required` means an implemented discovery tool needs the
+  process to be restarted with a valid explicit fully qualified
+  `--root <path>`.
 
 ## Current development runtime
 
-Only `capabilities` and `health_check` are registered as MCP tools. All eight
-discovery tools and the C#, TypeScript/JavaScript, and generic providers report
-`unavailable` with reason `not_implemented`. The server uses stdio and performs
-no network access by default.
+`capabilities`, `health_check`, `file_outline`, and `search_text` are registered
+as MCP tools. The two discovery tools and generic text provider report
+`supported` only when the process has a valid root. The C# and
+TypeScript/JavaScript providers and the six deferred tools remain unavailable
+with `not_implemented`. The server uses stdio and performs no network access by
+default.
+
+## Immediate discovery behavior
+
+`search_text` performs ordinal exact matching for a single-line query; CR, LF,
+and NUL characters are rejected. Matching is case-sensitive by default;
+clients can request ordinal case-insensitive matching. Results are
+ordered deterministically and include repository-relative `/`-separated path,
+one-based line and column, and a bounded snippet. It searches readable UTF-8
+text directly without an index.
+
+The fixed search bounds are:
+
+- single-line query: 256 characters; CR, LF, and NUL are not accepted
+- results: 50 by default, 200 maximum
+- candidate files: 10,000
+- visited directories: 2,000
+- filesystem entries: 20,000
+- total readable bytes: 8 MiB
+- individual file: 1 MiB
+- searched line: 16,384 characters
+- matches: 20 per line and 50 per file
+- snippet: 320 characters (always enough for the maximum query)
+
+Search skips file and directory symlinks, binary/non-UTF-8 files, files over
+the individual limit, recognized generated files, and `.git`, `.sanjaya`,
+common build/package outputs, and dependency directories. Bounded warning codes
+describe skipped categories. Reaching a limit, encountering inaccessible
+content, or cancellation produces a `partial` response with the evidence found
+so far. Documented exclusions, generated files, symlinks, and binary files may
+produce aggregate warnings but do not by themselves make an otherwise complete
+search partial. Cancellation before any match also includes the stable
+`cancelled` error.
+
+`file_outline` is deliberately generic. It accepts one repository-relative
+regular UTF-8 file up to 1 MiB, reports byte and line counts, and returns at
+most 20 preview lines of 240 characters each. It rejects absolute, traversal,
+directory, symlink, binary, oversized, missing, and inaccessible inputs with
+stable errors. It does not claim C# or TypeScript/JavaScript structure.
 
 ## Planned v0.1 matrix
 
@@ -44,8 +87,12 @@ no network access by default.
 | `find_references` | Locate C# syntax references | None |
 | `get_source` | Retrieve one C# symbol's source | None |
 
-Repository-root inputs and canonical path containment are planned but are not
-implemented by the protocol foundation.
+One immutable repository scope is created per process. Missing or invalid root
+configuration does not prevent MCP initialization, `capabilities`, or
+`health_check`. Discovery accepts repository-relative paths only; containment
+uses canonical existing paths and rejects traversal, absolute-path injection,
+prefix collisions, and external symlink targets. No public result contains the
+absolute repository path.
 
 ## Response envelope
 
