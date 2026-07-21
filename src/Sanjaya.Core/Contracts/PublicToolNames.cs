@@ -29,5 +29,13 @@ public static class PublicToolNames
         FindReferences,
         GetSource,
     ];
-}
 
+    /// <summary>
+    /// Tools implemented by the protocol-foundation release.
+    /// </summary>
+    public static IReadOnlyList<string> ProtocolFoundation { get; } =
+    [
+        Capabilities,
+        HealthCheck,
+    ];
+}

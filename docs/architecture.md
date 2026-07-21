@@ -22,7 +22,8 @@ flowchart LR
 
 Owns MCP stdio hosting, tool registration, input/output schemas, cancellation,
 and conversion between domain results and MCP content blocks. Standard output
-is reserved for JSON-RPC.
+is reserved for JSON-RPC. The protocol host starts without ambient application
+configuration or default console logging providers.
 
 ### `Sanjaya.Core`
 
@@ -56,4 +57,3 @@ are deferred beyond v0.1.
 The root npm package contains a thin Node launcher and a framework-dependent
 .NET 8 publish output. The launcher forwards stdio and process signals; it does
 not implement product behavior or download code during installation.
-

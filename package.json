@@ -30,6 +30,7 @@
   "scripts": {
     "build": "dotnet publish src/Sanjaya.Server/Sanjaya.Server.csproj --configuration Release --self-contained false --output dist/dotnet",
     "test": "dotnet test Sanjaya.sln --configuration Release",
+    "verify:launcher": "node scripts/verify-mcp-launcher.mjs",
     "verify:package": "npm pack --dry-run --cache .npm-cache"
   },
   "mcpName": "io.github.priyadarshiswain/sanjaya"

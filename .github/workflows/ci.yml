@@ -49,6 +49,8 @@ jobs:
       - name: Build framework-dependent npm payload
         run: npm run build -- --no-restore
 
+      - name: Verify npm launcher MCP handshake
+        run: npm run verify:launcher
+
       - name: Inspect package contents
         run: npm run verify:package
-

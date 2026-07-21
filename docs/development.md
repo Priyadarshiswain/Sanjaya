@@ -6,7 +6,7 @@
 - Node.js 18 or newer
 - Git for repository-oriented capabilities
 
-## Validate the scaffold
+## Validate the development build
 
 ```bash
 dotnet restore Sanjaya.sln
@@ -20,6 +20,7 @@ node --check bin/sanjaya-mcp.js
 
 ```bash
 npm run build
+npm run verify:launcher
 npm run verify:package
 ```
 
@@ -30,7 +31,12 @@ The package is intentionally marked `private` and versioned
 `0.0.0-development`. Do not remove those safeguards until a publication step is
 separately reviewed and approved.
 
-## Current limitation
+## Run from an MCP client
 
-The scaffold does not start an MCP server. `Sanjaya.Server` exits with an
-explicit diagnostic until implementation is authorized.
+After `npm run build`, the development launcher is `node bin/sanjaya-mcp.js`.
+It communicates using JSON-RPC over stdio, so it should be started by an MCP
+client rather than used as an interactive terminal command.
+
+The current server registers only `capabilities` and `health_check`. Repository
+root resolution, file access, search, indexing, and language providers remain
+unimplemented and are not advertised as callable MCP tools.

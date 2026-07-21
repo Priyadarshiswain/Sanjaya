@@ -21,6 +21,7 @@ if (!existsSync(serverAssembly)) {
   process.exit(1);
 }
 
+// The npm entry point is a process launcher; MCP behavior remains in .NET.
 const child = spawn("dotnet", [serverAssembly, ...process.argv.slice(2)], {
   stdio: "inherit",
   windowsHide: true,
@@ -54,4 +55,3 @@ for (const signal of ["SIGINT", "SIGTERM"]) {
     }
   });
 }
-
