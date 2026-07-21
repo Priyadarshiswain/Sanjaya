@@ -1,0 +1,27 @@
+# .NET
+**/bin/
+**/obj/
+!/bin/
+!/bin/sanjaya-mcp.js
+TestResults/
+artifacts/
+coverage/
+
+# npm
+node_modules/
+.npm-cache/
+*.tgz
+
+# Generated distribution and local indexes
+dist/
+.sanjaya/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vs/
+*.user
+*.suo
+
+# Local project coordination; never publish this file
+PROJECT_STATUS.md

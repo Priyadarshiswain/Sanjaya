@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Description>Sanjaya MCP stdio server.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sanjaya.Core\Sanjaya.Core.csproj" />
+    <ProjectReference Include="..\Sanjaya.Providers.CSharp\Sanjaya.Providers.CSharp.csproj" />
+    <ProjectReference Include="..\Sanjaya.Providers.TypeScript\Sanjaya.Providers.TypeScript.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="ModelContextProtocol" />
+  </ItemGroup>
+</Project>
+

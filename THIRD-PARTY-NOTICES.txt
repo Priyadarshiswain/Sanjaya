@@ -1,0 +1,12 @@
+Sanjaya third-party notices
+
+This scaffold does not contain vendored third-party source or runtime files.
+
+Before the first distributable package is approved, the project will generate
+and review notices for every dependency included in the npm payload. The review
+must include the official MCP C# SDK, .NET hosting libraries, Roslyn, the xUnit
+test toolchain where applicable, and any bundled TypeScript compiler runtime.
+
+The TypeScript distribution gate is documented in:
+third_party/typescript/README.md
+

@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Restore npm metadata
+        run: npm ci --ignore-scripts
+
+      - name: Restore .NET dependencies
+        run: dotnet restore Sanjaya.sln
+
+      - name: Build
+        run: dotnet build Sanjaya.sln --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test Sanjaya.sln --no-build --configuration Release
+
+      - name: Verify formatting
+        run: dotnet format Sanjaya.sln --no-restore --verify-no-changes
+
+      - name: Check npm launcher syntax
+        run: node --check bin/sanjaya-mcp.js
+
+      - name: Build framework-dependent npm payload
+        run: npm run build -- --no-restore
+
+      - name: Inspect package contents
+        run: npm run verify:package
+
