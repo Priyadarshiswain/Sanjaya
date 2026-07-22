@@ -57,7 +57,8 @@ can supply the active folder at process launch:
 ```
 
 The current server also registers `file_outline`, `search_text`,
-`recent_changes`, `index_codebase`, `search_code`, and `find_definition`.
+`recent_changes`, `index_codebase`, `search_code`, `find_definition`, and
+`find_references`.
 Missing or invalid root configuration does not prevent MCP initialization,
 capability reporting, or health checks;
 discovery returns stable setup guidance instead. Local Git evidence
@@ -68,5 +69,6 @@ generic preview. The C# structural-chunk provider powers the explicit
 deterministic local index. After `index_codebase`, `search_code` performs
 read-only deterministic lexical search and refuses a stale or incompatible
 index; `find_definition` adds exact case-sensitive C# syntax-declaration
-navigation with explicit ambiguity. TypeScript/JavaScript AST structure remains
-unimplemented.
+navigation with explicit ambiguity; `find_references` returns bounded Roslyn
+identifier candidates without semantic-binding claims. TypeScript/JavaScript
+AST structure remains unimplemented.

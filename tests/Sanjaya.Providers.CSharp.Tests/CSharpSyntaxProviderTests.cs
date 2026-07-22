@@ -18,11 +18,46 @@ public sealed class CSharpSyntaxProviderTests
 
         Assert.Equal("1", provider.ContractVersion);
         Assert.Equal(
-            [CapabilityKind.FileOutline, CapabilityKind.StructuralChunking, CapabilityKind.Definitions],
+            [CapabilityKind.FileOutline, CapabilityKind.StructuralChunking, CapabilityKind.Definitions, CapabilityKind.References],
             capabilities.Where(item => item.Status == CapabilityStatus.Supported).Select(item => item.Capability));
         Assert.All(
             capabilities.Where(item => item.Status != CapabilityStatus.Supported),
             item => Assert.Equal(ContractValues.ReasonNotImplemented, item.Reason));
+    }
+
+    [Fact]
+    public void FindsOnlyExactSyntaxReferenceCandidatesWithEnclosingEvidence()
+    {
+        const string source = """
+            namespace Demo;
+            public class Sample
+            {
+                public void Run() { }
+                public void Call()
+                {
+                    Run();
+                    var text = "Run";
+                    // Run();
+                }
+            }
+            """;
+        CSharpSyntaxProvider provider = new();
+
+        ReferenceAnalysis analysis = provider.AnalyzeReferences(
+            "Sample.cs",
+            source,
+            "Run",
+            CancellationToken.None);
+
+        SyntaxReferenceCandidate match = Assert.Single(analysis.Matches);
+        Assert.Equal("identifier_name", match.SyntaxKind);
+        Assert.Equal("method", match.EnclosingKind);
+        Assert.Equal("Call", match.EnclosingName);
+        Assert.Equal("Demo.Sample", match.EnclosingContainer);
+        Assert.Equal(7, match.StartLine);
+        Assert.Contains("Run();", match.Snippet, StringComparison.Ordinal);
+        Assert.False(analysis.MatchesTruncated);
+        Assert.Equal(0, analysis.SyntaxDiagnosticCount);
     }
 
     [Fact]

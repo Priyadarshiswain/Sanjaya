@@ -17,5 +17,6 @@ public static class SanjayaRuntime
         + PublicToolNames.LocalGitEvidence.Count
         + PublicToolNames.StructuralIndex.Count
         + PublicToolNames.StructuralSearch.Count
-        + PublicToolNames.DefinitionLookup.Count;
+        + PublicToolNames.DefinitionLookup.Count
+        + PublicToolNames.ReferenceLookup.Count;
 }

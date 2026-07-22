@@ -12,7 +12,7 @@ namespace Sanjaya.Providers.CSharp;
 /// Provides deterministic syntax-only C# structure. It never loads a project,
 /// invokes a compiler, or claims semantic resolution.
 /// </summary>
-public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChunkProvider
+public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChunkProvider, IReferenceProvider
 {
     public const string ProviderId = "csharp-roslyn-syntax";
 
@@ -25,12 +25,16 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
     public bool CanHandle(string relativePath) =>
         string.Equals(Path.GetExtension(relativePath), ".cs", StringComparison.OrdinalIgnoreCase);
 
+    public bool IsValidName(string name) =>
+        SyntaxFacts.IsValidIdentifier(name)
+        || SyntaxFacts.GetKeywordKind(name) != SyntaxKind.None;
+
     public IReadOnlyCollection<CapabilityDescriptor> GetCapabilities() =>
     [
         Supported(CapabilityKind.FileOutline),
         Supported(CapabilityKind.StructuralChunking),
         Supported(CapabilityKind.Definitions),
-        Deferred(CapabilityKind.References),
+        Supported(CapabilityKind.References),
         Deferred(CapabilityKind.SourceRetrieval),
         Deferred(CapabilityKind.CallGraph),
     ];
@@ -69,6 +73,30 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
             .ToArray();
 
         return new StructuralChunkAnalysis(chunks, truncated, parsed.SyntaxDiagnosticCount);
+    }
+
+    public ReferenceAnalysis AnalyzeReferences(
+        string relativePath,
+        string sourceText,
+        string name,
+        CancellationToken cancellationToken)
+    {
+        ParsedFile parsed = Parse(sourceText, cancellationToken);
+        SyntaxReferenceCandidate[] matches = parsed.Root.DescendantNodes()
+            .OfType<SimpleNameSyntax>()
+            .Where(candidate =>
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                return candidate.Identifier.ValueText.Equals(name, StringComparison.Ordinal);
+            })
+            .Take(ReferenceLookupLimits.MaximumMatchesPerFile + 1)
+            .Select(candidate => CreateReference(candidate, sourceText))
+            .ToArray();
+        bool truncated = matches.Length > ReferenceLookupLimits.MaximumMatchesPerFile;
+        return new ReferenceAnalysis(
+            matches.Take(ReferenceLookupLimits.MaximumMatchesPerFile).ToArray(),
+            truncated,
+            parsed.SyntaxDiagnosticCount);
     }
 
     private static ParsedFile Parse(string sourceText, CancellationToken cancellationToken)
@@ -202,6 +230,39 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
             item.EndLine,
             content,
             truncated);
+    }
+
+    private static SyntaxReferenceCandidate CreateReference(SimpleNameSyntax reference, string sourceText)
+    {
+        FileLinePositionSpan lines = reference.SyntaxTree.GetLineSpan(reference.Identifier.Span);
+        OutlineItem? enclosing = reference.Ancestors()
+            .Select(TryCreateItem)
+            .FirstOrDefault(item => item is not null);
+        int lineStart = sourceText.LastIndexOf('\n', Math.Max(0, reference.SpanStart - 1));
+        lineStart = lineStart < 0 ? 0 : lineStart + 1;
+        int lineEnd = sourceText.IndexOf('\n', reference.Span.End);
+        lineEnd = lineEnd < 0 ? sourceText.Length : lineEnd;
+        string snippet = sourceText[lineStart..lineEnd].TrimEnd('\r');
+        if (snippet.Length > ReferenceLookupLimits.MaximumSnippetCharacters)
+        {
+            int tokenOffset = reference.SpanStart - lineStart;
+            int start = Math.Clamp(
+                tokenOffset - (ReferenceLookupLimits.MaximumSnippetCharacters / 2),
+                0,
+                snippet.Length - ReferenceLookupLimits.MaximumSnippetCharacters);
+            snippet = snippet.Substring(start, ReferenceLookupLimits.MaximumSnippetCharacters);
+        }
+
+        return new SyntaxReferenceCandidate(
+            reference is GenericNameSyntax ? "generic_name" : "identifier_name",
+            enclosing?.Kind,
+            enclosing?.Name,
+            enclosing?.Container,
+            lines.StartLinePosition.Line + 1,
+            lines.StartLinePosition.Character + 1,
+            lines.EndLinePosition.Line + 1,
+            lines.EndLinePosition.Character + 1,
+            snippet);
     }
 
     private static string Join(params object?[] parts)

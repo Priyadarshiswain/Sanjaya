@@ -79,4 +79,9 @@ public static class PublicToolNames
     [
         FindDefinition,
     ];
+
+    public static IReadOnlyList<string> ReferenceLookup { get; } =
+    [
+        FindReferences,
+    ];
 }

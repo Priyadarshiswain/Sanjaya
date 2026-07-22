@@ -22,6 +22,7 @@ public sealed class StdioProtocolTests
                 .Concat(PublicToolNames.StructuralIndex)
                 .Concat(PublicToolNames.StructuralSearch)
                 .Concat(PublicToolNames.DefinitionLookup)
+                .Concat(PublicToolNames.ReferenceLookup)
                 .Order(),
             tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()).Order());
         Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
@@ -46,6 +47,9 @@ public sealed class StdioProtocolTests
         Assert.False(definitionAnnotations.GetProperty("destructiveHint").GetBoolean());
         Assert.True(definitionAnnotations.GetProperty("idempotentHint").GetBoolean());
         Assert.False(definitionAnnotations.GetProperty("openWorldHint").GetBoolean());
+        JsonElement referencesTool = tools.EnumerateArray().Single(
+            tool => tool.GetProperty("name").GetString() == PublicToolNames.FindReferences);
+        Assert.True(referencesTool.GetProperty("annotations").GetProperty("readOnlyHint").GetBoolean());
 
         JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
         AssertStructured(capabilities, 3, PublicToolNames.Capabilities, ContractValues.StatusOk, isError: false);
@@ -145,6 +149,10 @@ public sealed class StdioProtocolTests
             .EnumerateArray()
             .Single(tool => tool.GetProperty("name").GetString() == PublicToolNames.FindDefinition);
         Assert.Equal(ContractValues.AvailabilitySupported, definitionAvailability.GetProperty("status").GetString());
+        JsonElement referenceAvailability = indexedCapabilities
+            .GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("tools")
+            .EnumerateArray().Single(tool => tool.GetProperty("name").GetString() == PublicToolNames.FindReferences);
+        Assert.Equal(ContractValues.AvailabilitySupported, referenceAvailability.GetProperty("status").GetString());
 
         JsonElement codeSearch = await server.CallAsync(
             9,
@@ -166,6 +174,14 @@ public sealed class StdioProtocolTests
         Assert.Equal(ContractValues.ResolutionUnique, structuredDefinition.GetProperty("data").GetProperty("resolution").GetString());
         Assert.Equal("Sample.cs", structuredDefinition.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
         Assert.DoesNotContain(repository.Path, definition.GetRawText(), StringComparison.Ordinal);
+
+        JsonElement references = await server.CallAsync(
+            11, PublicToolNames.FindReferences, "{\"name\":\"Run\"}", timeout.Token);
+        AssertStructured(references, 11, PublicToolNames.FindReferences, ContractValues.StatusOk, isError: false);
+        JsonElement structuredReferences = references.GetProperty("result").GetProperty("structuredContent");
+        Assert.Equal("syntax_candidate", structuredReferences.GetProperty("data").GetProperty("classification").GetString());
+        Assert.Equal("Sample.cs", structuredReferences.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
+        Assert.DoesNotContain(repository.Path, references.GetRawText(), StringComparison.Ordinal);
 
         JsonElement multiline = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"two\\nlines\"}", timeout.Token);
         AssertStructured(multiline, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);
@@ -344,7 +360,9 @@ public sealed class StdioProtocolTests
             Path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"sanjaya-process-{Guid.NewGuid():N}");
             Directory.CreateDirectory(Path);
             File.WriteAllText(System.IO.Path.Combine(Path, "marker.txt"), marker);
-            File.WriteAllText(System.IO.Path.Combine(Path, "Sample.cs"), "public class Sample { public void Run() { } }");
+            File.WriteAllText(
+                System.IO.Path.Combine(Path, "Sample.cs"),
+                "public class Sample { public void Run() { } public void Call() { Run(); } }");
         }
 
         public string Path { get; }
