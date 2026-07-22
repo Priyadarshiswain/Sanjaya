@@ -1,8 +1,10 @@
 # Packaging contract
 
-Sanjaya is not published. The repository now describes an exact public
-`sanjaya-mcp@0.1.0` candidate with npm provenance required. Preparing that
-candidate does not make it available from npm.
+Sanjaya is published as
+[`sanjaya-mcp@0.1.0`](https://www.npmjs.com/package/sanjaya-mcp) with npm
+provenance. The repository continues to build and verify an exact candidate
+before any publication; preparing a candidate alone does not make it available
+from npm.
 
 ## Runtime boundary
 
@@ -76,8 +78,7 @@ write to a registry. Installed-tarball verification also reads the packed
 `package.json` and proves that npm preserved the exact `mcpName` ownership
 field, package name, version, and license.
 
-The future VS Code installation configuration must reference the exact
-published package version verified by this process. Its generated installation
-URL remains inactive while the exact package is not yet published. Package
-publication and link activation are separate, explicitly reviewed release
-actions.
+The future VS Code installation configuration references the exact published
+package version verified by this process. Its generated installation URL
+remains inactive pending separate review and Official MCP Registry verification.
+Package publication and link activation are separate release actions.

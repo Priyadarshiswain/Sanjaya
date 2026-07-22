@@ -1,8 +1,10 @@
 # v0.1.0 release runbook
 
-This repository is prepared for a `0.1.0` candidate. It is not evidence that
-the npm package, Official MCP Registry entry, GitHub release, or VS Code install
-link exists. Every external action below requires a separate owner decision.
+This runbook records the separately approved `0.1.0` release procedure. The
+exact npm package has been published and independently verified, and its
+bootstrap credential has been removed. The Official MCP Registry entry,
+GitHub release, and VS Code install link do not exist yet; each remaining
+external action requires a separate owner decision.
 
 ## What the readiness pull request does
 

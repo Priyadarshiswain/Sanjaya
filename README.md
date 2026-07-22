@@ -17,12 +17,15 @@ with evidence.
 
 ## Project status
 
-Sanjaya has a reviewed `0.1.0` release candidate, but it has not been published.
-The command below will become usable only after the separately approved npm
-release is complete and independently verified.
-It implements capability reporting, a health check, bounded exact-text search,
-Roslyn syntax outlines for C#, generic readable-file outlines, and bounded local
-Git change evidence. A bounded C# structural-chunk provider powers the
+Sanjaya `0.1.0` is available from npm as
+[`sanjaya-mcp@0.1.0`](https://www.npmjs.com/package/sanjaya-mcp). The published
+package was independently verified with a clean installation, launcher
+diagnostics, and an MCP handshake.
+
+This release implements capability reporting, a health check, bounded
+exact-text search, Roslyn syntax outlines for C#, generic readable-file
+outlines, and bounded local Git change evidence. A bounded C#
+structural-chunk provider powers the
 repository-local deterministic index, which can be rebuilt explicitly with
 `index_codebase` and searched read-only with deterministic lexical ranking via
 `search_code`. Exact C# syntax declarations can be located with
@@ -34,9 +37,10 @@ TypeScript and JavaScript files receive compiler-backed syntax outlines and
 structural chunks through a bounded local worker, and those chunks participate
 in the same deterministic index and lexical search.
 Discovery is scoped to one explicit repository root per process. The npm
-package and Official MCP Registry entry are not available yet.
+package is available; the Official MCP Registry entry has not been submitted.
 The future VS Code install-once configuration is defined and tested, but its
-public link remains inactive until an exact npm release is available. See the
+public one-click link remains inactive pending separate review and registry
+verification. See the
 [VS Code integration contract](docs/vscode.md).
 Official MCP Registry metadata is also defined and checked offline, but no
 registry entry has been submitted. See the
@@ -51,7 +55,7 @@ vendored for the syntax provider. Semantic TypeScript/JavaScript definitions,
 references, type checking, module resolution, and source retrieval are not
 claimed.
 
-## Install after publication
+## Install
 
 Prerequisites are Node.js 22.13 or newer and the .NET 8 runtime. Git is optional
 and is needed only for `recent_changes`.

@@ -2,18 +2,18 @@
 
 ## Current status
 
-Sanjaya has an exact `0.1.0` install configuration candidate, but the package
-has not been published. There is therefore no working VS Code installation
-button yet. The public link remains deliberately inactive until the exact npm
-release exists and passes installed-package verification.
+Sanjaya `0.1.0` is published and independently verified on npm. The reviewed
+VS Code configuration can therefore install the exact package, but there is no
+public one-click installation button yet. Link activation remains a separate
+reviewed step after Official MCP Registry verification.
 
-This avoids sending a first-time user to a package or version that cannot be
-installed.
+Until that step is approved, users can configure the exact `npx` command in
+their MCP client as described in the project README.
 
 ## Intended single-folder experience
 
-After release verification, the Sanjaya documentation can provide a native VS
-Code MCP installation link. VS Code will show the proposed stdio server
+After link activation, the Sanjaya documentation can provide a native VS Code
+MCP installation link. VS Code will show the proposed stdio server
 configuration and ask the user to trust it before startup. The reviewed
 configuration will:
 
