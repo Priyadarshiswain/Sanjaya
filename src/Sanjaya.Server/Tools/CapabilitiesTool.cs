@@ -6,6 +6,7 @@ using Sanjaya.Core.Contracts;
 using Sanjaya.Core.Indexing;
 using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
+using Sanjaya.Providers.TypeScript;
 using Sanjaya.Server.Serialization;
 
 namespace Sanjaya.Server.Tools;
@@ -61,7 +62,19 @@ public sealed class CapabilitiesTool(
             providers.Add(CreateDeferredProvider("csharp-roslyn-syntax", ["csharp"]));
         }
 
-        providers.Add(CreateDeferredProvider("typescript-javascript", ["typescript", "javascript"]));
+        if (providers.All(provider => provider.Id != TypeScriptSyntaxProvider.TypeScriptProviderId))
+        {
+            providers.Add(CreateDeferredProvider(
+                TypeScriptSyntaxProvider.TypeScriptProviderId,
+                ["typescript"]));
+        }
+
+        if (providers.All(provider => provider.Id != TypeScriptSyntaxProvider.JavaScriptProviderId))
+        {
+            providers.Add(CreateDeferredProvider(
+                TypeScriptSyntaxProvider.JavaScriptProviderId,
+                ["javascript"]));
+        }
         providers.Add(repository.IsReady
             ? new ProviderAvailability(
                 "generic",
@@ -310,14 +323,21 @@ public sealed class CapabilitiesTool(
                 .ToArray();
             bool supported = repository.IsReady && capabilities.Any(
                 capability => capability.Status == ContractValues.AvailabilitySupported);
+            string? providerReason = supported
+                ? null
+                : !repository.IsReady
+                    ? ContractValues.ReasonRepositoryRootRequired
+                    : capabilities
+                        .Select(capability => capability.Reason)
+                        .FirstOrDefault(reason => reason is not null
+                            && reason != ContractValues.ReasonNotImplemented)
+                        ?? ContractValues.ReasonNotImplemented;
             return new ProviderAvailability(
                 provider.Id,
                 provider.Languages.Order(StringComparer.Ordinal).ToArray(),
                 supported ? ContractValues.AvailabilitySupported : ContractValues.AvailabilityUnavailable,
                 capabilities,
-                supported ? null : repository.IsReady
-                    ? ContractValues.ReasonNotImplemented
-                    : ContractValues.ReasonRepositoryRootRequired);
+                providerReason);
         }
 
         static ProviderAvailability CreateDeferredProvider(string id, IReadOnlyList<string> languages) =>

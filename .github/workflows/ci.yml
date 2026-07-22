@@ -52,6 +52,9 @@ jobs:
       - name: Verify vendored TypeScript artifact
         run: npm run verify:typescript
 
+      - name: Verify TypeScript worker boundary
+        run: npm run verify:typescript-worker
+
       - name: Verify npm launcher MCP handshake
         run: npm run verify:launcher
 

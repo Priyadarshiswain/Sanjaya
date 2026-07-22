@@ -3,6 +3,7 @@ using ModelContextProtocol.Protocol;
 using Sanjaya.Core.Contracts;
 using Sanjaya.Core.Repositories;
 using Sanjaya.Providers.CSharp;
+using Sanjaya.Providers.TypeScript;
 using Sanjaya.Server.Tools;
 using Xunit;
 
@@ -94,7 +95,33 @@ public sealed class ProtocolFoundationToolTests
             data.Providers.Single(item => item.Id == CSharpSyntaxProvider.ProviderId).Reason);
         Assert.Equal(
             ContractValues.ReasonNotImplemented,
-            data.Providers.Single(item => item.Id == "typescript-javascript").Reason);
+            data.Providers.Single(item => item.Id == TypeScriptSyntaxProvider.TypeScriptProviderId).Reason);
+        Assert.Equal(
+            ContractValues.ReasonNotImplemented,
+            data.Providers.Single(item => item.Id == TypeScriptSyntaxProvider.JavaScriptProviderId).Reason);
+    }
+
+    [Fact]
+    public void CapabilitiesReportsMissingTypeScriptRuntimeWithoutClaimingGenericFallback()
+    {
+        CapabilitiesTool tool = new(
+            RepositoryScope.Create(FindRepositoryRoot()),
+            [new CSharpSyntaxProvider(), new UnavailableTypeScriptProvider("typescript"), new UnavailableTypeScriptProvider("javascript")]);
+
+        CapabilityReportData data = tool.CreateResponse().Data!;
+        foreach (string providerId in new[]
+                 {
+                     TypeScriptSyntaxProvider.TypeScriptProviderId,
+                     TypeScriptSyntaxProvider.JavaScriptProviderId,
+                 })
+        {
+            ProviderAvailability provider = data.Providers.Single(item => item.Id == providerId);
+            Assert.Equal(ContractValues.AvailabilityUnavailable, provider.Status);
+            Assert.Equal(ContractValues.ReasonRuntimeUnavailable, provider.Reason);
+            Assert.All(
+                provider.Capabilities.Where(item => item.Name is "file_outline" or "structural_chunking"),
+                item => Assert.Equal(ContractValues.ReasonRuntimeUnavailable, item.Reason));
+        }
     }
 
     [Fact]

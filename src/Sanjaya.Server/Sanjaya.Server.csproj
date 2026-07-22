@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="..\Sanjaya.Providers.TypeScript\Runtime\typescript-worker.mjs"
+             Link="runtime/typescript/typescript-worker.mjs"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
     <Content Include="..\..\third_party\typescript\PROVENANCE.json"
              Link="third_party/typescript/PROVENANCE.json"
              CopyToOutputDirectory="PreserveNewest"

@@ -28,18 +28,21 @@ repository-local deterministic index, which can be rebuilt explicitly with
 Exact C# identifier usages can be inspected as honestly labelled syntax
 candidates with `find_references`. The resulting stable declaration chunk IDs
 can be used with `get_source` for exact bounded C# source retrieval.
+TypeScript and JavaScript files receive compiler-backed syntax outlines and
+structural chunks through a bounded local worker, and those chunks participate
+in the same deterministic index and lexical search.
 Discovery is scoped to one explicit repository root per process. The npm
 package, MCP Registry entry, and installation commands do not exist yet.
 The official TypeScript 6.0.3 compiler API subset and its complete notices are
-vendored for the planned TypeScript/JavaScript syntax provider, but that
-provider remains unavailable until its runtime-safety and capability contract
-is implemented and tested.
+vendored for the syntax provider. Semantic TypeScript/JavaScript definitions,
+references, type checking, module resolution, and source retrieval are not
+claimed.
 
 ## v0.1 direction
 
 - .NET 8 stdio MCP server
 - npm installation and launcher channel
-- No network calls in the default configuration
+- No network operations in the default implementation
 - Roslyn-backed C# discovery
 - TypeScript compiler AST chunking for TypeScript and JavaScript
 - Generic file and exact-text capabilities for other readable languages
@@ -74,7 +77,7 @@ worktree root, and indexed discovery requires an index created by
 
 ## Development
 
-The development build requires the .NET 8 SDK and Node.js 18 or newer. See the
+The development build requires the .NET 8 SDK and Node.js 22.13 or newer. See the
 [development guide](docs/development.md) for validation commands.
 
 ## License

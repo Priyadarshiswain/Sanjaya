@@ -69,9 +69,25 @@ index.
 
 Owns TypeScript compiler AST integration for TypeScript and JavaScript outlines
 and chunks. The reviewed TypeScript 6.0.3 compiler API subset is vendored with
-offline provenance and notice verification. Runtime invocation and provider
-capabilities remain blocked until their separate safety contract is approved
-and implemented.
+offline provenance and notice verification. Two single-language adapters share
+one serialized persistent Node worker so capability and index labels remain
+precise while compiler startup is paid once.
+
+The npm launcher supplies its own absolute Node executable; the provider never
+discovers an ambient executable or compiler. The worker receives only a strict
+protocol envelope, repository-relative display path, language, and source text
+already bounded by Core. It parses syntax only and never receives a repository
+root, reads project files, imports source, loads configuration or plugins,
+resolves modules, or type-checks.
+
+Node starts directly without a shell, with a minimal environment, fixed
+read-only access to the bundled worker and compiler, no filesystem-write,
+child-process, worker-thread, addon, WASI, or inspector permission, a 256 MiB
+V8 old-space limit, and five-second startup and request deadlines. The Node
+Permission Model is defense in depth, not an operating-system sandbox. Node 22
+and 24 do not enforce network permission; network absence on those supported
+lines comes from the fixed trusted worker exposing no network operation and
+never executing project source. Newer Node lines may add runtime enforcement.
 
 ## Extension model
 
@@ -86,5 +102,7 @@ separately versioned provider SDK are deferred beyond v0.1.
 ## Distribution boundary
 
 The root npm package contains a thin Node launcher and a framework-dependent
-.NET 8 publish output. The launcher forwards stdio and process signals; it does
-not implement product behavior or download code during installation.
+.NET 8 publish output. The launcher forwards stdio and process signals, and
+passes its absolute Node executable to the server for the bundled syntax
+worker. It does not implement discovery behavior or download code during
+installation.

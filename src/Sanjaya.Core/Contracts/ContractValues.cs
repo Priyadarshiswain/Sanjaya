@@ -20,6 +20,7 @@ public static class ContractValues
     public const string ReasonRepositoryRootRequired = "repository_root_required";
     public const string ReasonNotGitRepository = "not_git_repository";
     public const string ReasonStructuralProviderUnavailable = "structural_provider_unavailable";
+    public const string ReasonRuntimeUnavailable = "runtime_unavailable";
     public const string ReasonDefinitionProviderUnavailable = "definition_provider_unavailable";
     public const string ReasonReferenceProviderUnavailable = "reference_provider_unavailable";
     public const string ReasonSourceProviderUnavailable = "source_provider_unavailable";
@@ -43,6 +44,9 @@ public static class ContractValues
     public const string ErrorGitOutputLimit = "git_output_limit";
     public const string ErrorGitCommandFailed = "git_command_failed";
     public const string ErrorStructuralProviderUnavailable = "structural_provider_unavailable";
+    public const string ErrorStructuralProviderTimeout = "structural_provider_timeout";
+    public const string ErrorStructuralProviderOutputLimit = "structural_provider_output_limit";
+    public const string ErrorStructuralProviderInvalidOutput = "structural_provider_invalid_output";
     public const string ErrorDefinitionProviderUnavailable = "definition_provider_unavailable";
     public const string ErrorReferenceProviderUnavailable = "reference_provider_unavailable";
     public const string ErrorReferenceLimit = "reference_limit";

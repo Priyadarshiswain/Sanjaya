@@ -1,6 +1,7 @@
 # Privacy and local data
 
-Sanjaya's default v0.1 contract is local-first and network-free.
+Sanjaya's default v0.1 contract is local-first and contains no network
+operation.
 
 ## Repository access
 
@@ -58,16 +59,33 @@ this explicit.
 ## Vendored TypeScript runtime
 
 The npm payload contains an allowlisted, checksum-verified TypeScript compiler
-API runtime and its complete upstream license and notices. The current runtime
-does not invoke it and reports TypeScript/JavaScript structure as unavailable.
-Future provider activation must separately define bounded local source
-transfer, subprocess isolation, timeouts, output limits, and diagnostics. It
-must not load an ambient compiler or contact a network service.
+API runtime and its complete upstream license and notices. TypeScript and
+JavaScript source up to 1 MiB is sent to one persistent local Node worker over
+bounded newline-delimited JSON. The worker receives a repository-relative
+display path, never the repository root or an absolute project path. It parses
+the supplied text with the pinned compiler and never reads, imports, or executes
+project files.
+
+The worker starts without a shell, inherits only a minimal environment, and has
+read access only to its bundled runtime files. Filesystem writes, child
+processes, worker threads, addons, WASI, and inspector access are not granted.
+Requests and responses have finite byte, item, string, memory, stderr, and time
+limits. Failures return stable sanitized codes without worker diagnostics,
+source text, environment values, or executable paths. These controls are
+defense in depth and are not a hostile-code sandbox.
 
 ## Network behavior
 
 Default tools must not contact GitHub, model providers, analytics services, or
 any other remote endpoint. Sanjaya will not include telemetry in v0.1.
+
+The trusted TypeScript worker contains no network import or operation and
+repository source is parser input, never executed code. This is the enforceable
+design boundary on Node 22 and 24 because those runtime lines do not provide a
+network permission control. Their Permission Model still restricts the other
+capabilities listed above. On newer Node lines, the same launch policy may also
+deny network access at runtime. Sanjaya does not describe the Node Permission
+Model as an operating-system network sandbox.
 
 Future semantic search or generated summaries must be separately opt-in. Before
 activation, Sanjaya must identify the endpoint and state that source-derived

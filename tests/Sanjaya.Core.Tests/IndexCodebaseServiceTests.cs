@@ -266,6 +266,39 @@ public sealed class IndexCodebaseServiceTests
         Assert.False(Directory.Exists(System.IO.Path.Combine(repository.Path, ".sanjaya")));
     }
 
+    [Theory]
+    [InlineData(StructuralProviderFailure.Unavailable, ContractValues.ErrorStructuralProviderUnavailable)]
+    [InlineData(StructuralProviderFailure.TimedOut, ContractValues.ErrorStructuralProviderTimeout)]
+    [InlineData(StructuralProviderFailure.OutputLimit, ContractValues.ErrorStructuralProviderOutputLimit)]
+    [InlineData(StructuralProviderFailure.InvalidOutput, ContractValues.ErrorStructuralProviderInvalidOutput)]
+    public async Task ProviderFailurePreservesThePreviousGoodIndex(
+        StructuralProviderFailure failure,
+        string expectedCode)
+    {
+        using TemporaryDirectory repository = new();
+        repository.WriteFile("source.fake", "first");
+        Assert.Equal(
+            ContractValues.StatusOk,
+            (await CreateService(repository).RebuildAsync(CancellationToken.None)).Status);
+        byte[] original = File.ReadAllBytes(IndexPath(repository));
+        repository.WriteFile("source.fake", "SECRET_CHANGED_SOURCE");
+        IndexCodebaseService failing = new(
+            RepositoryScope.Create(repository.Path),
+            [new FakeStructuralProvider(failure: failure)],
+            "test");
+
+        ToolResponse<IndexCodebaseData> response = await failing.RebuildAsync(CancellationToken.None);
+
+        Assert.Equal(ContractValues.StatusError, response.Status);
+        Assert.Equal(expectedCode, response.Error!.Code);
+        Assert.Equal(original, File.ReadAllBytes(IndexPath(repository)));
+        Assert.Empty(Directory.EnumerateFiles(
+            System.IO.Path.Combine(repository.Path, ".sanjaya"),
+            "*.tmp"));
+        Assert.DoesNotContain("SECRET_CHANGED_SOURCE", response.Error.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain(repository.Path, response.Error.Message, StringComparison.Ordinal);
+    }
+
     private static IndexCodebaseService CreateService(
         TemporaryDirectory repository,
         IndexBuildLimits? limits = null) =>
@@ -280,7 +313,8 @@ public sealed class IndexCodebaseServiceTests
 
     private sealed class FakeStructuralProvider(
         bool twoChunks = false,
-        bool truncateContent = false) : IStructuralChunkProvider
+        bool truncateContent = false,
+        StructuralProviderFailure? failure = null) : IStructuralChunkProvider
     {
         public string Id => "fake-syntax";
 
@@ -300,6 +334,11 @@ public sealed class IndexCodebaseServiceTests
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            if (failure is not null)
+            {
+                throw new StructuralProviderException(failure.Value);
+            }
+
             List<StructuralChunk> chunks =
             [
                 new("type", System.IO.Path.GetFileNameWithoutExtension(relativePath), null, 1, 1, sourceText, truncateContent),

@@ -177,7 +177,7 @@ public sealed class CSharpSyntaxProviderTests
         Assert.Equal(ContractValues.StatusPartial, response.Status);
         Assert.Equal(CSharpSyntaxProvider.ProviderId, response.Provider);
         Assert.True(response.Data!.SyntaxDiagnosticCount > 0);
-        Assert.Contains("csharp_syntax_diagnostics", response.Warnings);
+        Assert.Contains("syntax_diagnostics_recovered", response.Warnings);
         Assert.Contains(response.Data.Items!, item => item.Name == "Broken");
     }
 

@@ -8,6 +8,7 @@ using Sanjaya.Core.Indexing;
 using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
 using Sanjaya.Providers.CSharp;
+using Sanjaya.Providers.TypeScript;
 using Sanjaya.Server;
 using Sanjaya.Server.Configuration;
 using Sanjaya.Server.Diagnostics;
@@ -17,6 +18,7 @@ using Sanjaya.Server.Tools;
 try
 {
     RepositoryScope repository = RepositoryScope.Create(RootConfiguration.Parse(args));
+    using TypeScriptWorker? typeScriptWorker = TypeScriptWorker.TryCreate(AppContext.BaseDirectory);
     HostApplicationBuilder builder = new(new HostApplicationBuilderSettings
     {
         // Avoid ambient configuration and default console providers in the MCP process.
@@ -33,7 +35,32 @@ try
         .AddSingleton<IStructuralChunkProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<IReferenceProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<ISourceRetrievalProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
-        .AddSingleton<ICapabilityProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
+        .AddSingleton<ICapabilityProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>());
+
+    if (typeScriptWorker is not null)
+    {
+        TypeScriptSyntaxProvider typeScript = new("typescript", typeScriptWorker);
+        TypeScriptSyntaxProvider javaScript = new("javascript", typeScriptWorker);
+        builder.Services
+            .AddSingleton<IFileOutlineProvider>(typeScript)
+            .AddSingleton<IStructuralChunkProvider>(typeScript)
+            .AddSingleton<ICapabilityProvider>(typeScript)
+            .AddSingleton<IFileOutlineProvider>(javaScript)
+            .AddSingleton<IStructuralChunkProvider>(javaScript)
+            .AddSingleton<ICapabilityProvider>(javaScript);
+    }
+    else
+    {
+        UnavailableTypeScriptProvider typeScript = new("typescript");
+        UnavailableTypeScriptProvider javaScript = new("javascript");
+        builder.Services
+            .AddSingleton<IFileOutlineProvider>(typeScript)
+            .AddSingleton<ICapabilityProvider>(typeScript)
+            .AddSingleton<IFileOutlineProvider>(javaScript)
+            .AddSingleton<ICapabilityProvider>(javaScript);
+    }
+
+    builder.Services
         .AddSingleton<SearchTextService>()
         .AddSingleton<FileOutlineService>()
         .AddSingleton(services => new IndexCodebaseService(

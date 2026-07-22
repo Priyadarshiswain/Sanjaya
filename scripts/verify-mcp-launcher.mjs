@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createInterface } from "node:readline";
@@ -10,9 +10,23 @@ writeFileSync(
   join(repositoryRoot, "Sample.cs"),
   "namespace Launcher; public class Sample { public void Run() { } public void Call() { Run(); } }\n",
 );
+writeFileSync(
+  join(repositoryRoot, "Widget.ts"),
+  "export interface Widget { id: number }\nexport const createWidget = (): Widget => ({ id: 1 });\n",
+);
+writeFileSync(
+  join(repositoryRoot, "Panel.jsx"),
+  "export class Panel { render() { return <section />; } }\n",
+);
 
 const child = spawn(process.execPath, ["bin/sanjaya-mcp.js", "--root", repositoryRoot], {
   cwd: process.cwd(),
+  env: {
+    ...process.env,
+    NODE_PATH: join(repositoryRoot, "ambient-node-modules-must-not-load"),
+    SANJAYA_NODE_EXECUTABLE: "ambient-runtime-must-not-win",
+    HTTPS_PROXY: "http://127.0.0.1:1",
+  },
   stdio: ["pipe", "pipe", "pipe"],
   windowsHide: true,
 });
@@ -103,6 +117,35 @@ try {
 
   await send({
     jsonrpc: "2.0",
+    id: 11,
+    method: "tools/call",
+    params: { name: "file_outline", arguments: { path: "Widget.ts" } },
+  });
+  const typeScriptOutline = await readMessage();
+  const typeScriptContent = typeScriptOutline?.result?.structuredContent;
+  if (
+    typeScriptContent?.provider !== "typescript-compiler-syntax" ||
+    typeScriptContent?.data?.items?.[0]?.name !== "Widget"
+  ) {
+    throw new Error("Launcher did not expose the TypeScript compiler-backed outline.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 12,
+    method: "tools/call",
+    params: { name: "file_outline", arguments: { path: "Panel.jsx" } },
+  });
+  const javaScriptOutline = await readMessage();
+  if (
+    javaScriptOutline?.result?.structuredContent?.provider !== "javascript-typescript-syntax" ||
+    javaScriptOutline?.result?.structuredContent?.data?.items?.[0]?.name !== "Panel"
+  ) {
+    throw new Error("Launcher did not expose the JSX compiler-backed outline.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
     id: 5,
     method: "tools/call",
     params: { name: "index_codebase", arguments: {} },
@@ -111,10 +154,46 @@ try {
   const indexContent = index?.result?.structuredContent;
   if (
     indexContent?.data?.indexPath !== ".sanjaya/index-v1.json" ||
-    indexContent?.data?.filesIndexed !== 1 ||
+    indexContent?.data?.filesIndexed !== 3 ||
     indexContent?.data?.chunksIndexed < 1
   ) {
-    throw new Error("Launcher did not build the bounded C# structural index.");
+    throw new Error("Launcher did not build the bounded mixed-language structural index.");
+  }
+  const indexedProviderIds = indexContent?.data?.providers?.map((provider) => provider.id).sort();
+  if (JSON.stringify(indexedProviderIds) !== JSON.stringify([
+    "csharp-roslyn-syntax",
+    "javascript-typescript-syntax",
+    "typescript-compiler-syntax",
+  ])) {
+    throw new Error("Launcher index did not report exact mixed-language providers.");
+  }
+  const indexPath = join(repositoryRoot, ".sanjaya", "index-v1.json");
+  const firstIndexBytes = readFileSync(indexPath);
+  const indexDocument = JSON.parse(firstIndexBytes);
+  const expectedChunkLabels = [
+    ["Sample.cs", "csharp-roslyn-syntax", "csharp"],
+    ["Widget.ts", "typescript-compiler-syntax", "typescript"],
+    ["Panel.jsx", "javascript-typescript-syntax", "javascript"],
+  ];
+  for (const [path, provider, language] of expectedChunkLabels) {
+    if (!indexDocument.chunks.some((chunk) =>
+      chunk.path === path && chunk.provider === provider && chunk.language === language)) {
+      throw new Error(`Launcher index omitted the exact ${language} provider label.`);
+    }
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 15,
+    method: "tools/call",
+    params: { name: "index_codebase", arguments: {} },
+  });
+  const rebuiltIndex = await readMessage();
+  if (
+    rebuiltIndex?.result?.structuredContent?.data?.repositoryFingerprint !== indexContent.data.repositoryFingerprint ||
+    !readFileSync(indexPath).equals(firstIndexBytes)
+  ) {
+    throw new Error("Mixed-language index rebuild was not byte-for-byte deterministic.");
   }
 
   if (JSON.stringify(index).includes(repositoryRoot)) {
@@ -135,6 +214,30 @@ try {
 
   if (JSON.stringify(codeSearch).includes(repositoryRoot)) {
     throw new Error("Indexed search response exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 13,
+    method: "tools/call",
+    params: { name: "search_code", arguments: { query: "createWidget" } },
+  });
+  const typeScriptSearch = await readMessage();
+  const typeScriptMatch = typeScriptSearch?.result?.structuredContent?.data?.matches?.[0];
+  if (typeScriptMatch?.path !== "Widget.ts" || typeScriptMatch?.name !== "createWidget") {
+    throw new Error("Launcher did not search the TypeScript structural index.");
+  }
+
+  await send({ jsonrpc: "2.0", id: 14, method: "tools/call", params: { name: "capabilities", arguments: {} } });
+  const capabilities = await readMessage();
+  const providerStatuses = new Map(
+    capabilities?.result?.structuredContent?.data?.providers?.map((provider) => [provider.id, provider.status]),
+  );
+  if (
+    providerStatuses.get("typescript-compiler-syntax") !== "supported" ||
+    providerStatuses.get("javascript-typescript-syntax") !== "supported"
+  ) {
+    throw new Error("Launcher did not report active TypeScript and JavaScript providers.");
   }
 
   await send({

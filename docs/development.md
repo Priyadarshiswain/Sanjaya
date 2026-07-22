@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - .NET SDK 8.0.418 or a compatible later patch
-- Node.js 18 or newer
+- Node.js 22.13 or newer
 - Git for repository-oriented capabilities
 
 ## Validate the development build
@@ -21,6 +21,7 @@ node --check bin/sanjaya-mcp.js
 ```bash
 npm run build
 npm run verify:typescript
+npm run verify:typescript-worker
 npm run verify:launcher
 npm run verify:package
 ```
@@ -66,16 +67,20 @@ discovery returns stable setup guidance instead. Local Git evidence
 additionally requires the configured root to be the Git worktree root and an
 installed Git executable.
 C# files use a bounded Roslyn syntax outline; other readable files retain the
-generic preview. The C# structural-chunk provider powers the explicit
+generic preview. TypeScript and JavaScript files use the pinned TypeScript
+6.0.3 compiler for syntax-only outlines and structural chunks. The C#,
+TypeScript, and JavaScript structural providers power the explicit
 deterministic local index. After `index_codebase`, `search_code` performs
 read-only deterministic lexical search and refuses a stale or incompatible
 index; `find_definition` adds exact case-sensitive C# syntax-declaration
 navigation with explicit ambiguity; `find_references` returns bounded Roslyn
 identifier candidates without semantic-binding claims; and `get_source`
 resolves a stable indexed chunk ID to exact bounded declaration source.
-TypeScript/JavaScript AST structure remains unimplemented.
+Definitions, references, and source retrieval remain C#-only.
 
 `verify:typescript` checks the vendored TypeScript allowlist, provenance hashes,
 fixed-path loading, bounded TypeScript and JavaScript parsing, and published
-file hashes. `verify:package` performs a JSON package dry run and rejects
-missing notices or non-allowlisted TypeScript files.
+file hashes. `verify:typescript-worker` checks the strict worker protocol,
+supported syntax fixtures, inert treatment of project source, and fixed worker
+capability boundary. `verify:package` performs a JSON package dry run and
+rejects missing notices, worker output, or non-allowlisted TypeScript files.
