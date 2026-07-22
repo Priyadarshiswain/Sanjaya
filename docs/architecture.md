@@ -68,8 +68,10 @@ index.
 ### `Sanjaya.Providers.TypeScript`
 
 Owns TypeScript compiler AST integration for TypeScript and JavaScript outlines
-and chunks. Compiler distribution is blocked until the provenance and notice
-gate in `third_party/typescript/README.md` is satisfied.
+and chunks. The reviewed TypeScript 6.0.3 compiler API subset is vendored with
+offline provenance and notice verification. Runtime invocation and provider
+capabilities remain blocked until their separate safety contract is approved
+and implemented.
 
 ## Extension model
 

@@ -49,6 +49,9 @@ jobs:
       - name: Build framework-dependent npm payload
         run: npm run build -- --no-restore
 
+      - name: Verify vendored TypeScript artifact
+        run: npm run verify:typescript
+
       - name: Verify npm launcher MCP handshake
         run: npm run verify:launcher
 

@@ -30,6 +30,10 @@ candidates with `find_references`. The resulting stable declaration chunk IDs
 can be used with `get_source` for exact bounded C# source retrieval.
 Discovery is scoped to one explicit repository root per process. The npm
 package, MCP Registry entry, and installation commands do not exist yet.
+The official TypeScript 6.0.3 compiler API subset and its complete notices are
+vendored for the planned TypeScript/JavaScript syntax provider, but that
+provider remains unavailable until its runtime-safety and capability contract
+is implemented and tested.
 
 ## v0.1 direction
 
