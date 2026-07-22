@@ -50,7 +50,8 @@ claimed.
 - Explicit capability and degradation reporting
 
 See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
-and [privacy](docs/privacy.md) for the proposed public contract.
+[privacy](docs/privacy.md), and [packaging](docs/packaging.md) for the proposed
+public contract.
 
 ## Approved v0.1 MCP tools
 

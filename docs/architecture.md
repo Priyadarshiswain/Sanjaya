@@ -105,4 +105,7 @@ The root npm package contains a thin Node launcher and a framework-dependent
 .NET 8 publish output. The launcher forwards stdio and process signals, and
 passes its absolute Node executable to the server for the bundled syntax
 worker. It does not implement discovery behavior or download code during
-installation.
+installation. The publish output is a portable DLL invocation rather than a
+platform-specific app host; debug symbols and unused satellite resources are
+excluded. The reviewed [packaging contract](packaging.md) defines the exact
+payload and verification boundary.

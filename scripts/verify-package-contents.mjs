@@ -1,60 +1,82 @@
-import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import {
+  approvedPackageFiles,
+  assertEqual,
+  forbiddenLifecycleScripts,
+  maximumCompressedBytes,
+  maximumPackageEntries,
+  maximumUnpackedBytes,
+  verifyPackedFiles,
+} from "./package-contract.mjs";
 
 const npmCli = process.env.npm_execpath;
 if (!npmCli) {
   throw new Error("npm_execpath is unavailable; run this check through npm.");
 }
 
+const repositoryRoot = process.cwd();
 const rootPackage = JSON.parse(readFileSync("package.json", "utf8"));
 if (rootPackage.private !== true || rootPackage.version !== "0.0.0-development") {
   throw new Error("Package release safety locks changed.");
 }
-if (rootPackage.dependencies || rootPackage.devDependencies || rootPackage.optionalDependencies) {
-  throw new Error("The Sanjaya npm launcher package must remain dependency-free.");
+for (const dependencyField of [
+  "dependencies",
+  "devDependencies",
+  "optionalDependencies",
+  "peerDependencies",
+  "bundleDependencies",
+  "bundledDependencies",
+]) {
+  if (rootPackage[dependencyField]) {
+    throw new Error(`The Sanjaya npm launcher package must not declare ${dependencyField}.`);
+  }
+}
+for (const script of forbiddenLifecycleScripts) {
+  if (rootPackage.scripts?.[script]) {
+    throw new Error(`The package must not define the ${script} lifecycle script.`);
+  }
 }
 
 const pack = spawnSync(
   process.execPath,
-  [npmCli, "pack", "--dry-run", "--json", "--cache", ".npm-cache"],
-  { cwd: process.cwd(), encoding: "utf8" },
+  [npmCli, "pack", "--dry-run", "--json", "--ignore-scripts", "--cache", ".npm-cache"],
+  { cwd: repositoryRoot, encoding: "utf8", windowsHide: true },
 );
+if (pack.error) {
+  throw pack.error;
+}
 if (pack.status !== 0) {
   throw new Error(`npm package dry run failed: ${pack.stderr.trim()}`);
 }
 
-const report = JSON.parse(pack.stdout)[0];
-const files = new Set(report.files.map((file) => file.path));
-const required = [
-  "LICENSE",
-  "NOTICE",
-  "THIRD-PARTY-NOTICES.txt",
-  "dist/dotnet/runtime/typescript/typescript-worker.mjs",
-  "dist/dotnet/third_party/typescript/PROVENANCE.json",
-  "dist/dotnet/third_party/typescript/package/LICENSE.txt",
-  "dist/dotnet/third_party/typescript/package/ThirdPartyNoticeText.txt",
-  "dist/dotnet/third_party/typescript/package/lib/typescript.js",
-  "dist/dotnet/third_party/typescript/package/package.json",
-];
-for (const path of required) {
-  if (!files.has(path)) {
-    throw new Error(`Required package file is missing: ${path}`);
-  }
+const reports = JSON.parse(pack.stdout);
+if (!Array.isArray(reports) || reports.length !== 1) {
+  throw new Error("npm pack returned an unexpected report count.");
+}
+const report = reports[0];
+const actualFiles = report.files.map((file) => file.path).sort();
+assertEqual(actualFiles, approvedPackageFiles, "npm package contents drifted from the exact allowlist.");
+if (report.entryCount !== approvedPackageFiles.length || report.entryCount > maximumPackageEntries) {
+  throw new Error(`npm package entry count exceeded the ${maximumPackageEntries}-entry review ceiling.`);
+}
+if (report.size > maximumCompressedBytes) {
+  throw new Error(`npm package exceeded the ${maximumCompressedBytes}-byte compressed review ceiling.`);
+}
+if (report.unpackedSize > maximumUnpackedBytes) {
+  throw new Error(`npm package exceeded the ${maximumUnpackedBytes}-byte unpacked review ceiling.`);
 }
 
-const forbidden = [...files].filter(
-  (path) =>
-    (path.includes("/runtime/typescript/") && !path.endsWith("/runtime/typescript/typescript-worker.mjs")) ||
-    path.includes("/third_party/typescript/package/bin/") ||
-    path.endsWith(".d.ts") ||
-    path.endsWith(".map") ||
-    path.endsWith(".node") ||
-    (path.includes("/third_party/typescript/package/lib/") && !path.endsWith("/lib/typescript.js")),
-);
-if (forbidden.length > 0) {
-  throw new Error(`Non-allowlisted TypeScript package files were included: ${forbidden.join(", ")}`);
+const manifest = verifyPackedFiles(repositoryRoot, actualFiles);
+const manifestBytes = manifest.reduce((total, file) => total + file.bytes, 0);
+if (manifestBytes !== report.unpackedSize) {
+  throw new Error("npm report unpacked size disagrees with the verified package manifest.");
 }
 
 console.log(
-  `npm package dry run verified ${report.entryCount} files; ${Math.round(report.size / 1024 / 1024 * 10) / 10} MB compressed.`,
+  `Verified exact ${report.entryCount}-file npm payload; ${formatMiB(report.size)} MiB compressed and ${formatMiB(report.unpackedSize)} MiB unpacked.`,
 );
+
+function formatMiB(bytes) {
+  return (bytes / 1024 / 1024).toFixed(1);
+}

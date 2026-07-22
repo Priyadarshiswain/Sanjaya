@@ -1,10 +1,17 @@
 import { spawn } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { createInterface } from "node:readline";
 
 const repositoryRoot = mkdtempSync(join(tmpdir(), "sanjaya-launcher-"));
+const externalLauncher = process.env.SANJAYA_VERIFY_LAUNCHER_PATH;
+const launcherPath = externalLauncher
+  ? resolve(externalLauncher)
+  : resolve("bin/sanjaya-mcp.js");
+if (!existsSync(launcherPath)) {
+  throw new Error("Sanjaya launcher verification target is missing.");
+}
 writeFileSync(join(repositoryRoot, "marker.txt"), "LAUNCHER_UNIQUE_MARKER\n");
 writeFileSync(
   join(repositoryRoot, "Sample.cs"),
@@ -19,17 +26,22 @@ writeFileSync(
   "export class Panel { render() { return <section />; } }\n",
 );
 
-const child = spawn(process.execPath, ["bin/sanjaya-mcp.js", "--root", repositoryRoot], {
-  cwd: process.cwd(),
-  env: {
-    ...process.env,
-    NODE_PATH: join(repositoryRoot, "ambient-node-modules-must-not-load"),
-    SANJAYA_NODE_EXECUTABLE: "ambient-runtime-must-not-win",
-    HTTPS_PROXY: "http://127.0.0.1:1",
+const child = spawn(
+  externalLauncher ? launcherPath : process.execPath,
+  externalLauncher ? ["--root", repositoryRoot] : [launcherPath, "--root", repositoryRoot],
+  {
+    cwd: process.cwd(),
+    env: {
+      ...process.env,
+      NODE_PATH: join(repositoryRoot, "ambient-node-modules-must-not-load"),
+      SANJAYA_NODE_EXECUTABLE: "ambient-runtime-must-not-win",
+      HTTPS_PROXY: "http://127.0.0.1:1",
+    },
+    shell: Boolean(externalLauncher && process.platform === "win32"),
+    stdio: ["pipe", "pipe", "pipe"],
+    windowsHide: true,
   },
-  stdio: ["pipe", "pipe", "pipe"],
-  windowsHide: true,
-});
+);
 const exitPromise = new Promise((resolve) => child.once("exit", resolve));
 const output = createInterface({ input: child.stdout });
 const lines = output[Symbol.asyncIterator]();
