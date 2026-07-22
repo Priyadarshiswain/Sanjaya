@@ -15,6 +15,8 @@ failures.
   root does not contain top-level Git worktree metadata.
 - `definition_provider_unavailable` means this runtime has no active C#
   structural provider that honestly advertises syntax definitions.
+- `reference_provider_unavailable` means this runtime has no active C# provider
+  that honestly advertises syntax-reference candidates.
 - `index_missing` means indexed discovery is implemented but `index_codebase` has
   not created its repository-local index.
 - `index_invalid` means the expected index path is not a bounded regular local
@@ -23,12 +25,12 @@ failures.
 ## Current development runtime
 
 `capabilities`, `health_check`, `file_outline`, `search_text`, `recent_changes`,
-`index_codebase`, `search_code`, and `find_definition` are registered as MCP
+`index_codebase`, `search_code`, `find_definition`, and `find_references` are registered as MCP
 tools. Generic discovery and the C#
 syntax provider report `supported` only when the process has a valid root. C#
-currently supports file outlines, structural indexing, and exact syntax
-definition lookup; references, source retrieval, and call graph remain
-unavailable. The TypeScript/JavaScript provider and both deferred tools remain
+currently supports file outlines, structural indexing, exact syntax definition
+lookup, and syntax-reference candidates; source retrieval and call graph remain
+unavailable. The TypeScript/JavaScript provider and the deferred source tool remain
 unavailable with `not_implemented`. The server uses stdio and performs no
 network access by default.
 
@@ -146,6 +148,20 @@ never rebuilds the index, and does not load projects, resolve invocations or
 overloads semantically, inspect referenced assemblies, or claim compiler-level
 symbol resolution.
 
+`find_references` verifies the same current index and then rescans bounded
+eligible C# source with Roslyn. It matches exact case-sensitive identifier and
+generic-name tokens while excluding declaration names, comments, and strings.
+Every result is labelled `syntax_candidate` and includes an exact token range,
+fixed syntax kind, enclosing declaration metadata, and a source-line snippet
+of at most 320 characters. An optional repository-relative C# path limits the
+search scope.
+
+Responses return 50 candidates by default and at most 200 while reporting the
+exact total. A file may contribute at most 10,000 matches and the repository at
+most 50,000; exceeding either bound fails with `reference_limit`. Syntax
+diagnostics produce explicit partial evidence. The tool does not semantically
+distinguish same-name locals, overloads, aliases, inherited members, or types.
+
 ## Local Git evidence
 
 `recent_changes` returns the current branch or detached-HEAD state, full HEAD
@@ -183,7 +199,7 @@ and command/parse failure.
 | Exact text search | Supported | Supported | Supported |
 | Structural indexing | Supported | Planned | Unsupported |
 | Definitions | Exact syntax declarations | Unsupported | Unsupported |
-| References | Syntax-based | Unsupported | Unsupported |
+| References | Syntax candidates | Unsupported | Unsupported |
 | Symbol source retrieval | Supported | Unsupported | Unsupported |
 | Call graph | Experimental | Unsupported | Unsupported |
 | Vector search | Experimental | Experimental | Unsupported |

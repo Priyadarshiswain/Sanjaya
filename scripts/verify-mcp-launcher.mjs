@@ -8,7 +8,7 @@ const repositoryRoot = mkdtempSync(join(tmpdir(), "sanjaya-launcher-"));
 writeFileSync(join(repositoryRoot, "marker.txt"), "LAUNCHER_UNIQUE_MARKER\n");
 writeFileSync(
   join(repositoryRoot, "Sample.cs"),
-  "namespace Launcher; public class Sample { public void Run() { } }\n",
+  "namespace Launcher; public class Sample { public void Run() { } public void Call() { Run(); } }\n",
 );
 
 const child = spawn(process.execPath, ["bin/sanjaya-mcp.js", "--root", repositoryRoot], {
@@ -54,6 +54,7 @@ try {
     "capabilities",
     "file_outline",
     "find_definition",
+    "find_references",
     "health_check",
     "index_codebase",
     "recent_changes",
@@ -162,6 +163,26 @@ try {
   await send({
     jsonrpc: "2.0",
     id: 8,
+    method: "tools/call",
+    params: { name: "find_references", arguments: { name: "Run" } },
+  });
+  const references = await readMessage();
+  const referenceContent = references?.result?.structuredContent;
+  if (
+    referenceContent?.data?.classification !== "syntax_candidate" ||
+    referenceContent?.data?.totalMatches !== 1 ||
+    referenceContent?.data?.matches?.[0]?.path !== "Sample.cs"
+  ) {
+    throw new Error("Launcher did not return the C# syntax reference candidate.");
+  }
+
+  if (JSON.stringify(references).includes(repositoryRoot)) {
+    throw new Error("Reference lookup response exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 9,
     method: "tools/call",
     params: { name: "recent_changes", arguments: {} },
   });

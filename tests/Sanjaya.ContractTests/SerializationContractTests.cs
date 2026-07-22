@@ -55,9 +55,28 @@ public sealed class SerializationContractTests
         Assert.Equal("not_git_repository", ContractValues.ReasonNotGitRepository);
         Assert.Equal("structural_provider_unavailable", ContractValues.ReasonStructuralProviderUnavailable);
         Assert.Equal("definition_provider_unavailable", ContractValues.ReasonDefinitionProviderUnavailable);
+        Assert.Equal("reference_provider_unavailable", ContractValues.ReasonReferenceProviderUnavailable);
         Assert.Equal("not_found", ContractValues.ResolutionNotFound);
         Assert.Equal("unique", ContractValues.ResolutionUnique);
         Assert.Equal("ambiguous", ContractValues.ResolutionAmbiguous);
+    }
+
+    [Fact]
+    public void ReferenceContractLabelsSyntaxCandidatesAndExactTokenRanges()
+    {
+        FindReferencesData data = new(
+            "Run", null, "sha256:" + new string('a', 64), "syntax_candidate",
+            [new ReferenceMatch(
+                "syntax_candidate", "src/Sample.cs", "identifier_name", "method", "Call", "Demo.Sample",
+                8, 9, 8, 12, "Run();")],
+            1, false, 1, 0);
+
+        using JsonDocument document = JsonDocument.Parse(JsonSerializer.Serialize(data));
+        JsonElement match = document.RootElement.GetProperty("matches")[0];
+        Assert.Equal("syntax_candidate", match.GetProperty("classification").GetString());
+        Assert.Equal("identifier_name", match.GetProperty("syntaxKind").GetString());
+        Assert.Equal(9, match.GetProperty("startColumn").GetInt32());
+        Assert.Equal("Demo.Sample", match.GetProperty("enclosingContainer").GetString());
     }
 
     [Fact]

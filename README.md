@@ -25,6 +25,8 @@ repository-local deterministic index, which can be rebuilt explicitly with
 `index_codebase` and searched read-only with deterministic lexical ranking via
 `search_code`. Exact C# syntax declarations can be located with
 `find_definition`, including explicit ambiguity reporting.
+Exact C# identifier usages can be inspected as honestly labelled syntax
+candidates with `find_references`.
 Discovery is scoped to one explicit repository root per process. The npm
 package, MCP Registry entry, and installation commands do not exist yet.
 
@@ -57,7 +59,8 @@ and [privacy](docs/privacy.md) for the proposed public contract.
 
 These names form the approved v0.1 contract. The current runtime registers
 `capabilities`, `health_check`, `file_outline`, `search_text`, `recent_changes`,
-`index_codebase`, `search_code`, and `find_definition`. Discovery tools report
+`index_codebase`, `search_code`, `find_definition`, and `find_references`.
+Discovery tools report
 `repository_root_required` until the process starts with a valid
 `--root <path>`; local Git evidence also requires that root to be a Git
 worktree root, and indexed discovery requires an index created by

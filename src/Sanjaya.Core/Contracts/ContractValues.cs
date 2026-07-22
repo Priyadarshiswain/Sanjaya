@@ -21,6 +21,7 @@ public static class ContractValues
     public const string ReasonNotGitRepository = "not_git_repository";
     public const string ReasonStructuralProviderUnavailable = "structural_provider_unavailable";
     public const string ReasonDefinitionProviderUnavailable = "definition_provider_unavailable";
+    public const string ReasonReferenceProviderUnavailable = "reference_provider_unavailable";
     public const string ReasonIndexMissing = "index_missing";
     public const string ReasonIndexInvalid = "index_invalid";
 
@@ -42,6 +43,8 @@ public static class ContractValues
     public const string ErrorGitCommandFailed = "git_command_failed";
     public const string ErrorStructuralProviderUnavailable = "structural_provider_unavailable";
     public const string ErrorDefinitionProviderUnavailable = "definition_provider_unavailable";
+    public const string ErrorReferenceProviderUnavailable = "reference_provider_unavailable";
+    public const string ErrorReferenceLimit = "reference_limit";
     public const string ErrorIndexPathConflict = "index_path_conflict";
     public const string ErrorIndexBusy = "index_busy";
     public const string ErrorIndexTraversalLimit = "index_traversal_limit";

@@ -11,6 +11,16 @@ internal sealed class FreshIndexReader(
 {
     public async Task<IndexDocument> ReadAsync(CancellationToken cancellationToken)
     {
+        FreshIndexState state = await ReadWithSourcesAsync(
+            includeText: false,
+            cancellationToken).ConfigureAwait(false);
+        return state.Document;
+    }
+
+    public async Task<FreshIndexState> ReadWithSourcesAsync(
+        bool includeText,
+        CancellationToken cancellationToken)
+    {
         IndexDocument document = await new IndexDocumentReader(repository, providers)
             .ReadCompatibleAsync(cancellationToken)
             .ConfigureAwait(false);
@@ -18,7 +28,7 @@ internal sealed class FreshIndexReader(
         try
         {
             IndexSourceSnapshot current = await new IndexSourceScanner(repository, providers, limits)
-                .CaptureAsync(includeText: false, cancellationToken)
+                .CaptureAsync(includeText, cancellationToken)
                 .ConfigureAwait(false);
             IndexProvider[] activeProviders = providers.Select(provider => new IndexProvider(
                 provider.Id,
@@ -32,7 +42,7 @@ internal sealed class FreshIndexReader(
                     "The structural index does not match the current eligible source files.");
             }
 
-            return document;
+            return new FreshIndexState(document, current);
         }
         catch (OperationCanceledException)
         {
@@ -50,3 +60,5 @@ internal sealed class FreshIndexReader(
         }
     }
 }
+
+internal sealed record FreshIndexState(IndexDocument Document, IndexSourceSnapshot Sources);
