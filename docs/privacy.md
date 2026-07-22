@@ -96,6 +96,18 @@ Future semantic search or generated summaries must be separately opt-in. Before
 activation, Sanjaya must identify the endpoint and state that source-derived
 content may be transmitted to it.
 
+## Editor installation
+
+The future VS Code link configures an exact npm package version and an explicit
+`${workspaceFolder}` root. VS Code retains its normal MCP trust confirmation;
+Sanjaya does not silently modify workspace files, inject secrets, or add
+environment overrides. The portable cross-platform configuration does not
+claim an operating-system sandbox; repository containment remains an
+application boundary. `npx` may contact the npm registry to acquire the
+package, which is installation traffic rather than Sanjaya runtime telemetry
+or source transmission. The active link remains absent until the exact release
+exists.
+
 ## Diagnostics
 
 Errors and logs must avoid credentials, environment-variable values, local
