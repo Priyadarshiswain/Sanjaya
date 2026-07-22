@@ -63,7 +63,14 @@ public sealed class StdioProtocolTests
         Assert.False(capabilities.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("repositoryReady").GetBoolean());
 
         JsonElement health = await server.CallAsync(4, PublicToolNames.HealthCheck, "{}", timeout.Token);
-        AssertStructured(health, 4, PublicToolNames.HealthCheck, ContractValues.StatusOk, isError: false);
+        AssertStructured(health, 4, PublicToolNames.HealthCheck, ContractValues.StatusPartial, isError: false);
+        JsonElement healthData = health.GetProperty("result").GetProperty("structuredContent").GetProperty("data");
+        Assert.False(healthData.GetProperty("ready").GetBoolean());
+        JsonElement repositoryCheck = healthData.GetProperty("checks").EnumerateArray()
+            .Single(check => check.GetProperty("name").GetString() == "repository");
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
+            repositoryCheck.GetProperty("code").GetString());
 
         JsonElement search = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"marker\"}", timeout.Token);
         AssertStructured(search, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);
@@ -227,7 +234,11 @@ public sealed class StdioProtocolTests
 
         await server.InitializeAsync(timeout.Token);
         JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
-        Assert.False(capabilities.GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("repositoryReady").GetBoolean());
+        JsonElement capabilityData = capabilities.GetProperty("result").GetProperty("structuredContent").GetProperty("data");
+        Assert.False(capabilityData.GetProperty("repositoryReady").GetBoolean());
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootNotFound,
+            capabilityData.GetProperty("repositoryReason").GetString());
         Assert.DoesNotContain(invalid, capabilities.GetRawText(), StringComparison.Ordinal);
         await server.CloseAsync(timeout.Token);
     }
@@ -255,7 +266,9 @@ public sealed class StdioProtocolTests
         await first.CloseAsync(timeout.Token);
         Assert.Equal(0, first.ExitCode);
         JsonElement stillRunning = await second.CallAsync(5, PublicToolNames.HealthCheck, "{}", timeout.Token);
-        AssertStructured(stillRunning, 5, PublicToolNames.HealthCheck, ContractValues.StatusOk, isError: false);
+        // This test starts the assembly directly rather than through the npm launcher, so the
+        // TypeScript worker deliberately has no trusted Node executable and health is partial.
+        AssertStructured(stillRunning, 5, PublicToolNames.HealthCheck, ContractValues.StatusPartial, isError: false);
         await second.CloseAsync(timeout.Token);
 
         string allResponses = string.Concat(

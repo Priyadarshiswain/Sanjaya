@@ -11,6 +11,7 @@ export const approvedPackageFiles = Object.freeze([
   "NOTICE",
   "README.md",
   "THIRD-PARTY-NOTICES.txt",
+  "bin/sanjaya-diagnostics.js",
   "bin/sanjaya-mcp.js",
   "dist/dotnet/Microsoft.CodeAnalysis.CSharp.dll",
   "dist/dotnet/Microsoft.CodeAnalysis.dll",

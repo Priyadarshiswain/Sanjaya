@@ -1,3 +1,5 @@
+using Sanjaya.Core.Contracts;
+
 namespace Sanjaya.Core.Repositories;
 
 /// <summary>
@@ -9,10 +11,16 @@ public sealed class RepositoryScope
         ? StringComparison.OrdinalIgnoreCase
         : StringComparison.Ordinal;
 
-    private RepositoryScope(string? canonicalRoot, string? configurationError)
+    private RepositoryScope(
+        string? canonicalRoot,
+        string? configurationReason,
+        string? configurationError,
+        string? configurationRemediation)
     {
         CanonicalRoot = canonicalRoot;
+        ConfigurationReason = configurationReason;
         ConfigurationError = configurationError;
+        ConfigurationRemediation = configurationRemediation;
     }
 
     public bool IsReady => CanonicalRoot is not null;
@@ -45,13 +53,29 @@ public sealed class RepositoryScope
 
     public string? ConfigurationError { get; }
 
+    public string? ConfigurationReason { get; }
+
+    public string? ConfigurationRemediation { get; }
+
     internal string? CanonicalRoot { get; }
 
-    public static RepositoryScope Create(string? configuredRoot)
+    public static RepositoryScope Create(
+        string? configuredRoot,
+        RepositoryConfigurationFailure parsingFailure = RepositoryConfigurationFailure.None)
     {
-        if (string.IsNullOrWhiteSpace(configuredRoot) || !Path.IsPathFullyQualified(configuredRoot))
+        if (parsingFailure != RepositoryConfigurationFailure.None)
         {
-            return new(null, "A fully qualified repository root was not configured.");
+            return Failure(parsingFailure);
+        }
+
+        if (string.IsNullOrWhiteSpace(configuredRoot))
+        {
+            return Failure(RepositoryConfigurationFailure.Missing);
+        }
+
+        if (!Path.IsPathFullyQualified(configuredRoot))
+        {
+            return Failure(RepositoryConfigurationFailure.Relative);
         }
 
         try
@@ -60,20 +84,75 @@ public sealed class RepositoryScope
             DirectoryInfo directory = new(absolute);
             if (!directory.Exists)
             {
-                return new(null, "The configured repository root is not an existing directory.");
+                return File.Exists(absolute)
+                    ? Failure(RepositoryConfigurationFailure.NotDirectory)
+                    : Failure(RepositoryConfigurationFailure.NotFound);
             }
 
             if ((directory.Attributes & FileAttributes.Directory) == 0)
             {
-                return new(null, "The configured repository root is not an existing directory.");
+                return Failure(RepositoryConfigurationFailure.NotDirectory);
             }
 
-            return new(Path.TrimEndingDirectorySeparator(absolute), null);
+            return new(Path.TrimEndingDirectorySeparator(absolute), null, null, null);
         }
-        catch (Exception exception) when (exception is ArgumentException or IOException or UnauthorizedAccessException or NotSupportedException)
+        catch (UnauthorizedAccessException)
         {
-            return new(null, "The configured repository root is invalid or inaccessible.");
+            return Failure(RepositoryConfigurationFailure.Inaccessible);
         }
+        catch (IOException)
+        {
+            return Failure(RepositoryConfigurationFailure.Inaccessible);
+        }
+        catch (Exception exception) when (exception is ArgumentException or NotSupportedException)
+        {
+            return Failure(RepositoryConfigurationFailure.Invalid);
+        }
+    }
+
+    private static RepositoryScope Failure(RepositoryConfigurationFailure failure)
+    {
+        (string reason, string message, string remediation) = failure switch
+        {
+            RepositoryConfigurationFailure.Missing => (
+                ContractValues.ReasonRepositoryRootRequired,
+                "No repository root was configured.",
+                "Restart Sanjaya with --root <absolute-path>."),
+            RepositoryConfigurationFailure.MissingValue => (
+                ContractValues.ReasonRepositoryRootValueMissing,
+                "The --root argument is missing its value.",
+                "Use --root <absolute-path>."),
+            RepositoryConfigurationFailure.Duplicate => (
+                ContractValues.ReasonRepositoryRootDuplicate,
+                "The --root argument was supplied more than once.",
+                "Configure exactly one --root <absolute-path> argument."),
+            RepositoryConfigurationFailure.UnknownArgument => (
+                ContractValues.ReasonRepositoryRootUnknownArgument,
+                "An unsupported Sanjaya argument was supplied.",
+                "Use only --root <absolute-path>, or run sanjaya-mcp --help."),
+            RepositoryConfigurationFailure.Relative => (
+                ContractValues.ReasonRepositoryRootRelative,
+                "The configured repository root is not an absolute path.",
+                "Restart Sanjaya with --root <absolute-path>."),
+            RepositoryConfigurationFailure.NotFound => (
+                ContractValues.ReasonRepositoryRootNotFound,
+                "The configured repository root does not exist.",
+                "Choose an existing repository directory and restart Sanjaya."),
+            RepositoryConfigurationFailure.NotDirectory => (
+                ContractValues.ReasonRepositoryRootNotDirectory,
+                "The configured repository root is not a directory.",
+                "Choose a repository directory and restart Sanjaya."),
+            RepositoryConfigurationFailure.Inaccessible => (
+                ContractValues.ReasonRepositoryRootInaccessible,
+                "The configured repository root is inaccessible.",
+                "Grant read access to the repository directory and restart Sanjaya."),
+            _ => (
+                ContractValues.ReasonRepositoryRootInvalid,
+                "The configured repository root is invalid.",
+                "Choose a valid absolute repository directory and restart Sanjaya."),
+        };
+
+        return new(null, reason, message, remediation);
     }
 
     public RepositoryPathResult ResolveFile(string? repositoryRelativePath)
@@ -200,6 +279,20 @@ public sealed class RepositoryScope
 
         return Path.GetFullPath(current);
     }
+}
+
+public enum RepositoryConfigurationFailure
+{
+    None,
+    Missing,
+    MissingValue,
+    Duplicate,
+    UnknownArgument,
+    Relative,
+    NotFound,
+    NotDirectory,
+    Inaccessible,
+    Invalid,
 }
 
 public enum RepositoryPathError

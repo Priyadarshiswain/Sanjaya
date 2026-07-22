@@ -102,10 +102,18 @@ separately versioned provider SDK are deferred beyond v0.1.
 ## Distribution boundary
 
 The root npm package contains a thin Node launcher and a framework-dependent
-.NET 8 publish output. The launcher forwards stdio and process signals, and
-passes its absolute Node executable to the server for the bundled syntax
-worker. It does not implement discovery behavior or download code during
-installation. The publish output is a portable DLL invocation rather than a
+.NET 8 publish output. Before normal startup, the launcher verifies its Node
+version, packaged server assembly, and installed .NET 8 runtime. It then
+forwards stdio and process signals and passes its absolute Node executable to
+the server for the bundled syntax worker. It does not implement discovery
+behavior or download code during installation. The publish output is a portable DLL invocation rather than a
 platform-specific app host; debug symbols and unused satellite resources are
 excluded. The reviewed [packaging contract](packaging.md) defines the exact
 payload and verification boundary.
+
+The same launcher owns the non-MCP `--help`, `--version`, and `--diagnose`
+boundary. Diagnostic mode completes before the server starts and writes only a
+deterministic human-readable readiness report. It checks local runtimes,
+packaged files, the configured root, and optional Git metadata without reading
+project source or writing repository state. Normal startup keeps stdout
+exclusively for MCP JSON-RPC.

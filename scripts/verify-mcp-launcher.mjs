@@ -94,6 +94,39 @@ try {
 
   await send({
     jsonrpc: "2.0",
+    id: 20,
+    method: "tools/call",
+    params: { name: "health_check", arguments: {} },
+  });
+  const health = await readMessage();
+  const healthContent = health?.result?.structuredContent;
+  if (
+    healthContent?.status !== "ok" ||
+    healthContent?.data?.ready !== true ||
+    healthContent?.data?.checks?.find((check) => check.name === "typescript_worker")?.status !== "ok" ||
+    healthContent?.data?.checks?.find((check) => check.name === "git")?.required !== false
+  ) {
+    throw new Error("Launcher health did not report required runtime readiness accurately.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 21,
+    method: "tools/call",
+    params: { name: "capabilities", arguments: {} },
+  });
+  const runtimeCapabilities = await readMessage();
+  const capabilityData = runtimeCapabilities?.result?.structuredContent?.data;
+  if (
+    capabilityData?.repositoryReady !== true ||
+    capabilityData?.providers?.find((provider) => provider.id === "typescript-compiler-syntax")?.status !== "supported" ||
+    capabilityData?.providers?.find((provider) => provider.id === "javascript-typescript-syntax")?.status !== "supported"
+  ) {
+    throw new Error("Launcher capabilities did not report the active runtime providers.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
     id: 3,
     method: "tools/call",
     params: { name: "search_text", arguments: { query: "LAUNCHER_UNIQUE_MARKER" } },

@@ -38,6 +38,20 @@ try {
     ".bin",
     process.platform === "win32" ? "sanjaya-mcp.cmd" : "sanjaya-mcp",
   );
+  verifyInstalledDiagnostic(
+    launcherPath,
+    ["--version"],
+    0,
+    `sanjaya-mcp ${rootPackage.version}`,
+    repositoryRoot,
+  );
+  verifyInstalledDiagnostic(
+    launcherPath,
+    ["--diagnose", "--root", repositoryRoot],
+    0,
+    "Result: ready",
+    repositoryRoot,
+  );
   const verification = spawnSync(process.execPath, ["scripts/verify-mcp-launcher.mjs"], {
     cwd: repositoryRoot,
     env: {
@@ -54,9 +68,30 @@ try {
     throw new Error(`Installed package MCP verification failed with exit code ${verification.status}.`);
   }
 
-  console.log("Installed the local npm tarball offline and verified its packaged MCP launcher.");
+  console.log("Installed the local npm tarball offline and verified its diagnostics and MCP launcher.");
 } finally {
   rmSync(temporaryRoot, { recursive: true, force: true });
+}
+
+function verifyInstalledDiagnostic(launcherPath, argumentsToPass, expectedStatus, expectedOutput, privatePath) {
+  const result = spawnSync(launcherPath, argumentsToPass, {
+    cwd: consumerRoot,
+    encoding: "utf8",
+    shell: process.platform === "win32",
+    windowsHide: true,
+  });
+  if (result.error) {
+    throw result.error;
+  }
+  if (result.status !== expectedStatus || !result.stdout.includes(expectedOutput)) {
+    throw new Error("Installed package diagnostic command did not satisfy its public contract.");
+  }
+  if (result.stderr !== "") {
+    throw new Error("Installed package diagnostic command wrote unexpected stderr.");
+  }
+  if (result.stdout.includes(privatePath)) {
+    throw new Error("Installed package diagnostics exposed the absolute repository root.");
+  }
 }
 
 function packTarball() {

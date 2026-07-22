@@ -191,12 +191,12 @@ public sealed class FileOutlineService(
         return text.EndsWith('\n') ? count - 1 : count;
     }
 
-    private static ToolResponse<FileOutlineData> PathError(RepositoryPathError error) => error switch
+    private ToolResponse<FileOutlineData> PathError(RepositoryPathError error) => error switch
     {
         RepositoryPathError.RootRequired => Error(
-            ContractValues.ErrorRepositoryRootRequired,
-            "Repository discovery requires an explicit valid --root path.",
-            "Restart Sanjaya with --root <path>."),
+            repository.ConfigurationReason!,
+            repository.ConfigurationError!,
+            repository.ConfigurationRemediation),
         RepositoryPathError.OutsideRepository => Error(
             ContractValues.ErrorPathOutsideRepository,
             "Path resolves outside the configured repository."),

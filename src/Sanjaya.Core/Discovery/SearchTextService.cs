@@ -30,9 +30,9 @@ public sealed class SearchTextService(RepositoryScope repository)
         if (!repository.IsReady)
         {
             return Error(
-                ContractValues.ErrorRepositoryRootRequired,
-                "Repository discovery requires an explicit valid --root path.",
-                "Restart Sanjaya with --root <path>.");
+                repository.ConfigurationReason!,
+                repository.ConfigurationError!,
+                repository.ConfigurationRemediation);
         }
 
         if (string.IsNullOrEmpty(query)

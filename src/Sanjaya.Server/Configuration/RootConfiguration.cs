@@ -1,3 +1,5 @@
+using Sanjaya.Core.Repositories;
+
 namespace Sanjaya.Server.Configuration;
 
 /// <summary>
@@ -5,7 +7,7 @@ namespace Sanjaya.Server.Configuration;
 /// </summary>
 public static class RootConfiguration
 {
-    public static string? Parse(string[] arguments)
+    public static RootConfigurationResult Parse(string[] arguments)
     {
         ArgumentNullException.ThrowIfNull(arguments);
 
@@ -14,17 +16,30 @@ public static class RootConfiguration
         {
             if (!string.Equals(arguments[index], "--root", StringComparison.Ordinal))
             {
-                continue;
+                return new(null, RepositoryConfigurationFailure.UnknownArgument);
             }
 
-            if (root is not null || index + 1 >= arguments.Length || string.IsNullOrWhiteSpace(arguments[index + 1]))
+            if (root is not null)
             {
-                return null;
+                return new(null, RepositoryConfigurationFailure.Duplicate);
+            }
+
+            if (index + 1 >= arguments.Length
+                || string.IsNullOrWhiteSpace(arguments[index + 1])
+                || arguments[index + 1].StartsWith("--", StringComparison.Ordinal))
+            {
+                return new(null, RepositoryConfigurationFailure.MissingValue);
             }
 
             root = arguments[++index];
         }
 
-        return root;
+        return root is null
+            ? new(null, RepositoryConfigurationFailure.Missing)
+            : new(root, RepositoryConfigurationFailure.None);
     }
 }
+
+public sealed record RootConfigurationResult(
+    string? Root,
+    RepositoryConfigurationFailure Failure);

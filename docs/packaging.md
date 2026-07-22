@@ -39,7 +39,7 @@ marker, owner checkout path, local planning path, private-key marker, or
 delegation metadata.
 
 Review ceilings prevent silent payload growth: at most 64 entries, 9 MiB
-compressed, and 25 MiB unpacked. The current reviewed target is 60 entries,
+compressed, and 25 MiB unpacked. The current reviewed target is 61 entries,
 approximately 6.5 MiB compressed and 23.3 MiB unpacked. A future dependency or
 payload change must deliberately update both the exact allowlist and these
 ceilings where necessary.
@@ -49,8 +49,8 @@ ceilings where necessary.
 `npm run verify:installed-package` creates a real tarball, installs it offline
 into an isolated temporary consumer with scripts disabled, compares the
 installed files with the same allowlist, scans their bytes, and exercises the
-installed npm executable shim through an MCP initialize, tool discovery, and
-representative discovery workflow.
+installed npm executable shim through version and readiness diagnostics, an MCP
+initialize, tool discovery, and a representative discovery workflow.
 
 `npm run verify:reproducible-package` performs two clean package builds. It
 compares file paths, per-file SHA-256 values, npm integrity and shasum values,

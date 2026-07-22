@@ -8,6 +8,8 @@ namespace Sanjaya.Core.Contracts;
 public sealed record HealthReportData(
     [property: JsonPropertyName("registeredToolCount")]
     int RegisteredToolCount,
+    [property: JsonPropertyName("ready")]
+    bool Ready,
     [property: JsonPropertyName("checks")]
     IReadOnlyList<HealthCheckEntry> Checks);
 
@@ -17,4 +19,10 @@ public sealed record HealthCheckEntry(
     [property: JsonPropertyName("status")]
     string Status,
     [property: JsonPropertyName("message")]
-    string Message);
+    string Message,
+    [property: JsonPropertyName("code")]
+    string? Code = null,
+    [property: JsonPropertyName("remediation")]
+    string? Remediation = null,
+    [property: JsonPropertyName("required")]
+    bool Required = true);

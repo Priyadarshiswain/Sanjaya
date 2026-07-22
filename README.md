@@ -33,6 +33,11 @@ structural chunks through a bounded local worker, and those chunks participate
 in the same deterministic index and lexical search.
 Discovery is scoped to one explicit repository root per process. The npm
 package, MCP Registry entry, and installation commands do not exist yet.
+The development launcher provides local `--help`, `--version`, and
+`--diagnose` commands so setup failures can be understood before an MCP client
+starts. Diagnostics report stable reason codes and remediation without reading
+source files, writing an index, contacting the network, or exposing the
+configured absolute path.
 The official TypeScript 6.0.3 compiler API subset and its complete notices are
 vendored for the syntax provider. Semantic TypeScript/JavaScript definitions,
 references, type checking, module resolution, and source retrieval are not
@@ -79,7 +84,8 @@ worktree root, and indexed discovery requires an index created by
 ## Development
 
 The development build requires the .NET 8 SDK and Node.js 22.13 or newer. See the
-[development guide](docs/development.md) for validation commands.
+[development guide](docs/development.md) for validation commands and the
+[diagnostics guide](docs/diagnostics.md) for the first-run contract.
 
 ## License
 
