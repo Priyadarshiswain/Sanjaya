@@ -1,8 +1,9 @@
 # Official MCP Registry metadata
 
 Sanjaya has a reviewed `server.json` contract pinned to `0.1.0`, but it has not
-been submitted to the Official MCP Registry. The matching npm candidate has not
-been published, so there is no installable registry release.
+been submitted to the Official MCP Registry. The matching
+[`sanjaya-mcp@0.1.0`](https://www.npmjs.com/package/sanjaya-mcp) package is
+published and independently verified; no registry record exists yet.
 
 The registry is currently in preview and stores server metadata rather than
 the package artifact. Its [publishing quickstart](https://modelcontextprotocol.io/registry/quickstart)
@@ -55,6 +56,9 @@ contract avoids making ordinary builds depend on a mutable network response.
 
 ## Separately approved release order
 
+The npm publication and verification steps below are complete for `0.1.0`;
+registry submission still requires separate explicit owner approval.
+
 1. Review the exact stable version in `package.json`, `package-lock.json`, and
    `server.json`, then re-run every release check.
 2. Build and approve the reproducible npm artifact for that exact version.
@@ -68,7 +72,7 @@ contract avoids making ordinary builds depend on a mutable network response.
 The registry requires a unique version for each publication, and published
 metadata cannot be edited in place. The current
 [versioning guidance](https://modelcontextprotocol.io/registry/versioning)
-therefore makes submission a release operation, not a routine CI action. No
-registry login, automated publisher workflow, name reservation, submission,
-tag, GitHub release, npm publication, VS Code install-link activation, or
-GitHub MCP Registry claim is part of this metadata-preparation step.
+therefore makes submission a release operation, not a routine CI action. This
+metadata-preparation step does not perform registry login or submission, create
+a GitHub release, activate the VS Code install link, or claim GitHub MCP
+Registry inclusion.

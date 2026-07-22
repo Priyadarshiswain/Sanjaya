@@ -9,9 +9,8 @@ sanjaya-mcp --version
 sanjaya-mcp --diagnose --root <absolute-path>
 ```
 
-These commands are part of the reviewed `0.1.0` candidate. Sanjaya is not
-published yet, so the package command below becomes usable only after npm
-publication is separately approved and verified:
+These commands are part of the published and independently verified `0.1.0`
+package. Check one repository before adding Sanjaya to an MCP client:
 
 ```bash
 npx -y sanjaya-mcp@0.1.0 --diagnose --root /absolute/path/to/repository

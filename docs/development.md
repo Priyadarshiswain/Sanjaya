@@ -49,16 +49,17 @@ npm integrity value, and tarball hash.
 See the [packaging contract](packaging.md) for the distribution boundary and
 the exact verification guarantees.
 
-The package metadata is pinned to the reviewed `0.1.0` candidate. This does not
-mean it is published. Tag creation, workflow dispatch, environment approval,
-npm publication, registry submission, and installation-link activation remain
-separate owner-approved actions. See the [release runbook](releasing.md).
+The package metadata is pinned to the published and independently verified
+`0.1.0` release. Candidate creation, tag creation, workflow dispatch,
+environment approval, npm publication, registry submission, and
+installation-link activation remain separate owner-approved actions for each
+release. See the [release runbook](releasing.md).
 
 `verify:vscode-install` proves the future VS Code user-profile configuration
 pins one exact release, passes `${workspaceFolder}` as the immutable root, and
-keeps the live installation URL out of public docs while publication is pending.
+keeps the live installation URL out of public docs while activation is pending.
 The public [VS Code integration guide](vscode.md) remains non-installing until
-release activation is separately approved.
+link activation is separately approved after registry verification.
 
 `verify:registry-metadata` checks `server.json` without contacting a registry.
 It locks the official schema URL, GitHub identity and repository id, npm
