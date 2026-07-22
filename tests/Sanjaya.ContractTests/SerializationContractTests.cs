@@ -56,6 +56,11 @@ public sealed class SerializationContractTests
         Assert.Equal("structural_provider_unavailable", ContractValues.ReasonStructuralProviderUnavailable);
         Assert.Equal("definition_provider_unavailable", ContractValues.ReasonDefinitionProviderUnavailable);
         Assert.Equal("reference_provider_unavailable", ContractValues.ReasonReferenceProviderUnavailable);
+        Assert.Equal("source_provider_unavailable", ContractValues.ReasonSourceProviderUnavailable);
+        Assert.Equal("chunk_not_found", ContractValues.ErrorChunkNotFound);
+        Assert.Equal("source_ambiguous", ContractValues.ErrorSourceAmbiguous);
+        Assert.Equal("source_resolution_failed", ContractValues.ErrorSourceResolutionFailed);
+        Assert.Equal("source_range_too_large", ContractValues.ErrorSourceRangeTooLarge);
         Assert.Equal("not_found", ContractValues.ResolutionNotFound);
         Assert.Equal("unique", ContractValues.ResolutionUnique);
         Assert.Equal("ambiguous", ContractValues.ResolutionAmbiguous);
@@ -77,6 +82,35 @@ public sealed class SerializationContractTests
         Assert.Equal("identifier_name", match.GetProperty("syntaxKind").GetString());
         Assert.Equal(9, match.GetProperty("startColumn").GetInt32());
         Assert.Equal("Demo.Sample", match.GetProperty("enclosingContainer").GetString());
+    }
+
+    [Fact]
+    public void SourceContractCarriesExactBoundedRangesWithoutAbsolutePaths()
+    {
+        GetSourceData data = new(
+            "sha256:" + new string('b', 64),
+            "sha256:" + new string('a', 64),
+            "csharp-roslyn-syntax",
+            "csharp",
+            "src/Sample.cs",
+            "method",
+            "Run",
+            "Demo.Sample",
+            new SourceRange(4, 5, 8, 6),
+            new SourceRange(5, 1, 7, 6),
+            "public void Run() { }",
+            false,
+            0);
+
+        string json = JsonSerializer.Serialize(data);
+        using JsonDocument document = JsonDocument.Parse(json);
+        JsonElement root = document.RootElement;
+
+        Assert.Equal("src/Sample.cs", root.GetProperty("path").GetString());
+        Assert.Equal(5, root.GetProperty("returnedRange").GetProperty("startLine").GetInt32());
+        Assert.Equal(6, root.GetProperty("declarationRange").GetProperty("endColumn").GetInt32());
+        Assert.False(root.GetProperty("complete").GetBoolean());
+        Assert.DoesNotContain("repositoryRoot", json, StringComparison.Ordinal);
     }
 
     [Fact]

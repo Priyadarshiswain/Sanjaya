@@ -46,6 +46,7 @@ public sealed class CapabilitiesTool(
         implementedTools.UnionWith(PublicToolNames.StructuralSearch);
         implementedTools.UnionWith(PublicToolNames.DefinitionLookup);
         implementedTools.UnionWith(PublicToolNames.ReferenceLookup);
+        implementedTools.UnionWith(PublicToolNames.SourceRetrieval);
         ToolAvailability[] tools = PublicToolNames.All
             .Select(CreateAvailability)
             .ToArray();
@@ -217,6 +218,34 @@ public sealed class CapabilitiesTool(
                 {
                     return new ToolAvailability(name, ContractValues.AvailabilityUnavailable,
                         ContractValues.ReasonReferenceProviderUnavailable);
+                }
+
+                string? reason = GetIndexUnavailabilityReason();
+                if (reason is not null)
+                {
+                    return new ToolAvailability(name, ContractValues.AvailabilityUnavailable, reason);
+                }
+            }
+
+            if (string.Equals(name, PublicToolNames.GetSource, StringComparison.Ordinal))
+            {
+                if (!repository.IsReady)
+                {
+                    return new ToolAvailability(name, ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonRepositoryRootRequired);
+                }
+
+                bool providerAvailable = (capabilityProviders ?? [])
+                    .OfType<ISourceRetrievalProvider>()
+                    .Any(provider => provider.GetCapabilities().Any(capability =>
+                        capability.Capability == CapabilityKind.SourceRetrieval
+                        && capability.Status == CapabilityStatus.Supported
+                        && capability.Provider == provider.Id
+                        && capability.Language == "csharp"));
+                if (!providerAvailable)
+                {
+                    return new ToolAvailability(name, ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonSourceProviderUnavailable);
                 }
 
                 string? reason = GetIndexUnavailabilityReason();

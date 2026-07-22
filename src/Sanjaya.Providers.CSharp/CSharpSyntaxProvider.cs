@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
 using Sanjaya.Core.Capabilities;
 using Sanjaya.Core.Contracts;
 using Sanjaya.Core.Discovery;
@@ -12,7 +13,11 @@ namespace Sanjaya.Providers.CSharp;
 /// Provides deterministic syntax-only C# structure. It never loads a project,
 /// invokes a compiler, or claims semantic resolution.
 /// </summary>
-public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChunkProvider, IReferenceProvider
+public sealed class CSharpSyntaxProvider :
+    IFileOutlineProvider,
+    IStructuralChunkProvider,
+    IReferenceProvider,
+    ISourceRetrievalProvider
 {
     public const string ProviderId = "csharp-roslyn-syntax";
 
@@ -35,7 +40,7 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
         Supported(CapabilityKind.StructuralChunking),
         Supported(CapabilityKind.Definitions),
         Supported(CapabilityKind.References),
-        Deferred(CapabilityKind.SourceRetrieval),
+        Supported(CapabilityKind.SourceRetrieval),
         Deferred(CapabilityKind.CallGraph),
     ];
 
@@ -97,6 +102,21 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
             matches.Take(ReferenceLookupLimits.MaximumMatchesPerFile).ToArray(),
             truncated,
             parsed.SyntaxDiagnosticCount);
+    }
+
+    public SourceRetrievalAnalysis AnalyzeSource(
+        string relativePath,
+        string sourceText,
+        SourceRetrievalTarget target,
+        CancellationToken cancellationToken)
+    {
+        ParsedFile parsed = Parse(sourceText, cancellationToken);
+        SourceDeclaration[] matches = EnumerateDeclarations(parsed.Root, cancellationToken)
+            .Take(DiscoveryLimits.MaximumOutlineItems + 1)
+            .Where(declaration => MatchesTarget(CreateChunk(declaration), target))
+            .Select(declaration => CreateSourceDeclaration(declaration.Node, sourceText))
+            .ToArray();
+        return new SourceRetrievalAnalysis(matches, parsed.SyntaxDiagnosticCount);
     }
 
     private static ParsedFile Parse(string sourceText, CancellationToken cancellationToken)
@@ -230,6 +250,39 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
             item.EndLine,
             content,
             truncated);
+    }
+
+    private static bool MatchesTarget(StructuralChunk chunk, SourceRetrievalTarget target) =>
+        chunk.Kind.Equals(target.Kind, StringComparison.Ordinal)
+        && chunk.Name.Equals(target.Name, StringComparison.Ordinal)
+        && string.Equals(chunk.Container, target.Container, StringComparison.Ordinal)
+        && chunk.StartLine == target.StartLine
+        && chunk.EndLine == target.EndLine
+        && chunk.Content.Equals(target.IndexedContent, StringComparison.Ordinal)
+        && chunk.ContentTruncated == target.IndexedContentTruncated;
+
+    private static SourceDeclaration CreateSourceDeclaration(SyntaxNode node, string sourceText)
+    {
+        int start = node.FullSpan.Start;
+        int end = node.FullSpan.End;
+        while (start < end && char.IsWhiteSpace(sourceText[start]))
+        {
+            start++;
+        }
+
+        while (end > start && char.IsWhiteSpace(sourceText[end - 1]))
+        {
+            end--;
+        }
+
+        TextSpan span = TextSpan.FromBounds(start, end);
+        FileLinePositionSpan lines = node.SyntaxTree.GetLineSpan(span);
+        return new SourceDeclaration(
+            sourceText[start..end],
+            lines.StartLinePosition.Line + 1,
+            lines.StartLinePosition.Character + 1,
+            lines.EndLinePosition.Line + 1,
+            lines.EndLinePosition.Character + 1);
     }
 
     private static SyntaxReferenceCandidate CreateReference(SimpleNameSyntax reference, string sourceText)

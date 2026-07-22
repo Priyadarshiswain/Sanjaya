@@ -84,4 +84,9 @@ public static class PublicToolNames
     [
         FindReferences,
     ];
+
+    public static IReadOnlyList<string> SourceRetrieval { get; } =
+    [
+        GetSource,
+    ];
 }

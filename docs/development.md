@@ -57,8 +57,8 @@ can supply the active folder at process launch:
 ```
 
 The current server also registers `file_outline`, `search_text`,
-`recent_changes`, `index_codebase`, `search_code`, `find_definition`, and
-`find_references`.
+`recent_changes`, `index_codebase`, `search_code`, `find_definition`,
+`find_references`, and `get_source`.
 Missing or invalid root configuration does not prevent MCP initialization,
 capability reporting, or health checks;
 discovery returns stable setup guidance instead. Local Git evidence
@@ -70,5 +70,6 @@ deterministic local index. After `index_codebase`, `search_code` performs
 read-only deterministic lexical search and refuses a stale or incompatible
 index; `find_definition` adds exact case-sensitive C# syntax-declaration
 navigation with explicit ambiguity; `find_references` returns bounded Roslyn
-identifier candidates without semantic-binding claims. TypeScript/JavaScript
-AST structure remains unimplemented.
+identifier candidates without semantic-binding claims; and `get_source`
+resolves a stable indexed chunk ID to exact bounded declaration source.
+TypeScript/JavaScript AST structure remains unimplemented.

@@ -23,6 +23,7 @@ public sealed class StdioProtocolTests
                 .Concat(PublicToolNames.StructuralSearch)
                 .Concat(PublicToolNames.DefinitionLookup)
                 .Concat(PublicToolNames.ReferenceLookup)
+                .Concat(PublicToolNames.SourceRetrieval)
                 .Order(),
             tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()).Order());
         Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
@@ -50,6 +51,12 @@ public sealed class StdioProtocolTests
         JsonElement referencesTool = tools.EnumerateArray().Single(
             tool => tool.GetProperty("name").GetString() == PublicToolNames.FindReferences);
         Assert.True(referencesTool.GetProperty("annotations").GetProperty("readOnlyHint").GetBoolean());
+        JsonElement sourceTool = tools.EnumerateArray().Single(
+            tool => tool.GetProperty("name").GetString() == PublicToolNames.GetSource);
+        Assert.True(sourceTool.GetProperty("annotations").GetProperty("readOnlyHint").GetBoolean());
+        Assert.False(sourceTool.GetProperty("annotations").GetProperty("destructiveHint").GetBoolean());
+        Assert.True(sourceTool.GetProperty("annotations").GetProperty("idempotentHint").GetBoolean());
+        Assert.False(sourceTool.GetProperty("annotations").GetProperty("openWorldHint").GetBoolean());
 
         JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
         AssertStructured(capabilities, 3, PublicToolNames.Capabilities, ContractValues.StatusOk, isError: false);
@@ -153,6 +160,10 @@ public sealed class StdioProtocolTests
             .GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("tools")
             .EnumerateArray().Single(tool => tool.GetProperty("name").GetString() == PublicToolNames.FindReferences);
         Assert.Equal(ContractValues.AvailabilitySupported, referenceAvailability.GetProperty("status").GetString());
+        JsonElement sourceAvailability = indexedCapabilities
+            .GetProperty("result").GetProperty("structuredContent").GetProperty("data").GetProperty("tools")
+            .EnumerateArray().Single(tool => tool.GetProperty("name").GetString() == PublicToolNames.GetSource);
+        Assert.Equal(ContractValues.AvailabilitySupported, sourceAvailability.GetProperty("status").GetString());
 
         JsonElement codeSearch = await server.CallAsync(
             9,
@@ -182,6 +193,21 @@ public sealed class StdioProtocolTests
         Assert.Equal("syntax_candidate", structuredReferences.GetProperty("data").GetProperty("classification").GetString());
         Assert.Equal("Sample.cs", structuredReferences.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
         Assert.DoesNotContain(repository.Path, references.GetRawText(), StringComparison.Ordinal);
+
+        string chunkId = structuredDefinition.GetProperty("data").GetProperty("matches")[0]
+            .GetProperty("chunkId").GetString()!;
+        JsonElement source = await server.CallAsync(
+            12,
+            PublicToolNames.GetSource,
+            $"{{\"chunkId\":{JsonSerializer.Serialize(chunkId)}}}",
+            timeout.Token);
+        AssertStructured(source, 12, PublicToolNames.GetSource, ContractValues.StatusOk, isError: false);
+        JsonElement structuredSource = source.GetProperty("result").GetProperty("structuredContent");
+        Assert.Equal("Sample.cs", structuredSource.GetProperty("data").GetProperty("path").GetString());
+        Assert.Equal("public void Run() { }", structuredSource.GetProperty("data").GetProperty("source").GetString());
+        Assert.True(structuredSource.GetProperty("data").GetProperty("complete").GetBoolean());
+        Assert.DoesNotContain("Call", structuredSource.GetProperty("data").GetProperty("source").GetString(), StringComparison.Ordinal);
+        Assert.DoesNotContain(repository.Path, source.GetRawText(), StringComparison.Ordinal);
 
         JsonElement multiline = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"two\\nlines\"}", timeout.Token);
         AssertStructured(multiline, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);
