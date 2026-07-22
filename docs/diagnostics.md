@@ -9,9 +9,13 @@ sanjaya-mcp --version
 sanjaya-mcp --diagnose --root <absolute-path>
 ```
 
-These commands are part of the reviewed development package. Sanjaya is not
-published yet, so this document is a contract rather than an installation
-instruction.
+These commands are part of the reviewed `0.1.0` candidate. Sanjaya is not
+published yet, so the package command below becomes usable only after npm
+publication is separately approved and verified:
+
+```bash
+npx -y sanjaya-mcp@0.1.0 --diagnose --root /absolute/path/to/repository
+```
 
 ## Readiness checks
 

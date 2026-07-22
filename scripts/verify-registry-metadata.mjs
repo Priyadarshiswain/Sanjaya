@@ -2,6 +2,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  assertReleasePackage,
+  packageName,
+  registryName,
+  releaseVersion,
+} from "./release-contract.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const serverPath = resolve(repositoryRoot, "server.json");
@@ -16,9 +22,8 @@ const serverDocument = JSON.parse(serverSource);
 const packageDocument = JSON.parse(packageSource);
 
 const expectedSchema = "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json";
-const expectedRegistryName = "io.github.priyadarshiswain/sanjaya";
-const expectedPackageName = "sanjaya-mcp";
-const expectedDevelopmentVersion = "0.0.0-development";
+const expectedRegistryName = registryName;
+const expectedPackageName = packageName;
 const expectedRepositoryUrl = "https://github.com/Priyadarshiswain/Sanjaya";
 const expectedRepositoryId = "1307595672";
 
@@ -34,7 +39,7 @@ assert.equal(serverDocument.title, "Sanjaya");
 assertNonEmptyTextWithin(serverDocument.title, 100, "title");
 assert.equal(serverDocument.description, packageDocument.description);
 assertNonEmptyTextWithin(serverDocument.description, 100, "description");
-assert.equal(serverDocument.version, expectedDevelopmentVersion);
+assert.equal(serverDocument.version, releaseVersion);
 assertExactVersion(serverDocument.version, "server version");
 
 assertExactKeys(serverDocument.repository, ["id", "source", "url"], "repository");
@@ -81,8 +86,7 @@ assert.ok(!Object.hasOwn(repositoryRootInput, "value"), "The repository path mus
 assert.ok(!Object.hasOwn(repositoryRootInput, "isSecret"), "The repository path is not a secret input.");
 
 assert.equal(packageDocument.name, expectedPackageName);
-assert.equal(packageDocument.version, expectedDevelopmentVersion);
-assert.equal(packageDocument.private, true, "Registry preparation must retain the npm publication lock.");
+assertReleasePackage(packageDocument);
 assert.equal(packageDocument.mcpName, expectedRegistryName);
 assert.equal(packageDocument.license, "Apache-2.0");
 assert.equal(packageDocument.repository?.url, `git+${expectedRepositoryUrl}.git`);
@@ -91,7 +95,7 @@ assert.equal(registryPackage.identifier, packageDocument.name);
 assert.equal(registryPackage.version, packageDocument.version);
 assert.equal(serverDocument.name, packageDocument.mcpName);
 
-console.log("Official MCP Registry metadata identity, package, root input, and publication locks verified.");
+console.log("Official MCP Registry metadata identity, package, root input, and v0.1.0 candidate locks verified.");
 
 function assertExactKeys(value, expectedKeys, label) {
   assert.ok(value && typeof value === "object" && !Array.isArray(value), `${label} must be an object.`);

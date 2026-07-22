@@ -1,8 +1,8 @@
 # Packaging contract
 
-Sanjaya is not published. The current npm metadata remains locked with
-`private: true` and version `0.0.0-development`; this document describes the
-development package that must pass review before any release decision.
+Sanjaya is not published. The repository now describes an exact public
+`sanjaya-mcp@0.1.0` candidate with npm provenance required. Preparing that
+candidate does not make it available from npm.
 
 ## Runtime boundary
 
@@ -57,21 +57,27 @@ compares file paths, per-file SHA-256 values, npm integrity and shasum values,
 and the raw tarball SHA-256. CI runs the package and installed-launcher checks on
 Ubuntu, macOS, and Windows with Node.js 22 and .NET 8.
 
-These checks create evidence for a future publication review. They do not
-reserve the npm name, change a version, create a registry entry, tag a release,
-or publish an artifact.
+`npm run release:candidate` first proves two clean package builds are identical,
+then writes the exact tarball, per-file manifest, source commit, npm integrity,
+and SHA-256/SHA-512 evidence to ignored `dist/release`. The companion
+`npm run verify:release-candidate` check validates that evidence without
+repacking the artifact.
+
+These checks create evidence for publication review. They do not reserve the
+npm name, create a registry entry, tag a release, dispatch a workflow, or
+publish an artifact.
 
 `npm run verify:registry-metadata` separately proves that the repository's
 Official MCP Registry identity, npm ownership fields, exact package version,
 stdio transport, and required `--root <path>` inputs agree with this package.
-The check is offline and keeps `private: true` plus
-`0.0.0-development` mandatory; it does not validate a published artifact or
+The check is offline and requires exact `0.1.0` agreement, public-access
+metadata, and npm provenance; it does not validate a published artifact or
 write to a registry. Installed-tarball verification also reads the packed
 `package.json` and proves that npm preserved the exact `mcpName` ownership
 field, package name, version, and license.
 
 The future VS Code installation configuration must reference the exact
 published package version verified by this process. Its generated installation
-URL remains inactive while npm metadata is `private`, development-versioned, or
-not yet published. Package publication and link activation are separate,
-explicitly reviewed release actions.
+URL remains inactive while the exact package is not yet published. Package
+publication and link activation are separate, explicitly reviewed release
+actions.

@@ -1,0 +1,137 @@
+name: Publish npm release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact annotated release tag to build
+        required: true
+        default: v0.1.0
+        type: string
+      publish:
+        description: Continue to the separately protected npm publish job
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    name: Build reviewed candidate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the exact release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+
+      - name: Verify the release ref
+        env:
+          REQUESTED_TAG: ${{ inputs.tag }}
+        run: |
+          if [ "$REQUESTED_TAG" != "v0.1.0" ]; then
+            echo "Only the reviewed v0.1.0 tag may be published by this workflow." >&2
+            exit 1
+          fi
+          if [ "$(git cat-file -t "refs/tags/$REQUESTED_TAG")" != "tag" ]; then
+            echo "$REQUESTED_TAG must be an annotated tag." >&2
+            exit 1
+          fi
+          test "$(git rev-parse "refs/tags/$REQUESTED_TAG^{commit}")" = "$(git rev-parse HEAD)"
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Restore npm metadata
+        run: npm ci --ignore-scripts
+
+      - name: Restore .NET dependencies
+        run: dotnet restore Sanjaya.sln
+
+      - name: Build
+        run: dotnet build Sanjaya.sln --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test Sanjaya.sln --no-build --configuration Release
+
+      - name: Verify formatting
+        run: dotnet format Sanjaya.sln --no-restore --verify-no-changes
+
+      - name: Verify package and integration contracts
+        run: |
+          node --check bin/sanjaya-mcp.js
+          npm run verify:vscode-install
+          npm run verify:registry-metadata
+          npm run build -- --no-restore
+          npm run verify:typescript
+          npm run verify:typescript-worker
+          npm run verify:launcher
+          npm run verify:diagnostics
+          npm run verify:package
+          npm run verify:installed-package
+
+      - name: Build exact release candidate and evidence
+        run: |
+          npm run release:candidate
+          npm run verify:release-candidate -- --require-clean
+
+      - name: Upload exact candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanjaya-mcp-0.1.0-candidate
+          path: |
+            dist/release/sanjaya-mcp-0.1.0.tgz
+            dist/release/candidate.json
+            dist/release/manifest.json
+            dist/release/SHA256SUMS
+            dist/release/SHA512SUMS
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Publish approved npm artifact
+    if: ${{ inputs.publish == true }}
+    needs: candidate
+    runs-on: ubuntu-latest
+    environment: npm-release
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Check out the exact release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+
+      - name: Set up Node.js 24 for npm provenance
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Download exact candidate
+        uses: actions/download-artifact@v4
+        with:
+          name: sanjaya-mcp-0.1.0-candidate
+          path: dist/release
+
+      - name: Verify downloaded evidence
+        run: node scripts/verify-release-candidate.mjs --require-clean
+
+      - name: Publish exact candidate to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish dist/release/sanjaya-mcp-0.1.0.tgz --access public --provenance
