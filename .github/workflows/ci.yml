@@ -49,6 +49,9 @@ jobs:
       - name: Verify VS Code install contract
         run: npm run verify:vscode-install
 
+      - name: Verify Official MCP Registry metadata
+        run: npm run verify:registry-metadata
+
       - name: Build framework-dependent npm payload
         run: npm run build -- --no-restore
 
@@ -101,6 +104,9 @@ jobs:
 
       - name: Verify VS Code install contract
         run: npm run verify:vscode-install
+
+      - name: Verify Official MCP Registry metadata
+        run: npm run verify:registry-metadata
 
       - name: Build clean portable package
         run: npm run build -- --no-restore --disable-build-servers

@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -31,6 +32,11 @@ try {
   const installedFiles = listFiles(installedRoot);
   assertEqual(installedFiles, approvedPackageFiles, "Installed package contents differ from the packed allowlist.");
   verifyPackedFiles(installedRoot, installedFiles);
+  const installedPackage = JSON.parse(readFileSync(join(installedRoot, "package.json"), "utf8"));
+  assert.equal(installedPackage.name, rootPackage.name);
+  assert.equal(installedPackage.version, rootPackage.version);
+  assert.equal(installedPackage.mcpName, rootPackage.mcpName, "Packed npm ownership metadata changed.");
+  assert.equal(installedPackage.license, rootPackage.license);
 
   const launcherPath = join(
     consumerRoot,

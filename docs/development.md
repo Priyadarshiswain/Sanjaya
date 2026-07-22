@@ -26,6 +26,7 @@ npm run verify:typescript-worker
 npm run verify:launcher
 npm run verify:diagnostics
 npm run verify:vscode-install
+npm run verify:registry-metadata
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
@@ -55,6 +56,12 @@ pins one exact release, passes `${workspaceFolder}` as the immutable root, and
 cannot generate a live installation URL from the current development version.
 The public [VS Code integration guide](vscode.md) remains non-installing until
 release activation is separately approved.
+
+`verify:registry-metadata` checks `server.json` without contacting a registry.
+It locks the official schema URL, GitHub identity and repository id, npm
+package ownership fields, exact development version, stdio transport, required
+repository-root input, and 4 KiB metadata ceiling. The public
+[registry metadata guide](registry.md) describes the publication boundary.
 
 ## Run from an MCP client
 

@@ -36,6 +36,9 @@ package, MCP Registry entry, and installation commands do not exist yet.
 The future VS Code install-once configuration is defined and tested, but its
 public link remains inactive until an exact npm release is available. See the
 [VS Code integration contract](docs/vscode.md).
+Official MCP Registry metadata is also defined and checked offline, but no
+registry entry has been submitted. See the
+[registry metadata contract](docs/registry.md).
 The development launcher provides local `--help`, `--version`, and
 `--diagnose` commands so setup failures can be understood before an MCP client
 starts. Diagnostics report stable reason codes and remediation without reading
@@ -59,7 +62,8 @@ claimed.
 
 See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 [privacy](docs/privacy.md), [packaging](docs/packaging.md), and
-[VS Code integration](docs/vscode.md) for the proposed public contract.
+[VS Code integration](docs/vscode.md), and
+[registry metadata](docs/registry.md) for the proposed public contract.
 
 ## Approved v0.1 MCP tools
 

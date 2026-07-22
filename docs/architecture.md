@@ -132,3 +132,18 @@ configuration and is activation-locked while the package remains private or
 development-versioned. Remote environments and multi-root workspaces require
 explicit configurations because their repository location or root selection
 cannot be inferred safely.
+
+## Registry metadata boundary
+
+The Official MCP Registry document describes identity and installation, not
+the complete runtime capability contract. It points to one npm package over
+stdio and models the existing CLI as a fixed `--root` argument followed by one
+required repository-path input. It does not add a remote endpoint, secret,
+environment override, shell command, runtime permission, or automatic root
+discovery.
+
+Capabilities remain authoritative at runtime through the `capabilities` tool
+and in [capabilities.md](capabilities.md). License and third-party obligations
+remain in the package files, and [privacy.md](privacy.md) remains authoritative
+for local data behavior. Registry publication is a later release operation;
+the current metadata and verifier retain the development publication locks.

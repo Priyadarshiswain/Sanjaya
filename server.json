@@ -1,14 +1,15 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "$comment": "Scaffold only. Replace the development version only during a separately approved publication step.",
   "name": "io.github.priyadarshiswain/sanjaya",
   "title": "Sanjaya",
   "description": "Local-first codebase discovery for AI agents, with precise navigation and verifiable evidence.",
   "repository": {
     "url": "https://github.com/Priyadarshiswain/Sanjaya",
-    "source": "github"
+    "source": "github",
+    "id": "1307595672"
   },
   "version": "0.0.0-development",
+  "websiteUrl": "https://github.com/Priyadarshiswain/Sanjaya",
   "packages": [
     {
       "registryType": "npm",
@@ -16,7 +17,20 @@
       "version": "0.0.0-development",
       "transport": {
         "type": "stdio"
-      }
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "--root"
+        },
+        {
+          "type": "positional",
+          "valueHint": "repository_root",
+          "description": "Absolute path to the repository root Sanjaya may inspect.",
+          "format": "filepath",
+          "isRequired": true
+        }
+      ]
     }
   ]
 }
