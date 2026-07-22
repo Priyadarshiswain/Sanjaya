@@ -1,12 +1,37 @@
 Sanjaya third-party notices
 
-This scaffold does not contain vendored third-party source or runtime files.
+Microsoft TypeScript 6.0.3
+Copyright Microsoft Corporation
+License: Apache-2.0
+Official source: https://github.com/microsoft/TypeScript/tree/v6.0.3
+Official package: https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz
 
-Before the first distributable package is approved, the project will generate
-and review notices for every dependency included in the npm payload. The review
-must include the official MCP C# SDK, .NET hosting libraries, Roslyn, the xUnit
-test toolchain where applicable, and any bundled TypeScript compiler runtime.
+Sanjaya distributes an unmodified, allowlisted subset of the official package:
 
-The TypeScript distribution gate is documented in:
-third_party/typescript/README.md
+- package.json
+- LICENSE.txt
+- ThirdPartyNoticeText.txt
+- lib/typescript.js
 
+The complete upstream license and third-party notice text are stored in the
+source tree at:
+
+- third_party/typescript/package/LICENSE.txt
+- third_party/typescript/package/ThirdPartyNoticeText.txt
+
+They are distributed in the npm payload beside the runtime at:
+
+- dist/dotnet/third_party/typescript/package/LICENSE.txt
+- dist/dotnet/third_party/typescript/package/ThirdPartyNoticeText.txt
+
+Artifact identity and file hashes are recorded in:
+
+- third_party/typescript/PROVENANCE.json
+
+The TypeScript runtime is included for the planned TypeScript/JavaScript syntax
+provider. That provider is not implemented or advertised as supported in the
+current development build.
+
+Before the first distributable package is approved, Sanjaya must also complete
+the notice review for every other dependency included in the npm payload,
+including the official MCP C# SDK, .NET hosting libraries, and Roslyn.

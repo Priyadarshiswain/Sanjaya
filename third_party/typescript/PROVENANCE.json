@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1",
+  "component": "Microsoft TypeScript compiler API",
+  "package": "typescript",
+  "version": "6.0.3",
+  "license": "Apache-2.0",
+  "source": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "tarball": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+    "npmSha1": "90251dc007916e972786cb94d74d15b185577d21",
+    "npmIntegrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "tarballSha256": "33cd0ee1beaa8c9e9d15a9da836c62ddea4c34a42d7c2d349dbc80d94165d22a"
+  },
+  "files": [
+    {
+      "path": "package/package.json",
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "bytes": 3527
+    },
+    {
+      "path": "package/LICENSE.txt",
+      "sha256": "a7d00bfd54525bc694b6e32f64c7ebcf5e6b7ae3657be5cc12767bce74654a47",
+      "bytes": 9197
+    },
+    {
+      "path": "package/ThirdPartyNoticeText.txt",
+      "sha256": "1af3c68039c57e539422da82a4faada506ce6d0ea6f90e0b699d02dbcdb7a90c",
+      "bytes": 37824
+    },
+    {
+      "path": "package/lib/typescript.js",
+      "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "bytes": 9144216
+    }
+  ]
+}

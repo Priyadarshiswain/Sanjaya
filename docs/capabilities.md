@@ -36,6 +36,12 @@ call graph remains unavailable. The TypeScript/JavaScript provider remains
 unavailable with `not_implemented`. The server uses stdio and performs no
 network access by default.
 
+The package contains a provenance-verified TypeScript 6.0.3 compiler API subset
+and complete upstream notices. Merely bundling that inactive runtime does not
+change capability reporting: no TypeScript/JavaScript process is started and
+no AST claim is made until the provider's separate safety and behavior contract
+is implemented.
+
 ## Immediate discovery behavior
 
 `search_text` performs ordinal exact matching for a single-line query; CR, LF,

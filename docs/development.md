@@ -20,6 +20,7 @@ node --check bin/sanjaya-mcp.js
 
 ```bash
 npm run build
+npm run verify:typescript
 npm run verify:launcher
 npm run verify:package
 ```
@@ -73,3 +74,8 @@ navigation with explicit ambiguity; `find_references` returns bounded Roslyn
 identifier candidates without semantic-binding claims; and `get_source`
 resolves a stable indexed chunk ID to exact bounded declaration source.
 TypeScript/JavaScript AST structure remains unimplemented.
+
+`verify:typescript` checks the vendored TypeScript allowlist, provenance hashes,
+fixed-path loading, bounded TypeScript and JavaScript parsing, and published
+file hashes. `verify:package` performs a JSON package dry run and rejects
+missing notices or non-allowlisted TypeScript files.

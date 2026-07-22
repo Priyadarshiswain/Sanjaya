@@ -11,5 +11,27 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="ModelContextProtocol" />
   </ItemGroup>
-</Project>
 
+  <ItemGroup>
+    <Content Include="..\..\third_party\typescript\PROVENANCE.json"
+             Link="third_party/typescript/PROVENANCE.json"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\third_party\typescript\package\package.json"
+             Link="third_party/typescript/package/package.json"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\third_party\typescript\package\LICENSE.txt"
+             Link="third_party/typescript/package/LICENSE.txt"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\third_party\typescript\package\ThirdPartyNoticeText.txt"
+             Link="third_party/typescript/package/ThirdPartyNoticeText.txt"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\third_party\typescript\package\lib\typescript.js"
+             Link="third_party/typescript/package/lib/typescript.js"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

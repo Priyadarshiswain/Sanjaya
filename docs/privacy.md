@@ -55,6 +55,15 @@ Users must treat `.sanjaya/` as sensitive local build data and must not commit
 or distribute it. Sanjaya documentation and generated setup guidance must make
 this explicit.
 
+## Vendored TypeScript runtime
+
+The npm payload contains an allowlisted, checksum-verified TypeScript compiler
+API runtime and its complete upstream license and notices. The current runtime
+does not invoke it and reports TypeScript/JavaScript structure as unavailable.
+Future provider activation must separately define bounded local source
+transfer, subprocess isolation, timeouts, output limits, and diagnostics. It
+must not load an ambient compiler or contact a network service.
+
 ## Network behavior
 
 Default tools must not contact GitHub, model providers, analytics services, or
