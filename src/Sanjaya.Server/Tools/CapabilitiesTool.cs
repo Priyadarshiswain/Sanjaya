@@ -16,7 +16,7 @@ namespace Sanjaya.Server.Tools;
 /// </summary>
 public sealed class CapabilitiesTool(
     RepositoryScope repository,
-    IEnumerable<ICapabilityProvider>? capabilityProviders = null)
+    IEnumerable<ICapabilityProvider> capabilityProviders)
 {
     [McpServerTool(
         Name = PublicToolNames.Capabilities,
@@ -52,7 +52,7 @@ public sealed class CapabilitiesTool(
             .Select(CreateAvailability)
             .ToArray();
 
-        List<ProviderAvailability> providers = (capabilityProviders ?? [])
+        List<ProviderAvailability> providers = capabilityProviders
             .GroupBy(provider => provider.Id, StringComparer.Ordinal)
             .Select(group => CreateProviderAvailability(group.First()))
             .OrderBy(provider => provider.Id, StringComparer.Ordinal)
@@ -88,14 +88,16 @@ public sealed class CapabilitiesTool(
                 [new ProviderCapabilityAvailability(
                     "file_outline",
                     ContractValues.AvailabilityUnavailable,
-                    ContractValues.ReasonRepositoryRootRequired)],
-                ContractValues.ReasonRepositoryRootRequired));
+                    repository.ConfigurationReason!)],
+                repository.ConfigurationReason!));
 
         CapabilityReportData data = new(
             SanjayaRuntime.BuildVersion,
             SanjayaRuntime.Transport,
             SanjayaRuntime.DefaultNetworkAccess,
             repository.IsReady,
+            repository.ConfigurationReason,
+            repository.ConfigurationRemediation,
             tools,
             providers);
 
@@ -122,7 +124,7 @@ public sealed class CapabilitiesTool(
                 return new ToolAvailability(
                     name,
                     ContractValues.AvailabilityUnavailable,
-                    ContractValues.ReasonRepositoryRootRequired);
+                    repository.ConfigurationReason!);
             }
 
             if (string.Equals(name, PublicToolNames.RecentChanges, StringComparison.Ordinal))
@@ -132,7 +134,7 @@ public sealed class CapabilitiesTool(
                     return new ToolAvailability(
                         name,
                         ContractValues.AvailabilityUnavailable,
-                        ContractValues.ReasonRepositoryRootRequired);
+                        repository.ConfigurationReason!);
                 }
 
                 if (!repository.IsGitWorktreeCandidate)
@@ -151,10 +153,10 @@ public sealed class CapabilitiesTool(
                     return new ToolAvailability(
                         name,
                         ContractValues.AvailabilityUnavailable,
-                        ContractValues.ReasonRepositoryRootRequired);
+                        repository.ConfigurationReason!);
                 }
 
-                if (!(capabilityProviders ?? []).OfType<IStructuralChunkProvider>().Any())
+                if (!capabilityProviders.OfType<IStructuralChunkProvider>().Any())
                 {
                     return new ToolAvailability(
                         name,
@@ -165,7 +167,7 @@ public sealed class CapabilitiesTool(
 
             if (string.Equals(name, PublicToolNames.SearchCode, StringComparison.Ordinal))
             {
-                if (!(capabilityProviders ?? []).OfType<IStructuralChunkProvider>().Any())
+                if (!capabilityProviders.OfType<IStructuralChunkProvider>().Any())
                 {
                     return new ToolAvailability(
                         name,
@@ -187,10 +189,10 @@ public sealed class CapabilitiesTool(
                     return new ToolAvailability(
                         name,
                         ContractValues.AvailabilityUnavailable,
-                        ContractValues.ReasonRepositoryRootRequired);
+                        repository.ConfigurationReason!);
                 }
 
-                bool definitionProviderAvailable = (capabilityProviders ?? [])
+                bool definitionProviderAvailable = capabilityProviders
                     .OfType<IStructuralChunkProvider>()
                     .Any(provider => provider.GetCapabilities().Any(capability =>
                         capability.Capability == CapabilityKind.Definitions
@@ -217,10 +219,10 @@ public sealed class CapabilitiesTool(
                 if (!repository.IsReady)
                 {
                     return new ToolAvailability(name, ContractValues.AvailabilityUnavailable,
-                        ContractValues.ReasonRepositoryRootRequired);
+                        repository.ConfigurationReason!);
                 }
 
-                bool providerAvailable = (capabilityProviders ?? [])
+                bool providerAvailable = capabilityProviders
                     .OfType<IReferenceProvider>()
                     .Any(provider => provider.GetCapabilities().Any(capability =>
                         capability.Capability == CapabilityKind.References
@@ -245,10 +247,10 @@ public sealed class CapabilitiesTool(
                 if (!repository.IsReady)
                 {
                     return new ToolAvailability(name, ContractValues.AvailabilityUnavailable,
-                        ContractValues.ReasonRepositoryRootRequired);
+                        repository.ConfigurationReason!);
                 }
 
-                bool providerAvailable = (capabilityProviders ?? [])
+                bool providerAvailable = capabilityProviders
                     .OfType<ISourceRetrievalProvider>()
                     .Any(provider => provider.GetCapabilities().Any(capability =>
                         capability.Capability == CapabilityKind.SourceRetrieval
@@ -275,7 +277,7 @@ public sealed class CapabilitiesTool(
         {
             if (!repository.IsReady)
             {
-                return ContractValues.ReasonRepositoryRootRequired;
+                return repository.ConfigurationReason!;
             }
 
             RepositoryPathResult index = repository.ResolveFile(IndexCodebaseService.RelativeIndexPath);
@@ -310,7 +312,7 @@ public sealed class CapabilitiesTool(
                         return new ProviderCapabilityAvailability(
                             CapabilityName(descriptor.Capability),
                             ContractValues.AvailabilityUnavailable,
-                            ContractValues.ReasonRepositoryRootRequired);
+                            repository.ConfigurationReason!);
                     }
 
                     return new ProviderCapabilityAvailability(
@@ -326,7 +328,7 @@ public sealed class CapabilitiesTool(
             string? providerReason = supported
                 ? null
                 : !repository.IsReady
-                    ? ContractValues.ReasonRepositoryRootRequired
+                    ? repository.ConfigurationReason!
                     : capabilities
                         .Select(capability => capability.Reason)
                         .FirstOrDefault(reason => reason is not null

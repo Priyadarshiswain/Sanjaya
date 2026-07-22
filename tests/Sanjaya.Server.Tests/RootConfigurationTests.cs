@@ -1,4 +1,5 @@
 using Sanjaya.Server.Configuration;
+using Sanjaya.Core.Repositories;
 using Xunit;
 
 namespace Sanjaya.Server.Tests;
@@ -8,21 +9,34 @@ public sealed class RootConfigurationTests
     [Fact]
     public void MissingRootDoesNotUseCurrentDirectory()
     {
-        Assert.Null(RootConfiguration.Parse([]));
+        RootConfigurationResult result = RootConfiguration.Parse([]);
+
+        Assert.Null(result.Root);
+        Assert.Equal(RepositoryConfigurationFailure.Missing, result.Failure);
     }
 
     [Fact]
     public void RootArgumentIsForwardedWithoutInterpretation()
     {
         const string root = "folder with spaces/../repository";
-        Assert.Equal(root, RootConfiguration.Parse(["--root", root]));
+        RootConfigurationResult result = RootConfiguration.Parse(["--root", root]);
+
+        Assert.Equal(root, result.Root);
+        Assert.Equal(RepositoryConfigurationFailure.None, result.Failure);
     }
 
     [Theory]
-    [InlineData("--root")]
-    [InlineData("--root", "first", "--root", "second")]
-    public void MalformedRootConfigurationBecomesMissingRuntimeState(params string[] arguments)
+    [InlineData(RepositoryConfigurationFailure.MissingValue, "--root")]
+    [InlineData(RepositoryConfigurationFailure.MissingValue, "--root", "--unknown")]
+    [InlineData(RepositoryConfigurationFailure.Duplicate, "--root", "/first", "--root", "/second")]
+    [InlineData(RepositoryConfigurationFailure.UnknownArgument, "--unknown")]
+    public void MalformedRootConfigurationPreservesStableFailure(
+        RepositoryConfigurationFailure expected,
+        params string[] arguments)
     {
-        Assert.Null(RootConfiguration.Parse(arguments));
+        RootConfigurationResult result = RootConfiguration.Parse(arguments);
+
+        Assert.Null(result.Root);
+        Assert.Equal(expected, result.Failure);
     }
 }

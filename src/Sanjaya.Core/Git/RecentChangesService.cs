@@ -20,9 +20,9 @@ public sealed class RecentChangesService(RepositoryScope repository, IGitCommand
         if (!repository.IsReady)
         {
             return Error(
-                ContractValues.ErrorRepositoryRootRequired,
-                "Local Git evidence requires an explicit valid --root path.",
-                "Restart Sanjaya with --root <path>.");
+                repository.ConfigurationReason!,
+                repository.ConfigurationError!,
+                repository.ConfigurationRemediation);
         }
 
         if (!repository.IsGitWorktreeCandidate)

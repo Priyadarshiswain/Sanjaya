@@ -1,6 +1,8 @@
 using System.Text.Json;
 using ModelContextProtocol.Protocol;
+using Sanjaya.Core.Capabilities;
 using Sanjaya.Core.Contracts;
+using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
 using Sanjaya.Providers.CSharp;
 using Sanjaya.Providers.TypeScript;
@@ -63,6 +65,8 @@ public sealed class ProtocolFoundationToolTests
         CapabilityReportData data = tool.CreateResponse().Data!;
 
         Assert.False(data.RepositoryReady);
+        Assert.Equal(ContractValues.ReasonRepositoryRootRequired, data.RepositoryReason);
+        Assert.Equal("Restart Sanjaya with --root <absolute-path>.", data.RepositoryRemediation);
         Assert.Equal(
             ContractValues.ReasonRepositoryRootRequired,
             data.Tools.Single(item => item.Name == PublicToolNames.SearchText).Reason);
@@ -99,6 +103,22 @@ public sealed class ProtocolFoundationToolTests
         Assert.Equal(
             ContractValues.ReasonNotImplemented,
             data.Providers.Single(item => item.Id == TypeScriptSyntaxProvider.JavaScriptProviderId).Reason);
+    }
+
+    [Fact]
+    public void CapabilitiesPreservesThePreciseRootFailureReason()
+    {
+        CapabilitiesTool tool = new(
+            RepositoryScope.Create("relative/repository"),
+            [new CSharpSyntaxProvider()]);
+
+        CapabilityReportData data = tool.CreateResponse().Data!;
+
+        Assert.False(data.RepositoryReady);
+        Assert.Equal(ContractValues.ReasonRepositoryRootRelative, data.RepositoryReason);
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootRelative,
+            data.Tools.Single(item => item.Name == PublicToolNames.SearchText).Reason);
     }
 
     [Fact]
@@ -147,11 +167,42 @@ public sealed class ProtocolFoundationToolTests
     [Fact]
     public void HealthCheckReportsOnlyImplementedRuntimeChecks()
     {
-        HealthReportData data = HealthCheckTool.CreateResponse().Data!;
+        HealthCheckTool tool = new(
+            RepositoryScope.Create(FindRepositoryRoot()),
+            [
+                new CSharpSyntaxProvider(),
+                new ReadyCapabilityProvider(TypeScriptSyntaxProvider.TypeScriptProviderId, "typescript"),
+                new ReadyCapabilityProvider(TypeScriptSyntaxProvider.JavaScriptProviderId, "javascript"),
+            ]);
+        ToolResponse<HealthReportData> response = tool.CreateResponse();
+        HealthReportData data = response.Data!;
 
         Assert.Equal(10, data.RegisteredToolCount);
-        Assert.Equal(["server", "transport", "stdout", "network"], data.Checks.Select(check => check.Name));
+        Assert.True(data.Ready);
+        Assert.Equal(ContractValues.StatusOk, response.Status);
+        Assert.Equal(
+            ["server", "transport", "stdout", "network", "repository", "typescript_worker", "git"],
+            data.Checks.Select(check => check.Name));
         Assert.All(data.Checks, check => Assert.Equal(ContractValues.StatusOk, check.Status));
+        Assert.False(data.Checks.Single(check => check.Name == "git").Required);
+    }
+
+    [Fact]
+    public void HealthCheckExplainsMissingRootWithoutBreakingProtocolReadiness()
+    {
+        HealthCheckTool tool = new(
+            RepositoryScope.Create(null),
+            [
+                new ReadyCapabilityProvider(TypeScriptSyntaxProvider.TypeScriptProviderId, "typescript"),
+                new ReadyCapabilityProvider(TypeScriptSyntaxProvider.JavaScriptProviderId, "javascript"),
+            ]);
+        ToolResponse<HealthReportData> response = tool.CreateResponse();
+        HealthCheckEntry repository = response.Data!.Checks.Single(check => check.Name == "repository");
+
+        Assert.Equal(ContractValues.StatusPartial, response.Status);
+        Assert.False(response.Data.Ready);
+        Assert.Equal(ContractValues.ReasonRepositoryRootRequired, repository.Code);
+        Assert.Equal("Restart Sanjaya with --root <absolute-path>.", repository.Remediation);
     }
 
     [Fact]
@@ -179,5 +230,19 @@ public sealed class ProtocolFoundationToolTests
         }
 
         return directory?.FullName ?? throw new InvalidOperationException("Could not locate repository root.");
+    }
+
+    private sealed class ReadyCapabilityProvider(string id, string language) : ICapabilityProvider
+    {
+        public string Id => id;
+
+        public string ContractVersion => "1";
+
+        public IReadOnlyCollection<string> Languages => [language];
+
+        public IReadOnlyCollection<CapabilityDescriptor> GetCapabilities() =>
+        [
+            new(CapabilityKind.FileOutline, id, language, CapabilityStatus.Supported),
+        ];
     }
 }

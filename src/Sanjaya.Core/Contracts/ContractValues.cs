@@ -18,6 +18,14 @@ public static class ContractValues
 
     public const string ReasonNotImplemented = "not_implemented";
     public const string ReasonRepositoryRootRequired = "repository_root_required";
+    public const string ReasonRepositoryRootValueMissing = "repository_root_value_missing";
+    public const string ReasonRepositoryRootDuplicate = "repository_root_duplicate";
+    public const string ReasonRepositoryRootUnknownArgument = "repository_root_unknown_argument";
+    public const string ReasonRepositoryRootRelative = "repository_root_relative";
+    public const string ReasonRepositoryRootNotFound = "repository_root_not_found";
+    public const string ReasonRepositoryRootNotDirectory = "repository_root_not_directory";
+    public const string ReasonRepositoryRootInaccessible = "repository_root_inaccessible";
+    public const string ReasonRepositoryRootInvalid = "repository_root_invalid";
     public const string ReasonNotGitRepository = "not_git_repository";
     public const string ReasonStructuralProviderUnavailable = "structural_provider_unavailable";
     public const string ReasonRuntimeUnavailable = "runtime_unavailable";

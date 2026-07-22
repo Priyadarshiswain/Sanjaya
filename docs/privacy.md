@@ -101,3 +101,11 @@ content may be transmitted to it.
 Errors and logs must avoid credentials, environment-variable values, local
 absolute paths when relative paths suffice, and source content unrelated to the
 requested evidence.
+
+Launcher `--diagnose` is an explicit non-MCP, local, read-only mode. It checks
+the active Node version, packaged server and TypeScript files, installed .NET 8
+runtime, repository-directory readability, and optional Git worktree metadata.
+It never reads repository source, builds an index, loads project configuration,
+or contacts the network. Output uses stable codes and generic remediation; it
+does not echo the configured absolute root, raw subprocess stderr, or ambient
+environment values.

@@ -28,9 +28,9 @@ public sealed class FindDefinitionService(
         if (!repository.IsReady)
         {
             return Error(
-                ContractValues.ErrorRepositoryRootRequired,
-                "Definition lookup requires an explicit valid --root path.",
-                "Restart Sanjaya with --root <path>.");
+                repository.ConfigurationReason!,
+                repository.ConfigurationError!,
+                repository.ConfigurationRemediation);
         }
 
         HashSet<string> definitionProviderIds = providers

@@ -58,6 +58,9 @@ jobs:
       - name: Verify npm launcher MCP handshake
         run: npm run verify:launcher
 
+      - name: Verify first-run diagnostics
+        run: npm run verify:diagnostics
+
       - name: Inspect package contents
         run: npm run verify:package
 
@@ -104,6 +107,9 @@ jobs:
 
       - name: Inspect exact package contents
         run: npm run verify:package
+
+      - name: Verify first-run diagnostics
+        run: npm run verify:diagnostics
 
       - name: Install tarball offline and verify MCP
         run: npm run verify:installed-package

@@ -11,6 +11,12 @@ failures.
 - `repository_root_required` means an implemented discovery tool needs the
   process to be restarted with a valid explicit fully qualified
   `--root <path>`.
+- `repository_root_value_missing`, `repository_root_duplicate`, and
+  `repository_root_unknown_argument` distinguish malformed startup arguments.
+- `repository_root_relative`, `repository_root_not_found`,
+  `repository_root_not_directory`, `repository_root_inaccessible`, and
+  `repository_root_invalid` distinguish unusable configured roots without
+  echoing their values.
 - `not_git_repository` means local Git evidence is implemented but the selected
   root does not contain top-level Git worktree metadata.
 - `runtime_unavailable` means a syntax provider is included but its required
@@ -46,6 +52,15 @@ to the .NET server; Sanjaya does not search `PATH`, global packages,
 `node_modules`, or `NODE_PATH` for a runtime or compiler. If startup validation
 fails, the two providers report `runtime_unavailable` and an explicit outline
 request fails rather than silently returning generic text as AST evidence.
+
+`health_check` reports overall `ready` plus required checks for the server,
+stdio transport, stdout discipline, network boundary, repository root, and
+TypeScript worker. Optional top-level Git metadata readiness is reported
+separately and does not make the overall runtime unready; `--diagnose` also
+verifies the Git executable and worktree alignment. Failed checks carry a
+stable `code`, generic message, remediation, and `required` flag.
+`capabilities` exposes the precise repository reason and remediation even when
+MCP initialization remains healthy.
 
 ## Immediate discovery behavior
 

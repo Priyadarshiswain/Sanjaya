@@ -27,9 +27,9 @@ public sealed class IndexCodebaseService(
         if (!repository.IsReady)
         {
             return Error(
-                ContractValues.ErrorRepositoryRootRequired,
-                "Structural indexing requires an explicit valid --root path.",
-                "Restart Sanjaya with --root <path>.");
+                repository.ConfigurationReason!,
+                repository.ConfigurationError!,
+                repository.ConfigurationRemediation);
         }
 
         if (providers.Count == 0)

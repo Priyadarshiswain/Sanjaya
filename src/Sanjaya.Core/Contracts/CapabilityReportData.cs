@@ -14,6 +14,10 @@ public sealed record CapabilityReportData(
     bool DefaultNetworkAccess,
     [property: JsonPropertyName("repositoryReady")]
     bool RepositoryReady,
+    [property: JsonPropertyName("repositoryReason")]
+    string? RepositoryReason,
+    [property: JsonPropertyName("repositoryRemediation")]
+    string? RepositoryRemediation,
     [property: JsonPropertyName("tools")]
     IReadOnlyList<ToolAvailability> Tools,
     [property: JsonPropertyName("providers")]

@@ -8,9 +8,34 @@ public sealed class RepositoryScopeTests
     [Fact]
     public void MissingAndInvalidRootsRemainSafeUnreadyStates()
     {
-        Assert.False(RepositoryScope.Create(null).IsReady);
-        Assert.False(RepositoryScope.Create("relative/repository").IsReady);
-        Assert.False(RepositoryScope.Create(System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString("N"))).IsReady);
+        RepositoryScope missing = RepositoryScope.Create(null);
+        RepositoryScope relative = RepositoryScope.Create("relative/repository");
+        RepositoryScope nonexistent = RepositoryScope.Create(
+            System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString("N")));
+
+        Assert.False(missing.IsReady);
+        Assert.Equal("repository_root_required", missing.ConfigurationReason);
+        Assert.False(relative.IsReady);
+        Assert.Equal("repository_root_relative", relative.ConfigurationReason);
+        Assert.False(nonexistent.IsReady);
+        Assert.Equal("repository_root_not_found", nonexistent.ConfigurationReason);
+        Assert.DoesNotContain(System.IO.Path.GetTempPath(), nonexistent.ConfigurationError, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(RepositoryConfigurationFailure.MissingValue, "repository_root_value_missing")]
+    [InlineData(RepositoryConfigurationFailure.Duplicate, "repository_root_duplicate")]
+    [InlineData(RepositoryConfigurationFailure.UnknownArgument, "repository_root_unknown_argument")]
+    public void ParserFailuresRemainActionableWithoutInputEcho(
+        RepositoryConfigurationFailure failure,
+        string expectedReason)
+    {
+        RepositoryScope scope = RepositoryScope.Create(null, failure);
+
+        Assert.False(scope.IsReady);
+        Assert.Equal(expectedReason, scope.ConfigurationReason);
+        Assert.NotNull(scope.ConfigurationError);
+        Assert.NotNull(scope.ConfigurationRemediation);
     }
 
     [Fact]

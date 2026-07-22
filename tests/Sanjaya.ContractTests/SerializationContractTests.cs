@@ -13,7 +13,7 @@ public sealed class SerializationContractTests
             ContractValues.StatusOk,
             PublicToolNames.HealthCheck,
             "sanjaya-runtime",
-            new HealthReportData(2, [new HealthCheckEntry("server", ContractValues.StatusOk, "Running.")]),
+            new HealthReportData(2, true, [new HealthCheckEntry("server", ContractValues.StatusOk, "Running.")]),
             [],
             []);
 
@@ -52,6 +52,14 @@ public sealed class SerializationContractTests
         Assert.Equal("unavailable", ContractValues.AvailabilityUnavailable);
         Assert.Equal("not_implemented", ContractValues.ReasonNotImplemented);
         Assert.Equal("repository_root_required", ContractValues.ReasonRepositoryRootRequired);
+        Assert.Equal("repository_root_value_missing", ContractValues.ReasonRepositoryRootValueMissing);
+        Assert.Equal("repository_root_duplicate", ContractValues.ReasonRepositoryRootDuplicate);
+        Assert.Equal("repository_root_unknown_argument", ContractValues.ReasonRepositoryRootUnknownArgument);
+        Assert.Equal("repository_root_relative", ContractValues.ReasonRepositoryRootRelative);
+        Assert.Equal("repository_root_not_found", ContractValues.ReasonRepositoryRootNotFound);
+        Assert.Equal("repository_root_not_directory", ContractValues.ReasonRepositoryRootNotDirectory);
+        Assert.Equal("repository_root_inaccessible", ContractValues.ReasonRepositoryRootInaccessible);
+        Assert.Equal("repository_root_invalid", ContractValues.ReasonRepositoryRootInvalid);
         Assert.Equal("not_git_repository", ContractValues.ReasonNotGitRepository);
         Assert.Equal("structural_provider_unavailable", ContractValues.ReasonStructuralProviderUnavailable);
         Assert.Equal("definition_provider_unavailable", ContractValues.ReasonDefinitionProviderUnavailable);

@@ -14,6 +14,7 @@ dotnet build Sanjaya.sln --no-restore --configuration Release
 dotnet test Sanjaya.sln --no-build --configuration Release
 dotnet format Sanjaya.sln --verify-no-changes
 node --check bin/sanjaya-mcp.js
+node --check bin/sanjaya-diagnostics.js
 ```
 
 ## Build the npm payload
@@ -23,6 +24,7 @@ npm run build
 npm run verify:typescript
 npm run verify:typescript-worker
 npm run verify:launcher
+npm run verify:diagnostics
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
@@ -35,7 +37,8 @@ package publish excludes portable PDBs from staging. Package inspection checks
 an exact file allowlist, privacy patterns, and size ceilings. The
 installed-package check packs a real tarball, installs it into an isolated
 temporary consumer with lifecycle scripts disabled and offline mode, then
-completes an MCP handshake through the installed launcher. The
+verifies the installed version and readiness commands before completing an MCP
+handshake through the installed launcher. The
 reproducibility check performs two clean builds and compares every file hash,
 npm integrity value, and tarball hash.
 
@@ -53,6 +56,17 @@ After `npm run build`, the development launcher is:
 ```bash
 node bin/sanjaya-mcp.js --root /absolute/path/to/repository
 ```
+
+Before configuring a client, inspect the launcher contract and local readiness:
+
+```bash
+node bin/sanjaya-mcp.js --help
+node bin/sanjaya-mcp.js --version
+node bin/sanjaya-mcp.js --diagnose --root /absolute/path/to/repository
+```
+
+`--diagnose` exits after local read-only checks; it does not start MCP. See the
+[diagnostics guide](diagnostics.md) for its guarantees and stable results.
 
 It communicates using JSON-RPC over stdio, so it should be started by an MCP
 client rather than used as an interactive terminal command. The launcher

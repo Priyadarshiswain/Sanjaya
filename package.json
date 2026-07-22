@@ -30,6 +30,7 @@
   "scripts": {
     "build": "node scripts/build-package.mjs",
     "test": "dotnet test Sanjaya.sln --configuration Release",
+    "verify:diagnostics": "node scripts/verify-launcher-diagnostics.mjs",
     "verify:launcher": "node scripts/verify-mcp-launcher.mjs",
     "verify:installed-package": "node scripts/verify-installed-package.mjs",
     "verify:reproducible-package": "node scripts/verify-package-reproducibility.mjs",

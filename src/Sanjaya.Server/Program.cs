@@ -17,7 +17,8 @@ using Sanjaya.Server.Tools;
 
 try
 {
-    RepositoryScope repository = RepositoryScope.Create(RootConfiguration.Parse(args));
+    RootConfigurationResult rootConfiguration = RootConfiguration.Parse(args);
+    RepositoryScope repository = RepositoryScope.Create(rootConfiguration.Root, rootConfiguration.Failure);
     using TypeScriptWorker? typeScriptWorker = TypeScriptWorker.TryCreate(AppContext.BaseDirectory);
     HostApplicationBuilder builder = new(new HostApplicationBuilderSettings
     {

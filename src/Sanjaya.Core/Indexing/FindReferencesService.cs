@@ -31,9 +31,9 @@ public sealed class FindReferencesService(
         if (!repository.IsReady)
         {
             return Error(
-                ContractValues.ErrorRepositoryRootRequired,
-                "Reference lookup requires an explicit valid --root path.",
-                "Restart Sanjaya with --root <path>.");
+                repository.ConfigurationReason!,
+                repository.ConfigurationError!,
+                repository.ConfigurationRemediation);
         }
 
         if (references.Count == 0)
