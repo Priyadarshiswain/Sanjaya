@@ -32,6 +32,7 @@ try
         .AddSingleton<IFileOutlineProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<IStructuralChunkProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<IReferenceProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
+        .AddSingleton<ISourceRetrievalProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<ICapabilityProvider>(services => services.GetRequiredService<CSharpSyntaxProvider>())
         .AddSingleton<SearchTextService>()
         .AddSingleton<FileOutlineService>()
@@ -49,6 +50,10 @@ try
             repository,
             services.GetServices<IStructuralChunkProvider>(),
             services.GetServices<IReferenceProvider>()))
+        .AddSingleton(services => new GetSourceService(
+            repository,
+            services.GetServices<IStructuralChunkProvider>(),
+            services.GetServices<ISourceRetrievalProvider>()))
         .AddSingleton<IGitCommandRunner, GitCommandRunner>()
         .AddSingleton<RecentChangesService>()
         .AddMcpServer(options =>
@@ -71,7 +76,8 @@ try
         .WithTools<IndexCodebaseTool>(SanjayaJson.Options)
         .WithTools<SearchCodeTool>(SanjayaJson.Options)
         .WithTools<FindDefinitionTool>(SanjayaJson.Options)
-        .WithTools<FindReferencesTool>(SanjayaJson.Options);
+        .WithTools<FindReferencesTool>(SanjayaJson.Options)
+        .WithTools<GetSourceTool>(SanjayaJson.Options);
 
     await builder.Build().RunAsync().ConfigureAwait(false);
     return 0;

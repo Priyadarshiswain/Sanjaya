@@ -17,6 +17,8 @@ failures.
   structural provider that honestly advertises syntax definitions.
 - `reference_provider_unavailable` means this runtime has no active C# provider
   that honestly advertises syntax-reference candidates.
+- `source_provider_unavailable` means this runtime has no active C# provider
+  that honestly advertises exact syntax-source retrieval.
 - `index_missing` means indexed discovery is implemented but `index_codebase` has
   not created its repository-local index.
 - `index_invalid` means the expected index path is not a bounded regular local
@@ -25,12 +27,12 @@ failures.
 ## Current development runtime
 
 `capabilities`, `health_check`, `file_outline`, `search_text`, `recent_changes`,
-`index_codebase`, `search_code`, `find_definition`, and `find_references` are registered as MCP
-tools. Generic discovery and the C#
+`index_codebase`, `search_code`, `find_definition`, `find_references`, and
+`get_source` are registered as MCP tools. Generic discovery and the C#
 syntax provider report `supported` only when the process has a valid root. C#
 currently supports file outlines, structural indexing, exact syntax definition
-lookup, and syntax-reference candidates; source retrieval and call graph remain
-unavailable. The TypeScript/JavaScript provider and the deferred source tool remain
+lookup, syntax-reference candidates, and symbol-addressed source retrieval;
+call graph remains unavailable. The TypeScript/JavaScript provider remains
 unavailable with `not_implemented`. The server uses stdio and performs no
 network access by default.
 
@@ -161,6 +163,24 @@ exact total. A file may contribute at most 10,000 matches and the repository at
 most 50,000; exceeding either bound fails with `reference_limit`. Syntax
 diagnostics produce explicit partial evidence. The tool does not semantically
 distinguish same-name locals, overloads, aliases, inherited members, or types.
+
+`get_source` accepts only an exact lowercase chunk ID returned by `search_code`
+or `find_definition`. It verifies the current compatible index, reuses the
+same bounded in-memory source snapshot used for freshness validation, and asks
+the active C# provider to resolve the indexed declaration to one exact Roslyn
+syntax span. Missing, duplicate, or inconsistent resolution fails explicitly;
+the tool never accepts an arbitrary path or chooses a declaration
+heuristically.
+
+The complete declaration is returned when its UTF-8 source is at most 64 KiB.
+Larger declarations can be retrieved through an optional one-based inclusive
+`startLine` and `endLine` window that must remain inside the exact declaration.
+A window is reported as `partial` evidence and cannot expose adjacent source,
+including when declarations share a physical line. Results contain the stable
+chunk and index identifiers, provider and declaration metadata,
+repository-relative path, exact start-inclusive/end-exclusive line and column
+ranges, source text, and a `complete` flag. Syntax recovery remains explicit;
+no project build or semantic resolution is claimed.
 
 ## Local Git evidence
 

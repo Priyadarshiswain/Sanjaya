@@ -55,6 +55,7 @@ try {
     "file_outline",
     "find_definition",
     "find_references",
+    "get_source",
     "health_check",
     "index_codebase",
     "recent_changes",
@@ -183,6 +184,26 @@ try {
   await send({
     jsonrpc: "2.0",
     id: 9,
+    method: "tools/call",
+    params: { name: "get_source", arguments: { chunkId: definitionMatch.chunkId } },
+  });
+  const source = await readMessage();
+  const sourceContent = source?.result?.structuredContent;
+  if (
+    sourceContent?.data?.path !== "Sample.cs" ||
+    sourceContent?.data?.source !== "public void Run() { }" ||
+    sourceContent?.data?.complete !== true
+  ) {
+    throw new Error("Launcher did not return exact indexed C# declaration source.");
+  }
+
+  if (JSON.stringify(source).includes(repositoryRoot)) {
+    throw new Error("Source retrieval response exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 10,
     method: "tools/call",
     params: { name: "recent_changes", arguments: {} },
   });

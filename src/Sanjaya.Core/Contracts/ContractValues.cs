@@ -22,6 +22,7 @@ public static class ContractValues
     public const string ReasonStructuralProviderUnavailable = "structural_provider_unavailable";
     public const string ReasonDefinitionProviderUnavailable = "definition_provider_unavailable";
     public const string ReasonReferenceProviderUnavailable = "reference_provider_unavailable";
+    public const string ReasonSourceProviderUnavailable = "source_provider_unavailable";
     public const string ReasonIndexMissing = "index_missing";
     public const string ReasonIndexInvalid = "index_invalid";
 
@@ -45,6 +46,11 @@ public static class ContractValues
     public const string ErrorDefinitionProviderUnavailable = "definition_provider_unavailable";
     public const string ErrorReferenceProviderUnavailable = "reference_provider_unavailable";
     public const string ErrorReferenceLimit = "reference_limit";
+    public const string ErrorSourceProviderUnavailable = "source_provider_unavailable";
+    public const string ErrorChunkNotFound = "chunk_not_found";
+    public const string ErrorSourceAmbiguous = "source_ambiguous";
+    public const string ErrorSourceResolutionFailed = "source_resolution_failed";
+    public const string ErrorSourceRangeTooLarge = "source_range_too_large";
     public const string ErrorIndexPathConflict = "index_path_conflict";
     public const string ErrorIndexBusy = "index_busy";
     public const string ErrorIndexTraversalLimit = "index_traversal_limit";

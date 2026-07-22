@@ -18,5 +18,6 @@ public static class SanjayaRuntime
         + PublicToolNames.StructuralIndex.Count
         + PublicToolNames.StructuralSearch.Count
         + PublicToolNames.DefinitionLookup.Count
-        + PublicToolNames.ReferenceLookup.Count;
+        + PublicToolNames.ReferenceLookup.Count
+        + PublicToolNames.SourceRetrieval.Count;
 }

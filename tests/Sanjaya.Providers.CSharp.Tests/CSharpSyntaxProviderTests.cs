@@ -18,7 +18,7 @@ public sealed class CSharpSyntaxProviderTests
 
         Assert.Equal("1", provider.ContractVersion);
         Assert.Equal(
-            [CapabilityKind.FileOutline, CapabilityKind.StructuralChunking, CapabilityKind.Definitions, CapabilityKind.References],
+            [CapabilityKind.FileOutline, CapabilityKind.StructuralChunking, CapabilityKind.Definitions, CapabilityKind.References, CapabilityKind.SourceRetrieval],
             capabilities.Where(item => item.Status == CapabilityStatus.Supported).Select(item => item.Capability));
         Assert.All(
             capabilities.Where(item => item.Status != CapabilityStatus.Supported),
@@ -58,6 +58,51 @@ public sealed class CSharpSyntaxProviderTests
         Assert.Contains("Run();", match.Snippet, StringComparison.Ordinal);
         Assert.False(analysis.MatchesTruncated);
         Assert.Equal(0, analysis.SyntaxDiagnosticCount);
+    }
+
+    [Fact]
+    public void ResolvesIndexedDeclarationToExactSourceSpanAndReportsCollisions()
+    {
+        const string source = """
+            namespace Demo;
+            public class Sample
+            {
+                /// <summary>Runs.</summary>
+                public void Run()
+                {
+                    Console.WriteLine("run");
+                }
+            }
+            """;
+        CSharpSyntaxProvider provider = new();
+        StructuralChunk chunk = provider.AnalyzeChunks(
+            "Sample.cs", source, CancellationToken.None).Chunks.Single(item => item.Name == "Run");
+        SourceRetrievalTarget target = new(
+            chunk.Kind, chunk.Name, chunk.Container, chunk.StartLine, chunk.EndLine,
+            chunk.Content, chunk.ContentTruncated);
+
+        SourceRetrievalAnalysis resolved = provider.AnalyzeSource(
+            "Sample.cs", source, target, CancellationToken.None);
+
+        SourceDeclaration declaration = Assert.Single(resolved.Matches);
+        Assert.StartsWith("/// <summary>Runs.</summary>", declaration.Content, StringComparison.Ordinal);
+        Assert.Contains("Console.WriteLine", declaration.Content, StringComparison.Ordinal);
+        Assert.Equal(4, declaration.StartLine);
+        Assert.Equal(5, declaration.StartColumn);
+        Assert.Equal(8, declaration.EndLine);
+        Assert.Equal(6, declaration.EndColumn);
+
+        const string collision = "class Sample { void Run() { } void Run() { } }";
+        StructuralChunk duplicate = provider.AnalyzeChunks(
+            "Collision.cs", collision, CancellationToken.None).Chunks.First(item => item.Name == "Run");
+        SourceRetrievalAnalysis ambiguous = provider.AnalyzeSource(
+            "Collision.cs",
+            collision,
+            new SourceRetrievalTarget(
+                duplicate.Kind, duplicate.Name, duplicate.Container, duplicate.StartLine, duplicate.EndLine,
+                duplicate.Content, duplicate.ContentTruncated),
+            CancellationToken.None);
+        Assert.Equal(2, ambiguous.Matches.Count);
     }
 
     [Fact]

@@ -60,9 +60,10 @@ symbol-addressed source retrieval. v0.1 must describe syntax-based operations
 honestly and must not imply full build or solution semantic resolution.
 
 The current provider parses bounded source text with Roslyn syntax APIs only.
-It implements `IFileOutlineProvider` and `IStructuralChunkProvider`; it does not
-open project files, build a solution, start a subprocess, access the network,
-or write an index.
+It implements `IFileOutlineProvider`, `IStructuralChunkProvider`,
+`IReferenceProvider`, and `ISourceRetrievalProvider`; it does not open project
+files, build a solution, start a subprocess, access the network, or write an
+index.
 
 ### `Sanjaya.Providers.TypeScript`
 
@@ -73,8 +74,9 @@ gate in `third_party/typescript/README.md` is satisfied.
 ## Extension model
 
 Core exposes provider metadata through `ICapabilityProvider` and validated text
-analysis through small operation contracts. `IFileOutlineProvider` and
-`IStructuralChunkProvider` receive repository-relative paths and source text
+analysis through small operation contracts. `IFileOutlineProvider`,
+`IStructuralChunkProvider`, `IReferenceProvider`, and
+`ISourceRetrievalProvider` receive repository-relative paths and source text
 only after Core has enforced containment, regular-file, UTF-8, and size rules.
 Roslyn types never cross the provider boundary. Dynamic plugin loading and a
 separately versioned provider SDK are deferred beyond v0.1.
