@@ -44,6 +44,7 @@ public sealed class CapabilitiesTool(
         implementedTools.UnionWith(PublicToolNames.LocalGitEvidence);
         implementedTools.UnionWith(PublicToolNames.StructuralIndex);
         implementedTools.UnionWith(PublicToolNames.StructuralSearch);
+        implementedTools.UnionWith(PublicToolNames.DefinitionLookup);
         ToolAvailability[] tools = PublicToolNames.All
             .Select(CreateAvailability)
             .ToArray();
@@ -155,6 +156,38 @@ public sealed class CapabilitiesTool(
                         name,
                         ContractValues.AvailabilityUnavailable,
                         ContractValues.ReasonStructuralProviderUnavailable);
+                }
+
+                string? reason = GetIndexUnavailabilityReason();
+                if (reason is not null)
+                {
+                    return new ToolAvailability(name, ContractValues.AvailabilityUnavailable, reason);
+                }
+            }
+
+            if (string.Equals(name, PublicToolNames.FindDefinition, StringComparison.Ordinal))
+            {
+                if (!repository.IsReady)
+                {
+                    return new ToolAvailability(
+                        name,
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonRepositoryRootRequired);
+                }
+
+                bool definitionProviderAvailable = (capabilityProviders ?? [])
+                    .OfType<IStructuralChunkProvider>()
+                    .Any(provider => provider.GetCapabilities().Any(capability =>
+                        capability.Capability == CapabilityKind.Definitions
+                        && capability.Status == CapabilityStatus.Supported
+                        && capability.Provider == provider.Id
+                        && capability.Language == "csharp"));
+                if (!definitionProviderAvailable)
+                {
+                    return new ToolAvailability(
+                        name,
+                        ContractValues.AvailabilityUnavailable,
+                        ContractValues.ReasonDefinitionProviderUnavailable);
                 }
 
                 string? reason = GetIndexUnavailabilityReason();

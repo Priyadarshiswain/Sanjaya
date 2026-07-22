@@ -71,4 +71,12 @@ public static class PublicToolNames
     [
         SearchCode,
     ];
+
+    /// <summary>
+    /// Exact syntax-declaration navigation backed by the structural index.
+    /// </summary>
+    public static IReadOnlyList<string> DefinitionLookup { get; } =
+    [
+        FindDefinition,
+    ];
 }

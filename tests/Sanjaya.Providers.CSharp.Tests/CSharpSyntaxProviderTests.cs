@@ -18,7 +18,7 @@ public sealed class CSharpSyntaxProviderTests
 
         Assert.Equal("1", provider.ContractVersion);
         Assert.Equal(
-            [CapabilityKind.FileOutline, CapabilityKind.StructuralChunking],
+            [CapabilityKind.FileOutline, CapabilityKind.StructuralChunking, CapabilityKind.Definitions],
             capabilities.Where(item => item.Status == CapabilityStatus.Supported).Select(item => item.Capability));
         Assert.All(
             capabilities.Where(item => item.Status != CapabilityStatus.Supported),

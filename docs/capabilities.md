@@ -13,19 +13,22 @@ failures.
   `--root <path>`.
 - `not_git_repository` means local Git evidence is implemented but the selected
   root does not contain top-level Git worktree metadata.
-- `index_missing` means indexed search is implemented but `index_codebase` has
+- `definition_provider_unavailable` means this runtime has no active C#
+  structural provider that honestly advertises syntax definitions.
+- `index_missing` means indexed discovery is implemented but `index_codebase` has
   not created its repository-local index.
 - `index_invalid` means the expected index path is not a bounded regular local
-  file; invoking `search_code` provides the more specific safe failure.
+  file; invoking the indexed tool provides the more specific safe failure.
 
 ## Current development runtime
 
 `capabilities`, `health_check`, `file_outline`, `search_text`, `recent_changes`,
-`index_codebase`, and `search_code` are registered as MCP tools. Generic discovery and the C#
+`index_codebase`, `search_code`, and `find_definition` are registered as MCP
+tools. Generic discovery and the C#
 syntax provider report `supported` only when the process has a valid root. C#
-currently supports file outlines and structural indexing;
-definitions, references, source retrieval, and call graph remain unavailable.
-The TypeScript/JavaScript provider and all three deferred tools remain
+currently supports file outlines, structural indexing, and exact syntax
+definition lookup; references, source retrieval, and call graph remain
+unavailable. The TypeScript/JavaScript provider and both deferred tools remain
 unavailable with `not_implemented`. The server uses stdio and performs no
 network access by default.
 
@@ -126,6 +129,23 @@ Missing, corrupt, incompatible, stale, and unverifiable index states use
 distinct errors and never trigger an implicit rebuild. Syntax recovery or
 truncated indexed chunk content makes matching evidence explicitly `partial`.
 
+`find_definition` is read-only and applies exact ordinal C# declaration-name
+matching to the same compatible fresh index. Optional exact `kind`,
+`container`, and repository-relative `path` filters disambiguate common names
+and overloads. It reports `not_found`, `unique`, or `ambiguous`; ambiguity is a
+complete result rather than an error. Results use stable source ordering and
+include provider, language, declaration metadata, chunk identifier, a snippet
+of at most 480 characters, and one-based repository-relative evidence.
+
+Names and containers are limited to 240 characters. Supported v0.1 kinds are
+namespace, record, record struct, class, struct, interface, enum, delegate,
+method, constructor, destructor, property, indexer, operator, and conversion
+operator. Responses return 25 matches by default and at most 100 while
+reporting the exact total and truncation state. Lookup is case-sensitive,
+never rebuilds the index, and does not load projects, resolve invocations or
+overloads semantically, inspect referenced assemblies, or claim compiler-level
+symbol resolution.
+
 ## Local Git evidence
 
 `recent_changes` returns the current branch or detached-HEAD state, full HEAD
@@ -162,7 +182,7 @@ and command/parse failure.
 | File outline | Roslyn structure | TypeScript AST structure | Generic metadata and preview |
 | Exact text search | Supported | Supported | Supported |
 | Structural indexing | Supported | Planned | Unsupported |
-| Definitions | Syntax-based | Unsupported | Unsupported |
+| Definitions | Exact syntax declarations | Unsupported | Unsupported |
 | References | Syntax-based | Unsupported | Unsupported |
 | Symbol source retrieval | Supported | Unsupported | Unsupported |
 | Call graph | Experimental | Unsupported | Unsupported |

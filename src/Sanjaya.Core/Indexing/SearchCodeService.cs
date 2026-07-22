@@ -65,21 +65,9 @@ public sealed class SearchCodeService(
 
         try
         {
-            IndexDocument document = await new IndexDocumentReader(repository, providers)
-                .ReadCompatibleAsync(cancellationToken)
+            IndexDocument document = await new FreshIndexReader(repository, providers, limits)
+                .ReadAsync(cancellationToken)
                 .ConfigureAwait(false);
-            IndexSourceSnapshot current = await new IndexSourceScanner(repository, providers, limits)
-                .CaptureAsync(includeText: false, cancellationToken)
-                .ConfigureAwait(false);
-            IndexProvider[] activeProviders = CreateIndexProviders();
-            string currentFingerprint = IndexFingerprint.CreateRepository(activeProviders, current.Files);
-            if (currentFingerprint != document.RepositoryFingerprint)
-            {
-                return Error(
-                    ContractValues.ErrorIndexStale,
-                    "The structural index does not match the current eligible source files.",
-                    "Run index_codebase, then retry search_code.");
-            }
 
             List<Candidate> candidates = [];
             foreach (IndexChunk chunk in document.Chunks)
@@ -110,12 +98,7 @@ public sealed class SearchCodeService(
                 match.StartLine,
                 match.EndLine,
                 match.Name)).ToArray();
-            int diagnostics = document.Files.Sum(file => file.SyntaxDiagnosticCount);
-            int truncatedChunks = document.Chunks.Count(chunk => chunk.ContentTruncated);
-            List<string> warnings = [];
-            Add(warnings, "index_syntax_diagnostics_recovered", diagnostics);
-            Add(warnings, "index_chunk_content_truncated", truncatedChunks);
-            bool partial = diagnostics > 0 || truncatedChunks > 0;
+            IndexQuality quality = IndexEvidenceQuality.Inspect(document);
             SearchCodeData data = new(
                 normalizedQuery,
                 caseSensitive,
@@ -125,12 +108,12 @@ public sealed class SearchCodeService(
                 ordered.Length > maximumResults);
 
             return new ToolResponse<SearchCodeData>(
-                partial ? ContractValues.StatusPartial : ContractValues.StatusOk,
+                quality.IsPartial ? ContractValues.StatusPartial : ContractValues.StatusOk,
                 PublicToolNames.SearchCode,
                 "sanjaya-index",
                 data,
                 evidence,
-                warnings);
+                quality.Warnings);
         }
         catch (OperationCanceledException)
         {
@@ -140,18 +123,7 @@ public sealed class SearchCodeService(
         {
             return Error(failure.Code, failure.Message, Remediation(failure.Code));
         }
-        catch (IndexSourceScanFailure failure)
-        {
-            return Error(
-                ContractValues.ErrorIndexStateUnverifiable,
-                $"The current eligible source state could not be verified: {failure.Message}");
-        }
     }
-
-    private IndexProvider[] CreateIndexProviders() => providers.Select(provider => new IndexProvider(
-        provider.Id,
-        provider.ContractVersion,
-        provider.Languages.Order(StringComparer.Ordinal).ToArray())).ToArray();
 
     private static Candidate? Match(IndexChunk chunk, IReadOnlyList<string> terms, bool caseSensitive)
     {
@@ -203,7 +175,11 @@ public sealed class SearchCodeService(
             chunk.EndLine,
             score,
             orderedFields,
-            CreateSnippet(chunk.Content, terms, comparison));
+            IndexSnippet.Create(
+                chunk.Content,
+                terms,
+                comparison,
+                SearchCodeLimits.MaximumSnippetCharacters));
         return new Candidate(match);
     }
 
@@ -225,50 +201,14 @@ public sealed class SearchCodeService(
         return best;
     }
 
-    private static string CreateSnippet(
-        string content,
-        IReadOnlyList<string> terms,
-        StringComparison comparison)
-    {
-        if (content.Length <= SearchCodeLimits.MaximumSnippetCharacters)
-        {
-            return content;
-        }
-
-        int occurrence = -1;
-        foreach (string term in terms)
-        {
-            occurrence = content.IndexOf(term, comparison);
-            if (occurrence >= 0)
-            {
-                break;
-            }
-        }
-
-        int start = occurrence < 0
-            ? 0
-            : Math.Clamp(
-                occurrence - (SearchCodeLimits.MaximumSnippetCharacters / 2),
-                0,
-                content.Length - SearchCodeLimits.MaximumSnippetCharacters);
-        return content.Substring(start, SearchCodeLimits.MaximumSnippetCharacters);
-    }
-
     private static string? Remediation(string code) => code switch
     {
         ContractValues.ErrorIndexMissing => "Run index_codebase, then retry search_code.",
         ContractValues.ErrorIndexCorrupt => "Run index_codebase to replace the invalid index.",
         ContractValues.ErrorIndexIncompatible => "Run index_codebase with this Sanjaya version.",
+        ContractValues.ErrorIndexStale => "Run index_codebase, then retry search_code.",
         _ => null,
     };
-
-    private static void Add(List<string> warnings, string code, int count)
-    {
-        if (count > 0)
-        {
-            warnings.Add($"{code}:{count}");
-        }
-    }
 
     private static ToolResponse<SearchCodeData> Error(
         string code,
