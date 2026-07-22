@@ -94,7 +94,7 @@ jobs:
         run: dotnet restore Sanjaya.sln
 
       - name: Build clean portable package
-        run: npm run build -- --no-restore --disable-build-servers -m:1
+        run: npm run build -- --no-restore --disable-build-servers
 
       - name: Verify vendored TypeScript artifact
         run: npm run verify:typescript
