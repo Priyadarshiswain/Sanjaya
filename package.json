@@ -37,6 +37,7 @@
     "verify:typescript-worker": "node scripts/verify-typescript-worker.mjs",
     "verify:typescript": "node scripts/verify-typescript-artifact.mjs",
     "verify:package": "node scripts/verify-package-contents.mjs",
+    "verify:registry-metadata": "node scripts/verify-registry-metadata.mjs",
     "verify:vscode-install": "node scripts/verify-vscode-install-contract.mjs"
   },
   "mcpName": "io.github.priyadarshiswain/sanjaya"

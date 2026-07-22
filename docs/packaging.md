@@ -61,6 +61,15 @@ These checks create evidence for a future publication review. They do not
 reserve the npm name, change a version, create a registry entry, tag a release,
 or publish an artifact.
 
+`npm run verify:registry-metadata` separately proves that the repository's
+Official MCP Registry identity, npm ownership fields, exact package version,
+stdio transport, and required `--root <path>` inputs agree with this package.
+The check is offline and keeps `private: true` plus
+`0.0.0-development` mandatory; it does not validate a published artifact or
+write to a registry. Installed-tarball verification also reads the packed
+`package.json` and proves that npm preserved the exact `mcpName` ownership
+field, package name, version, and license.
+
 The future VS Code installation configuration must reference the exact
 published package version verified by this process. Its generated installation
 URL remains inactive while npm metadata is `private`, development-versioned, or
