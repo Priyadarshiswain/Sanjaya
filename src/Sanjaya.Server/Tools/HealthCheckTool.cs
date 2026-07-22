@@ -36,7 +36,7 @@ public sealed class HealthCheckTool
             new("server", ContractValues.StatusOk, "The MCP server is running."),
             new("transport", ContractValues.StatusOk, "JSON-RPC is using stdio."),
             new("stdout", ContractValues.StatusOk, "Stdout is reserved for MCP protocol messages."),
-            new("network", ContractValues.StatusOk, "Default operation performs no network access."),
+            new("network", ContractValues.StatusOk, "The default implementation contains no network operation."),
         ];
 
         HealthReportData data = new(SanjayaRuntime.RegisteredToolCount, checks);

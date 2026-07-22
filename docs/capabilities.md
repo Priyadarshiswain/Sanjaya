@@ -13,6 +13,8 @@ failures.
   `--root <path>`.
 - `not_git_repository` means local Git evidence is implemented but the selected
   root does not contain top-level Git worktree metadata.
+- `runtime_unavailable` means a syntax provider is included but its required
+  local runtime did not pass startup validation.
 - `definition_provider_unavailable` means this runtime has no active C#
   structural provider that honestly advertises syntax definitions.
 - `reference_provider_unavailable` means this runtime has no active C# provider
@@ -32,15 +34,18 @@ failures.
 syntax provider report `supported` only when the process has a valid root. C#
 currently supports file outlines, structural indexing, exact syntax definition
 lookup, syntax-reference candidates, and symbol-addressed source retrieval;
-call graph remains unavailable. The TypeScript/JavaScript provider remains
-unavailable with `not_implemented`. The server uses stdio and performs no
-network access by default.
+call graph remains unavailable. With the npm launcher and Node.js 22.13 or
+newer, the TypeScript and JavaScript providers support syntax outlines and
+structural indexing. Their definitions, references, source retrieval, and call
+graph capabilities remain unavailable with `not_implemented`. The server uses
+stdio and its default implementation contains no network operation.
 
 The package contains a provenance-verified TypeScript 6.0.3 compiler API subset
-and complete upstream notices. Merely bundling that inactive runtime does not
-change capability reporting: no TypeScript/JavaScript process is started and
-no AST claim is made until the provider's separate safety and behavior contract
-is implemented.
+and complete upstream notices. The npm launcher passes its exact Node executable
+to the .NET server; Sanjaya does not search `PATH`, global packages,
+`node_modules`, or `NODE_PATH` for a runtime or compiler. If startup validation
+fails, the two providers report `runtime_unavailable` and an explicit outline
+request fails rather than silently returning generic text as AST evidence.
 
 ## Immediate discovery behavior
 
@@ -83,11 +88,17 @@ limited to 500 items and 240 display characters per item. Syntax errors return
 bounded recovered structure as a `partial` response with a diagnostic count;
 Sanjaya does not build the project or claim semantic compilation.
 
+TypeScript (`.ts`, `.tsx`, `.mts`, `.cts`, and `.d.ts`) and JavaScript (`.js`,
+`.jsx`, `.mjs`, and `.cjs`) use the pinned TypeScript compiler syntax tree.
+They return deterministic declarations and nested containers with the same
+500-item, 240-character, 1 MiB source, and recovered-diagnostic bounds. They do
+not load `tsconfig`, resolve imports, type-check, execute source, or provide
+language-server semantics.
+
 Other readable files use `generic-text`: byte and line counts plus at most 20
-preview lines of 240 characters each. TypeScript and JavaScript continue to use
-this fallback until their AST provider ships. Both modes reject absolute,
-traversal, directory, symlink, binary, oversized, missing, and inaccessible
-inputs with stable errors.
+preview lines of 240 characters each. All modes reject absolute, traversal,
+directory, symlink, binary, oversized, missing, and inaccessible inputs with
+stable errors.
 
 The C# provider also implements structural chunks for the local index. It
 produces at most 500 deterministic chunks per file and bounds each chunk to 64
@@ -96,8 +107,9 @@ KiB.
 ## Deterministic structural index
 
 `index_codebase` explicitly rebuilds `.sanjaya/index-v1.json`. It indexes only
-files claimed by an active structural provider, currently C#, and never edits
-source files, Git metadata, or the consumer repository's `.gitignore`. A
+files claimed by an active C#, TypeScript, or JavaScript structural provider
+and never edits source files, Git metadata, or the consumer repository's
+`.gitignore`. A
 warning is returned unless the root `.gitignore` explicitly contains a direct
 `.sanjaya` rule.
 
@@ -217,13 +229,13 @@ symlinked Git metadata is rejected. Stable failures distinguish missing root,
 non-Git root, root mismatch, missing Git, timeout, output limit, cancellation,
 and command/parse failure.
 
-## Planned v0.1 matrix
+## Current v0.1 matrix
 
 | Capability | C# | TypeScript/JavaScript | Other readable files |
 |---|---|---|---|
 | File outline | Roslyn structure | TypeScript AST structure | Generic metadata and preview |
 | Exact text search | Supported | Supported | Supported |
-| Structural indexing | Supported | Planned | Unsupported |
+| Structural indexing | Supported | TypeScript AST structure | Unsupported |
 | Definitions | Exact syntax declarations | Unsupported | Unsupported |
 | References | Syntax candidates | Unsupported | Unsupported |
 | Symbol source retrieval | Supported | Unsupported | Unsupported |

@@ -1,5 +1,7 @@
 using Sanjaya.Core.Contracts;
+using Sanjaya.Core.Capabilities;
 using Sanjaya.Core.Discovery;
+using Sanjaya.Core.Providers;
 using Sanjaya.Core.Repositories;
 using Xunit;
 
@@ -85,5 +87,50 @@ public sealed class FileOutlineServiceTests
         Assert.Equal(
             ContractValues.ErrorCancelled,
             (await service.OutlineAsync("file.txt", cancellation.Token)).Error!.Code);
+    }
+
+    [Theory]
+    [InlineData(StructuralProviderFailure.Unavailable, ContractValues.ErrorStructuralProviderUnavailable)]
+    [InlineData(StructuralProviderFailure.TimedOut, ContractValues.ErrorStructuralProviderTimeout)]
+    [InlineData(StructuralProviderFailure.OutputLimit, ContractValues.ErrorStructuralProviderOutputLimit)]
+    [InlineData(StructuralProviderFailure.InvalidOutput, ContractValues.ErrorStructuralProviderInvalidOutput)]
+    public async Task StructuralProviderFailuresRemainSanitizedAndNeverDowngradeToText(
+        StructuralProviderFailure failure,
+        string expectedCode)
+    {
+        using TemporaryDirectory repository = new();
+        repository.WriteFile("source.fake", "SECRET_SOURCE_CONTENT");
+        FileOutlineService service = new(
+            RepositoryScope.Create(repository.Path),
+            [new FailingOutlineProvider(failure)]);
+
+        ToolResponse<FileOutlineData> response = await service.OutlineAsync("source.fake", CancellationToken.None);
+
+        Assert.Equal(ContractValues.StatusError, response.Status);
+        Assert.Equal("failing-outline", response.Provider);
+        Assert.Equal(expectedCode, response.Error!.Code);
+        Assert.Null(response.Data);
+        Assert.DoesNotContain("SECRET_SOURCE_CONTENT", response.Error.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain(repository.Path, response.Error.Message, StringComparison.Ordinal);
+    }
+
+    private sealed class FailingOutlineProvider(StructuralProviderFailure failure) : IFileOutlineProvider
+    {
+        public string Id => "failing-outline";
+
+        public string ContractVersion => "1";
+
+        public IReadOnlyCollection<string> Languages => ["fake"];
+
+        public bool CanHandle(string relativePath) => relativePath.EndsWith(".fake", StringComparison.Ordinal);
+
+        public IReadOnlyCollection<CapabilityDescriptor> GetCapabilities() =>
+            [new(CapabilityKind.FileOutline, Id, "fake", CapabilityStatus.Supported)];
+
+        public FileOutlineAnalysis AnalyzeOutline(
+            string relativePath,
+            string sourceText,
+            CancellationToken cancellationToken) =>
+            throw new StructuralProviderException(failure);
     }
 }

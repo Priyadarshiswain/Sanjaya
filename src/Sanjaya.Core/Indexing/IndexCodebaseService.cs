@@ -107,6 +107,10 @@ public sealed class IndexCodebaseService(
         {
             return Error(failure.Code, failure.Message);
         }
+        catch (StructuralProviderException exception)
+        {
+            return ProviderError(exception.Failure);
+        }
         catch (UnauthorizedAccessException)
         {
             return Error(
@@ -487,6 +491,24 @@ public sealed class IndexCodebaseService(
             [],
             [],
             new ErrorDetail(code, message, remediation));
+
+    private static ToolResponse<IndexCodebaseData> ProviderError(
+        StructuralProviderFailure failure) => failure switch
+        {
+            StructuralProviderFailure.Unavailable => Error(
+                ContractValues.ErrorStructuralProviderUnavailable,
+                "A structural provider runtime is unavailable.",
+                "Restart Sanjaya with a supported runtime."),
+            StructuralProviderFailure.TimedOut => Error(
+                ContractValues.ErrorStructuralProviderTimeout,
+                "A structural provider exceeded its analysis time limit."),
+            StructuralProviderFailure.OutputLimit => Error(
+                ContractValues.ErrorStructuralProviderOutputLimit,
+                "A structural provider exceeded its bounded output limit."),
+            _ => Error(
+                ContractValues.ErrorStructuralProviderInvalidOutput,
+                "A structural provider returned invalid protocol output."),
+        };
 
     private sealed record ExistingIndexInfo(
         string FormatVersion,

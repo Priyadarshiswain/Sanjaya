@@ -128,7 +128,7 @@ public sealed class FileOutlineService(
             List<string> warnings = [];
             if (analysis.SyntaxDiagnosticCount > 0)
             {
-                warnings.Add("csharp_syntax_diagnostics");
+                warnings.Add("syntax_diagnostics_recovered");
             }
 
             if (analysis.ItemsTruncated)
@@ -165,6 +165,10 @@ public sealed class FileOutlineService(
                 ContractValues.ErrorCancelled,
                 "File outline was cancelled.",
                 provider: provider.Id);
+        }
+        catch (StructuralProviderException exception)
+        {
+            return ProviderError(exception.Failure, provider.Id);
         }
     }
 
@@ -214,4 +218,27 @@ public sealed class FileOutlineService(
             [],
             [],
             new ErrorDetail(code, message, remediation));
+
+    private static ToolResponse<FileOutlineData> ProviderError(
+        StructuralProviderFailure failure,
+        string provider) => failure switch
+        {
+            StructuralProviderFailure.Unavailable => Error(
+                ContractValues.ErrorStructuralProviderUnavailable,
+                "The structural provider runtime is unavailable.",
+                "Restart Sanjaya with a supported runtime.",
+                provider),
+            StructuralProviderFailure.TimedOut => Error(
+                ContractValues.ErrorStructuralProviderTimeout,
+                "The structural provider exceeded its analysis time limit.",
+                provider: provider),
+            StructuralProviderFailure.OutputLimit => Error(
+                ContractValues.ErrorStructuralProviderOutputLimit,
+                "The structural provider exceeded its bounded output limit.",
+                provider: provider),
+            _ => Error(
+                ContractValues.ErrorStructuralProviderInvalidOutput,
+                "The structural provider returned invalid protocol output.",
+                provider: provider),
+        };
 }

@@ -25,6 +25,10 @@ if (!existsSync(serverAssembly)) {
 const child = spawn("dotnet", [serverAssembly, ...process.argv.slice(2)], {
   stdio: "inherit",
   windowsHide: true,
+  env: {
+    ...process.env,
+    SANJAYA_NODE_EXECUTABLE: process.execPath,
+  },
 });
 
 child.on("error", (error) => {

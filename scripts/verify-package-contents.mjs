@@ -29,6 +29,7 @@ const required = [
   "LICENSE",
   "NOTICE",
   "THIRD-PARTY-NOTICES.txt",
+  "dist/dotnet/runtime/typescript/typescript-worker.mjs",
   "dist/dotnet/third_party/typescript/PROVENANCE.json",
   "dist/dotnet/third_party/typescript/package/LICENSE.txt",
   "dist/dotnet/third_party/typescript/package/ThirdPartyNoticeText.txt",
@@ -43,6 +44,7 @@ for (const path of required) {
 
 const forbidden = [...files].filter(
   (path) =>
+    (path.includes("/runtime/typescript/") && !path.endsWith("/runtime/typescript/typescript-worker.mjs")) ||
     path.includes("/third_party/typescript/package/bin/") ||
     path.endsWith(".d.ts") ||
     path.endsWith(".map") ||

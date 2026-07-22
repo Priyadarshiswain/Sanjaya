@@ -17,7 +17,7 @@
     "README.md"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=22.13.0"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "build": "dotnet publish src/Sanjaya.Server/Sanjaya.Server.csproj --configuration Release --self-contained false --output dist/dotnet",
     "test": "dotnet test Sanjaya.sln --configuration Release",
     "verify:launcher": "node scripts/verify-mcp-launcher.mjs",
+    "verify:typescript-worker": "node scripts/verify-typescript-worker.mjs",
     "verify:typescript": "node scripts/verify-typescript-artifact.mjs",
     "verify:package": "node scripts/verify-package-contents.mjs"
   },
