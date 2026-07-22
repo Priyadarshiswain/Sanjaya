@@ -1,7 +1,8 @@
-export const releaseVersion = "0.1.0";
+export const releaseVersion = "0.1.1";
+export const publishedVersion = "0.1.0";
 export const releaseTag = `v${releaseVersion}`;
 export const packageName = "sanjaya-mcp";
-export const registryName = "io.github.priyadarshiswain/sanjaya";
+export const registryName = "io.github.Priyadarshiswain/sanjaya";
 
 // Candidate means the source and artifact contract is reviewed, not published.
 // Change this only after npm publication is independently verified.

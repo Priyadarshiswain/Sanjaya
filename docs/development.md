@@ -49,11 +49,12 @@ npm integrity value, and tarball hash.
 See the [packaging contract](packaging.md) for the distribution boundary and
 the exact verification guarantees.
 
-The package metadata is pinned to the published and independently verified
-`0.1.0` release. Candidate creation, tag creation, workflow dispatch,
-environment approval, npm publication, registry submission, and
-installation-link activation remain separate owner-approved actions for each
-release. See the [release runbook](releasing.md).
+The package metadata is pinned to the `0.1.1` corrective candidate; `0.1.0`
+remains the independently verified public release until publication completes.
+Candidate creation, tag creation, workflow dispatch, environment approval, npm
+publication, registry submission, and installation-link activation remain
+separate owner-approved actions. See the
+[v0.1.1 release runbook](releasing-0.1.1.md).
 
 `verify:vscode-install` proves the future VS Code user-profile configuration
 pins one exact release, passes `${workspaceFolder}` as the immutable root, and

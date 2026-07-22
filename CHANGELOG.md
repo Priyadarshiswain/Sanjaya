@@ -7,6 +7,17 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Correct the Official MCP Registry identity to match the canonical
+  capitalization of the GitHub account. Runtime behavior and MCP capabilities
+  are unchanged.
+
+### Security
+
+- Replace the bootstrap npm token path with GitHub Actions trusted publishing
+  through short-lived OIDC credentials.
+
 ## [0.1.0] - 2026-07-23
 
 ### Added

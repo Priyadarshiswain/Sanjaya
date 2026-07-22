@@ -1,6 +1,6 @@
 {
   "name": "sanjaya-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local-first codebase discovery for AI agents, with precise navigation and verifiable evidence.",
   "license": "Apache-2.0",
   "type": "module",
@@ -45,5 +45,5 @@
     "verify:registry-metadata": "node scripts/verify-registry-metadata.mjs",
     "verify:vscode-install": "node scripts/verify-vscode-install-contract.mjs"
   },
-  "mcpName": "io.github.priyadarshiswain/sanjaya"
+  "mcpName": "io.github.Priyadarshiswain/sanjaya"
 }

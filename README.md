@@ -22,6 +22,11 @@ Sanjaya `0.1.0` is available from npm as
 package was independently verified with a clean installation, launcher
 diagnostics, and an MCP handshake.
 
+A metadata-only `0.1.1` candidate corrects the Official MCP Registry identity
+to match the canonical capitalization of the GitHub account. Runtime behavior
+and the approved MCP tool contract are unchanged. Until npm lists `0.1.1`,
+`0.1.0` remains the verified public version.
+
 This release implements capability reporting, a health check, bounded
 exact-text search, Roslyn syntax outlines for C#, generic readable-file
 outlines, and bounded local Git change evidence. A bounded C#
@@ -60,18 +65,25 @@ claimed.
 Prerequisites are Node.js 22.13 or newer and the .NET 8 runtime. Git is optional
 and is needed only for `recent_changes`.
 
-Check one repository before adding Sanjaya to an MCP client:
+Check one repository with the currently verified public version before adding
+Sanjaya to an MCP client:
 
 ```bash
 npx -y sanjaya-mcp@0.1.0 --diagnose --root /absolute/path/to/repository
 ```
 
+Once npm lists the corrective release, use its exact version instead:
+
+```bash
+npx -y sanjaya-mcp@0.1.1 --diagnose --root /absolute/path/to/repository
+```
+
 An MCP client should then start the same exact package over stdio with separate
-arguments for `--root` and the repository's absolute path. Pinning `0.1.0`
-keeps setup reproducible; do not replace it with `latest`. When moving between
-projects, configure the client to substitute that project's workspace folder
-and start a separate Sanjaya process. Each process remains confined to one
-immutable repository root.
+arguments for `--root` and the repository's absolute path. Pin the exact
+version that npm shows as published—prefer `0.1.1` once available—and do not
+replace it with `latest`. When moving between projects, configure the client to
+substitute that project's workspace folder and start a separate Sanjaya
+process. Each process remains confined to one immutable repository root.
 
 Review the package name, version, command, and root argument in the client's
 trust prompt. To remove Sanjaya, remove or disable its MCP server configuration;
@@ -94,7 +106,7 @@ See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 [privacy](docs/privacy.md), [packaging](docs/packaging.md), and
 [VS Code integration](docs/vscode.md), and
 [registry metadata](docs/registry.md) for the public contract. Release operators
-should use the [approval-gated release runbook](docs/releasing.md).
+should use the [v0.1.1 approval-gated release runbook](docs/releasing-0.1.1.md).
 
 ## Approved v0.1 MCP tools
 

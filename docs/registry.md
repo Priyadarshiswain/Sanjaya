@@ -1,9 +1,11 @@
 # Official MCP Registry metadata
 
-Sanjaya has a reviewed `server.json` contract pinned to `0.1.0`, but it has not
-been submitted to the Official MCP Registry. The matching
-[`sanjaya-mcp@0.1.0`](https://www.npmjs.com/package/sanjaya-mcp) package is
-published and independently verified; no registry record exists yet.
+Sanjaya has a reviewed `server.json` candidate pinned to `0.1.1`, but it has not
+been submitted to the Official MCP Registry. The independently verified
+[`sanjaya-mcp@0.1.0`](https://www.npmjs.com/package/sanjaya-mcp) package remains
+public; its lowercase `mcpName` cannot satisfy the registry's case-sensitive
+GitHub namespace authorization. The `0.1.1` candidate corrects only that
+identity metadata and leaves runtime behavior unchanged.
 
 The registry is currently in preview and stores server metadata rather than
 the package artifact. Its [publishing quickstart](https://modelcontextprotocol.io/registry/quickstart)
@@ -12,7 +14,7 @@ requires npm `mcpName` to match the `server.json` name.
 
 ## Reviewed identity and installation shape
 
-- Registry name: `io.github.priyadarshiswain/sanjaya`
+- Registry name: `io.github.Priyadarshiswain/sanjaya`
 - Display title: `Sanjaya`
 - Source and website: the public Sanjaya GitHub repository
 - Package: exact-version `sanjaya-mcp` from the public npm registry
@@ -45,7 +47,7 @@ URL, registry-name syntax, text limits, canonical HTTPS repository fields,
 immutable repository id, exact npm identity and version agreement,
 Apache-2.0 package metadata, stdio transport, argument order, configurable
 repository path, absence of unexpected metadata, and the registry's 4 KiB JSON
-limit. It also requires the exact `0.1.0` package version, public-access
+limit. It also requires the exact `0.1.1` package version, public-access
 metadata, and npm provenance. The installed-tarball check independently proves
 that the packed npm `package.json` retains the same `mcpName`, package name,
 version, and license that the registry will use for ownership verification.
@@ -56,8 +58,9 @@ contract avoids making ordinary builds depend on a mutable network response.
 
 ## Separately approved release order
 
-The npm publication and verification steps below are complete for `0.1.0`;
-registry submission still requires separate explicit owner approval.
+The original npm publication and verification steps are complete for `0.1.0`.
+The corrected `0.1.1` package must complete the same evidence and approval
+process before registry submission receives separate owner approval.
 
 1. Review the exact stable version in `package.json`, `package-lock.json`, and
    `server.json`, then re-run every release check.
