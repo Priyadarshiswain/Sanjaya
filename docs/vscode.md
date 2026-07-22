@@ -2,20 +2,20 @@
 
 ## Current status
 
-Sanjaya has not been published, so there is no working VS Code installation
-button or registry installation command yet. The install-once configuration is
-defined and tested in the repository, but its public link remains deliberately
-inactive until the exact npm release exists and passes installed-package
-verification.
+Sanjaya has an exact `0.1.0` install configuration candidate, but the package
+has not been published. There is therefore no working VS Code installation
+button yet. The public link remains deliberately inactive until the exact npm
+release exists and passes installed-package verification.
 
 This avoids sending a first-time user to a package or version that cannot be
 installed.
 
 ## Intended single-folder experience
 
-After release, the Sanjaya documentation will provide a native VS Code MCP
-installation link. VS Code will show the proposed stdio server configuration
-and ask the user to trust it before startup. The reviewed configuration will:
+After release verification, the Sanjaya documentation can provide a native VS
+Code MCP installation link. VS Code will show the proposed stdio server
+configuration and ask the user to trust it before startup. The reviewed
+configuration will:
 
 - invoke `npx` with one exact immutable `sanjaya-mcp` version;
 - pass `--root` and `${workspaceFolder}` as separate arguments;

@@ -11,12 +11,13 @@ import {
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { handleDiagnosticMode } from "../bin/sanjaya-diagnostics.js";
+import { packageName, releaseVersion } from "./release-contract.mjs";
 
 const repositoryRoot = resolve(".");
 const launcher = join(repositoryRoot, "bin", "sanjaya-mcp.js");
 
 verifyProcess(["--help"], 0, "Usage:", "");
-verifyProcess(["--version"], 0, "sanjaya-mcp 0.0.0-development", "");
+verifyProcess(["--version"], 0, `${packageName} ${releaseVersion}`, "");
 
 const ready = verifyProcess(["--diagnose", "--root", repositoryRoot], 0, "Result: ready", "");
 assertIncludes(ready.stdout, "[ok] dotnet_runtime_ready:");

@@ -17,7 +17,9 @@ with evidence.
 
 ## Project status
 
-Sanjaya has a working, development-only MCP server and has not been released.
+Sanjaya has a reviewed `0.1.0` release candidate, but it has not been published.
+The command below will become usable only after the separately approved npm
+release is complete and independently verified.
 It implements capability reporting, a health check, bounded exact-text search,
 Roslyn syntax outlines for C#, generic readable-file outlines, and bounded local
 Git change evidence. A bounded C# structural-chunk provider powers the
@@ -32,14 +34,14 @@ TypeScript and JavaScript files receive compiler-backed syntax outlines and
 structural chunks through a bounded local worker, and those chunks participate
 in the same deterministic index and lexical search.
 Discovery is scoped to one explicit repository root per process. The npm
-package, MCP Registry entry, and installation commands do not exist yet.
+package and Official MCP Registry entry are not available yet.
 The future VS Code install-once configuration is defined and tested, but its
 public link remains inactive until an exact npm release is available. See the
 [VS Code integration contract](docs/vscode.md).
 Official MCP Registry metadata is also defined and checked offline, but no
 registry entry has been submitted. See the
 [registry metadata contract](docs/registry.md).
-The development launcher provides local `--help`, `--version`, and
+The launcher provides local `--help`, `--version`, and
 `--diagnose` commands so setup failures can be understood before an MCP client
 starts. Diagnostics report stable reason codes and remediation without reading
 source files, writing an index, contacting the network, or exposing the
@@ -48,6 +50,30 @@ The official TypeScript 6.0.3 compiler API subset and its complete notices are
 vendored for the syntax provider. Semantic TypeScript/JavaScript definitions,
 references, type checking, module resolution, and source retrieval are not
 claimed.
+
+## Install after publication
+
+Prerequisites are Node.js 22.13 or newer and the .NET 8 runtime. Git is optional
+and is needed only for `recent_changes`.
+
+Check one repository before adding Sanjaya to an MCP client:
+
+```bash
+npx -y sanjaya-mcp@0.1.0 --diagnose --root /absolute/path/to/repository
+```
+
+An MCP client should then start the same exact package over stdio with separate
+arguments for `--root` and the repository's absolute path. Pinning `0.1.0`
+keeps setup reproducible; do not replace it with `latest`. When moving between
+projects, configure the client to substitute that project's workspace folder
+and start a separate Sanjaya process. Each process remains confined to one
+immutable repository root.
+
+Review the package name, version, command, and root argument in the client's
+trust prompt. To remove Sanjaya, remove or disable its MCP server configuration;
+`npx` does not require a global Sanjaya installation. See the
+[VS Code integration contract](docs/vscode.md) and
+[first-run diagnostics](docs/diagnostics.md).
 
 ## v0.1 direction
 
@@ -63,7 +89,8 @@ claimed.
 See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 [privacy](docs/privacy.md), [packaging](docs/packaging.md), and
 [VS Code integration](docs/vscode.md), and
-[registry metadata](docs/registry.md) for the proposed public contract.
+[registry metadata](docs/registry.md) for the public contract. Release operators
+should use the [approval-gated release runbook](docs/releasing.md).
 
 ## Approved v0.1 MCP tools
 
@@ -90,7 +117,7 @@ worktree root, and indexed discovery requires an index created by
 
 ## Development
 
-The development build requires the .NET 8 SDK and Node.js 22.13 or newer. See the
+Building from source requires the .NET 8 SDK and Node.js 22.13 or newer. See the
 [development guide](docs/development.md) for validation commands and the
 [diagnostics guide](docs/diagnostics.md) for the first-run contract.
 

@@ -128,8 +128,8 @@ single-folder projects therefore creates separate correctly scoped processes
 without adding root-discovery behavior to the server.
 
 The encoded installation URL is generated from the same canonical
-configuration and is activation-locked while the package remains private or
-development-versioned. Remote environments and multi-root workspaces require
+configuration and remains activation-locked until npm publication is verified.
+Remote environments and multi-root workspaces require
 explicit configurations because their repository location or root selection
 cannot be inferred safely.
 
@@ -146,4 +146,5 @@ Capabilities remain authoritative at runtime through the `capabilities` tool
 and in [capabilities.md](capabilities.md). License and third-party obligations
 remain in the package files, and [privacy.md](privacy.md) remains authoritative
 for local data behavior. Registry publication is a later release operation;
-the current metadata and verifier retain the development publication locks.
+the current metadata and verifier retain the exact `0.1.0` candidate and
+ownership locks.

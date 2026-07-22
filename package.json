@@ -1,7 +1,6 @@
 {
   "name": "sanjaya-mcp",
-  "version": "0.0.0-development",
-  "private": true,
+  "version": "0.1.0",
   "description": "Local-first codebase discovery for AI agents, with precise navigation and verifiable evidence.",
   "license": "Apache-2.0",
   "type": "module",
@@ -27,6 +26,10 @@
     "url": "https://github.com/Priyadarshiswain/Sanjaya/issues"
   },
   "homepage": "https://github.com/Priyadarshiswain/Sanjaya#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "node scripts/build-package.mjs",
     "test": "dotnet test Sanjaya.sln --configuration Release",
@@ -34,6 +37,8 @@
     "verify:launcher": "node scripts/verify-mcp-launcher.mjs",
     "verify:installed-package": "node scripts/verify-installed-package.mjs",
     "verify:reproducible-package": "node scripts/verify-package-reproducibility.mjs",
+    "release:candidate": "node scripts/build-release-candidate.mjs",
+    "verify:release-candidate": "node scripts/verify-release-candidate.mjs",
     "verify:typescript-worker": "node scripts/verify-typescript-worker.mjs",
     "verify:typescript": "node scripts/verify-typescript-artifact.mjs",
     "verify:package": "node scripts/verify-package-contents.mjs",

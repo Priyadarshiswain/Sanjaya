@@ -6,15 +6,21 @@ import {
   createVsCodeServerConfiguration,
   parseVsCodeInstallUrl,
 } from "./vscode-install-contract.mjs";
+import {
+  assertReleasePackage,
+  packageName,
+  publicationState,
+  releaseVersion,
+} from "./release-contract.mjs";
 
 const repositoryRoot = resolve(".");
 const packageDocument = JSON.parse(readFileSync(resolve(repositoryRoot, "package.json"), "utf8"));
-const reviewedReleaseVersion = "0.1.0";
+const reviewedReleaseVersion = releaseVersion;
 const expected = {
   name: "sanjaya",
   type: "stdio",
   command: "npx",
-  args: ["-y", "sanjaya-mcp@0.1.0", "--root", "${workspaceFolder}"],
+  args: ["-y", `${packageName}@${releaseVersion}`, "--root", "${workspaceFolder}"],
 };
 
 const configuration = createVsCodeServerConfiguration(reviewedReleaseVersion);
@@ -47,7 +53,6 @@ for (const forbidden of [
 }
 
 for (const invalidVersion of [
-  packageDocument.version,
   "0.0.0",
   "0.1",
   "0.1.0-development",
@@ -65,9 +70,8 @@ for (const invalidVersion of [
   );
 }
 
-assert.equal(packageDocument.private, true, "VS Code contract work must retain the npm publication lock.");
-assert.equal(packageDocument.version, "0.0.0-development");
-assert.throws(() => createVsCodeInstallUrl(packageDocument.version));
+assertReleasePackage(packageDocument);
+assert.equal(publicationState, "candidate", "The public VS Code link must remain locked before publication.");
 
 for (const publicDocument of ["README.md", ...listPublicMarkdown(resolve(repositoryRoot, "docs"))]) {
   const content = readFileSync(resolve(repositoryRoot, publicDocument), "utf8");
@@ -75,13 +79,16 @@ for (const publicDocument of ["README.md", ...listPublicMarkdown(resolve(reposit
     !content.includes("vscode:mcp/install?"),
     `${publicDocument} exposes an active install URL before publication.`,
   );
-  assert.ok(
-    !/npx\s+(?:-y|--yes).*sanjaya-mcp@/u.test(content),
-    `${publicDocument} exposes an active registry command before publication.`,
-  );
+  for (const match of content.matchAll(/sanjaya-mcp@([^\s`"']+)/gu)) {
+    assert.equal(
+      match[1],
+      releaseVersion,
+      `${publicDocument} contains a package command that is not pinned to ${releaseVersion}.`,
+    );
+  }
 }
 
-console.log("VS Code install configuration, version pin, workspace root, and activation lock verified.");
+console.log("VS Code install configuration, v0.1.0 pin, workspace root, and candidate activation lock verified.");
 
 function listPublicMarkdown(root) {
   const result = [];

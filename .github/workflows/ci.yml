@@ -70,8 +70,10 @@ jobs:
       - name: Inspect package contents
         run: npm run verify:package
 
-      - name: Verify reproducible npm tarball
-        run: npm run verify:reproducible-package
+      - name: Build and verify exact release candidate
+        run: |
+          npm run release:candidate
+          npm run verify:release-candidate -- --require-clean
 
   package-portability:
     name: Package (${{ matrix.os }})

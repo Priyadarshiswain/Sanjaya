@@ -9,6 +9,7 @@ import {
   maximumUnpackedBytes,
   verifyPackedFiles,
 } from "./package-contract.mjs";
+import { assertReleasePackage } from "./release-contract.mjs";
 
 const npmCli = process.env.npm_execpath;
 if (!npmCli) {
@@ -17,9 +18,7 @@ if (!npmCli) {
 
 const repositoryRoot = process.cwd();
 const rootPackage = JSON.parse(readFileSync("package.json", "utf8"));
-if (rootPackage.private !== true || rootPackage.version !== "0.0.0-development") {
-  throw new Error("Package release safety locks changed.");
-}
+assertReleasePackage(rootPackage);
 for (const dependencyField of [
   "dependencies",
   "devDependencies",

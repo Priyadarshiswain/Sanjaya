@@ -1,8 +1,8 @@
 # Official MCP Registry metadata
 
-Sanjaya has a reviewed `server.json` contract, but it has not been submitted to
-the Official MCP Registry. The npm package is still private and versioned
-`0.0.0-development`; there is no installable registry release.
+Sanjaya has a reviewed `server.json` contract pinned to `0.1.0`, but it has not
+been submitted to the Official MCP Registry. The matching npm candidate has not
+been published, so there is no installable registry release.
 
 The registry is currently in preview and stores server metadata rather than
 the package artifact. Its [publishing quickstart](https://modelcontextprotocol.io/registry/quickstart)
@@ -44,10 +44,10 @@ URL, registry-name syntax, text limits, canonical HTTPS repository fields,
 immutable repository id, exact npm identity and version agreement,
 Apache-2.0 package metadata, stdio transport, argument order, configurable
 repository path, absence of unexpected metadata, and the registry's 4 KiB JSON
-limit. It also fails if `private: true` or `0.0.0-development` changes during
-metadata preparation. The installed-tarball check independently proves that
-the packed npm `package.json` retains the same `mcpName`, package name, version,
-and license that the registry will use for ownership verification.
+limit. It also requires the exact `0.1.0` package version, public-access
+metadata, and npm provenance. The installed-tarball check independently proves
+that the packed npm `package.json` retains the same `mcpName`, package name,
+version, and license that the registry will use for ownership verification.
 
 The pinned schema and current publisher behavior must be checked again during
 release review because the registry remains in preview. A focused offline
@@ -55,9 +55,8 @@ contract avoids making ordinary builds depend on a mutable network response.
 
 ## Separately approved release order
 
-1. Review the exact stable version in a release change. Replace the development
-   version in `package.json` and `server.json` with that same version, remove
-   the npm publication lock, and re-run every release check.
+1. Review the exact stable version in `package.json`, `package-lock.json`, and
+   `server.json`, then re-run every release check.
 2. Build and approve the reproducible npm artifact for that exact version.
 3. Publish the approved npm artifact and verify its installed diagnostics and
    MCP workflow from the public registry.

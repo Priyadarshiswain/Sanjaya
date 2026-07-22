@@ -30,6 +30,8 @@ npm run verify:registry-metadata
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
+npm run release:candidate
+npm run verify:release-candidate
 ```
 
 `npm run build` deletes and recreates only the ignored `dist/dotnet` staging
@@ -47,19 +49,20 @@ npm integrity value, and tarball hash.
 See the [packaging contract](packaging.md) for the distribution boundary and
 the exact verification guarantees.
 
-The package is intentionally marked `private` and versioned
-`0.0.0-development`. Do not remove those safeguards until a publication step is
-separately reviewed and approved.
+The package metadata is pinned to the reviewed `0.1.0` candidate. This does not
+mean it is published. Tag creation, workflow dispatch, environment approval,
+npm publication, registry submission, and installation-link activation remain
+separate owner-approved actions. See the [release runbook](releasing.md).
 
 `verify:vscode-install` proves the future VS Code user-profile configuration
 pins one exact release, passes `${workspaceFolder}` as the immutable root, and
-cannot generate a live installation URL from the current development version.
+keeps the live installation URL out of public docs while publication is pending.
 The public [VS Code integration guide](vscode.md) remains non-installing until
 release activation is separately approved.
 
 `verify:registry-metadata` checks `server.json` without contacting a registry.
 It locks the official schema URL, GitHub identity and repository id, npm
-package ownership fields, exact development version, stdio transport, required
+package ownership fields, exact candidate version, stdio transport, required
 repository-root input, and 4 KiB metadata ceiling. The public
 [registry metadata guide](registry.md) describes the publication boundary.
 
