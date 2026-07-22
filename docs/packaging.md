@@ -60,3 +60,9 @@ Ubuntu, macOS, and Windows with Node.js 22 and .NET 8.
 These checks create evidence for a future publication review. They do not
 reserve the npm name, change a version, create a registry entry, tag a release,
 or publish an artifact.
+
+The future VS Code installation configuration must reference the exact
+published package version verified by this process. Its generated installation
+URL remains inactive while npm metadata is `private`, development-versioned, or
+not yet published. Package publication and link activation are separate,
+explicitly reviewed release actions.

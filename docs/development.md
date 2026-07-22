@@ -25,6 +25,7 @@ npm run verify:typescript
 npm run verify:typescript-worker
 npm run verify:launcher
 npm run verify:diagnostics
+npm run verify:vscode-install
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
@@ -48,6 +49,12 @@ the exact verification guarantees.
 The package is intentionally marked `private` and versioned
 `0.0.0-development`. Do not remove those safeguards until a publication step is
 separately reviewed and approved.
+
+`verify:vscode-install` proves the future VS Code user-profile configuration
+pins one exact release, passes `${workspaceFolder}` as the immutable root, and
+cannot generate a live installation URL from the current development version.
+The public [VS Code integration guide](vscode.md) remains non-installing until
+release activation is separately approved.
 
 ## Run from an MCP client
 

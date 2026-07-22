@@ -33,6 +33,9 @@ structural chunks through a bounded local worker, and those chunks participate
 in the same deterministic index and lexical search.
 Discovery is scoped to one explicit repository root per process. The npm
 package, MCP Registry entry, and installation commands do not exist yet.
+The future VS Code install-once configuration is defined and tested, but its
+public link remains inactive until an exact npm release is available. See the
+[VS Code integration contract](docs/vscode.md).
 The development launcher provides local `--help`, `--version`, and
 `--diagnose` commands so setup failures can be understood before an MCP client
 starts. Diagnostics report stable reason codes and remediation without reading
@@ -55,8 +58,8 @@ claimed.
 - Explicit capability and degradation reporting
 
 See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
-[privacy](docs/privacy.md), and [packaging](docs/packaging.md) for the proposed
-public contract.
+[privacy](docs/privacy.md), [packaging](docs/packaging.md), and
+[VS Code integration](docs/vscode.md) for the proposed public contract.
 
 ## Approved v0.1 MCP tools
 

@@ -117,3 +117,18 @@ deterministic human-readable readiness report. It checks local runtimes,
 packaged files, the configured root, and optional Git metadata without reading
 project source or writing repository state. Normal startup keeps stdout
 exclusively for MCP JSON-RPC.
+
+## VS Code integration boundary
+
+VS Code's native user-profile MCP configuration is sufficient for the v0.1
+install-once experience; Sanjaya does not need an editor extension. The
+reviewed configuration starts the exact npm version over stdio and passes
+`${workspaceFolder}` as the explicit immutable root. Switching normal
+single-folder projects therefore creates separate correctly scoped processes
+without adding root-discovery behavior to the server.
+
+The encoded installation URL is generated from the same canonical
+configuration and is activation-locked while the package remains private or
+development-versioned. Remote environments and multi-root workspaces require
+explicit configurations because their repository location or root selection
+cannot be inferred safely.
