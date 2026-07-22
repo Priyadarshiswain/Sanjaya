@@ -21,6 +21,7 @@ public sealed class StdioProtocolTests
                 .Concat(PublicToolNames.LocalGitEvidence)
                 .Concat(PublicToolNames.StructuralIndex)
                 .Concat(PublicToolNames.StructuralSearch)
+                .Concat(PublicToolNames.DefinitionLookup)
                 .Order(),
             tools.EnumerateArray().Select(tool => tool.GetProperty("name").GetString()).Order());
         Assert.All(tools.EnumerateArray(), tool => Assert.True(tool.TryGetProperty("outputSchema", out _)));
@@ -38,6 +39,13 @@ public sealed class StdioProtocolTests
         Assert.False(searchCodeAnnotations.GetProperty("destructiveHint").GetBoolean());
         Assert.True(searchCodeAnnotations.GetProperty("idempotentHint").GetBoolean());
         Assert.False(searchCodeAnnotations.GetProperty("openWorldHint").GetBoolean());
+        JsonElement definitionTool = tools.EnumerateArray().Single(
+            tool => tool.GetProperty("name").GetString() == PublicToolNames.FindDefinition);
+        JsonElement definitionAnnotations = definitionTool.GetProperty("annotations");
+        Assert.True(definitionAnnotations.GetProperty("readOnlyHint").GetBoolean());
+        Assert.False(definitionAnnotations.GetProperty("destructiveHint").GetBoolean());
+        Assert.True(definitionAnnotations.GetProperty("idempotentHint").GetBoolean());
+        Assert.False(definitionAnnotations.GetProperty("openWorldHint").GetBoolean());
 
         JsonElement capabilities = await server.CallAsync(3, PublicToolNames.Capabilities, "{}", timeout.Token);
         AssertStructured(capabilities, 3, PublicToolNames.Capabilities, ContractValues.StatusOk, isError: false);
@@ -129,6 +137,14 @@ public sealed class StdioProtocolTests
             .EnumerateArray()
             .Single(tool => tool.GetProperty("name").GetString() == PublicToolNames.SearchCode);
         Assert.Equal(ContractValues.AvailabilitySupported, searchAvailability.GetProperty("status").GetString());
+        JsonElement definitionAvailability = indexedCapabilities
+            .GetProperty("result")
+            .GetProperty("structuredContent")
+            .GetProperty("data")
+            .GetProperty("tools")
+            .EnumerateArray()
+            .Single(tool => tool.GetProperty("name").GetString() == PublicToolNames.FindDefinition);
+        Assert.Equal(ContractValues.AvailabilitySupported, definitionAvailability.GetProperty("status").GetString());
 
         JsonElement codeSearch = await server.CallAsync(
             9,
@@ -139,6 +155,17 @@ public sealed class StdioProtocolTests
         JsonElement structuredCodeSearch = codeSearch.GetProperty("result").GetProperty("structuredContent");
         Assert.Equal("Sample.cs", structuredCodeSearch.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
         Assert.DoesNotContain(repository.Path, codeSearch.GetRawText(), StringComparison.Ordinal);
+
+        JsonElement definition = await server.CallAsync(
+            10,
+            PublicToolNames.FindDefinition,
+            "{\"name\":\"Run\",\"kind\":\"method\",\"container\":\"Sample\"}",
+            timeout.Token);
+        AssertStructured(definition, 10, PublicToolNames.FindDefinition, ContractValues.StatusOk, isError: false);
+        JsonElement structuredDefinition = definition.GetProperty("result").GetProperty("structuredContent");
+        Assert.Equal(ContractValues.ResolutionUnique, structuredDefinition.GetProperty("data").GetProperty("resolution").GetString());
+        Assert.Equal("Sample.cs", structuredDefinition.GetProperty("data").GetProperty("matches")[0].GetProperty("path").GetString());
+        Assert.DoesNotContain(repository.Path, definition.GetRawText(), StringComparison.Ordinal);
 
         JsonElement multiline = await server.CallAsync(5, PublicToolNames.SearchText, "{\"query\":\"two\\nlines\"}", timeout.Token);
         AssertStructured(multiline, 5, PublicToolNames.SearchText, ContractValues.StatusError, isError: true);

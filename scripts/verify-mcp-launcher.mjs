@@ -53,6 +53,7 @@ try {
   const expectedTools = [
     "capabilities",
     "file_outline",
+    "find_definition",
     "health_check",
     "index_codebase",
     "recent_changes",
@@ -137,6 +138,30 @@ try {
   await send({
     jsonrpc: "2.0",
     id: 7,
+    method: "tools/call",
+    params: {
+      name: "find_definition",
+      arguments: { name: "Run", kind: "method", container: "Launcher.Sample" },
+    },
+  });
+  const definition = await readMessage();
+  const definitionContent = definition?.result?.structuredContent;
+  const definitionMatch = definitionContent?.data?.matches?.[0];
+  if (
+    definitionContent?.data?.resolution !== "unique" ||
+    definitionMatch?.path !== "Sample.cs" ||
+    definitionMatch?.name !== "Run"
+  ) {
+    throw new Error("Launcher did not resolve the indexed C# syntax definition.");
+  }
+
+  if (JSON.stringify(definition).includes(repositoryRoot)) {
+    throw new Error("Definition lookup response exposed the absolute repository root.");
+  }
+
+  await send({
+    jsonrpc: "2.0",
+    id: 8,
     method: "tools/call",
     params: { name: "recent_changes", arguments: {} },
   });

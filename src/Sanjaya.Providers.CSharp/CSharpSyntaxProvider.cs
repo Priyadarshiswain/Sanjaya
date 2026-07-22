@@ -29,7 +29,7 @@ public sealed class CSharpSyntaxProvider : IFileOutlineProvider, IStructuralChun
     [
         Supported(CapabilityKind.FileOutline),
         Supported(CapabilityKind.StructuralChunking),
-        Deferred(CapabilityKind.Definitions),
+        Supported(CapabilityKind.Definitions),
         Deferred(CapabilityKind.References),
         Deferred(CapabilityKind.SourceRetrieval),
         Deferred(CapabilityKind.CallGraph),

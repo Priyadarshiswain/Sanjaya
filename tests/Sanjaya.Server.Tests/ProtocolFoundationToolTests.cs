@@ -29,15 +29,19 @@ public sealed class ProtocolFoundationToolTests
         Assert.Equal(
             ContractValues.ReasonIndexMissing,
             response.Data.Tools.Single(item => item.Name == PublicToolNames.SearchCode).Reason);
+        Assert.Equal(
+            ContractValues.ReasonIndexMissing,
+            response.Data.Tools.Single(item => item.Name == PublicToolNames.FindDefinition).Reason);
         Assert.All(
             response.Data.Tools.Where(item => item.Status == ContractValues.AvailabilityUnavailable
-                && item.Name != PublicToolNames.SearchCode),
+                && item.Name != PublicToolNames.SearchCode
+                && item.Name != PublicToolNames.FindDefinition),
             item => Assert.Equal(ContractValues.ReasonNotImplemented, item.Reason));
         ProviderAvailability csharp = response.Data.Providers.Single(
             item => item.Id == CSharpSyntaxProvider.ProviderId);
         Assert.Equal(ContractValues.AvailabilitySupported, csharp.Status);
         Assert.Equal(
-            ["file_outline", "structural_chunking"],
+            ["file_outline", "structural_chunking", "definitions"],
             csharp.Capabilities
                 .Where(item => item.Status == ContractValues.AvailabilitySupported)
                 .Select(item => item.Name));
@@ -67,6 +71,9 @@ public sealed class ProtocolFoundationToolTests
             data.Tools.Single(item => item.Name == PublicToolNames.SearchCode).Reason);
         Assert.Equal(
             ContractValues.ReasonRepositoryRootRequired,
+            data.Tools.Single(item => item.Name == PublicToolNames.FindDefinition).Reason);
+        Assert.Equal(
+            ContractValues.ReasonRepositoryRootRequired,
             data.Providers.Single(item => item.Id == "generic").Reason);
         Assert.Equal(
             ContractValues.ReasonRepositoryRootRequired,
@@ -83,9 +90,13 @@ public sealed class ProtocolFoundationToolTests
 
         ToolAvailability index = tool.CreateResponse().Data!.Tools.Single(
             item => item.Name == PublicToolNames.IndexCodebase);
+        ToolAvailability definition = tool.CreateResponse().Data!.Tools.Single(
+            item => item.Name == PublicToolNames.FindDefinition);
 
         Assert.Equal(ContractValues.AvailabilityUnavailable, index.Status);
         Assert.Equal(ContractValues.ReasonStructuralProviderUnavailable, index.Reason);
+        Assert.Equal(ContractValues.AvailabilityUnavailable, definition.Status);
+        Assert.Equal(ContractValues.ReasonDefinitionProviderUnavailable, definition.Reason);
     }
 
     [Fact]
@@ -93,7 +104,7 @@ public sealed class ProtocolFoundationToolTests
     {
         HealthReportData data = HealthCheckTool.CreateResponse().Data!;
 
-        Assert.Equal(7, data.RegisteredToolCount);
+        Assert.Equal(8, data.RegisteredToolCount);
         Assert.Equal(["server", "transport", "stdout", "network"], data.Checks.Select(check => check.Name));
         Assert.All(data.Checks, check => Assert.Equal(ContractValues.StatusOk, check.Status));
     }

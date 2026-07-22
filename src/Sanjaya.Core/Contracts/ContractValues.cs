@@ -12,10 +12,15 @@ public static class ContractValues
     public const string AvailabilitySupported = "supported";
     public const string AvailabilityUnavailable = "unavailable";
 
+    public const string ResolutionNotFound = "not_found";
+    public const string ResolutionUnique = "unique";
+    public const string ResolutionAmbiguous = "ambiguous";
+
     public const string ReasonNotImplemented = "not_implemented";
     public const string ReasonRepositoryRootRequired = "repository_root_required";
     public const string ReasonNotGitRepository = "not_git_repository";
     public const string ReasonStructuralProviderUnavailable = "structural_provider_unavailable";
+    public const string ReasonDefinitionProviderUnavailable = "definition_provider_unavailable";
     public const string ReasonIndexMissing = "index_missing";
     public const string ReasonIndexInvalid = "index_invalid";
 
@@ -36,6 +41,7 @@ public static class ContractValues
     public const string ErrorGitOutputLimit = "git_output_limit";
     public const string ErrorGitCommandFailed = "git_command_failed";
     public const string ErrorStructuralProviderUnavailable = "structural_provider_unavailable";
+    public const string ErrorDefinitionProviderUnavailable = "definition_provider_unavailable";
     public const string ErrorIndexPathConflict = "index_path_conflict";
     public const string ErrorIndexBusy = "index_busy";
     public const string ErrorIndexTraversalLimit = "index_traversal_limit";

@@ -54,6 +54,10 @@ public sealed class SerializationContractTests
         Assert.Equal("repository_root_required", ContractValues.ReasonRepositoryRootRequired);
         Assert.Equal("not_git_repository", ContractValues.ReasonNotGitRepository);
         Assert.Equal("structural_provider_unavailable", ContractValues.ReasonStructuralProviderUnavailable);
+        Assert.Equal("definition_provider_unavailable", ContractValues.ReasonDefinitionProviderUnavailable);
+        Assert.Equal("not_found", ContractValues.ResolutionNotFound);
+        Assert.Equal("unique", ContractValues.ResolutionUnique);
+        Assert.Equal("ambiguous", ContractValues.ResolutionAmbiguous);
     }
 
     [Fact]
@@ -108,6 +112,41 @@ public sealed class SerializationContractTests
         Assert.Equal(1000, match.GetProperty("score").GetInt32());
         Assert.Equal("name", match.GetProperty("matchedFields")[0].GetString());
         Assert.Equal("sha256:" + new string('a', 64), document.RootElement.GetProperty("indexFingerprint").GetString());
+    }
+
+    [Fact]
+    public void DefinitionContractReportsResolutionFiltersAndRepositoryEvidence()
+    {
+        FindDefinitionData data = new(
+            "Run",
+            "method",
+            "Demo.Sample",
+            "src/Sample.cs",
+            "sha256:" + new string('a', 64),
+            ContractValues.ResolutionUnique,
+            [new DefinitionMatch(
+                "sha256:" + new string('b', 64),
+                "csharp-roslyn-syntax",
+                "csharp",
+                "src/Sample.cs",
+                "method",
+                "Run",
+                "Demo.Sample",
+                5,
+                8,
+                "public void Run()")],
+            1,
+            false);
+
+        using JsonDocument document = JsonDocument.Parse(JsonSerializer.Serialize(data));
+        JsonElement root = document.RootElement;
+        JsonElement match = root.GetProperty("matches")[0];
+
+        Assert.Equal("unique", root.GetProperty("resolution").GetString());
+        Assert.Equal("Demo.Sample", root.GetProperty("container").GetString());
+        Assert.Equal("src/Sample.cs", match.GetProperty("path").GetString());
+        Assert.Equal("csharp", match.GetProperty("language").GetString());
+        Assert.Equal(5, match.GetProperty("startLine").GetInt32());
     }
 
     [Fact]
