@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Check out the exact release tag
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.tag }}
           fetch-depth: 0
@@ -44,14 +44,15 @@ jobs:
           test "$(git rev-parse "refs/tags/$REQUESTED_TAG^{commit}")" = "$(git rev-parse HEAD)"
 
       - name: Set up .NET 8
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 8.0.x
 
       - name: Set up Node.js 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
+          package-manager-cache: false
 
       - name: Restore npm metadata
         run: npm ci --ignore-scripts
@@ -87,7 +88,7 @@ jobs:
           npm run verify:release-candidate -- --require-clean
 
       - name: Upload exact candidate
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: sanjaya-mcp-0.1.0-candidate
           path: |
@@ -111,19 +112,20 @@ jobs:
 
     steps:
       - name: Check out the exact release tag
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ inputs.tag }}
           fetch-depth: 0
 
       - name: Set up Node.js 24 for npm provenance
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+          package-manager-cache: false
 
       - name: Download exact candidate
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: sanjaya-mcp-0.1.0-candidate
           path: dist/release
