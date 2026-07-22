@@ -87,6 +87,11 @@ capabilities listed above. On newer Node lines, the same launch policy may also
 deny network access at runtime. Sanjaya does not describe the Node Permission
 Model as an operating-system network sandbox.
 
+The complete npm payload is also checked against an exact reviewed file list
+and high-confidence private-path and private-project byte patterns. Debug
+symbols are excluded so build-machine source paths are not distributed. These
+checks are documented in the [packaging contract](packaging.md).
+
 Future semantic search or generated summaries must be separately opt-in. Before
 activation, Sanjaya must identify the endpoint and state that source-derived
 content may be transmitted to it.

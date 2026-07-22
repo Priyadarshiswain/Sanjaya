@@ -24,10 +24,23 @@ npm run verify:typescript
 npm run verify:typescript-worker
 npm run verify:launcher
 npm run verify:package
+npm run verify:installed-package
+npm run verify:reproducible-package
 ```
 
-Package inspection uses an ignored project-local npm cache so validation does
-not depend on machine-level cache ownership or permissions.
+`npm run build` deletes and recreates only the ignored `dist/dotnet` staging
+directory. It rejects symlinked staging content and release-boundary overrides.
+Release compiler paths are normalized at the repository boundary, and the
+package publish excludes portable PDBs from staging. Package inspection checks
+an exact file allowlist, privacy patterns, and size ceilings. The
+installed-package check packs a real tarball, installs it into an isolated
+temporary consumer with lifecycle scripts disabled and offline mode, then
+completes an MCP handshake through the installed launcher. The
+reproducibility check performs two clean builds and compares every file hash,
+npm integrity value, and tarball hash.
+
+See the [packaging contract](packaging.md) for the distribution boundary and
+the exact verification guarantees.
 
 The package is intentionally marked `private` and versioned
 `0.0.0-development`. Do not remove those safeguards until a publication step is
@@ -82,5 +95,7 @@ Definitions, references, and source retrieval remain C#-only.
 fixed-path loading, bounded TypeScript and JavaScript parsing, and published
 file hashes. `verify:typescript-worker` checks the strict worker protocol,
 supported syntax fixtures, inert treatment of project source, and fixed worker
-capability boundary. `verify:package` performs a JSON package dry run and
-rejects missing notices, worker output, or non-allowlisted TypeScript files.
+capability boundary. `verify:package` checks the complete npm payload against
+the reviewed allowlist and rejects missing notices, unexpected files, local
+paths, private-project markers, lifecycle scripts, dependencies, and size
+drift. The worker never executes project source.
