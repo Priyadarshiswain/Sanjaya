@@ -17,6 +17,13 @@ import Ajv2020 from "ajv/dist/2020.js";
 const evalRoot = resolve(dirname(fileURLToPath(import.meta.url)));
 const schemaRoot = join(evalRoot, "schemas");
 const exampleRoot = join(evalRoot, "examples");
+const generatedDirectoryNames = new Set([
+  ".git",
+  ".sanjaya",
+  "bin",
+  "node_modules",
+  "obj",
+]);
 
 const schemaFiles = [
   "answer.schema.json",
@@ -211,9 +218,6 @@ expectInvalid(
 );
 
 for (const file of listFiles(evalRoot)) {
-  if (file.includes(`${join(evalRoot, "node_modules")}`)) {
-    continue;
-  }
   const source = readFileSync(file, "utf8");
   const macHomePrefix = ["", "Users", ""].join("/");
   const windowsHomePrefix = ["C:", "Users", ""].join("\\");
@@ -306,6 +310,9 @@ function sha256(path) {
 function listFiles(root) {
   const files = [];
   for (const entry of readdirSync(root)) {
+    if (generatedDirectoryNames.has(entry)) {
+      continue;
+    }
     const path = join(root, entry);
     if (statSync(path).isDirectory()) {
       files.push(...listFiles(path));

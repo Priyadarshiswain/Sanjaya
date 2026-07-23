@@ -13,16 +13,20 @@ improves agent performance. No model results are published here yet.
 
 Start with [SPEC.md](SPEC.md). Machine-readable contracts are under
 [`schemas/`](schemas/), and schema-valid non-result examples are under
-[`examples/`](examples/).
+[`examples/`](examples/). The newly written SignalDesk project under
+[`fixtures/`](fixtures/) provides controlled ground truth and deterministic
+core, medium, and large scale profiles.
 
 Validate the contract without running a model:
 
 ```bash
 npm ci --prefix evals --ignore-scripts
 npm run verify --prefix evals
+npm run verify:fixture --prefix evals
 ```
 
-This check parses and compiles every JSON Schema, validates the examples, and
-proves representative invalid records are rejected. It does not contact a
-model, start Sanjaya, clone a repository, publish results, or submit anything
-to an external registry.
+These checks parse and compile every JSON Schema, validate the examples, prove
+representative invalid records are rejected, reproduce all controlled fixture
+identities, and exercise the exact public `sanjaya-mcp@0.1.1` artifact through
+MCP. They do not contact a model, clone a public evaluation repository, publish
+results, or submit anything to an external registry.

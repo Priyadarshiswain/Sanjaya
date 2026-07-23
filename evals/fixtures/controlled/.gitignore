@@ -1,0 +1,5 @@
+.sanjaya/
+node_modules/
+dist/
+coverage/
+notes/

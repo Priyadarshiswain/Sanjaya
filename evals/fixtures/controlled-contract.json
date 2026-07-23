@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "name": "SignalDesk",
+  "finalRuntimeRetryBaseSeconds": 7,
+  "profiles": {
+    "core": {
+      "commit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+      "sourceFiles": 25,
+      "trackedFiles": 37
+    },
+    "medium": {
+      "commit": "8b726ede4264a9cbbcd2a8267c1335e9a436a653",
+      "sourceFiles": 1000,
+      "trackedFiles": 1012
+    },
+    "large": {
+      "commit": "2c61fc4781db354e5b053e0668fc692716dcba27",
+      "sourceFiles": 5000,
+      "trackedFiles": 5012
+    }
+  },
+  "workingTree": [
+    " M docs/operator-runbook.md",
+    "?? local-observation.txt"
+  ]
+}
