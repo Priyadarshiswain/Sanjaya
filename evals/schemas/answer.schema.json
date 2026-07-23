@@ -15,6 +15,7 @@
   ],
   "properties": {
     "schemaVersion": {
+      "type": "string",
       "const": "1.0"
     },
     "taskId": {
