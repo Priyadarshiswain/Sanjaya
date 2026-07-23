@@ -17,7 +17,6 @@ public sealed class SearchTextService(RepositoryScope repository)
         "build",
         "coverage",
         "node_modules",
-        "packages",
         "vendor",
     };
 

@@ -22,7 +22,6 @@ internal sealed class IndexSourceScanner(
         "build",
         "coverage",
         "node_modules",
-        "packages",
         "vendor",
     };
 

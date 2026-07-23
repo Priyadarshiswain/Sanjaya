@@ -56,7 +56,7 @@ internal static class IndexFingerprint
     {
         IEnumerable<string> providerParts = providers.Select(
             provider => $"provider:{provider.Id}:{provider.ContractVersion}:{string.Join(',', provider.Languages)}");
-        return Hash(providerParts.Concat(fileParts).ToArray());
+        return Hash(providerParts.Concat(fileParts.Order(StringComparer.Ordinal)).ToArray());
     }
 
     private static string Hash(params string[] parts)

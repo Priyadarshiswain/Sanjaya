@@ -203,6 +203,11 @@ public sealed class CSharpSyntaxProvider :
             return null;
         }
 
+        if (string.IsNullOrWhiteSpace(description.Value.Name))
+        {
+            return null;
+        }
+
         FileLinePositionSpan lines = node.SyntaxTree.GetLineSpan(node.Span);
         return new OutlineItem(
             description.Value.Kind,

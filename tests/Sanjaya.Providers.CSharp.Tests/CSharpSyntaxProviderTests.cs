@@ -144,6 +144,34 @@ public sealed class CSharpSyntaxProviderTests
     }
 
     [Fact]
+    public void RecoveredModernSyntaxNeverProducesUnnamedDeclarations()
+    {
+        const string source = """
+            public static class ConnectionExtensions
+            {
+                extension(IConnection connection)
+                {
+                    public Task SendAsync() => Task.CompletedTask;
+                }
+            }
+            """;
+        CSharpSyntaxProvider provider = new();
+
+        FileOutlineAnalysis outline = provider.AnalyzeOutline(
+            "ConnectionExtensions.cs",
+            source,
+            CancellationToken.None);
+        StructuralChunkAnalysis chunks = provider.AnalyzeChunks(
+            "ConnectionExtensions.cs",
+            source,
+            CancellationToken.None);
+
+        Assert.Contains(outline.Items, item => item.Name == "ConnectionExtensions");
+        Assert.DoesNotContain(outline.Items, item => string.IsNullOrWhiteSpace(item.Name));
+        Assert.DoesNotContain(chunks.Chunks, chunk => string.IsNullOrWhiteSpace(chunk.Name));
+    }
+
+    [Fact]
     public async Task FileOutlineRoutesCSharpToRoslynAndKeepsGenericFallback()
     {
         using TemporaryRepository repository = new();
