@@ -1,0 +1,7 @@
+{"schemaVersion":"1.0","sequence":1,"elapsedMs":0,"eventType":"session_start","actor":"harness","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":2,"elapsedMs":1,"eventType":"model_turn","actor":"model","inputBytes":0,"outputBytes":207,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":3,"elapsedMs":2,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":67,"outputBytes":1009,"repositoryBytesRead":1009}
+{"schemaVersion":"1.0","sequence":4,"elapsedMs":3,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":334,"outputBytes":1500,"repositoryBytesRead":1500}
+{"schemaVersion":"1.0","sequence":5,"elapsedMs":4,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":347,"outputBytes":2028,"repositoryBytesRead":2028}
+{"schemaVersion":"1.0","sequence":6,"elapsedMs":5,"eventType":"model_turn","actor":"model","inputBytes":0,"outputBytes":1248,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":7,"elapsedMs":33596,"eventType":"final_answer","actor":"model","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0,"uncachedInputTokens":4714,"cachedInputTokens":42496,"outputTokens":1403}

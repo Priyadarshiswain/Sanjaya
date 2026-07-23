@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0072-FFA195E5",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "native",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "30a00cff5660743c6aeac7a79a5cbe08efddaee857da712a5b83c2942f409b72",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0008",
+    "answer": "The VM worker starts module-graph prewarming in `runVmTests`; it fire-and-forgets `rpc.prewarmModuleGraph` while the worker imports/loads the environment package. Both RPC-level and per-transform failures are swallowed so the worker’s normal fetch reports errors with import context.",
+    "claims": [
+      {
+        "key": "containing_function",
+        "value": "`runVmTests` in `packages/vitest/src/runtime/workers/vm.ts` initiates the prewarming call.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 30,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "rpc_method",
+        "value": "`rpc.prewarmModuleGraph(environment.viteEnvironment || environment.name, ctx.files.map(file => file.filepath))`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 43,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "overlapped_work",
+        "value": "It overlaps server transformation of the test file import graph with the worker importing/loading the environment package (noted as costly for jsdom); transformed results enter the `fetchWarmModules` snapshot so later worker fetches can use disk reads.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 42
+          }
+        ]
+      },
+      {
+        "key": "failure_policy",
+        "value": "The worker ignores rejection from the prewarm RPC (`.catch(() => {})`). The server-side prewarm also catches individual module transform/fetch errors; normal worker fetching is responsible for surfacing them with proper import context.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 41,
+            "endLine": 46
+          },
+          {
+            "path": "packages/vitest/src/node/pools/rpc.ts",
+            "startLine": 199,
+            "endLine": 211
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.8,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 42465,
+    "toolResponseBytes": 42465,
+    "uncachedInputTokens": 11897,
+    "cachedInputTokens": 39680,
+    "outputTokens": 879,
+    "wallTimeMs": 28423
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0072-FFA195E5.jsonl",
+    "sha256": "702bc6e061cd2c75149c9ff1fa39efa78c8a7b1617090da12fc63c6d0d1d9049",
+    "eventCount": 6
+  }
+}

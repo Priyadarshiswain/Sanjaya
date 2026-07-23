@@ -1,0 +1,10 @@
+{"schemaVersion":"1.0","sequence":1,"elapsedMs":0,"eventType":"session_start","actor":"harness","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":2,"elapsedMs":1,"eventType":"model_turn","actor":"model","inputBytes":0,"outputBytes":187,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":3,"elapsedMs":2,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":96,"outputBytes":42812,"repositoryBytesRead":42812}
+{"schemaVersion":"1.0","sequence":4,"elapsedMs":3,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":86,"outputBytes":305641,"repositoryBytesRead":305641}
+{"schemaVersion":"1.0","sequence":5,"elapsedMs":4,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":75,"outputBytes":1054,"repositoryBytesRead":1054}
+{"schemaVersion":"1.0","sequence":6,"elapsedMs":5,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":182,"outputBytes":154712,"repositoryBytesRead":154712}
+{"schemaVersion":"1.0","sequence":7,"elapsedMs":6,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":84,"outputBytes":11690,"repositoryBytesRead":11690}
+{"schemaVersion":"1.0","sequence":8,"elapsedMs":7,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":84,"outputBytes":13737,"repositoryBytesRead":13737}
+{"schemaVersion":"1.0","sequence":9,"elapsedMs":8,"eventType":"model_turn","actor":"model","inputBytes":0,"outputBytes":1047,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":10,"elapsedMs":36674,"eventType":"final_answer","actor":"model","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0,"uncachedInputTokens":52987,"cachedInputTokens":193536,"outputTokens":1330}

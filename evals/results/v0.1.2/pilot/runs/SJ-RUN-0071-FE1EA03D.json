@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0071-FE1EA03D",
+  "taskId": "SJ-EVAL-0007",
+  "arm": "native",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "9dedf3dd0c14c78ed13866b6b8c2c60eaa9b4ef25623c50e7cc973e9847f4cff",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0007",
+    "answer": "The worker-wide VM-pool V8 cache is `CodeCache`. A hit is validated by module identifier and exact source text. If cache production throws, it stores an entry with that source and `data: undefined`.",
+    "claims": [
+      {
+        "key": "cache_class",
+        "value": "`CodeCache`",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 7,
+            "endLine": 19
+          },
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 24,
+            "endLine": 28
+          }
+        ]
+      },
+      {
+        "key": "hit_guard",
+        "value": "The module `identifier` selects the entry, and `entry.source === source` requires exact source-text equality.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 14,
+            "endLine": 16
+          },
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 21,
+            "endLine": 26
+          }
+        ]
+      },
+      {
+        "key": "produce_failure",
+        "value": "An entry is stored as `{ source, data: undefined }` (an empty cache-data entry).",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 29,
+            "endLine": 46
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.8,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 27502,
+    "toolResponseBytes": 27502,
+    "uncachedInputTokens": 8557,
+    "cachedInputTokens": 38144,
+    "outputTokens": 706,
+    "wallTimeMs": 19672
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0071-FE1EA03D.jsonl",
+    "sha256": "508b2eceb791bed01380ebf7185ee984a9093bfc6ebe84ce3b790fc281170c7d",
+    "eventCount": 6
+  }
+}

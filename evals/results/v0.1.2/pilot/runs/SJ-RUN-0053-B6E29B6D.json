@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0053-B6E29B6D",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "sanjaya_available",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "30a00cff5660743c6aeac7a79a5cbe08efddaee857da712a5b83c2942f409b72",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0008",
+    "answer": "The VM worker starts module-graph prewarming in `runVmTests` by fire-and-forget calling `prewarmModuleGraph`; it overlaps server transforms with environment-package importing and suppresses prewarm failures so normal worker fetches report them with import context.",
+    "claims": [
+      {
+        "key": "containing_function",
+        "value": "`runVmTests` in `packages/vitest/src/runtime/workers/vm.ts`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 30,
+            "endLine": 31
+          },
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "rpc_method",
+        "value": "`rpc.prewarmModuleGraph(environment.viteEnvironment || environment.name, ctx.files.map(file => file.filepath))`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 43,
+            "endLine": 46
+          },
+          {
+            "path": "packages/vitest/src/types/rpc.ts",
+            "startLine": 23,
+            "endLine": 28
+          }
+        ]
+      },
+      {
+        "key": "overlapped_work",
+        "value": "Server-side transformation of each test file’s import graph is overlapped with the worker importing the environment package; warmed transforms are then available through the `fetchWarmModules` snapshot.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 41
+          },
+          {
+            "path": "packages/vitest/src/types/rpc.ts",
+            "startLine": 23,
+            "endLine": 26
+          }
+        ]
+      },
+      {
+        "key": "failure_policy",
+        "value": "Failures are intentionally ignored via `.catch(() => {})`; the worker’s normal fetch path reports them with the proper import context.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 41,
+            "endLine": 46
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.7142857142857143,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 49966,
+    "toolResponseBytes": 49966,
+    "uncachedInputTokens": 14470,
+    "cachedInputTokens": 40192,
+    "outputTokens": 916,
+    "wallTimeMs": 23985
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0053-B6E29B6D.jsonl",
+    "sha256": "923d60f6a492532db7f9cb7e45e0fda6e4baebfc3ef9de0cd97dd8d892671b2a",
+    "eventCount": 6
+  }
+}

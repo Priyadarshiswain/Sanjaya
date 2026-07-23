@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0047-96C8BE38",
+  "taskId": "SJ-EVAL-0006",
+  "arm": "native",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "b9f8be42547ad795402a518545ad6b03d509c54e18fe08bf322aa58943ecdff8",
+    "repositoryCommit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0006",
+    "answer": "AddMcp is defined by FastEndpoints.Mcp.Extensions; AddA2A is defined by FastEndpoints.A2A.Extensions.",
+    "claims": [
+      {
+        "key": "add_mcp_container",
+        "value": "FastEndpoints.Mcp.Extensions defines `public static IServiceCollection AddMcp(this IServiceCollection services, Action<McpOptions>? configure = null)`.",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 10,
+            "endLine": 10
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 24,
+            "endLine": 24
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 33,
+            "endLine": 33
+          }
+        ]
+      },
+      {
+        "key": "add_a2a_container",
+        "value": "FastEndpoints.A2A.Extensions defines `public static IServiceCollection AddA2A(this IServiceCollection services, Action<A2AOptions>? configure = null)`.",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 6,
+            "endLine": 6
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 20,
+            "endLine": 20
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 28,
+            "endLine": 28
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 6364,
+    "toolResponseBytes": 6364,
+    "uncachedInputTokens": 4050,
+    "cachedInputTokens": 31488,
+    "outputTokens": 607,
+    "wallTimeMs": 21064
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0047-96C8BE38.jsonl",
+    "sha256": "adde709fa1b198d18ae11c05e7bd2d05a6699c4e78f4a9ba6108d722b4b8f361",
+    "eventCount": 5
+  }
+}

@@ -23,7 +23,11 @@ import { prepareControlledFixture } from "./prepare-controlled-fixture.mjs";
 import { scoreAnswer } from "./scorer.mjs";
 
 const evalRoot = resolve(dirname(fileURLToPath(import.meta.url)));
-const protocol = readJson(join(evalRoot, "protocol", "pilot.json"));
+const study = optionalArgument("--study") ?? "pilot";
+if (!["pilot", "guided"].includes(study)) {
+  throw new Error("--study must be pilot or guided.");
+}
+const protocol = readJson(join(evalRoot, "protocol", `${study}.json`));
 const manifest = readJson(join(evalRoot, "repositories", "manifest.json"));
 const pilot = readJson(join(evalRoot, "tasks", "pilot.json"));
 const launcherPath = join(
@@ -49,7 +53,7 @@ if (!Number.isInteger(limit) && limit !== Number.POSITIVE_INFINITY) {
   throw new Error("--limit must be a positive integer.");
 }
 
-const resultsRoot = join(evalRoot, "results", "v0.1.2", "pilot");
+const resultsRoot = join(evalRoot, "results", "v0.1.2", study);
 const runsRoot = join(resultsRoot, "runs");
 const tracesRoot = join(resultsRoot, "traces");
 mkdirSync(runsRoot, { recursive: true });
@@ -224,7 +228,9 @@ function buildPlan() {
   return unsorted.map((entry, index) => ({
     ...entry,
     runId:
-      `SJ-RUN-${String(index + 1).padStart(4, "0")}-`
+      `SJ-RUN-${String(
+        protocol.design.runNumberOffset + index + 1,
+      ).padStart(4, "0")}-`
       + entry.orderHash.slice(0, 8).toUpperCase(),
   }));
 }
@@ -358,7 +364,7 @@ function runCodex({
     "-c",
     "project_doc_max_bytes=0",
   ];
-  if (arm === "sanjaya_available") {
+  if (arm !== "native") {
     args.push(
       "-c",
       `mcp_servers.sanjaya.command=${tomlString(process.execPath)}`,
@@ -415,7 +421,7 @@ function runCodex({
 }
 
 function buildPrompt(task) {
-  return [
+  const lines = [
     "You are participating in a frozen code-discovery evaluation.",
     "Investigate only the read-only repository snapshot in the current directory.",
     "Do not modify files. Do not use network access.",
@@ -425,7 +431,11 @@ function buildPrompt(task) {
     `Task ID: ${task.id}`,
     `Required claim keys: ${task.groundTruth.requiredClaims.map((claim) => claim.key).join(", ")}`,
     `Question: ${task.question}`,
-  ].join("\n");
+  ];
+  if (protocol.design.guidedInstruction) {
+    lines.splice(6, 0, protocol.design.guidedInstruction);
+  }
+  return lines.join("\n");
 }
 
 function sanitizeEvents(events, wallTimeMs, status) {

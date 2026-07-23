@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0048-9B7DD0DD",
+  "taskId": "SJ-EVAL-0010",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "7f7c09b15869d55bc40e116ebc79090f492c78b0ce3953e7da4d3e681ee08e5e",
+    "repositoryCommit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0010",
+    "answer": "The helper exports default function `connectToKiota`. It starts Kiota with the `rpc` argument, returns `new Error(errorMessage)` when its callback throws (using `error.data.message` when available, otherwise `An unknown error occurred`), and finally ends the child stdin then kills the child process.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "The default-exported helper function is `connectToKiota`.",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 6,
+            "endLine": 6
+          }
+        ]
+      },
+      {
+        "key": "child_argument",
+        "value": "The spawned Kiota child process receives the argument `rpc`.",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 9,
+            "endLine": 9
+          }
+        ]
+      },
+      {
+        "key": "callback_error_result",
+        "value": "It returns `new Error(errorMessage)`, where `errorMessage` is `error.data.message` if available, otherwise `An unknown error occurred`.",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 23,
+            "endLine": 27
+          }
+        ]
+      },
+      {
+        "key": "child_cleanup",
+        "value": "In `finally`, it calls `childProcess.stdin?.end()` and `childProcess.kill()`.",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 28,
+            "endLine": 34
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 930458,
+    "toolResponseBytes": 930458,
+    "uncachedInputTokens": 14240,
+    "cachedInputTokens": 64000,
+    "outputTokens": 818,
+    "wallTimeMs": 22979
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0048-9B7DD0DD.jsonl",
+    "sha256": "d14755b6238b04c2023d83ef98c976e8570b23951fb9dac677b201a0d63202d8",
+    "eventCount": 6
+  }
+}

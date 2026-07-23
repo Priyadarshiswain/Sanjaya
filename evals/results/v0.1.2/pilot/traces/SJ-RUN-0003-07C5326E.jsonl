@@ -1,0 +1,2 @@
+{"schemaVersion":"1.0","sequence":1,"elapsedMs":0,"eventType":"session_start","actor":"harness","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":2,"elapsedMs":3530,"eventType":"error","actor":"harness","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0,"errorCode":"agent_error"}

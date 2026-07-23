@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0046-8C0A8059",
+  "taskId": "SJ-EVAL-0007",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "9dedf3dd0c14c78ed13866b6b8c2c60eaa9b4ef25623c50e7cc973e9847f4cff",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0007",
+    "answer": "The worker-wide V8 cache is `CodeCache`. A hit requires the requested identifier to locate an entry and that entry's `source` exactly equal the requested source. If cache-data production throws, it stores an entry with that source and `data: undefined`.",
+    "claims": [
+      {
+        "key": "cache_class",
+        "value": "`CodeCache` is the worker-wide V8 code-cache class used by VM pools.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 7,
+            "endLine": 18
+          },
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 24,
+            "endLine": 26
+          }
+        ]
+      },
+      {
+        "key": "hit_guard",
+        "value": "The cache lookup uses the module `identifier` to retrieve an entry, then requires `entry.source === source` for a hit.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 21,
+            "endLine": 26
+          }
+        ]
+      },
+      {
+        "key": "produce_failure",
+        "value": "It stores `{ source, data: undefined }`—an empty cache entry—when `produce()` throws.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 29,
+            "endLine": 46
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.75,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 124744,
+    "toolResponseBytes": 124744,
+    "uncachedInputTokens": 20620,
+    "cachedInputTokens": 76800,
+    "outputTokens": 865,
+    "wallTimeMs": 22802
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0046-8C0A8059.jsonl",
+    "sha256": "762511fccb3e23b5cd15e0feca0f076898141cb11f8128090ad5e53e5d830ba9",
+    "eventCount": 6
+  }
+}

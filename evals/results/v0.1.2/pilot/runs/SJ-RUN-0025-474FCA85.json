@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0025-474FCA85",
+  "taskId": "SJ-EVAL-0009",
+  "arm": "sanjaya_available",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "d7b08725f97e30201f76be4003a8594ba5b9528ad102d583612d4ad967856ec4",
+    "repositoryCommit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0009",
+    "answer": "The TypeScript writer is Kiota.Builder.Writers.TypeScript.CodeMethodWriter. When a method’s parent is a CodeClass, WriteCodeElement writes the method documentation and prototype, then throws InvalidOperationException because TypeScript method implementations are not generated.",
+    "claims": [
+      {
+        "key": "writer_type",
+        "value": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 9,
+            "endLine": 13
+          }
+        ]
+      },
+      {
+        "key": "class_parent_behavior",
+        "value": "After writing documentation and the method prototype, WriteCodeElement throws InvalidOperationException when codeElement.Parent is CodeClass, stating that no method implementations are generated in TypeScript.",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 20,
+            "endLine": 26
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.5,
+    "claimRecall": 0.5,
+    "claimF1": 0.5,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 18355,
+    "toolResponseBytes": 18355,
+    "uncachedInputTokens": 6329,
+    "cachedInputTokens": 33536,
+    "outputTokens": 594,
+    "wallTimeMs": 18120
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0025-474FCA85.jsonl",
+    "sha256": "b33c8381d9ee47c8da75b26b8b05893747e3ffec262c07a35e463a8f9f90d01b",
+    "eventCount": 5
+  }
+}

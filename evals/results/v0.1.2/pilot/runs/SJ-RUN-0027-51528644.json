@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0027-51528644",
+  "taskId": "SJ-EVAL-0011",
+  "arm": "sanjaya_available",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "b87c9be43b79a79a0295b1af87ddc3d51f7262019e017bc81699241fa897d547",
+    "repositoryCommit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0011",
+    "answer": "The cancelled detached-launch cleanup path is `LaunchAndWaitForBackchannelAsync`, which invokes `RequestGracefulShutdownThenForceKillAsync`. The shutdown service is deliberately passed `CancellationToken.None`, not the caller's cancelled token.",
+    "claims": [
+      {
+        "key": "containing_method",
+        "value": "`AppHostLauncher.LaunchAndWaitForBackchannelAsync` catches `OperationCanceledException` and invokes cleanup after the child has been started.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 372,
+            "endLine": 400
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          }
+        ]
+      },
+      {
+        "key": "cleanup_helper",
+        "value": "`RequestGracefulShutdownThenForceKillAsync`",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      },
+      {
+        "key": "shutdown_token",
+        "value": "No. `ProcessTreeGracefulShutdownService.StopProcessTreeAsync` receives `CancellationToken.None`, rather than the caller's cancelled token.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.6,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 692198,
+    "toolResponseBytes": 692198,
+    "uncachedInputTokens": 22023,
+    "cachedInputTokens": 75776,
+    "outputTokens": 904,
+    "wallTimeMs": 26446
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0027-51528644.jsonl",
+    "sha256": "bd49f10cdaf330fdf2b64252ab783ef5a7772527775c20e152aec5552c2c21a4",
+    "eventCount": 6
+  }
+}

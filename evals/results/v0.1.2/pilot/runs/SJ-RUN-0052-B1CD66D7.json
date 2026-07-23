@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0052-B1CD66D7",
+  "taskId": "SJ-EVAL-0010",
+  "arm": "sanjaya_available",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "7f7c09b15869d55bc40e116ebc79090f492c78b0ce3953e7da4d3e681ee08e5e",
+    "repositoryCommit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0010",
+    "answer": "The npm-package helper is the default-exported `connectToKiota` function. It spawns Kiota with `rpc`, converts callback failures to an `Error`, and closes stdin before killing the child in `finally`.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "`connectToKiota` (default export)",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 6,
+            "endLine": 6
+          }
+        ]
+      },
+      {
+        "key": "child_argument",
+        "value": "`[\"rpc\"]`",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 9,
+            "endLine": 9
+          }
+        ]
+      },
+      {
+        "key": "callback_error_result",
+        "value": "Returns `new Error(errorMessage)`, where `errorMessage` is `error.data.message` when present, otherwise `'An unknown error occurred'`.",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 23,
+            "endLine": 27
+          }
+        ]
+      },
+      {
+        "key": "child_cleanup",
+        "value": "In `finally`, it ends `childProcess.stdin` and calls `childProcess.kill()` (after disposing the RPC reader, writer, and connection).",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 28,
+            "endLine": 34
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 9545,
+    "toolResponseBytes": 9545,
+    "uncachedInputTokens": 5807,
+    "cachedInputTokens": 30976,
+    "outputTokens": 716,
+    "wallTimeMs": 21753
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0052-B1CD66D7.jsonl",
+    "sha256": "7d46f37472ff83fef76a6a8674226839412b4396ddc1444d6845e16d478e5528",
+    "eventCount": 6
+  }
+}

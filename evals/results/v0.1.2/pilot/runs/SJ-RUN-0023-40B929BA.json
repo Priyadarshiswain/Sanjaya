@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0023-40B929BA",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "native",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "30a00cff5660743c6aeac7a79a5cbe08efddaee857da712a5b83c2942f409b72",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0008",
+    "answer": "The VM worker starts graph prewarming in `runVmTests`; it fire-and-forgets `rpc.prewarmModuleGraph` while environment-package importing proceeds, and suppresses prewarm errors so normal worker fetches report them with import context.",
+    "claims": [
+      {
+        "key": "containing_function",
+        "value": "`runVmTests` in `packages/vitest/src/runtime/workers/vm.ts`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 30,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "rpc_method",
+        "value": "`rpc.prewarmModuleGraph(environment.viteEnvironment || environment.name, ctx.files.map(file => file.filepath))`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 43,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "overlapped_work",
+        "value": "Server transformation of each test file's import graph overlaps the worker importing the environment package.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 40
+          },
+          {
+            "path": "packages/vitest/src/types/rpc.ts",
+            "startLine": 23,
+            "endLine": 26
+          }
+        ]
+      },
+      {
+        "key": "failure_policy",
+        "value": "Errors from prewarming are ignored via `.catch(() => {})`; the worker's own fetch subsequently reports failures with the proper import context.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 40,
+            "endLine": 46
+          },
+          {
+            "path": "test/e2e/test/vm-threads.test.ts",
+            "startLine": 85,
+            "endLine": 101
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 49429,
+    "toolResponseBytes": 49429,
+    "uncachedInputTokens": 16360,
+    "cachedInputTokens": 38144,
+    "outputTokens": 838,
+    "wallTimeMs": 23012
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0023-40B929BA.jsonl",
+    "sha256": "46f74f2c343bafa8b08f0f01a3fc528dc7c3963ef6e155a1e2db06a3a5fc907b",
+    "eventCount": 5
+  }
+}
