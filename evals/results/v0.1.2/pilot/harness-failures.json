@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "failures": [
+    {
+      "runId": "SJ-RUN-0001-043A6BD6",
+      "phase": "before_model_request",
+      "reason": "The outer workspace sandbox denied Codex CLI access to its authenticated local state database."
+    },
+    {
+      "runId": "SJ-RUN-0002-06BAD53A",
+      "phase": "response_schema_validation",
+      "reason": "The API rejected the generation schema because a const property omitted its explicit type."
+    },
+    {
+      "runId": "SJ-RUN-0003-07C5326E",
+      "phase": "response_schema_validation",
+      "reason": "The API rejected JSON Schema keywords supported by the public validation contract but not by structured output."
+    }
+  ]
+}

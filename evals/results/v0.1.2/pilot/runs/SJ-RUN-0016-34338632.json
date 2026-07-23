@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0016-34338632",
+  "taskId": "SJ-EVAL-0009",
+  "arm": "native",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "d7b08725f97e30201f76be4003a8594ba5b9528ad102d583612d4ad967856ec4",
+    "repositoryCommit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0009",
+    "answer": "The TypeScript writer is Kiota.Builder.Writers.TypeScript.CodeMethodWriter. WriteCodeElement writes the documentation and method prototype, then throws InvalidOperationException(\"No method implementations are generated in typescript: either functions or constants.\") when the parent is a CodeClass.",
+    "claims": [
+      {
+        "key": "writer_type",
+        "value": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 9,
+            "endLine": 13
+          }
+        ]
+      },
+      {
+        "key": "class_parent_behavior",
+        "value": "After writing method documentation and the method prototype, it throws InvalidOperationException with the message \"No method implementations are generated in typescript: either functions or constants.\" when codeElement.Parent is CodeClass.",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 20,
+            "endLine": 27
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.5,
+    "claimRecall": 0.5,
+    "claimF1": 0.5,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 49175,
+    "toolResponseBytes": 49175,
+    "uncachedInputTokens": 13326,
+    "cachedInputTokens": 39680,
+    "outputTokens": 578,
+    "wallTimeMs": 16995
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0016-34338632.jsonl",
+    "sha256": "81d0f74eef2cc1fd4bf11a58915a16df67b5456315b3052d2cd6080c74ccc79b",
+    "eventCount": 5
+  }
+}

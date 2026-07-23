@@ -1,0 +1,815 @@
+{
+  "schemaVersion": "1.0",
+  "tasks": [
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0001",
+      "title": "Locate the production retry-delay implementation",
+      "category": "target_location",
+      "difficulty": "intermediate",
+      "repository": {
+        "id": "signaldesk-core",
+        "commit": "c321a020bbb810ade59d63a48210de9fa84f0f52"
+      },
+      "languages": ["csharp"],
+      "sizeBand": "controlled",
+      "indexState": "warm",
+      "question": "Find the production backend method that calculates the next retry delay. Report its method name, fully qualified containing type, and maximum configured retry attempts, with repository-relative line evidence.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "method_name",
+            "description": "Production retry-delay method.",
+            "matchMode": "exact",
+            "acceptedValues": ["CalculateNextDelay"],
+            "acceptableEvidence": [
+              {
+                "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+                "startLine": 8,
+                "endLine": 20
+              }
+            ]
+          },
+          {
+            "key": "container",
+            "description": "Fully qualified production containing type.",
+            "matchMode": "exact",
+            "acceptedValues": ["SignalDesk.Relay.RetryPolicy"],
+            "acceptableEvidence": [
+              {
+                "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+                "startLine": 1,
+                "endLine": 8
+              }
+            ]
+          },
+          {
+            "key": "maximum_attempts",
+            "description": "Maximum retry-attempt constant.",
+            "matchMode": "exact",
+            "acceptedValues": ["6"],
+            "acceptableEvidence": [
+              {
+                "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+                "startLine": 5,
+                "endLine": 5
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "The legacy retry class is presented as the production implementation.",
+            "severity": "critical",
+            "claimKey": "container",
+            "rejectedValues": ["SignalDesk.Legacy.RetryPolicy"]
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["controlled", "csharp", "natural_language"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0002",
+      "title": "Resolve duplicate C# RetryPolicy declarations",
+      "category": "definition_ambiguity",
+      "difficulty": "intermediate",
+      "repository": {
+        "id": "signaldesk-core",
+        "commit": "c321a020bbb810ade59d63a48210de9fa84f0f52"
+      },
+      "languages": ["csharp"],
+      "sizeBand": "controlled",
+      "indexState": "warm",
+      "question": "How many C# classes named RetryPolicy are declared in this repository? Identify both fully qualified types and state which one is obsolete, with evidence for every declaration.",
+      "groundTruth": {
+        "expectedOutcome": "ambiguous",
+        "requiredClaims": [
+          {
+            "key": "declaration_count",
+            "description": "Number of C# RetryPolicy class declarations.",
+            "matchMode": "exact",
+            "acceptedValues": ["2"],
+            "acceptableEvidence": [
+              {
+                "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+                "startLine": 1,
+                "endLine": 4
+              },
+              {
+                "path": "backend/src/SignalDesk.Application/Legacy/RetryPolicy.cs",
+                "startLine": 1,
+                "endLine": 4
+              }
+            ]
+          },
+          {
+            "key": "production_type",
+            "description": "Non-obsolete retry policy type.",
+            "matchMode": "exact",
+            "acceptedValues": ["SignalDesk.Relay.RetryPolicy"],
+            "acceptableEvidence": [
+              {
+                "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+                "startLine": 1,
+                "endLine": 4
+              }
+            ]
+          },
+          {
+            "key": "obsolete_type",
+            "description": "Obsolete retry policy type.",
+            "matchMode": "exact",
+            "acceptedValues": ["SignalDesk.Legacy.RetryPolicy"],
+            "acceptableEvidence": [
+              {
+                "path": "backend/src/SignalDesk.Application/Legacy/RetryPolicy.cs",
+                "startLine": 1,
+                "endLine": 4
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "Only one C# RetryPolicy declaration is reported.",
+            "severity": "critical",
+            "claimKey": "declaration_count",
+            "rejectedValues": ["1"]
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["controlled", "csharp", "ambiguity"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0003",
+      "title": "Explain the frontend retry preview calculation",
+      "category": "typescript_javascript_structure",
+      "difficulty": "basic",
+      "repository": {
+        "id": "signaldesk-core",
+        "commit": "c321a020bbb810ade59d63a48210de9fa84f0f52"
+      },
+      "languages": ["typescript"],
+      "sizeBand": "controlled",
+      "indexState": "warm",
+      "question": "Locate the frontend function that previews retry delay. Report the exported function name, how it bounds the attempt, and the exact expression used for the returned delay, with line evidence.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "function_name",
+            "description": "Exported retry-preview function.",
+            "matchMode": "exact",
+            "acceptedValues": ["calculateRetryPreview"],
+            "acceptableEvidence": [
+              {
+                "path": "frontend/src/app/services/retry-preview.ts",
+                "startLine": 3,
+                "endLine": 6
+              }
+            ]
+          },
+          {
+            "key": "bounded_attempt",
+            "description": "Expression that bounds the attempt.",
+            "matchMode": "exact",
+            "acceptedValues": ["Math.min(attempt, config.maximumRetryAttempts)"],
+            "acceptableEvidence": [
+              {
+                "path": "frontend/src/app/services/retry-preview.ts",
+                "startLine": 7,
+                "endLine": 7
+              }
+            ]
+          },
+          {
+            "key": "delay_expression",
+            "description": "Expression returned as the preview delay.",
+            "matchMode": "exact",
+            "acceptedValues": ["config.retryBaseSeconds * 2 ** boundedAttempt"],
+            "acceptableEvidence": [
+              {
+                "path": "frontend/src/app/services/retry-preview.ts",
+                "startLine": 8,
+                "endLine": 8
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "The historical browser-only RetryPolicy is reported as the preview implementation.",
+            "severity": "critical",
+            "claimKey": "function_name",
+            "rejectedValues": ["RetryPolicy.calculateNextDelay"]
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["controlled", "typescript", "structure"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0004",
+      "title": "Recover recent committed and working-tree changes",
+      "category": "recent_changes",
+      "difficulty": "advanced",
+      "repository": {
+        "id": "signaldesk-core",
+        "commit": "c321a020bbb810ade59d63a48210de9fa84f0f52"
+      },
+      "languages": ["typescript", "generic"],
+      "sizeBand": "controlled",
+      "indexState": "none",
+      "question": "Summarize the two most recent commits and the current working-tree changes. Give both commit subjects and both modified or untracked repository-relative paths. Do not treat the working-tree observation as committed.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "latest_commit",
+            "description": "Most recent commit subject.",
+            "matchMode": "exact",
+            "acceptedValues": ["Align the retry preview default"],
+            "acceptableEvidence": []
+          },
+          {
+            "key": "previous_commit",
+            "description": "Second-most-recent commit subject.",
+            "matchMode": "exact",
+            "acceptedValues": ["Tune the runtime retry base delay"],
+            "acceptableEvidence": []
+          },
+          {
+            "key": "modified_path",
+            "description": "Tracked modified working-tree path.",
+            "matchMode": "exact",
+            "acceptedValues": ["docs/operator-runbook.md"],
+            "acceptableEvidence": [
+              {
+                "path": "docs/operator-runbook.md",
+                "startLine": 12,
+                "endLine": 12
+              }
+            ]
+          },
+          {
+            "key": "untracked_path",
+            "description": "Untracked working-tree path.",
+            "matchMode": "exact",
+            "acceptedValues": ["local-observation.txt"],
+            "acceptableEvidence": [
+              {
+                "path": "local-observation.txt",
+                "startLine": 1,
+                "endLine": 1
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "The local observation is described as committed.",
+            "severity": "critical"
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["controlled", "git", "working_tree"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0005",
+      "title": "Locate the shared agent endpoint engine",
+      "category": "target_location",
+      "difficulty": "intermediate",
+      "repository": {
+        "id": "fastendpoints",
+        "commit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09"
+      },
+      "languages": ["csharp"],
+      "sizeBand": "medium",
+      "indexState": "warm",
+      "question": "Find the in-process endpoint execution engine shared by the MCP and A2A integrations. Report its class, invocation method, and the two integration namespaces that register it, with evidence.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "engine_type",
+            "description": "Shared engine type.",
+            "matchMode": "exact",
+            "acceptedValues": ["FastEndpoints.Agents.EndpointInvoker"],
+            "acceptableEvidence": [
+              {
+                "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                "startLine": 6,
+                "endLine": 14
+              }
+            ]
+          },
+          {
+            "key": "invocation_method",
+            "description": "Engine invocation method.",
+            "matchMode": "exact",
+            "acceptedValues": ["InvokeAsync"],
+            "acceptableEvidence": [
+              {
+                "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                "startLine": 24,
+                "endLine": 28
+              }
+            ]
+          },
+          {
+            "key": "mcp_namespace",
+            "description": "MCP integration namespace.",
+            "matchMode": "exact",
+            "acceptedValues": ["FastEndpoints.Mcp"],
+            "acceptableEvidence": [
+              {
+                "path": "Src/Agents/Mcp/Extensions.cs",
+                "startLine": 10,
+                "endLine": 38
+              }
+            ]
+          },
+          {
+            "key": "a2a_namespace",
+            "description": "A2A integration namespace.",
+            "matchMode": "exact",
+            "acceptedValues": ["FastEndpoints.A2A"],
+            "acceptableEvidence": [
+              {
+                "path": "Src/Agents/A2A/Extensions.cs",
+                "startLine": 6,
+                "endLine": 33
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": []
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "csharp", "shared_engine"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0006",
+      "title": "Disambiguate integration extension classes",
+      "category": "definition_ambiguity",
+      "difficulty": "advanced",
+      "repository": {
+        "id": "fastendpoints",
+        "commit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09"
+      },
+      "languages": ["csharp"],
+      "sizeBand": "medium",
+      "indexState": "warm",
+      "question": "There are multiple static classes named Extensions under Src/Agents. Identify the fully qualified class that defines AddMcp and the one that defines AddA2A, and cite each method declaration.",
+      "groundTruth": {
+        "expectedOutcome": "ambiguous",
+        "requiredClaims": [
+          {
+            "key": "add_mcp_container",
+            "description": "Fully qualified AddMcp container.",
+            "matchMode": "exact",
+            "acceptedValues": ["FastEndpoints.Mcp.Extensions"],
+            "acceptableEvidence": [
+              {
+                "path": "Src/Agents/Mcp/Extensions.cs",
+                "startLine": 10,
+                "endLine": 33
+              }
+            ]
+          },
+          {
+            "key": "add_a2a_container",
+            "description": "Fully qualified AddA2A container.",
+            "matchMode": "exact",
+            "acceptedValues": ["FastEndpoints.A2A.Extensions"],
+            "acceptableEvidence": [
+              {
+                "path": "Src/Agents/A2A/Extensions.cs",
+                "startLine": 6,
+                "endLine": 28
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "Both methods are assigned to the same Extensions class.",
+            "severity": "critical"
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "csharp", "ambiguity"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0007",
+      "title": "Explain Vitest VM code-cache validity",
+      "category": "typescript_javascript_structure",
+      "difficulty": "intermediate",
+      "repository": {
+        "id": "vitest",
+        "commit": "d8b040c63aaffad22aa9921536ae201cff53cc0f"
+      },
+      "languages": ["typescript"],
+      "sizeBand": "medium",
+      "indexState": "warm",
+      "question": "Locate the worker-wide V8 code cache used by VM pools. Report the class name, the two values used to validate a cache hit, and what is stored when producing cache data throws.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "cache_class",
+            "description": "Worker-wide code-cache class.",
+            "matchMode": "exact",
+            "acceptedValues": ["CodeCache"],
+            "acceptableEvidence": [
+              {
+                "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                "startLine": 6,
+                "endLine": 19
+              }
+            ]
+          },
+          {
+            "key": "hit_guard",
+            "description": "Values that guard cache hits.",
+            "matchMode": "exact",
+            "acceptedValues": ["module identifier and exact source text"],
+            "acceptableEvidence": [
+              {
+                "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                "startLine": 14,
+                "endLine": 24
+              }
+            ]
+          },
+          {
+            "key": "produce_failure",
+            "description": "Stored result after produce throws.",
+            "matchMode": "exact",
+            "acceptedValues": ["an entry with undefined data"],
+            "acceptableEvidence": [
+              {
+                "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                "startLine": 29,
+                "endLine": 46
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "A production failure is retried for every fresh VM context.",
+            "severity": "critical"
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "typescript", "cache"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0008",
+      "title": "Locate VM module-graph prewarming",
+      "category": "references_source",
+      "difficulty": "intermediate",
+      "repository": {
+        "id": "vitest",
+        "commit": "d8b040c63aaffad22aa9921536ae201cff53cc0f"
+      },
+      "languages": ["typescript"],
+      "sizeBand": "medium",
+      "indexState": "warm",
+      "question": "Where does the VM worker initiate module-graph prewarming? Report the containing function, the RPC method called, what work it overlaps with, and how failures are handled.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "containing_function",
+            "description": "Function initiating the prewarm.",
+            "matchMode": "exact",
+            "acceptedValues": ["runVmTests"],
+            "acceptableEvidence": [
+              {
+                "path": "packages/vitest/src/runtime/workers/vm.ts",
+                "startLine": 30,
+                "endLine": 46
+              }
+            ]
+          },
+          {
+            "key": "rpc_method",
+            "description": "RPC method used to prewarm.",
+            "matchMode": "exact",
+            "acceptedValues": ["prewarmModuleGraph"],
+            "acceptableEvidence": [
+              {
+                "path": "packages/vitest/src/runtime/workers/vm.ts",
+                "startLine": 37,
+                "endLine": 46
+              }
+            ]
+          },
+          {
+            "key": "overlapped_work",
+            "description": "Work overlapped by prewarming.",
+            "matchMode": "exact",
+            "acceptedValues": ["environment package loading"],
+            "acceptableEvidence": [
+              {
+                "path": "packages/vitest/src/runtime/workers/vm.ts",
+                "startLine": 33,
+                "endLine": 43
+              }
+            ]
+          },
+          {
+            "key": "failure_policy",
+            "description": "Prewarm failure handling.",
+            "matchMode": "exact",
+            "acceptedValues": ["ignored"],
+            "acceptableEvidence": [
+              {
+                "path": "packages/vitest/src/runtime/workers/vm.ts",
+                "startLine": 41,
+                "endLine": 46
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": []
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "typescript", "references"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0009",
+      "title": "Disambiguate Kiota TypeScript method writer",
+      "category": "definition_ambiguity",
+      "difficulty": "advanced",
+      "repository": {
+        "id": "kiota",
+        "commit": "b9e61265f8394a6c5d0358e89e037873375b017a"
+      },
+      "languages": ["csharp"],
+      "sizeBand": "medium",
+      "indexState": "warm",
+      "question": "Kiota has many C# classes named CodeMethodWriter. Identify the fully qualified one responsible for TypeScript output and state what WriteCodeElement does when the method's parent is a CodeClass.",
+      "groundTruth": {
+        "expectedOutcome": "ambiguous",
+        "requiredClaims": [
+          {
+            "key": "writer_type",
+            "description": "TypeScript method-writer type.",
+            "matchMode": "exact",
+            "acceptedValues": ["Kiota.Builder.Writers.TypeScript.CodeMethodWriter"],
+            "acceptableEvidence": [
+              {
+                "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                "startLine": 9,
+                "endLine": 13
+              }
+            ]
+          },
+          {
+            "key": "class_parent_behavior",
+            "description": "Behavior for a CodeClass parent.",
+            "matchMode": "exact",
+            "acceptedValues": ["throws InvalidOperationException"],
+            "acceptableEvidence": [
+              {
+                "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                "startLine": 20,
+                "endLine": 26
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "A language-specific writer other than TypeScript is reported.",
+            "severity": "critical",
+            "claimKey": "writer_type",
+            "rejectedValues": [
+              "Kiota.Builder.Writers.CSharp.CodeMethodWriter",
+              "Kiota.Builder.Writers.Ruby.CodeMethodWriter"
+            ]
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "csharp", "ambiguity"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0010",
+      "title": "Trace Kiota RPC connection cleanup",
+      "category": "references_source",
+      "difficulty": "intermediate",
+      "repository": {
+        "id": "kiota",
+        "commit": "b9e61265f8394a6c5d0358e89e037873375b017a"
+      },
+      "languages": ["typescript"],
+      "sizeBand": "medium",
+      "indexState": "warm",
+      "question": "Locate the npm-package helper that connects to the Kiota RPC process. Report the exported function name, the child-process argument, what it returns when the callback throws, and the child cleanup performed in finally.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "function_name",
+            "description": "RPC connection helper.",
+            "matchMode": "exact",
+            "acceptedValues": ["connectToKiota"],
+            "acceptableEvidence": [
+              {
+                "path": "vscode/packages/npm-package/lib/connect.ts",
+                "startLine": 6,
+                "endLine": 9
+              }
+            ]
+          },
+          {
+            "key": "child_argument",
+            "description": "Argument passed to the Kiota child.",
+            "matchMode": "exact",
+            "acceptedValues": ["rpc"],
+            "acceptableEvidence": [
+              {
+                "path": "vscode/packages/npm-package/lib/connect.ts",
+                "startLine": 7,
+                "endLine": 10
+              }
+            ]
+          },
+          {
+            "key": "callback_error_result",
+            "description": "Result returned after callback failure.",
+            "matchMode": "exact",
+            "acceptedValues": ["Error"],
+            "acceptableEvidence": [
+              {
+                "path": "vscode/packages/npm-package/lib/connect.ts",
+                "startLine": 21,
+                "endLine": 27
+              }
+            ]
+          },
+          {
+            "key": "child_cleanup",
+            "description": "Child cleanup in finally.",
+            "matchMode": "exact",
+            "acceptedValues": ["end stdin and kill the child process"],
+            "acceptableEvidence": [
+              {
+                "path": "vscode/packages/npm-package/lib/connect.ts",
+                "startLine": 28,
+                "endLine": 35
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": []
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "typescript", "cleanup"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0011",
+      "title": "Find detached-launch cancellation cleanup",
+      "category": "target_location",
+      "difficulty": "advanced",
+      "repository": {
+        "id": "aspire",
+        "commit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b"
+      },
+      "languages": ["csharp"],
+      "sizeBand": "large",
+      "indexState": "none",
+      "question": "In the Aspire CLI, find the production cleanup path used when detached AppHost launch is cancelled after the child starts. Report the containing method, cleanup helper, and whether the shutdown helper receives the caller's cancelled token.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "containing_method",
+            "description": "Method containing cancellation cleanup.",
+            "matchMode": "exact",
+            "acceptedValues": ["LaunchAndWaitForBackchannelAsync"],
+            "acceptableEvidence": [
+              {
+                "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+                "startLine": 372,
+                "endLine": 379
+              }
+            ]
+          },
+          {
+            "key": "cleanup_helper",
+            "description": "Helper called after cancellation.",
+            "matchMode": "exact",
+            "acceptedValues": ["RequestGracefulShutdownThenForceKillAsync"],
+            "acceptableEvidence": [
+              {
+                "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+                "startLine": 549,
+                "endLine": 552
+              }
+            ]
+          },
+          {
+            "key": "shutdown_token",
+            "description": "Token passed to process-tree shutdown.",
+            "matchMode": "exact",
+            "acceptedValues": ["CancellationToken.None"],
+            "acceptableEvidence": [
+              {
+                "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+                "startLine": 578,
+                "endLine": 584
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "The already-cancelled caller token is used for cleanup.",
+            "severity": "critical",
+            "claimKey": "shutdown_token",
+            "rejectedValues": ["cancellationToken"]
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "large", "csharp", "cleanup"]
+    },
+    {
+      "schemaVersion": "1.0",
+      "id": "SJ-EVAL-0012",
+      "title": "Identify detached-child environment filtering",
+      "category": "negative_recovery",
+      "difficulty": "intermediate",
+      "repository": {
+        "id": "aspire",
+        "commit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b"
+      },
+      "languages": ["csharp"],
+      "sizeBand": "large",
+      "indexState": "none",
+      "question": "Which environment-variable names are removed from detached Aspire CLI child processes? Report the exact prefix and whether DEBUG_SESSION_* variables are removed, with production evidence.",
+      "groundTruth": {
+        "expectedOutcome": "answerable",
+        "requiredClaims": [
+          {
+            "key": "removed_prefix",
+            "description": "Prefix removed from detached child environment.",
+            "matchMode": "exact",
+            "acceptedValues": ["ASPIRE_EXTENSION_"],
+            "acceptableEvidence": [
+              {
+                "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+                "startLine": 339,
+                "endLine": 353
+              }
+            ]
+          },
+          {
+            "key": "debug_session_removed",
+            "description": "Whether DEBUG_SESSION_* variables are removed.",
+            "matchMode": "one_of",
+            "acceptedValues": ["false", "no"],
+            "acceptableEvidence": [
+              {
+                "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+                "startLine": 339,
+                "endLine": 353
+              }
+            ]
+          }
+        ],
+        "forbiddenClaims": [
+          {
+            "description": "DEBUG_SESSION_* variables are said to be removed.",
+            "severity": "critical",
+            "claimKey": "debug_session_removed",
+            "rejectedValues": ["true", "yes"]
+          }
+        ]
+      },
+      "scorerVersion": "1.0.0",
+      "tags": ["public", "large", "csharp", "negative"]
+    }
+  ]
+}

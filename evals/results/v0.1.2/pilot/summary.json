@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0",
+  "package": "sanjaya-mcp@0.1.2",
+  "model": "gpt-5.6-terra",
+  "agent": "codex-cli 0.144.5",
+  "effort": "medium",
+  "generatedAt": "2026-07-23T19:28:24.501Z",
+  "plannedRuns": 72,
+  "completedRuns": 69,
+  "retainedFailures": 3,
+  "byArm": {
+    "native": {
+      "planned": 36,
+      "completed": 34,
+      "strictSuccesses": 6,
+      "strictSuccessRatePlanned": 0.16666666666666666,
+      "meanClaimF1Completed": 0.25490196078431376,
+      "meanCitationValidityCompleted": 0.7798319327731094,
+      "runsUsingSanjaya": 0,
+      "medianToolCallsCompleted": 2,
+      "medianWallTimeMsCompleted": 20809,
+      "medianInputTokensCompleted": 47292.5,
+      "medianOutputTokensCompleted": 755
+    },
+    "sanjaya_available": {
+      "planned": 36,
+      "completed": 35,
+      "strictSuccesses": 6,
+      "strictSuccessRatePlanned": 0.16666666666666666,
+      "meanClaimF1Completed": 0.3261904761904762,
+      "meanCitationValidityCompleted": 0.8001927437641724,
+      "runsUsingSanjaya": 0,
+      "medianToolCallsCompleted": 2,
+      "medianWallTimeMsCompleted": 21562,
+      "medianInputTokensCompleted": 47436,
+      "medianOutputTokensCompleted": 698
+    }
+  },
+  "pairs": {
+    "completedPairs": 33,
+    "strictNativeWins": 0,
+    "strictTreatmentWins": 0,
+    "strictTies": 33,
+    "meanClaimF1Delta": 0.08333333333333333
+  },
+  "taskRows": [
+    {
+      "taskId": "SJ-EVAL-0001",
+      "title": "Locate the production retry-delay implementation",
+      "nativeStrict": 3,
+      "treatmentStrict": 3,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0002",
+      "title": "Resolve duplicate C# RetryPolicy declarations",
+      "nativeStrict": 3,
+      "treatmentStrict": 3,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0003",
+      "title": "Explain the frontend retry preview calculation",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0004",
+      "title": "Recover recent committed and working-tree changes",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0005",
+      "title": "Locate the shared agent endpoint engine",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0006",
+      "title": "Disambiguate integration extension classes",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0007",
+      "title": "Explain Vitest VM code-cache validity",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0008",
+      "title": "Locate VM module-graph prewarming",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0009",
+      "title": "Disambiguate Kiota TypeScript method writer",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0010",
+      "title": "Trace Kiota RPC connection cleanup",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0011",
+      "title": "Find detached-launch cancellation cleanup",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0012",
+      "title": "Identify detached-child environment filtering",
+      "nativeStrict": 0,
+      "treatmentStrict": 0,
+      "treatmentRunsUsingSanjaya": 0
+    }
+  ]
+}

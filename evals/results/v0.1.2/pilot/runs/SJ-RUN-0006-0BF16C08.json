@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0006-0BF16C08",
+  "taskId": "SJ-EVAL-0005",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "9dc243917abb6c9683440252ecaf53abb4aafda3510807071f6026185aafa658",
+    "repositoryCommit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0005",
+    "answer": "The shared in-process engine is FastEndpoints.Agents.EndpointInvoker. MCP and A2A both register it as a singleton and invoke EndpointInvoker.InvokeAsync; that method executes the endpoint through endpoint.ExecAsync(ct).",
+    "claims": [
+      {
+        "key": "engine_type",
+        "value": "FastEndpoints.Agents.EndpointInvoker (sealed class).",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 6,
+            "endLine": 14
+          }
+        ]
+      },
+      {
+        "key": "invocation_method",
+        "value": "EndpointInvoker.InvokeAsync(EndpointDefinition, JsonElement, ClaimsPrincipal?, CancellationToken); it invokes the endpoint via endpoint.ExecAsync(ct).",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 28,
+            "endLine": 28
+          },
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 55,
+            "endLine": 57
+          },
+          {
+            "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+            "startLine": 140,
+            "endLine": 144
+          },
+          {
+            "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+            "startLine": 46,
+            "endLine": 49
+          }
+        ]
+      },
+      {
+        "key": "mcp_namespace",
+        "value": "FastEndpoints.Mcp; its AddMcp extension registers EndpointInvoker as a singleton.",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 10,
+            "endLine": 10
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 33,
+            "endLine": 39
+          }
+        ]
+      },
+      {
+        "key": "a2a_namespace",
+        "value": "FastEndpoints.A2A; its AddA2A extension registers EndpointInvoker as a singleton.",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 6,
+            "endLine": 6
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 28,
+            "endLine": 36
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 50020,
+    "toolResponseBytes": 50020,
+    "uncachedInputTokens": 14877,
+    "cachedInputTokens": 62976,
+    "outputTokens": 1131,
+    "wallTimeMs": 31926
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0006-0BF16C08.jsonl",
+    "sha256": "59348cdc6e8e453cb31fe56150e40ef595869c282c2be14d5140dfae2404fdcc",
+    "eventCount": 7
+  }
+}

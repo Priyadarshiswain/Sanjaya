@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0037-6B552F55",
+  "taskId": "SJ-EVAL-0007",
+  "arm": "native",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "9dedf3dd0c14c78ed13866b6b8c2c60eaa9b4ef25623c50e7cc973e9847f4cff",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0007",
+    "answer": "The VM-pool worker-wide V8 cache is `CodeCache`. A hit requires the module identifier to locate an entry and an exact match of the source text. If cache-data production throws, it stores the entry with that source and `data: undefined`.",
+    "claims": [
+      {
+        "key": "cache_class",
+        "value": "`CodeCache` is the worker-wide V8 code-cache class used by VM pools.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 6,
+            "endLine": 19
+          },
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 24,
+            "endLine": 27
+          }
+        ]
+      },
+      {
+        "key": "hit_guard",
+        "value": "A cache hit is validated by the module `identifier` and exact `source` text: the entry is retrieved by identifier and returned only when `entry.source === source`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 14,
+            "endLine": 16
+          },
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 21,
+            "endLine": 26
+          }
+        ]
+      },
+      {
+        "key": "produce_failure",
+        "value": "When `produce()` throws, the cache stores `{ source, data: undefined }` (an empty entry).",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 29,
+            "endLine": 46
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.8,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 23934,
+    "toolResponseBytes": 23934,
+    "uncachedInputTokens": 7956,
+    "cachedInputTokens": 37120,
+    "outputTokens": 786,
+    "wallTimeMs": 20554
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0037-6B552F55.jsonl",
+    "sha256": "6d43e1418203caa63717098c86ad3c5a32bc40c3b03f28e4a151125ab1ea5a83",
+    "eventCount": 6
+  }
+}

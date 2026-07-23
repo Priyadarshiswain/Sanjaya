@@ -1,8 +1,8 @@
-# Sanjaya v0.1.1 benefit-evaluation specification
+# Sanjaya v0.1.2 benefit-evaluation specification
 
 Status: proposed public contract. No model evaluation has run.
 
-Target: the exact public `sanjaya-mcp@0.1.1` npm artifact.
+Target: the exact public `sanjaya-mcp@0.1.2` npm artifact.
 
 Schema version: `1.0`.
 
@@ -47,7 +47,7 @@ This optional diagnostic arm adds one short, frozen instruction explaining
 that Sanjaya should be used when its reported capability fits the task.
 
 Guided results must remain separate. They measure orchestration guidance, not
-the benefit of the v0.1.1 package alone, and cannot replace the
+the benefit of the v0.1.2 package alone, and cannot replace the
 `sanjaya_available` versus `native` headline.
 
 ## Preregistered hypotheses
@@ -73,7 +73,7 @@ separately timestamped price table and is never the only efficiency record.
 
 ### Claims this evaluation cannot establish
 
-The v0.1.1 evaluation does not establish:
+The v0.1.2 evaluation does not establish:
 
 - compiler-semantic reference binding or call-graph correctness;
 - TypeScript or JavaScript definitions, references, type checking, or source
@@ -250,7 +250,9 @@ Hold constant within every paired comparison:
 - exact model identifier and reasoning/effort setting;
 - agent CLI and harness versions;
 - system prompt, task prompt, and output schema;
-- maximum turns, timeout, and token budget;
+- maximum turns, timeout, and token budget when the selected agent exposes
+  those controls; any unavailable hard limit must be frozen and reported as a
+  harness limitation before execution;
 - repository commit and filesystem state;
 - CPU and memory allocation;
 - locale and relevant environment variables;
@@ -278,7 +280,7 @@ Scoring is blind to the arm.
 The pilot validates the tasks, scorers, harness, and accounting. It cannot
 support a broad, model-independent, or statistical-significance claim.
 
-### Full v0.1.1 study
+### Full v0.1.2 study
 
 - Approximately 30 frozen tasks.
 - Five repetitions per task and headline arm.

@@ -1,0 +1,13 @@
+{"schemaVersion":"1.0","sequence":1,"elapsedMs":0,"eventType":"session_start","actor":"harness","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":2,"elapsedMs":1,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"capabilities","inputBytes":2,"outputBytes":2766,"repositoryBytesRead":2766}
+{"schemaVersion":"1.0","sequence":3,"elapsedMs":2,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"search_code","inputBytes":58,"outputBytes":2242,"repositoryBytesRead":2242}
+{"schemaVersion":"1.0","sequence":4,"elapsedMs":3,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"get_source","inputBytes":85,"outputBytes":5740,"repositoryBytesRead":5740}
+{"schemaVersion":"1.0","sequence":5,"elapsedMs":4,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"find_references","inputBytes":43,"outputBytes":4022,"repositoryBytesRead":4022}
+{"schemaVersion":"1.0","sequence":6,"elapsedMs":5,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"find_definition","inputBytes":87,"outputBytes":1441,"repositoryBytesRead":1441}
+{"schemaVersion":"1.0","sequence":7,"elapsedMs":6,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"find_definition","inputBytes":87,"outputBytes":1441,"repositoryBytesRead":1441}
+{"schemaVersion":"1.0","sequence":8,"elapsedMs":7,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"get_source","inputBytes":85,"outputBytes":2006,"repositoryBytesRead":2006}
+{"schemaVersion":"1.0","sequence":9,"elapsedMs":8,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"get_source","inputBytes":85,"outputBytes":1856,"repositoryBytesRead":1856}
+{"schemaVersion":"1.0","sequence":10,"elapsedMs":9,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"search_text","inputBytes":76,"outputBytes":2009,"repositoryBytesRead":2009}
+{"schemaVersion":"1.0","sequence":11,"elapsedMs":10,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"search_text","inputBytes":76,"outputBytes":3150,"repositoryBytesRead":3150}
+{"schemaVersion":"1.0","sequence":12,"elapsedMs":11,"eventType":"model_turn","actor":"model","inputBytes":0,"outputBytes":1073,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":13,"elapsedMs":51254,"eventType":"final_answer","actor":"model","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0,"uncachedInputTokens":18616,"cachedInputTokens":151296,"outputTokens":1795}

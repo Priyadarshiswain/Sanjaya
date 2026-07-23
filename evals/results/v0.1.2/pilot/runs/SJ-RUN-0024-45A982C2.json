@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0024-45A982C2",
+  "taskId": "SJ-EVAL-0004",
+  "arm": "sanjaya_available",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "7a432abe81f25f39900bf69960ab19663c037d430d00152a0e5ab54ba1ce6620",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0004",
+    "answer": "Latest commit c321a020bbb810ade59d63a48210de9fa84f0f52: “Align the retry preview default” (frontend/src/app/core/runtime-config.ts). Previous commit 78d0d8290a0300eda1b46569f853de36f65257f4: “Tune the runtime retry base delay” (config/runtime.json). The uncommitted working tree has modified docs/operator-runbook.md and untracked local-observation.txt.",
+    "claims": [
+      {
+        "key": "latest_commit",
+        "value": "c321a020bbb810ade59d63a48210de9fa84f0f52 — Align the retry preview default; committed path: frontend/src/app/core/runtime-config.ts.",
+        "evidence": [
+          {
+            "path": "frontend/src/app/core/runtime-config.ts",
+            "startLine": 9,
+            "endLine": 9
+          }
+        ]
+      },
+      {
+        "key": "previous_commit",
+        "value": "78d0d8290a0300eda1b46569f853de36f65257f4 — Tune the runtime retry base delay; committed path: config/runtime.json.",
+        "evidence": [
+          {
+            "path": "config/runtime.json",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "modified_path",
+        "value": "docs/operator-runbook.md (working-tree modification; not a commit).",
+        "evidence": [
+          {
+            "path": "docs/operator-runbook.md",
+            "startLine": 13,
+            "endLine": 13
+          }
+        ]
+      },
+      {
+        "key": "untracked_path",
+        "value": "local-observation.txt (working-tree untracked file; not a commit).",
+        "evidence": [
+          {
+            "path": "local-observation.txt",
+            "startLine": 1,
+            "endLine": 1
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.25,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 5070,
+    "toolResponseBytes": 5070,
+    "uncachedInputTokens": 4810,
+    "cachedInputTokens": 43008,
+    "outputTokens": 1294,
+    "wallTimeMs": 34833
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0024-45A982C2.jsonl",
+    "sha256": "b15b97f13f4d5b2361f3fb88aefcbe212a498228a9c50d7ecc5eed31d46f3b80",
+    "eventCount": 6
+  }
+}

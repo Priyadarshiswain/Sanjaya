@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-1009-91DB0F9C",
+  "taskId": "SJ-EVAL-0002",
+  "arm": "sanjaya_guided",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "17886f2b23a1fe742c3e93309ca689e0d66699313e729b13ff0c91f5d8fc58bf",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0002",
+    "answer": "2 classes: SignalDesk.Relay.RetryPolicy (production) and SignalDesk.Legacy.RetryPolicy (obsolete).",
+    "claims": [
+      {
+        "key": "declaration_count",
+        "value": "2 C# classes named RetryPolicy are declared: SignalDesk.Legacy.RetryPolicy and SignalDesk.Relay.RetryPolicy.",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Legacy/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 10
+          },
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 35
+          }
+        ]
+      },
+      {
+        "key": "production_type",
+        "value": "SignalDesk.Relay.RetryPolicy.",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 1,
+            "endLine": 35
+          }
+        ]
+      },
+      {
+        "key": "obsolete_type",
+        "value": "SignalDesk.Legacy.RetryPolicy is obsolete; its Obsolete attribute directs users to SignalDesk.Relay.RetryPolicy.",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Legacy/RetryPolicy.cs",
+            "startLine": 1,
+            "endLine": 10
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 6,
+    "nativeToolCalls": 0,
+    "sanjayaToolCalls": 6,
+    "repositorySourceBytesRead": 10579,
+    "toolResponseBytes": 10579,
+    "uncachedInputTokens": 9245,
+    "cachedInputTokens": 77824,
+    "outputTokens": 792,
+    "wallTimeMs": 25462
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-1009-91DB0F9C.jsonl",
+    "sha256": "d1aac1c8ba78748c532d3d6dd33abcedb728352827031fa35a54c500424cf56f",
+    "eventCount": 9
+  }
+}

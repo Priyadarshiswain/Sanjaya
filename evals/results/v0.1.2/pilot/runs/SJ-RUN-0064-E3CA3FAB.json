@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0064-E3CA3FAB",
+  "taskId": "SJ-EVAL-0012",
+  "arm": "native",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "c7255bbc2cd77b7dc9ac1a1cb5acf90d48701910388b5222f541af86c43bcd5d",
+    "repositoryCommit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0012",
+    "answer": "Detached Aspire CLI child processes remove environment variables whose names start with `ASPIRE_EXTENSION_` (case-insensitive). `DEBUG_SESSION_*` variables are not removed; they are explicitly retained.",
+    "claims": [
+      {
+        "key": "removed_prefix",
+        "value": "ASPIRE_EXTENSION_ (matched case-insensitively)",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 339,
+            "endLine": 353
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 387,
+            "endLine": 398
+          },
+          {
+            "path": "src/Aspire.Cli/DotNet/ProcessExecutionFactory.cs",
+            "startLine": 154,
+            "endLine": 173
+          }
+        ]
+      },
+      {
+        "key": "debug_session_removed",
+        "value": "No. DEBUG_SESSION_* variables are retained in detached child processes.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 339,
+            "endLine": 344
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.5,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 5,
+    "nativeToolCalls": 5,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 701440,
+    "toolResponseBytes": 701440,
+    "uncachedInputTokens": 27119,
+    "cachedInputTokens": 154624,
+    "outputTokens": 1088,
+    "wallTimeMs": 30022
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0064-E3CA3FAB.jsonl",
+    "sha256": "de5b5557f6e4785084c20a7e035df959889ad17ae9d39f1807a57068b2d03f45",
+    "eventCount": 8
+  }
+}

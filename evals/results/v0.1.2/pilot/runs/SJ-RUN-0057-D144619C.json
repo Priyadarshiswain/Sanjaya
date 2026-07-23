@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0057-D144619C",
+  "taskId": "SJ-EVAL-0003",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "529a0441ae3e4f90a3f75beb40bd7ea280fed3d24464599fe49fab14ebf34dec",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0003",
+    "answer": "The frontend retry-delay preview function is `calculateRetryPreview`.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "`calculateRetryPreview`",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 3,
+            "endLine": 6
+          }
+        ]
+      },
+      {
+        "key": "bounded_attempt",
+        "value": "`const boundedAttempt = Math.min(attempt, config.maximumRetryAttempts);`",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 7,
+            "endLine": 7
+          }
+        ]
+      },
+      {
+        "key": "delay_expression",
+        "value": "`config.retryBaseSeconds * 2 ** boundedAttempt`",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 8,
+            "endLine": 8
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 6256,
+    "toolResponseBytes": 6256,
+    "uncachedInputTokens": 3677,
+    "cachedInputTokens": 32000,
+    "outputTokens": 527,
+    "wallTimeMs": 15246
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0057-D144619C.jsonl",
+    "sha256": "a9994dd740a382f8156925a06d58fd5bf564030c08e94600a43defa82f5b8ab9",
+    "eventCount": 5
+  }
+}

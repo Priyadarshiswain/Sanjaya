@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "1.0",
+  "package": "sanjaya-mcp@0.1.2",
+  "model": "gpt-5.6-terra",
+  "agent": "codex-cli 0.144.5",
+  "effort": "medium",
+  "generatedAt": "2026-07-23T19:41:29.027Z",
+  "relationship": "diagnostic_only_not_headline",
+  "native": {
+    "planned": 18,
+    "completed": 17,
+    "strictSuccesses": 6,
+    "meanClaimF1Completed": 0.48039215686274517,
+    "meanCitationValidityCompleted": 0.8763305322128853,
+    "runsUsingSanjaya": 0,
+    "meanSanjayaToolCalls": 0,
+    "medianTotalToolCalls": 2,
+    "medianWallTimeMs": 18151,
+    "medianInputTokens": 46032,
+    "medianOutputTokens": 650
+  },
+  "guided": {
+    "planned": 18,
+    "completed": 18,
+    "strictSuccesses": 3,
+    "meanClaimF1Completed": 0.38425925925925924,
+    "meanCitationValidityCompleted": 0.9268518518518517,
+    "runsUsingSanjaya": 18,
+    "meanSanjayaToolCalls": 5.333333333333333,
+    "medianTotalToolCalls": 5,
+    "medianWallTimeMs": 26388,
+    "medianInputTokens": 106357,
+    "medianOutputTokens": 800
+  },
+  "completedPairs": 17,
+  "meanPairedClaimF1Delta": -0.0735294117647059,
+  "meanPairedCitationDelta": 0.046218487394957986,
+  "tasks": [
+    {
+      "taskId": "SJ-EVAL-0001",
+      "title": "Locate the production retry-delay implementation",
+      "nativeStrict": 3,
+      "guidedStrict": 3,
+      "guidedSanjayaCalls": 15
+    },
+    {
+      "taskId": "SJ-EVAL-0002",
+      "title": "Resolve duplicate C# RetryPolicy declarations",
+      "nativeStrict": 3,
+      "guidedStrict": 0,
+      "guidedSanjayaCalls": 17
+    },
+    {
+      "taskId": "SJ-EVAL-0003",
+      "title": "Explain the frontend retry preview calculation",
+      "nativeStrict": 0,
+      "guidedStrict": 0,
+      "guidedSanjayaCalls": 10
+    },
+    {
+      "taskId": "SJ-EVAL-0005",
+      "title": "Locate the shared agent endpoint engine",
+      "nativeStrict": 0,
+      "guidedStrict": 0,
+      "guidedSanjayaCalls": 30
+    },
+    {
+      "taskId": "SJ-EVAL-0008",
+      "title": "Locate VM module-graph prewarming",
+      "nativeStrict": 0,
+      "guidedStrict": 0,
+      "guidedSanjayaCalls": 11
+    },
+    {
+      "taskId": "SJ-EVAL-0009",
+      "title": "Disambiguate Kiota TypeScript method writer",
+      "nativeStrict": 0,
+      "guidedStrict": 0,
+      "guidedSanjayaCalls": 13
+    }
+  ]
+}

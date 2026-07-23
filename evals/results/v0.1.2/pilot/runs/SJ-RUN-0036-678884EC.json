@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0036-678884EC",
+  "taskId": "SJ-EVAL-0005",
+  "arm": "sanjaya_available",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "9dc243917abb6c9683440252ecaf53abb4aafda3510807071f6026185aafa658",
+    "repositoryCommit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0005",
+    "answer": "The shared in-process endpoint engine is `FastEndpoints.Agents.EndpointInvoker`, invoked through `InvokeAsync(EndpointDefinition, JsonElement, ClaimsPrincipal?, CancellationToken)`. It is registered by the `FastEndpoints.Mcp` and `FastEndpoints.A2A` integrations.",
+    "claims": [
+      {
+        "key": "engine_type",
+        "value": "FastEndpoints.Agents.EndpointInvoker",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 6,
+            "endLine": 14
+          },
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 9,
+            "endLine": 12
+          }
+        ]
+      },
+      {
+        "key": "invocation_method",
+        "value": "EndpointInvoker.InvokeAsync(EndpointDefinition definition, JsonElement args, ClaimsPrincipal? principal, CancellationToken ct)",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 18,
+            "endLine": 28
+          },
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 55,
+            "endLine": 58
+          }
+        ]
+      },
+      {
+        "key": "mcp_namespace",
+        "value": "FastEndpoints.Mcp",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 24,
+            "endLine": 38
+          },
+          {
+            "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+            "startLine": 140,
+            "endLine": 144
+          }
+        ]
+      },
+      {
+        "key": "a2a_namespace",
+        "value": "FastEndpoints.A2A",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 20,
+            "endLine": 34
+          },
+          {
+            "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+            "startLine": 6,
+            "endLine": 14
+          },
+          {
+            "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+            "startLine": 46,
+            "endLine": 49
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.75,
+    "claimRecall": 0.75,
+    "claimF1": 0.75,
+    "citationValidity": 0.5555555555555556,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 5,
+    "nativeToolCalls": 5,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 87028,
+    "toolResponseBytes": 87028,
+    "uncachedInputTokens": 15605,
+    "cachedInputTokens": 62976,
+    "outputTokens": 1091,
+    "wallTimeMs": 28345
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0036-678884EC.jsonl",
+    "sha256": "da1957d4ed2a8a35bef374e30102545a088364e0bff1a78387aeef85104c3a03",
+    "eventCount": 8
+  }
+}
