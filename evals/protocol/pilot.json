@@ -52,7 +52,8 @@
     "hardTokenLimitReason": "codex-cli 0.144.5 does not expose a per-exec token cap; exact token usage is retained for every run",
     "locale": "C",
     "timezone": "UTC",
-    "outputSchema": "schemas/answer.schema.json",
+    "outputSchema": "schemas/answer.output.schema.json",
+    "validationSchema": "schemas/answer.schema.json",
     "scorerVersion": "1.0.0",
     "rawEvents": "temporary local files only; never committed",
     "sanitizedTrace": "content-minimized events only"

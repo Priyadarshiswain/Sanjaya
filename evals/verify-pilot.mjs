@@ -13,11 +13,16 @@ const manifestSchema = readJson(
 const manifest = readJson(join(evalRoot, "repositories", "manifest.json"));
 const pilot = readJson(join(evalRoot, "tasks", "pilot.json"));
 const protocol = readJson(join(evalRoot, "protocol", "pilot.json"));
+const outputSchema = readJson(
+  join(evalRoot, protocol.controls.outputSchema),
+);
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
 const validateTask = ajv.compile(taskSchema);
 const validateManifest = ajv.compile(manifestSchema);
+const validateOutputShape = ajv.compile(outputSchema);
 assert.ok(validateManifest(manifest), formatErrors(validateManifest.errors));
+assert.equal(typeof validateOutputShape, "function");
 
 assert.equal(pilot.schemaVersion, "1.0");
 assert.equal(pilot.tasks.length, 12);

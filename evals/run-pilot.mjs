@@ -17,6 +17,7 @@ import {
   resolve,
 } from "node:path";
 import { fileURLToPath } from "node:url";
+import Ajv2020 from "ajv/dist/2020.js";
 import { withSanjaya } from "./mcp-client.mjs";
 import { prepareControlledFixture } from "./prepare-controlled-fixture.mjs";
 import { scoreAnswer } from "./scorer.mjs";
@@ -32,7 +33,14 @@ const launcherPath = join(
   "bin",
   "sanjaya-mcp.js",
 );
-const answerSchemaPath = join(evalRoot, "schemas", "answer.schema.json");
+const answerSchemaPath = join(
+  evalRoot,
+  protocol.controls.outputSchema,
+);
+const validateAnswer = new Ajv2020({
+  allErrors: true,
+  strict: true,
+}).compile(readJson(join(evalRoot, protocol.controls.validationSchema)));
 const corpusRoot = resolve(requiredArgument("--corpus-root"));
 const limitValue = optionalArgument("--limit");
 const limit = limitValue ? Number.parseInt(limitValue, 10) : Number.POSITIVE_INFINITY;
@@ -258,6 +266,9 @@ async function executeRun({ planned, task, agentRoot, treatmentRoot }) {
     } else {
       try {
         answer = readJson(finalPath);
+        if (!validateAnswer(answer)) {
+          throw new Error("Answer failed the strict public answer schema.");
+        }
         if (answer.taskId !== task.id) {
           throw new Error("Answer task ID did not match.");
         }
