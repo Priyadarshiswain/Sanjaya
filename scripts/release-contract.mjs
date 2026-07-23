@@ -1,5 +1,5 @@
-export const releaseVersion = "0.1.1";
-export const publishedVersion = "0.1.0";
+export const releaseVersion = "0.1.2";
+export const publishedVersion = "0.1.1";
 export const releaseTag = `v${releaseVersion}`;
 export const packageName = "sanjaya-mcp";
 export const registryName = "io.github.Priyadarshiswain/sanjaya";

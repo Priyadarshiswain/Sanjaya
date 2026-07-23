@@ -1,6 +1,6 @@
 {
   "name": "sanjaya-mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Local-first codebase discovery for AI agents, with precise navigation and verifiable evidence.",
   "license": "Apache-2.0",
   "type": "module",

@@ -1,9 +1,10 @@
 # Packaging contract
 
-Sanjaya `0.1.0` is published with npm provenance. The repository now builds the
-metadata-only `0.1.1` corrective candidate, which aligns the Official MCP
-Registry identity with the canonical GitHub-account capitalization. Preparing
-that candidate alone does not make it available from npm.
+Sanjaya `0.1.1` is published with npm provenance. The repository now builds the
+`0.1.2` compatibility candidate, which fixes index freshness across nested
+paths, includes supported source under `packages/`, and prevents invalid
+unnamed C# chunks. Preparing that candidate alone does not make it available
+from npm.
 
 ## Runtime boundary
 
@@ -71,7 +72,7 @@ publish an artifact.
 `npm run verify:registry-metadata` separately proves that the repository's
 Official MCP Registry identity, npm ownership fields, exact package version,
 stdio transport, and required `--root <path>` inputs agree with this package.
-The check is offline and requires exact `0.1.1` agreement, public-access
+The check is offline and requires exact `0.1.2` agreement, public-access
 metadata, and npm provenance; it does not validate a published artifact or
 write to a registry. Installed-tarball verification also reads the packed
 `package.json` and proves that npm preserved the exact `mcpName` ownership

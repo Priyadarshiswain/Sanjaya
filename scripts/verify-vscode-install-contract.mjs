@@ -15,6 +15,10 @@ import {
 } from "./release-contract.mjs";
 
 const repositoryRoot = resolve(".");
+const historicalRunbooks = new Set([
+  "docs/releasing.md",
+  "docs/releasing-0.1.1.md",
+]);
 const packageDocument = JSON.parse(readFileSync(resolve(repositoryRoot, "package.json"), "utf8"));
 const reviewedReleaseVersion = releaseVersion;
 const expected = {
@@ -113,7 +117,9 @@ function listPublicMarkdown(root) {
         if (relativePath !== "docs/local") {
           pending.push(path);
         }
-      } else if (entry.isFile() && entry.name.endsWith(".md")) {
+      } else if (entry.isFile()
+          && entry.name.endsWith(".md")
+          && !historicalRunbooks.has(relativePath)) {
         result.push(relativePath);
       }
     }

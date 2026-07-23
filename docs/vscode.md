@@ -2,10 +2,10 @@
 
 ## Current status
 
-Sanjaya `0.1.0` is published and independently verified on npm. The reviewed
-VS Code configuration now targets the metadata-only `0.1.1` corrective
+Sanjaya `0.1.1` is published and independently verified on npm. The reviewed
+VS Code configuration now targets the `0.1.2` compatibility
 candidate, so there is no public one-click installation button yet. Link
-activation remains a separate reviewed step after `0.1.1` npm publication and
+activation remains a separate reviewed step after `0.1.2` npm publication and
 Official MCP Registry verification.
 
 Until that step is approved, users can configure the exact `npx` command in
