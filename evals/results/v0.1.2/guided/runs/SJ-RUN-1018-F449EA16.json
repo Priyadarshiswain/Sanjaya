@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-1018-F449EA16",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "sanjaya_guided",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "ea5bb71dae73e334af1d4694eb44399b5fc3972e5f295fb442341f692b24367c",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0008",
+    "answer": "The VM worker starts module-graph prewarming in `runVmTests`, immediately after loading the environment. It asks the server to transform the test files’ import graph while the worker imports the environment package; rejected prewarming promises are swallowed so normal worker fetches surface errors with import context.",
+    "claims": [
+      {
+        "key": "containing_function",
+        "value": "`runVmTests` in `packages/vitest/src/runtime/workers/vm.ts`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 30,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "rpc_method",
+        "value": "`rpc.prewarmModuleGraph(environment.viteEnvironment || environment.name, ctx.files.map(file => file.filepath))`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 43,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "overlapped_work",
+        "value": "Server-side transformation of the test file import graph overlaps with the worker importing the environment package.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 42
+          }
+        ]
+      },
+      {
+        "key": "failure_policy",
+        "value": "Failures are ignored by attaching `.catch(() => {})`; the worker’s own fetch later reports them with the proper import context.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 41,
+            "endLine": 46
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 4,
+    "nativeToolCalls": 1,
+    "sanjayaToolCalls": 3,
+    "repositorySourceBytesRead": 18705,
+    "toolResponseBytes": 18705,
+    "uncachedInputTokens": 12667,
+    "cachedInputTokens": 93696,
+    "outputTokens": 826,
+    "wallTimeMs": 25840
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-1018-F449EA16.jsonl",
+    "sha256": "0e597f2498ed4d7d0830b050391899f3f5b0b4ff6165a1f72ee1f2a7b4bd7ea8",
+    "eventCount": 8
+  }
+}

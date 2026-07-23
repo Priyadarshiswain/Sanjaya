@@ -1,0 +1,13 @@
+{"schemaVersion":"1.0","sequence":1,"elapsedMs":0,"eventType":"session_start","actor":"harness","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":2,"elapsedMs":1,"eventType":"model_turn","actor":"model","inputBytes":0,"outputBytes":250,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":3,"elapsedMs":2,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"capabilities","inputBytes":2,"outputBytes":2766,"repositoryBytesRead":2766}
+{"schemaVersion":"1.0","sequence":4,"elapsedMs":3,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"search_text","inputBytes":62,"outputBytes":401,"repositoryBytesRead":401}
+{"schemaVersion":"1.0","sequence":5,"elapsedMs":4,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"search_text","inputBytes":56,"outputBytes":5699,"repositoryBytesRead":5699}
+{"schemaVersion":"1.0","sequence":6,"elapsedMs":5,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"search_text","inputBytes":56,"outputBytes":9388,"repositoryBytesRead":9388}
+{"schemaVersion":"1.0","sequence":7,"elapsedMs":6,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"file_outline","inputBytes":66,"outputBytes":1258,"repositoryBytesRead":1258}
+{"schemaVersion":"1.0","sequence":8,"elapsedMs":7,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"find_definition","inputBytes":169,"outputBytes":1550,"repositoryBytesRead":1550}
+{"schemaVersion":"1.0","sequence":9,"elapsedMs":8,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"get_source","inputBytes":85,"outputBytes":1557,"repositoryBytesRead":1557}
+{"schemaVersion":"1.0","sequence":10,"elapsedMs":9,"eventType":"tool_result","actor":"sanjaya","toolFamily":"sanjaya","toolName":"find_definition","inputBytes":150,"outputBytes":601,"repositoryBytesRead":601}
+{"schemaVersion":"1.0","sequence":11,"elapsedMs":10,"eventType":"tool_result","actor":"native_tool","toolFamily":"native","toolName":"shell","inputBytes":107,"outputBytes":1644,"repositoryBytesRead":1644}
+{"schemaVersion":"1.0","sequence":12,"elapsedMs":11,"eventType":"model_turn","actor":"model","inputBytes":0,"outputBytes":767,"repositoryBytesRead":0}
+{"schemaVersion":"1.0","sequence":13,"elapsedMs":36294,"eventType":"final_answer","actor":"model","inputBytes":0,"outputBytes":0,"repositoryBytesRead":0,"uncachedInputTokens":15567,"cachedInputTokens":162560,"outputTokens":1062}

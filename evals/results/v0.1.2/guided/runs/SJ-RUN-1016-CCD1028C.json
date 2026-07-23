@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-1016-CCD1028C",
+  "taskId": "SJ-EVAL-0003",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "6d0b4d1d9a9fc9eddb5cfff2d2223ff813d4e6f62e6112c0c3228dc28abd96e4",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0003",
+    "answer": "The exported frontend retry-preview function is `calculateRetryPreview`.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "calculateRetryPreview",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "bounded_attempt",
+        "value": "`const boundedAttempt = Math.min(attempt, config.maximumRetryAttempts);`",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 7,
+            "endLine": 7
+          }
+        ]
+      },
+      {
+        "key": "delay_expression",
+        "value": "`config.retryBaseSeconds * 2 ** boundedAttempt`",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 8,
+            "endLine": 8
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.3333333333333333,
+    "claimRecall": 0.3333333333333333,
+    "claimF1": 0.3333333333333333,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 4,
+    "nativeToolCalls": 0,
+    "sanjayaToolCalls": 4,
+    "repositorySourceBytesRead": 13601,
+    "toolResponseBytes": 13601,
+    "uncachedInputTokens": 9271,
+    "cachedInputTokens": 80384,
+    "outputTokens": 569,
+    "wallTimeMs": 20683
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-1016-CCD1028C.jsonl",
+    "sha256": "7df4c0e9720c6a668878bd0e8708eb9d373b5a5aa2933e95cc364a8fa1714b6e",
+    "eventCount": 7
+  }
+}

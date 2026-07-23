@@ -10,11 +10,15 @@ import Ajv2020 from "ajv/dist/2020.js";
 import { scoreAnswer } from "./scorer.mjs";
 
 const evalRoot = resolve(dirname(fileURLToPath(import.meta.url)));
+const studyIndex = process.argv.indexOf("--study");
+const study = studyIndex >= 0 ? process.argv[studyIndex + 1] : "pilot";
+assert.ok(["pilot", "guided"].includes(study), "Unknown result study.");
 const schemaRoot = join(evalRoot, "schemas");
-const resultsRoot = join(evalRoot, "results", "v0.1.2", "pilot");
+const resultsRoot = join(evalRoot, "results", "v0.1.2", study);
 const runsRoot = join(resultsRoot, "runs");
 const tasks = readJson(join(evalRoot, "tasks", "pilot.json")).tasks;
 const taskById = new Map(tasks.map((task) => [task.id, task]));
+const protocol = readJson(join(evalRoot, "protocol", `${study}.json`));
 const answerSchema = readJson(join(schemaRoot, "answer.schema.json"));
 const runSchema = readJson(join(schemaRoot, "run.schema.json"));
 const traceSchema = readJson(join(schemaRoot, "trace-event.schema.json"));
@@ -24,7 +28,11 @@ const validateRun = ajv.compile(runSchema);
 const validateTrace = ajv.compile(traceSchema);
 const runFiles = readdirSync(runsRoot).filter((file) => file.endsWith(".json"));
 
-assert.equal(runFiles.length, 72, "Expected all 72 planned run records.");
+assert.equal(
+  runFiles.length,
+  protocol.design.totalRuns,
+  `Expected all ${protocol.design.totalRuns} planned run records.`,
+);
 const identities = new Set();
 const runIds = new Set();
 let completed = 0;
@@ -67,12 +75,16 @@ for (const file of runFiles) {
   }
 }
 
-for (const task of tasks) {
-  for (const arm of ["native", "sanjaya_available"]) {
-    for (let repetition = 1; repetition <= 3; repetition += 1) {
+for (const taskId of protocol.design.taskIds) {
+  for (const arm of protocol.design.arms) {
+    for (
+      let repetition = 1;
+      repetition <= protocol.design.repetitions;
+      repetition += 1
+    ) {
       assert.ok(
-        identities.has(`${task.id}|${arm}|${repetition}`),
-        `Missing ${task.id}|${arm}|${repetition}.`,
+        identities.has(`${taskId}|${arm}|${repetition}`),
+        `Missing ${taskId}|${arm}|${repetition}.`,
       );
     }
   }
@@ -87,8 +99,9 @@ assert.ok(!serializedResults.includes(macHomePrefix));
 assert.ok(!serializedResults.includes(windowsHomePrefix));
 
 console.log(
-  `Verified 72 run records, ${completed} completed sessions, ${failures} `
-  + "retained failures, strict rescoring, trace digests, and privacy guards.",
+  `Verified ${runFiles.length} ${study} run records, ${completed} completed `
+  + `sessions, ${failures} retained failures, strict rescoring, trace digests, `
+  + "and privacy guards.",
 );
 
 function sha256(value) {

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-1013-BA173948",
+  "taskId": "SJ-EVAL-0005",
+  "arm": "sanjaya_guided",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "aeff995b66f6ab5cbf4746ba0df7152f263474da1e68d804e576bfec7625ee2f",
+    "repositoryCommit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0005",
+    "answer": "The shared in-process engine is `FastEndpoints.Agents.EndpointInvoker`, invoked through `InvokeAsync(...)`; it is registered by the `FastEndpoints.Mcp` and `FastEndpoints.A2A` integrations.",
+    "claims": [
+      {
+        "key": "engine_type",
+        "value": "FastEndpoints.Agents.EndpointInvoker",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 8,
+            "endLine": 15
+          }
+        ]
+      },
+      {
+        "key": "invocation_method",
+        "value": "EndpointInvoker.InvokeAsync(EndpointDefinition, JsonElement, ClaimsPrincipal?, CancellationToken)",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 26,
+            "endLine": 55
+          }
+        ]
+      },
+      {
+        "key": "mcp_namespace",
+        "value": "FastEndpoints.Mcp",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 10,
+            "endLine": 10
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 33,
+            "endLine": 38
+          }
+        ]
+      },
+      {
+        "key": "a2a_namespace",
+        "value": "FastEndpoints.A2A",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 6,
+            "endLine": 6
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 28,
+            "endLine": 33
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.75,
+    "claimRecall": 0.75,
+    "claimF1": 0.75,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 10,
+    "nativeToolCalls": 0,
+    "sanjayaToolCalls": 10,
+    "repositorySourceBytesRead": 26673,
+    "toolResponseBytes": 26673,
+    "uncachedInputTokens": 18616,
+    "cachedInputTokens": 151296,
+    "outputTokens": 1795,
+    "wallTimeMs": 51254
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-1013-BA173948.jsonl",
+    "sha256": "be21e97df3b4fea88439890ac4f9d47b29d5610d83e331db596e82b0a94ba144",
+    "eventCount": 13
+  }
+}

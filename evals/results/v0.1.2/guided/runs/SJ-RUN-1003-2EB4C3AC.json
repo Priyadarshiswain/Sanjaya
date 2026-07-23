@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-1003-2EB4C3AC",
+  "taskId": "SJ-EVAL-0001",
+  "arm": "sanjaya_guided",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "5fee2e4b39eb069e6104be045ccacfa20a353f1d72722a417e22ad7ef93109c3",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0001",
+    "answer": "The production retry-delay calculation is implemented by SignalDesk.Relay.RetryPolicy.CalculateNextDelay, with MaximumAttempts configured as 6.",
+    "claims": [
+      {
+        "key": "method_name",
+        "value": "CalculateNextDelay",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 8,
+            "endLine": 21
+          }
+        ]
+      },
+      {
+        "key": "container",
+        "value": "SignalDesk.Relay.RetryPolicy",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "maximum_attempts",
+        "value": "6",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 5,
+            "endLine": 5
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 4,
+    "nativeToolCalls": 0,
+    "sanjayaToolCalls": 4,
+    "repositorySourceBytesRead": 18993,
+    "toolResponseBytes": 18993,
+    "uncachedInputTokens": 13136,
+    "cachedInputTokens": 95744,
+    "outputTokens": 732,
+    "wallTimeMs": 23815
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-1003-2EB4C3AC.jsonl",
+    "sha256": "dc09e7703c6fc44631f28f5d002cfdfe545ba62f3ef642feecb575443dbc347e",
+    "eventCount": 8
+  }
+}

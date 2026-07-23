@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-1001-1673E23D",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "sanjaya_guided",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "ea5bb71dae73e334af1d4694eb44399b5fc3972e5f295fb442341f692b24367c",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0008",
+    "answer": "The VM worker starts module-graph prewarming in runVmTests by fire-and-forget calling prewarmModuleGraph immediately after loading and storing the environment. It overlaps server graph transformation with importing the environment package, and suppresses prewarm failures so normal worker fetches report them with import context.",
+    "claims": [
+      {
+        "key": "containing_function",
+        "value": "runVmTests in packages/vitest/src/runtime/workers/vm.ts.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 30,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "rpc_method",
+        "value": "rpc.prewarmModuleGraph(environment.viteEnvironment || environment.name, ctx.files.map(file => file.filepath)).",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 43,
+            "endLine": 46
+          },
+          {
+            "path": "packages/vitest/src/types/rpc.ts",
+            "startLine": 28,
+            "endLine": 28
+          }
+        ]
+      },
+      {
+        "key": "overlapped_work",
+        "value": "Server transformation of the test file's import graph overlaps with the worker importing the environment package (notably jsdom); the resulting transforms are available to the worker's later fetches.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 41
+          }
+        ]
+      },
+      {
+        "key": "failure_policy",
+        "value": "Prewarm failures are swallowed with .catch(() => {}); the worker's own fetch is expected to report failures with proper import context.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 41,
+            "endLine": 46
+          },
+          {
+            "path": "test/e2e/test/vm-threads.test.ts",
+            "startLine": 85,
+            "endLine": 101
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 6,
+    "nativeToolCalls": 1,
+    "sanjayaToolCalls": 5,
+    "repositorySourceBytesRead": 23383,
+    "toolResponseBytes": 23383,
+    "uncachedInputTokens": 14288,
+    "cachedInputTokens": 94208,
+    "outputTokens": 1181,
+    "wallTimeMs": 33176
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-1001-1673E23D.jsonl",
+    "sha256": "1b8b2a113a87b1fdd681e8444c74c89bbfdd2f6754b76c7876c2545314476a28",
+    "eventCount": 10
+  }
+}
