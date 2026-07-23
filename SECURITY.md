@@ -2,8 +2,13 @@
 
 ## Supported versions
 
-Sanjaya has not released a supported version yet. This policy will be updated
-before the first public release.
+| Version | Supported |
+| --- | --- |
+| Latest published `0.1.x` | Yes |
+| Older `0.1.x` releases | No |
+
+Security fixes are published as new immutable patch versions. Upgrade to the
+latest version listed on npm rather than relying on the mutable `latest` tag.
 
 ## Reporting a vulnerability
 

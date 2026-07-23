@@ -17,15 +17,17 @@ with evidence.
 
 ## Project status
 
-Sanjaya `0.1.0` is available from npm as
-[`sanjaya-mcp@0.1.0`](https://www.npmjs.com/package/sanjaya-mcp). The published
+Sanjaya `0.1.1` is available from npm as
+[`sanjaya-mcp@0.1.1`](https://www.npmjs.com/package/sanjaya-mcp). The published
 package was independently verified with a clean installation, launcher
 diagnostics, and an MCP handshake.
 
-A metadata-only `0.1.1` candidate corrects the Official MCP Registry identity
-to match the canonical capitalization of the GitHub account. Runtime behavior
-and the approved MCP tool contract are unchanged. Until npm lists `0.1.1`,
-`0.1.0` remains the verified public version.
+A `0.1.2` candidate fixes three compatibility problems found by the public
+evaluation readiness probes: index freshness no longer depends on filesystem
+traversal order, source inside common `packages/` monorepo directories is
+discoverable, and recovered newer C# syntax cannot produce invalid unnamed
+chunks. The approved MCP tool and capability contract is unchanged. Until npm
+lists `0.1.2`, `0.1.1` remains the verified public version.
 
 This release implements capability reporting, a health check, bounded
 exact-text search, Roslyn syntax outlines for C#, generic readable-file
@@ -69,21 +71,22 @@ Check one repository with the currently verified public version before adding
 Sanjaya to an MCP client:
 
 ```bash
-npx -y sanjaya-mcp@0.1.0 --diagnose --root /absolute/path/to/repository
+npx -y sanjaya-mcp@0.1.1 --diagnose --root /absolute/path/to/repository
 ```
 
-Once npm lists the corrective release, use its exact version instead:
+Once npm lists the compatibility release, use its exact version instead:
 
 ```bash
-npx -y sanjaya-mcp@0.1.1 --diagnose --root /absolute/path/to/repository
+npx -y sanjaya-mcp@0.1.2 --diagnose --root /absolute/path/to/repository
 ```
 
 An MCP client should then start the same exact package over stdio with separate
 arguments for `--root` and the repository's absolute path. Pin the exact
-version that npm shows as published—prefer `0.1.1` once available—and do not
-replace it with `latest`. When moving between projects, configure the client to
-substitute that project's workspace folder and start a separate Sanjaya
-process. Each process remains confined to one immutable repository root.
+version that npm shows as published—use `0.1.1` until `0.1.2` is independently
+verified—and do not replace it with `latest`. When moving between projects,
+configure the client to substitute that project's workspace folder and start a
+separate Sanjaya process. Each process remains confined to one immutable
+repository root.
 
 Review the package name, version, command, and root argument in the client's
 trust prompt. To remove Sanjaya, remove or disable its MCP server configuration;
@@ -106,7 +109,7 @@ See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 [privacy](docs/privacy.md), [packaging](docs/packaging.md), and
 [VS Code integration](docs/vscode.md), and
 [registry metadata](docs/registry.md) for the public contract. Release operators
-should use the [v0.1.1 approval-gated release runbook](docs/releasing-0.1.1.md).
+should use the [v0.1.2 approval-gated release runbook](docs/releasing-0.1.2.md).
 
 ## Approved v0.1 MCP tools
 

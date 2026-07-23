@@ -1,11 +1,11 @@
 # Official MCP Registry metadata
 
-Sanjaya has a reviewed `server.json` candidate pinned to `0.1.1`, but it has not
+Sanjaya has a reviewed `server.json` candidate pinned to `0.1.2`, but it has not
 been submitted to the Official MCP Registry. The independently verified
-[`sanjaya-mcp@0.1.0`](https://www.npmjs.com/package/sanjaya-mcp) package remains
-public; its lowercase `mcpName` cannot satisfy the registry's case-sensitive
-GitHub namespace authorization. The `0.1.1` candidate corrects only that
-identity metadata and leaves runtime behavior unchanged.
+[`sanjaya-mcp@0.1.1`](https://www.npmjs.com/package/sanjaya-mcp) package remains
+public and contains the canonical case-sensitive GitHub namespace identity.
+The `0.1.2` candidate retains that identity while adding the reviewed indexing
+compatibility fixes.
 
 The registry is currently in preview and stores server metadata rather than
 the package artifact. Its [publishing quickstart](https://modelcontextprotocol.io/registry/quickstart)
@@ -47,7 +47,7 @@ URL, registry-name syntax, text limits, canonical HTTPS repository fields,
 immutable repository id, exact npm identity and version agreement,
 Apache-2.0 package metadata, stdio transport, argument order, configurable
 repository path, absence of unexpected metadata, and the registry's 4 KiB JSON
-limit. It also requires the exact `0.1.1` package version, public-access
+limit. It also requires the exact `0.1.2` package version, public-access
 metadata, and npm provenance. The installed-tarball check independently proves
 that the packed npm `package.json` retains the same `mcpName`, package name,
 version, and license that the registry will use for ownership verification.
@@ -58,9 +58,9 @@ contract avoids making ordinary builds depend on a mutable network response.
 
 ## Separately approved release order
 
-The original npm publication and verification steps are complete for `0.1.0`.
-The corrected `0.1.1` package must complete the same evidence and approval
-process before registry submission receives separate owner approval.
+The npm publication and verification steps are complete for `0.1.1`.
+The compatibility-focused `0.1.2` package must complete the same evidence and
+approval process before registry submission receives separate owner approval.
 
 1. Review the exact stable version in `package.json`, `package-lock.json`, and
    `server.json`, then re-run every release check.

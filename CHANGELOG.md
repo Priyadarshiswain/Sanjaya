@@ -7,6 +7,24 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-07-23
+
+### Fixed
+
+- Make repository fingerprints independent of filesystem traversal order so a
+  freshly built nested index is immediately readable.
+- Include supported source under common `packages/` monorepo directories in
+  structural indexing and exact-text search.
+- Prevent Roslyn recovery for newer C# syntax from emitting unnamed
+  declarations that invalidate the generated index.
+
+### Limitations
+
+- The existing 1 MiB per-file discovery ceiling is unchanged; an eligible
+  source file above that limit still causes indexing to fail explicitly.
+
+## [0.1.1] - 2026-07-23
+
 ### Fixed
 
 - Correct the Official MCP Registry identity to match the canonical
