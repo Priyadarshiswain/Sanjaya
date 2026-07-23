@@ -148,5 +148,5 @@ Capabilities remain authoritative at runtime through the `capabilities` tool
 and in [capabilities.md](capabilities.md). License and third-party obligations
 remain in the package files, and [privacy.md](privacy.md) remains authoritative
 for local data behavior. Registry publication remains a separate release
-operation; the current metadata and verifier retain the exact `0.1.0` identity
-and ownership locks.
+operation; the current metadata and verifier retain the exact `0.1.1`
+corrective identity and ownership locks.

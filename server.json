@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.priyadarshiswain/sanjaya",
+  "name": "io.github.Priyadarshiswain/sanjaya",
   "title": "Sanjaya",
   "description": "Local-first codebase discovery for AI agents, with precise navigation and verifiable evidence.",
   "repository": {
@@ -8,13 +8,13 @@
     "source": "github",
     "id": "1307595672"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "websiteUrl": "https://github.com/Priyadarshiswain/Sanjaya",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "sanjaya-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "transport": {
         "type": "stdio"
       },

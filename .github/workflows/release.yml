@@ -6,7 +6,7 @@ on:
       tag:
         description: Exact annotated release tag to build
         required: true
-        default: v0.1.0
+        default: v0.1.1
         type: string
       publish:
         description: Continue to the separately protected npm publish job
@@ -33,8 +33,8 @@ jobs:
         env:
           REQUESTED_TAG: ${{ inputs.tag }}
         run: |
-          if [ "$REQUESTED_TAG" != "v0.1.0" ]; then
-            echo "Only the reviewed v0.1.0 tag may be published by this workflow." >&2
+          if [ "$REQUESTED_TAG" != "v0.1.1" ]; then
+            echo "Only the reviewed v0.1.1 tag may be published by this workflow." >&2
             exit 1
           fi
           if [ "$(git cat-file -t "refs/tags/$REQUESTED_TAG")" != "tag" ]; then
@@ -90,9 +90,9 @@ jobs:
       - name: Upload exact candidate
         uses: actions/upload-artifact@v7
         with:
-          name: sanjaya-mcp-0.1.0-candidate
+          name: sanjaya-mcp-0.1.1-candidate
           path: |
-            dist/release/sanjaya-mcp-0.1.0.tgz
+            dist/release/sanjaya-mcp-0.1.1.tgz
             dist/release/candidate.json
             dist/release/manifest.json
             dist/release/SHA256SUMS
@@ -117,7 +117,7 @@ jobs:
           ref: ${{ inputs.tag }}
           fetch-depth: 0
 
-      - name: Set up Node.js 24 for npm provenance
+      - name: Set up Node.js 24 for npm trusted publishing
         uses: actions/setup-node@v7
         with:
           node-version: 24
@@ -127,13 +127,11 @@ jobs:
       - name: Download exact candidate
         uses: actions/download-artifact@v8
         with:
-          name: sanjaya-mcp-0.1.0-candidate
+          name: sanjaya-mcp-0.1.1-candidate
           path: dist/release
 
       - name: Verify downloaded evidence
         run: node scripts/verify-release-candidate.mjs --require-clean
 
       - name: Publish exact candidate to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish dist/release/sanjaya-mcp-0.1.0.tgz --access public --provenance
+        run: npm publish dist/release/sanjaya-mcp-0.1.1.tgz --access public --provenance

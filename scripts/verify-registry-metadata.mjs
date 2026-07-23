@@ -95,7 +95,7 @@ assert.equal(registryPackage.identifier, packageDocument.name);
 assert.equal(registryPackage.version, packageDocument.version);
 assert.equal(serverDocument.name, packageDocument.mcpName);
 
-console.log("Official MCP Registry metadata identity, package, root input, and v0.1.0 candidate locks verified.");
+console.log(`Official MCP Registry metadata identity, package, root input, and v${releaseVersion} candidate locks verified.`);
 
 function assertExactKeys(value, expectedKeys, label) {
   assert.ok(value && typeof value === "object" && !Array.isArray(value), `${label} must be an object.`);

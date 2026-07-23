@@ -9,6 +9,7 @@ import {
 import {
   assertReleasePackage,
   packageName,
+  publishedVersion,
   publicationState,
   releaseVersion,
 } from "./release-contract.mjs";
@@ -72,6 +73,11 @@ for (const invalidVersion of [
 
 assertReleasePackage(packageDocument);
 assert.equal(publicationState, "candidate", "The public VS Code link must remain locked before publication.");
+assert.notEqual(
+  publishedVersion,
+  releaseVersion,
+  "A candidate release must distinguish the currently published version from the reviewed candidate.",
+);
 
 for (const publicDocument of ["README.md", ...listPublicMarkdown(resolve(repositoryRoot, "docs"))]) {
   const content = readFileSync(resolve(repositoryRoot, publicDocument), "utf8");
@@ -80,15 +86,20 @@ for (const publicDocument of ["README.md", ...listPublicMarkdown(resolve(reposit
     `${publicDocument} exposes an active install URL before publication.`,
   );
   for (const match of content.matchAll(/sanjaya-mcp@([^\s`"']+)/gu)) {
-    assert.equal(
-      match[1],
-      releaseVersion,
-      `${publicDocument} contains a package command that is not pinned to ${releaseVersion}.`,
+    assert.ok(
+      match[1] === publishedVersion || match[1] === releaseVersion,
+      `${publicDocument} contains a package command that is neither the published ${publishedVersion} nor candidate ${releaseVersion}.`,
     );
   }
 }
 
-console.log("VS Code install configuration, v0.1.0 pin, workspace root, and candidate activation lock verified.");
+const readme = readFileSync(resolve(repositoryRoot, "README.md"), "utf8");
+assert.ok(
+  readme.includes(`${packageName}@${publishedVersion}`),
+  `README.md must retain the working ${publishedVersion} install while ${releaseVersion} is a candidate.`,
+);
+
+console.log(`VS Code install configuration, v${releaseVersion} pin, published v${publishedVersion} fallback, workspace root, and candidate activation lock verified.`);
 
 function listPublicMarkdown(root) {
   const result = [];

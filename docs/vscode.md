@@ -3,9 +3,10 @@
 ## Current status
 
 Sanjaya `0.1.0` is published and independently verified on npm. The reviewed
-VS Code configuration can therefore install the exact package, but there is no
-public one-click installation button yet. Link activation remains a separate
-reviewed step after Official MCP Registry verification.
+VS Code configuration now targets the metadata-only `0.1.1` corrective
+candidate, so there is no public one-click installation button yet. Link
+activation remains a separate reviewed step after `0.1.1` npm publication and
+Official MCP Registry verification.
 
 Until that step is approved, users can configure the exact `npx` command in
 their MCP client as described in the project README.
