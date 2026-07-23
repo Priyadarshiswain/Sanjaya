@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "taskId": "SJ-EVAL-0001",
+  "answer": "CalculateNextDelay in SignalDesk.Relay.RetryPolicy computes the retry delay.",
+  "claims": [
+    {
+      "key": "method_name",
+      "value": "CalculateNextDelay",
+      "evidence": [
+        {
+          "path": "src/Relay/RetryPolicy.cs",
+          "startLine": 24,
+          "endLine": 31
+        }
+      ]
+    },
+    {
+      "key": "container",
+      "value": "SignalDesk.Relay.RetryPolicy",
+      "evidence": [
+        {
+          "path": "src/Relay/RetryPolicy.cs",
+          "startLine": 3,
+          "endLine": 31
+        }
+      ]
+    }
+  ],
+  "unknowns": [],
+  "confidence": 0.98
+}

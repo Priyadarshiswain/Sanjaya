@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0",
+  "id": "SJ-EVAL-0001",
+  "title": "Locate the configured retry policy",
+  "category": "target_location",
+  "difficulty": "intermediate",
+  "repository": {
+    "id": "controlled",
+    "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "languages": [
+    "csharp",
+    "generic"
+  ],
+  "sizeBand": "controlled",
+  "indexState": "warm",
+  "question": "Find the C# method that calculates the next retry delay, report its fully qualified container, and cite the exact implementation lines.",
+  "groundTruth": {
+    "expectedOutcome": "answerable",
+    "requiredClaims": [
+      {
+        "key": "method_name",
+        "description": "The exact method that calculates the next retry delay.",
+        "matchMode": "exact",
+        "acceptedValues": [
+          "CalculateNextDelay"
+        ],
+        "acceptableEvidence": [
+          {
+            "path": "src/Relay/RetryPolicy.cs",
+            "startLine": 24,
+            "endLine": 31
+          }
+        ]
+      },
+      {
+        "key": "container",
+        "description": "The namespace and type containing the method.",
+        "matchMode": "exact",
+        "acceptedValues": [
+          "SignalDesk.Relay.RetryPolicy"
+        ],
+        "acceptableEvidence": [
+          {
+            "path": "src/Relay/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 31
+          }
+        ]
+      }
+    ],
+    "forbiddenClaims": [
+      {
+        "description": "A comment or test helper is presented as the production implementation.",
+        "severity": "critical"
+      }
+    ]
+  },
+  "scorerVersion": "1.0.0",
+  "tags": [
+    "natural_language",
+    "csharp"
+  ]
+}
