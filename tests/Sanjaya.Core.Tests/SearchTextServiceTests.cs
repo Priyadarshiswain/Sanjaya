@@ -42,6 +42,23 @@ public sealed class SearchTextServiceTests
     }
 
     [Fact]
+    public async Task SearchesSourceInsidePackagesDirectories()
+    {
+        using TemporaryDirectory repository = new();
+        repository.WriteFile("packages/core/source.ts", "PACKAGES_MARKER");
+        SearchTextService service = new(RepositoryScope.Create(repository.Path));
+
+        ToolResponse<SearchTextData> response = await service.SearchAsync(
+            "PACKAGES_MARKER",
+            true,
+            null,
+            CancellationToken.None);
+
+        Assert.Equal(ContractValues.StatusOk, response.Status);
+        Assert.Equal("packages/core/source.ts", Assert.Single(response.Data!.Matches).Path);
+    }
+
+    [Fact]
     public async Task SearchSkipsBinaryOversizedGeneratedExcludedAndSymlinkTargets()
     {
         using TemporaryDirectory repository = new();

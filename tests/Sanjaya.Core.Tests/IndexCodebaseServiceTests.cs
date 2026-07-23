@@ -52,6 +52,25 @@ public sealed class IndexCodebaseServiceTests
     }
 
     [Fact]
+    public async Task IndexesSupportedSourceInsidePackagesDirectories()
+    {
+        using TemporaryDirectory repository = new();
+        repository.WriteFile("packages/core/source.fake", "source");
+
+        ToolResponse<IndexCodebaseData> response = await CreateService(repository)
+            .RebuildAsync(CancellationToken.None);
+
+        Assert.Equal(ContractValues.StatusOk, response.Status);
+        Assert.Equal(1, response.Data!.FilesIndexed);
+        using JsonDocument document = JsonDocument.Parse(File.ReadAllBytes(IndexPath(repository)));
+        Assert.Equal(
+            "packages/core/source.fake",
+            Assert.Single(document.RootElement.GetProperty("files").EnumerateArray())
+                .GetProperty("path")
+                .GetString());
+    }
+
+    [Fact]
     public async Task CancellationAndFailedReplacementPreserveThePreviousGoodIndex()
     {
         using TemporaryDirectory repository = new();

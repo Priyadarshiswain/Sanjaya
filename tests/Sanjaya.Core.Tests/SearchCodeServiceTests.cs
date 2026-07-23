@@ -136,6 +136,25 @@ public sealed class SearchCodeServiceTests
     }
 
     [Fact]
+    public async Task FreshnessFingerprintIsIndependentOfTraversalOrder()
+    {
+        using TemporaryDirectory repository = new();
+        repository.WriteFile("z.fake", "root");
+        repository.WriteFile("a/alpha.fake", "nested");
+        TestStructuralProvider provider = new();
+        SearchCodeService search = await BuildAsync(repository, provider);
+
+        ToolResponse<SearchCodeData> response = await search.SearchAsync(
+            "alpha",
+            false,
+            null,
+            CancellationToken.None);
+
+        Assert.Equal(ContractValues.StatusOk, response.Status);
+        Assert.Equal("a/alpha.fake", Assert.Single(response.Data!.Matches).Path);
+    }
+
+    [Fact]
     public async Task RejectsUnverifiableStateInvalidArgumentsAndCancellation()
     {
         using TemporaryDirectory repository = new();
