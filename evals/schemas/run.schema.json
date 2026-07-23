@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Priyadarshiswain/Sanjaya/main/evals/schemas/run.schema.json",
+  "title": "Sanjaya evaluation run",
+  "description": "A sanitized, scored record for one independent task-arm repetition.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "taskId",
+    "arm",
+    "repetition",
+    "model",
+    "controls",
+    "status",
+    "answer",
+    "scores",
+    "metrics",
+    "trace"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^SJ-RUN-[0-9]{4}-[A-Z0-9]{8}$"
+    },
+    "taskId": {
+      "type": "string",
+      "pattern": "^SJ-EVAL-[0-9]{4}$"
+    },
+    "arm": {
+      "enum": [
+        "native",
+        "sanjaya_available",
+        "sanjaya_guided"
+      ]
+    },
+    "repetition": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model",
+        "agent",
+        "agentVersion",
+        "effort"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "agent": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "agentVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "effort": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        }
+      }
+    },
+    "controls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "promptSha256",
+        "repositoryCommit",
+        "networkAccess",
+        "maxTurns",
+        "timeoutSeconds"
+      ],
+      "properties": {
+        "promptSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "repositoryCommit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "networkAccess": {
+          "const": false
+        },
+        "maxTurns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "timeout",
+        "agent_error",
+        "harness_error",
+        "invalid_output"
+      ]
+    },
+    "answer": {
+      "oneOf": [
+        {
+          "$ref": "answer.schema.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scores": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/scores"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "metrics": {
+      "$ref": "#/$defs/metrics"
+    },
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "eventCount"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^traces/[a-zA-Z0-9._/-]+\\.jsonl$",
+          "maxLength": 512
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "eventCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "completed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "answer": {
+            "$ref": "answer.schema.json"
+          },
+          "scores": {
+            "$ref": "#/$defs/scores"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "unitScore": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strictSuccess",
+        "claimPrecision",
+        "claimRecall",
+        "claimF1",
+        "citationValidity",
+        "criticalForbiddenClaims",
+        "scorerVersion"
+      ],
+      "properties": {
+        "strictSuccess": {
+          "type": "boolean"
+        },
+        "claimPrecision": {
+          "$ref": "#/$defs/unitScore"
+        },
+        "claimRecall": {
+          "$ref": "#/$defs/unitScore"
+        },
+        "claimF1": {
+          "$ref": "#/$defs/unitScore"
+        },
+        "citationValidity": {
+          "$ref": "#/$defs/unitScore"
+        },
+        "criticalForbiddenClaims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scorerVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "turns",
+        "toolCalls",
+        "nativeToolCalls",
+        "sanjayaToolCalls",
+        "repositorySourceBytesRead",
+        "toolResponseBytes",
+        "uncachedInputTokens",
+        "cachedInputTokens",
+        "outputTokens",
+        "wallTimeMs"
+      ],
+      "properties": {
+        "turns": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "toolCalls": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "nativeToolCalls": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "sanjayaToolCalls": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "repositorySourceBytesRead": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "toolResponseBytes": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "uncachedInputTokens": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "cachedInputTokens": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "outputTokens": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "wallTimeMs": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        }
+      }
+    },
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

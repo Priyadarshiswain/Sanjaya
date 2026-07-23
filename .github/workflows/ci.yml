@@ -31,6 +31,12 @@ jobs:
       - name: Restore npm metadata
         run: npm ci --ignore-scripts
 
+      - name: Restore evaluation contract validator
+        run: npm ci --prefix evals --ignore-scripts
+
+      - name: Verify evaluation contract
+        run: npm run verify --prefix evals
+
       - name: Restore .NET dependencies
         run: dotnet restore Sanjaya.sln
 

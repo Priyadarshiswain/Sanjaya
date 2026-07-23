@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "repositories": [
+    {
+      "id": "controlled",
+      "originKind": "controlled_fixture",
+      "fixturePath": "evals/fixtures/controlled",
+      "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "license": "Apache-2.0",
+      "languages": [
+        "csharp",
+        "typescript",
+        "javascript",
+        "generic"
+      ],
+      "sizeBand": "controlled",
+      "size": {
+        "trackedFiles": 120,
+        "sourceFiles": 90,
+        "sourceBytes": 780000
+      }
+    },
+    {
+      "id": "public-large-example",
+      "originKind": "public_git",
+      "url": "https://github.com/example/public-large-example",
+      "commit": "dddddddddddddddddddddddddddddddddddddddd",
+      "license": "Apache-2.0",
+      "licenseUrl": "https://github.com/example/public-large-example/blob/dddddddddddddddddddddddddddddddddddddddd/LICENSE",
+      "languages": [
+        "typescript",
+        "javascript"
+      ],
+      "sizeBand": "large",
+      "size": {
+        "trackedFiles": 8200,
+        "sourceFiles": 6100,
+        "sourceBytes": 48000000
+      }
+    }
+  ]
+}

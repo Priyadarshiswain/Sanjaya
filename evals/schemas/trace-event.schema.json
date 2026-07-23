@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Priyadarshiswain/Sanjaya/main/evals/schemas/trace-event.schema.json",
+  "title": "Sanjaya evaluation trace event",
+  "description": "A content-minimized, repository-path-free event in a sanitized JSONL trajectory.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sequence",
+    "elapsedMs",
+    "eventType",
+    "actor",
+    "inputBytes",
+    "outputBytes",
+    "repositoryBytesRead"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "elapsedMs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "eventType": {
+      "enum": [
+        "session_start",
+        "model_turn",
+        "tool_call",
+        "tool_result",
+        "final_answer",
+        "error"
+      ]
+    },
+    "actor": {
+      "enum": [
+        "harness",
+        "model",
+        "native_tool",
+        "sanjaya"
+      ]
+    },
+    "toolFamily": {
+      "enum": [
+        "native",
+        "sanjaya"
+      ]
+    },
+    "toolName": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_.:-]+$",
+      "maxLength": 120
+    },
+    "inputBytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "outputBytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "repositoryBytesRead": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "uncachedInputTokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "cachedInputTokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "outputTokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "errorCode": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$",
+      "maxLength": 100
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "eventType": {
+            "enum": [
+              "tool_call",
+              "tool_result"
+            ]
+          }
+        },
+        "required": [
+          "eventType"
+        ]
+      },
+      "then": {
+        "properties": {
+          "toolFamily": {
+            "$ref": "#/properties/toolFamily"
+          },
+          "toolName": {
+            "$ref": "#/properties/toolName"
+          }
+        },
+        "required": [
+          "toolFamily",
+          "toolName"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-0001-A1B2C3D4",
+  "taskId": "SJ-EVAL-0001",
+  "arm": "sanjaya_available",
+  "repetition": 1,
+  "model": {
+    "provider": "example-provider",
+    "model": "example-model-version",
+    "agent": "example-agent",
+    "agentVersion": "1.0.0",
+    "effort": "high"
+  },
+  "controls": {
+    "promptSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "repositoryCommit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "networkAccess": false,
+    "maxTurns": 60,
+    "timeoutSeconds": 900
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0001",
+    "answer": "CalculateNextDelay in SignalDesk.Relay.RetryPolicy computes the retry delay.",
+    "claims": [
+      {
+        "key": "method_name",
+        "value": "CalculateNextDelay",
+        "evidence": [
+          {
+            "path": "src/Relay/RetryPolicy.cs",
+            "startLine": 24,
+            "endLine": 31
+          }
+        ]
+      },
+      {
+        "key": "container",
+        "value": "SignalDesk.Relay.RetryPolicy",
+        "evidence": [
+          {
+            "path": "src/Relay/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 31
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.98
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.0.0"
+  },
+  "metrics": {
+    "turns": 4,
+    "toolCalls": 3,
+    "nativeToolCalls": 0,
+    "sanjayaToolCalls": 3,
+    "repositorySourceBytesRead": 836,
+    "toolResponseBytes": 2140,
+    "uncachedInputTokens": 1600,
+    "cachedInputTokens": 0,
+    "outputTokens": 240,
+    "wallTimeMs": 12800
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-0001-A1B2C3D4.jsonl",
+    "sha256": "830bc83b478e13a2c6521b665d517752e9ee0562814d73f902eb3bf2406f7094",
+    "eventCount": 3
+  }
+}

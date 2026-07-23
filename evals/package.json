@@ -1,0 +1,17 @@
+{
+  "name": "sanjaya-eval-contract",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Offline schema validation for the Sanjaya evaluation contract.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "verify": "node verify-contract.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0"
+  }
+}
