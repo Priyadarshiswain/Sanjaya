@@ -27,6 +27,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            evals/package-lock.json
 
       - name: Restore npm metadata
         run: npm ci --ignore-scripts
@@ -36,6 +39,12 @@ jobs:
 
       - name: Verify evaluation contract
         run: npm run verify --prefix evals
+
+      - name: Verify controlled fixture with public npm artifact
+        run: npm run verify:fixture --prefix evals
+
+      - name: Build controlled C# fixture
+        run: dotnet build evals/fixtures/controlled/backend/SignalDesk.sln --configuration Release
 
       - name: Restore .NET dependencies
         run: dotnet restore Sanjaya.sln

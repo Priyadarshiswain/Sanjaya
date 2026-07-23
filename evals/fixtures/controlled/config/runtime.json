@@ -1,0 +1,6 @@
+{
+  "apiBaseUrl": "/api",
+  "retryBaseSeconds": 5,
+  "maximumRetryAttempts": 6,
+  "marker": "SIGNAL_DESK_ESCALATION_MARKER"
+}

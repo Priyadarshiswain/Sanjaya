@@ -2,16 +2,19 @@
   "name": "sanjaya-eval-contract",
   "version": "0.0.0",
   "private": true,
-  "description": "Offline schema validation for the Sanjaya evaluation contract.",
+  "description": "Offline contract and controlled-fixture validation for Sanjaya evaluations.",
   "license": "Apache-2.0",
   "type": "module",
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "verify": "node verify-contract.mjs"
+    "prepare:core": "node prepare-controlled-fixture.mjs --profile core",
+    "verify": "node verify-contract.mjs",
+    "verify:fixture": "node verify-controlled-fixture.mjs"
   },
   "devDependencies": {
-    "ajv": "8.20.0"
+    "ajv": "8.20.0",
+    "sanjaya-mcp": "0.1.1"
   }
 }

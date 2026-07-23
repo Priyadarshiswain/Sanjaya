@@ -1,0 +1,7 @@
+defaults:
+  team: operations
+  channel: inbox
+
+critical:
+  team: incident-command
+  channel: pager
