@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0",
+  "status": "frozen_before_model_execution",
+  "target": {
+    "package": "sanjaya-mcp",
+    "version": "0.1.2",
+    "npmIntegrity": "sha512-oVto+HMIvSOA+ygCzfsJFpMW4s44lhp7UwIEA+EZITpv4qHBOm+5QbAfDsH9jhD8ylVYXrhI/xYM8HEHYqvnrg==",
+    "releaseCommit": "2e9ad78a78caa51e2991e0a8e00c4e58d71a65f8"
+  },
+  "agent": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "name": "codex-cli",
+    "version": "0.144.5",
+    "ignoreUserConfig": true,
+    "ignoreRules": true,
+    "ephemeralSessions": true
+  },
+  "design": {
+    "arms": [
+      "native",
+      "sanjaya_available"
+    ],
+    "repetitions": 3,
+    "taskIds": [
+      "SJ-EVAL-0001",
+      "SJ-EVAL-0002",
+      "SJ-EVAL-0003",
+      "SJ-EVAL-0004",
+      "SJ-EVAL-0005",
+      "SJ-EVAL-0006",
+      "SJ-EVAL-0007",
+      "SJ-EVAL-0008",
+      "SJ-EVAL-0009",
+      "SJ-EVAL-0010",
+      "SJ-EVAL-0011",
+      "SJ-EVAL-0012"
+    ],
+    "totalRuns": 72,
+    "orderSeed": "sanjaya-v0.1.2-pilot-20260724",
+    "orderAlgorithm": "ascending SHA-256 of seed|taskId|repetition|arm",
+    "parallelism": 1
+  },
+  "controls": {
+    "sandbox": "read-only",
+    "repositoryToolNetworkAccess": false,
+    "modelTransportNetworkExcludedFromNetworkAccessField": true,
+    "timeoutSeconds": 300,
+    "maxTurns": 1,
+    "hardTokenLimit": null,
+    "hardTokenLimitReason": "codex-cli 0.144.5 does not expose a per-exec token cap; exact token usage is retained for every run",
+    "locale": "C",
+    "timezone": "UTC",
+    "outputSchema": "schemas/answer.schema.json",
+    "scorerVersion": "1.0.0",
+    "rawEvents": "temporary local files only; never committed",
+    "sanitizedTrace": "content-minimized events only"
+  },
+  "indexing": {
+    "warm": "built with the exact public package before the measured session in a separate treatment snapshot",
+    "none": "no index exists at session start",
+    "cost": "measured separately and never charged only to a query",
+    "sourceSnapshotIsolation": "the agent sees a pristine read-only snapshot; the MCP server uses an equivalent treatment snapshot so .sanjaya never leaks to the native arm"
+  },
+  "scoring": {
+    "structuredClaimsOnly": true,
+    "claimNormalization": "Unicode NFC, trim, collapse whitespace",
+    "citationRule": "same repository-relative path and overlapping accepted line range",
+    "forbiddenClaimRule": "only preregistered claim-key and rejected-value pairs are mechanically counted",
+    "proseLimitation": "free-form prose is retained for review but is not semantically judged by a model"
+  }
+}

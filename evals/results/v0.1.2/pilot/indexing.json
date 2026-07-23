@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "package": "sanjaya-mcp@0.1.2",
+  "generatedAt": "2026-07-23T18:52:31.069Z",
+  "records": [
+    {
+      "repositoryId": "signaldesk-core",
+      "status": "ok",
+      "warnings": [
+        "excluded_directories_skipped:3"
+      ],
+      "filesIndexed": 25,
+      "chunksIndexed": 84,
+      "sourceBytes": 9721,
+      "durationMs": 993,
+      "indexBytes": 54880
+    },
+    {
+      "repositoryId": "fastendpoints",
+      "status": "partial",
+      "warnings": [
+        "excluded_directories_skipped:5",
+        "index_directory_not_explicitly_ignored",
+        "syntax_diagnostics_recovered:212"
+      ],
+      "filesIndexed": 884,
+      "chunksIndexed": 9702,
+      "sourceBytes": 3257191,
+      "durationMs": 2365,
+      "indexBytes": 14018617
+    },
+    {
+      "repositoryId": "vitest",
+      "status": "partial",
+      "warnings": [
+        "excluded_directories_skipped:3",
+        "index_directory_not_explicitly_ignored",
+        "syntax_diagnostics_recovered:1"
+      ],
+      "filesIndexed": 2307,
+      "chunksIndexed": 11744,
+      "sourceBytes": 5712432,
+      "durationMs": 2063,
+      "indexBytes": 8544541
+    },
+    {
+      "repositoryId": "kiota",
+      "status": "partial",
+      "warnings": [
+        "excluded_directories_skipped:3",
+        "index_directory_not_explicitly_ignored",
+        "chunk_content_truncated:28"
+      ],
+      "filesIndexed": 768,
+      "chunksIndexed": 7350,
+      "sourceBytes": 5261523,
+      "durationMs": 2727,
+      "indexBytes": 16957414
+    }
+  ]
+}

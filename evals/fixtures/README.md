@@ -46,7 +46,7 @@ temporary `cleanupRoot` after manually inspecting a prepared fixture.
 npm run verify:fixture --prefix evals
 ```
 
-Verification uses the exact public `sanjaya-mcp@0.1.1` package locked under the
+Verification uses the exact public `sanjaya-mcp@0.1.2` package locked under the
 isolated eval development project. It exercises the installed launcher through
 MCP and checks all three profile identities. It runs no AI model, publishes no
 result, and makes no external submission.

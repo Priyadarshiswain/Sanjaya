@@ -9,12 +9,17 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "acquire:pilot": "node repositories/acquire.mjs",
     "prepare:core": "node prepare-controlled-fixture.mjs --profile core",
+    "run:layer0": "node run-layer0.mjs",
+    "run:pilot": "node run-pilot.mjs",
+    "test:scorer": "node scorer.test.mjs",
     "verify": "node verify-contract.mjs",
-    "verify:fixture": "node verify-controlled-fixture.mjs"
+    "verify:fixture": "node verify-controlled-fixture.mjs",
+    "verify:pilot": "node verify-pilot.mjs"
   },
   "devDependencies": {
     "ajv": "8.20.0",
-    "sanjaya-mcp": "0.1.1"
+    "sanjaya-mcp": "0.1.2"
   }
 }

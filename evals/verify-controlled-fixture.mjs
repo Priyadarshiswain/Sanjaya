@@ -10,6 +10,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import {
+  delimiter,
   dirname,
   join,
   resolve,
@@ -40,7 +41,7 @@ const launcherPath = join(
 );
 
 assert.equal(installedPackage.name, "sanjaya-mcp");
-assert.equal(installedPackage.version, "0.1.1");
+assert.equal(installedPackage.version, "0.1.2");
 assert.ok(existsSync(launcherPath), "The exact public npm launcher is missing.");
 
 const preparedProfiles = [];
@@ -82,7 +83,7 @@ try {
 
   const version = runLauncher(["--version"]);
   assert.equal(version.status, 0);
-  assert.equal(version.stdout.trim(), "sanjaya-mcp 0.1.1");
+  assert.equal(version.stdout.trim(), "sanjaya-mcp 0.1.2");
   assert.equal(version.stderr, "");
 
   const diagnostics = runLauncher([
@@ -102,7 +103,7 @@ try {
 
   console.log(
     "Verified deterministic core/medium/large SignalDesk fixtures and "
-    + "the exact public sanjaya-mcp@0.1.1 artifact through MCP without a model.",
+    + "the exact public sanjaya-mcp@0.1.2 artifact through MCP without a model.",
   );
 } finally {
   for (const prepared of preparedProfiles) {
@@ -425,8 +426,12 @@ function content(response) {
 }
 
 function isolatedEnvironment() {
+  const dotnetRoot = process.env.DOTNET_ROOT;
   return {
     ...process.env,
+    PATH: dotnetRoot
+      ? `${dotnetRoot}${delimiter}${process.env.PATH ?? ""}`
+      : process.env.PATH,
     HTTPS_PROXY: "http://127.0.0.1:1",
     HTTP_PROXY: "http://127.0.0.1:1",
     NO_PROXY: "",

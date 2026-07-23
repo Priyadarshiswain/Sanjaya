@@ -254,7 +254,28 @@
             "major",
             "minor"
           ]
+        },
+        "claimKey": {
+          "$ref": "#/$defs/claimKey"
+        },
+        "rejectedValues": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
         }
+      },
+      "dependentRequired": {
+        "claimKey": [
+          "rejectedValues"
+        ],
+        "rejectedValues": [
+          "claimKey"
+        ]
       }
     }
   }

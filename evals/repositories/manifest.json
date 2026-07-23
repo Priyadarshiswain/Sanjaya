@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0",
+  "repositories": [
+    {
+      "id": "signaldesk-core",
+      "originKind": "controlled_fixture",
+      "fixturePath": "evals/fixtures/controlled",
+      "commit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+      "license": "Apache-2.0",
+      "languages": [
+        "csharp",
+        "typescript",
+        "javascript",
+        "generic"
+      ],
+      "sizeBand": "controlled",
+      "size": {
+        "trackedFiles": 37,
+        "sourceFiles": 25,
+        "sourceBytes": 9721
+      }
+    },
+    {
+      "id": "fastendpoints",
+      "originKind": "public_git",
+      "url": "https://github.com/FastEndpoints/FastEndpoints",
+      "commit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+      "license": "MIT",
+      "licenseUrl": "https://github.com/FastEndpoints/FastEndpoints/blob/4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09/License.md",
+      "languages": [
+        "csharp"
+      ],
+      "sizeBand": "medium",
+      "size": {
+        "trackedFiles": 1087,
+        "sourceFiles": 884,
+        "sourceBytes": 3257191
+      }
+    },
+    {
+      "id": "vitest",
+      "originKind": "public_git",
+      "url": "https://github.com/vitest-dev/vitest",
+      "commit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+      "license": "MIT",
+      "licenseUrl": "https://github.com/vitest-dev/vitest/blob/d8b040c63aaffad22aa9921536ae201cff53cc0f/LICENSE",
+      "languages": [
+        "typescript",
+        "javascript"
+      ],
+      "sizeBand": "medium",
+      "size": {
+        "trackedFiles": 3066,
+        "sourceFiles": 2307,
+        "sourceBytes": 5712432
+      }
+    },
+    {
+      "id": "kiota",
+      "originKind": "public_git",
+      "url": "https://github.com/microsoft/kiota",
+      "commit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+      "license": "MIT",
+      "licenseUrl": "https://github.com/microsoft/kiota/blob/b9e61265f8394a6c5d0358e89e037873375b017a/LICENSE",
+      "languages": [
+        "csharp",
+        "typescript",
+        "javascript"
+      ],
+      "sizeBand": "medium",
+      "size": {
+        "trackedFiles": 1049,
+        "sourceFiles": 770,
+        "sourceBytes": 5263059
+      }
+    },
+    {
+      "id": "aspire",
+      "originKind": "public_git",
+      "url": "https://github.com/dotnet/aspire",
+      "commit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+      "license": "MIT",
+      "licenseUrl": "https://github.com/dotnet/aspire/blob/327570c17f4e337ea5ae4574a5fe6abee4a6838b/LICENSE.TXT",
+      "languages": [
+        "csharp",
+        "typescript",
+        "javascript"
+      ],
+      "sizeBand": "large",
+      "size": {
+        "trackedFiles": 11146,
+        "sourceFiles": 5084,
+        "sourceBytes": 51568810
+      }
+    }
+  ]
+}
