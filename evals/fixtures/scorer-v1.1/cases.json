@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "scorerVersion": "1.1.0",
-  "reviewStatus": "awaiting_independent_review",
+  "reviewProtocol": "independent_arm_blind",
   "cases": [
     {
       "id": "SJ-SCORE-0001",

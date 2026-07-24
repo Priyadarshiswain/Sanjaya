@@ -1,7 +1,8 @@
 # Scorer v1.1 methodology
 
-Status: proposed for independent review. It does not replace the frozen v1.0
-scores or authorize another model run.
+Status: additive versioned methodology. Independent fixture review is required
+before use. It does not replace the frozen v1.0 scores or authorize another
+model run.
 
 ## Problem being corrected
 
