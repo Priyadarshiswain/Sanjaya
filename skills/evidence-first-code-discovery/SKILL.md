@@ -14,11 +14,14 @@ make it the right tool for every lookup.
 1. Identify the claims the answer must support before searching.
 2. Skip broad discovery when the exact file and relevant range are already
    supplied or the necessary source is already in context.
-3. When Sanjaya is available and its capabilities are not established for the
-   current repository session, call `capabilities` once. Reuse the result.
-4. Treat the live capability response as authoritative. Do not infer support
+3. When Sanjaya is available, `capabilities` is exposed, and capabilities are
+   not established for the current repository session, call it once. Reuse the
+   result.
+4. If `capabilities` is not exposed, use the client’s live tool schemas or
+   metadata as the fallback capability boundary. Do not invent missing tools.
+5. Treat live capability information as authoritative. Do not infer support
    from the language, package version, or presence of another provider.
-5. Choose one primary route from the table below.
+6. Choose one primary route from the table below.
 
 | Evidence need | Primary route | Constraint |
 |---|---|---|
@@ -57,6 +60,8 @@ Inspect only enough source to validate the intended claim.
 - Retrieve the smallest useful source window.
 - Use a second route only to resolve ambiguity, recover from a bounded or
   unsupported result, or verify a materially consequential claim.
+- When a Sanjaya result answers only part of the task, use native tools only
+  for the missing evidence; do not re-query facts already established.
 - Keep declaration evidence distinct from usage evidence.
 - Preserve `partial`, truncation, recovered-syntax, and ambiguity states.
 - Treat every `find_references` result as a `syntax_candidate`; do not claim
@@ -101,3 +106,8 @@ Distinguish:
 Never expose an absolute repository path. Do not upgrade partial evidence,
 syntax candidates, or ambiguity into certainty. Keep caveats concise and
 include them only when they change how the answer should be interpreted.
+
+For recent-change evidence, report only requested revisions, subjects, paths,
+and working-tree state. Omit author names, email addresses, remote URLs, Git
+configuration, commit bodies, and change statistics unless the user explicitly
+requests them and they are relevant.

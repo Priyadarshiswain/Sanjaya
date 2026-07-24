@@ -66,10 +66,13 @@ file and line range or the necessary source is already in context.
 ### 2. Discover capabilities once
 
 When Sanjaya is available and its capabilities are not already established for
-the current repository session, call `capabilities` once.
+the current repository session, call `capabilities` once when the client
+exposes it.
 
-Reuse that result for later decisions in the same repository session. Do not
-call `health_check` routinely. Use it only for setup questions or when a
+If `capabilities` is not exposed, use the client’s live tool schemas or metadata
+as the fallback capability boundary and do not invent missing tools. Reuse
+capability information for later decisions in the same repository session. Do
+not call `health_check` routinely. Use it only for setup questions or when a
 capability reports a runtime or repository-readiness problem that needs
 diagnosis.
 
@@ -96,6 +99,10 @@ Do not call a Sanjaya tool and a native tool for the same successful lookup
 solely to prove that both work. Use a second route only to resolve ambiguity,
 recover from a bounded or unsupported result, or verify a claim whose
 correctness materially depends on it.
+
+When a Sanjaya result answers only part of the task, use a native fallback only
+for the missing evidence. Do not re-query facts already established by the
+successful result.
 
 ### 4. Keep indexing opt-in
 
@@ -127,6 +134,11 @@ line ranges. Distinguish:
 Never expose an absolute repository path. Preserve `partial`, ambiguity,
 recovered-syntax, truncation, and `syntax_candidate` qualifications instead of
 upgrading them into certainty.
+
+For recent-change evidence, report only requested revisions, subjects, paths,
+and working-tree state. Omit author names, email addresses, remote URLs, Git
+configuration, commit bodies, and change statistics unless the user explicitly
+requests them and they are relevant.
 
 ## Cost and stopping rules
 
@@ -180,6 +192,37 @@ The skill should target Sanjaya `0.1.2` or newer while treating the live
 `capabilities` response—not a version assumption—as the source of truth.
 Installing the skill into a user environment and selecting a distribution
 channel require separate owner review.
+
+## Initial qualitative forward test
+
+On 2026-07-24, six fresh read-only agents exercised three realistic tasks in
+two independent passes: an exact CI lookup, a structural C# lookup, and a
+recent-change plus working-tree question. Agents received the skill path and
+task but not the intended answer or the author’s diagnosis.
+
+All six answers were correct and used valid repository-relative evidence. The
+first pass exposed two orchestration gaps:
+
+- one client did not expose `capabilities`, although its live tool metadata was
+  sufficient to select supported operations; and
+- a recent-change answer included an unrequested author name and change
+  statistics, while native Git partially duplicated successful Sanjaya
+  evidence.
+
+The skill was tightened to accept live tool schemas as a capability fallback,
+use native tools only for missing evidence, and omit unrequested Git identity
+and metadata. In the second pass:
+
+- the exact lookup selected native exact search without duplicating it through
+  MCP;
+- the structural lookup remained read-only and created no index; and
+- the recent-change lookup used Sanjaya for commit evidence, native Git only
+  for missing working-tree state, and omitted author identity and statistics.
+
+No forward-test agent modified the repository, created an index, installed the
+skill, or published anything. This small qualitative check validates workflow
+comprehension only; it is not a preregistered benchmark or evidence of product
+benefit.
 
 ## Evaluation contract
 

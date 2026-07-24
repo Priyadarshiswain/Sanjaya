@@ -73,12 +73,16 @@ for (const tool of publicTools) {
 }
 
 for (const boundary of [
-  "call `capabilities` once",
+  "When Sanjaya is available, `capabilities` is exposed",
+  "call it once. Reuse the result.",
+  "If `capabilities` is not exposed, use the client’s live tool schemas or metadata as the fallback capability boundary.",
   "ask for approval before calling `index_codebase`",
   "Do not retry the same call unchanged.",
+  "use native tools only for the missing evidence; do not re-query facts already established.",
   "After three Sanjaya discovery calls, reassess",
   "Treat three as a review point, not a hard limit",
   "Never expose an absolute repository path.",
+  "Omit author names, email addresses, remote URLs, Git configuration, commit bodies, and change statistics unless the user explicitly requests them",
   "Do not treat this skill invocation as permission to install software, contact the network, edit source",
 ]) {
   assert.ok(
@@ -107,6 +111,7 @@ for (const heading of [
   "## Cost and stopping rules",
   "## Failure and fallback contract",
   "## Initial packaging boundary",
+  "## Initial qualitative forward test",
   "## Evaluation contract",
   "## Implementation status and remaining gates",
 ]) {
@@ -115,6 +120,7 @@ for (const heading of [
 for (const boundary of [
   "the skill is not installed or published.",
   "The skill must not create or rebuild the index silently.",
+  "This small qualitative check validates workflow comprehension only; it is not a preregistered benchmark or evidence of product benefit.",
   "Implementation approval does not authorize a paid model run or publication.",
   "Forward-testing, installation, model evaluation, and publication are later explicit decisions.",
 ]) {
