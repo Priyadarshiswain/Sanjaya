@@ -59,3 +59,10 @@ npm run run:pilot --prefix evals -- \
 Model transport uses the authenticated Codex service. Commands available to
 the evaluated agent remain in a read-only, network-disabled sandbox. Raw Codex
 events stay in temporary local storage and are deleted after sanitization.
+
+The completed pilot exposed an exact-string scoring defect. The proposed,
+additive [scorer v1.1 methodology](SCORER-V1.1.md) and its
+[arm-hidden review fixtures](fixtures/scorer-v1.1/README.md) correct
+deterministic formatting failures without silently guessing semantic
+equivalence. Scorer 1.0 remains the frozen scorer for the published v0.1.2 run
+records; no result is overwritten.
