@@ -2,6 +2,7 @@ import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -9,9 +10,10 @@ import {
   realpathSync,
   rmSync,
   statSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import {
   delimiter,
   dirname,
@@ -127,6 +129,8 @@ try {
     }
     const setupRoot = mkdtempSync(join(tmpdir(), "sanjaya-skill-setup-"));
     try {
+      seedAuthentication(setupRoot);
+      verifyAuthentication(setupRoot);
       installSkillPlugin(setupRoot);
     } finally {
       rmSync(setupRoot, { recursive: true, force: true });
@@ -346,12 +350,13 @@ async function executeRun({ planned, task, agentRoot, treatmentRoot }) {
   const traceAbsolutePath = join(tracesRoot, traceFileName);
   let pluginEvidence = null;
   let setupError = null;
-  if (planned.arm === "evidence_first_skill") {
-    try {
+  try {
+    seedAuthentication(codexHome);
+    if (planned.arm === "evidence_first_skill") {
       pluginEvidence = installSkillPlugin(codexHome);
-    } catch (error) {
-      setupError = error;
     }
+  } catch (error) {
+    setupError = error;
   }
   const indexBefore = indexFingerprint(treatmentRoot);
   const started = performance.now();
@@ -742,6 +747,47 @@ function verifyCodexVersion() {
     throw new Error(
       `Expected ${expected}, received ${result.stdout.trim() || "no version"}.`,
     );
+  }
+}
+
+function seedAuthentication(codexHome) {
+  const sourceHome = process.env.CODEX_HOME
+    ? resolve(process.env.CODEX_HOME)
+    : join(homedir(), ".codex");
+  const source = join(sourceHome, "auth.json");
+  if (!existsSync(source)) {
+    throw new Error("The authenticated Codex home has no auth.json.");
+  }
+  const target = join(codexHome, "auth.json");
+  symlinkSync(realpathSync(source), target, "file");
+  if (!lstatSync(target).isSymbolicLink()) {
+    throw new Error("The disposable Codex home did not isolate authentication.");
+  }
+}
+
+function verifyAuthentication(codexHome) {
+  const result = spawnSync("codex", ["login", "status"], {
+    cwd: repositoryRoot,
+    encoding: "utf8",
+    env: controlledEnvironment(codexHome),
+    windowsHide: true,
+  });
+  if (
+    result.error
+    || result.status !== 0
+    || !`${result.stdout}\n${result.stderr}`.includes("Logged in using ChatGPT")
+  ) {
+    throw new Error(
+      "The disposable Codex home cannot use the approved login: "
+      + JSON.stringify({
+        status: result.status,
+        stdout: result.stdout.trim(),
+        stderr: result.stderr.trim(),
+      }),
+    );
+  }
+  if (!lstatSync(join(codexHome, "auth.json")).isSymbolicLink()) {
+    throw new Error("Codex replaced the isolated authentication link.");
   }
 }
 

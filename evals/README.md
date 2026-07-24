@@ -122,3 +122,10 @@ recorded in this study. The harness stops between runs when it reaches the
 ceiling; it cannot interrupt a model response already in progress.
 It also stops after two consecutive session failures so an authentication or
 runtime fault cannot consume the entire stage.
+
+The first stage-one attempt stopped exactly this way after its initial native
+and skill sessions. A clean `CODEX_HOME` had also hidden the existing ChatGPT
+login. The frozen protocol records the amendment: both arms now receive only a
+temporary, user-private symlink to the existing `auth.json`, while personal
+configuration, rules, skills, plugins, memories, and sessions remain excluded.
+The two failed records are retained unchanged.
