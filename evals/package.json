@@ -16,7 +16,7 @@
     "run:guided": "node run-pilot.mjs --study guided",
     "analyze:pilot": "node analyze-pilot.mjs",
     "analyze:guided": "node analyze-guided.mjs",
-    "test:scorer": "node scorer.test.mjs",
+    "test:scorer": "node scorer.test.mjs && node scorer-v1.1.test.mjs",
     "verify": "node verify-contract.mjs",
     "verify:fixture": "node verify-controlled-fixture.mjs",
     "verify:guided": "node verify-guided.mjs",

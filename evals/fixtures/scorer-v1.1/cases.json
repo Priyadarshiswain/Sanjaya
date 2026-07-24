@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0",
+  "scorerVersion": "1.1.0",
+  "reviewProtocol": "independent_arm_blind",
+  "cases": [
+    {
+      "id": "SJ-SCORE-0001",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["FastEndpoints.Agents.EndpointInvoker"],
+      "suppliedValue": "`FastEndpoints.Agents.EndpointInvoker` (sealed class).",
+      "expectedMatch": true,
+      "rationale": "Markdown and a short explanatory suffix do not change the canonical type."
+    },
+    {
+      "id": "SJ-SCORE-0002",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["InvokeAsync"],
+      "suppliedValue": "EndpointInvoker.InvokeAsync(EndpointDefinition, JsonElement, ClaimsPrincipal?, CancellationToken)",
+      "expectedMatch": true,
+      "rationale": "A method signature contains the standalone canonical method name."
+    },
+    {
+      "id": "SJ-SCORE-0003",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["Math.min(attempt, config.maximumRetryAttempts)"],
+      "suppliedValue": "It bounds the attempt with `Math.min(attempt, config.maximumRetryAttempts)`.",
+      "expectedMatch": true,
+      "rationale": "An exact expression inside explanatory prose remains mechanically recoverable."
+    },
+    {
+      "id": "SJ-SCORE-0004",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["Align the retry preview default"],
+      "suppliedValue": "c321a020bbb810ade59d63a48210de9fa84f0f52 — Align the retry preview default; modified frontend/src/app/core/runtime-config.ts.",
+      "expectedMatch": true,
+      "rationale": "A commit hash and changed path can wrap the exact commit subject."
+    },
+    {
+      "id": "SJ-SCORE-0005",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "one_of",
+      "acceptedValues": ["false", "no"],
+      "suppliedValue": "No. DEBUG_SESSION_* variables are explicitly kept intact.",
+      "expectedMatch": true,
+      "rationale": "One registered alternative appears as the leading answer with punctuation and explanation."
+    },
+    {
+      "id": "SJ-SCORE-0006",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["CancellationToken.None"],
+      "suppliedValue": "No. The helper calls StopProcessTreeAsync with `CancellationToken.None`, rather than the caller's cancelled token.",
+      "expectedMatch": true,
+      "rationale": "The leading response negates the question, not the later canonical token."
+    },
+    {
+      "id": "SJ-SCORE-0007",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "exact",
+      "acceptedValues": ["Correct.Type"],
+      "suppliedValue": "Incorrect.Type",
+      "expectedMatch": false,
+      "rationale": "An accepted value embedded inside a larger identifier is not a canonical token."
+    },
+    {
+      "id": "SJ-SCORE-0008",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "exact",
+      "acceptedValues": ["Correct.Type"],
+      "suppliedValue": "This is not Correct.Type.",
+      "expectedMatch": false,
+      "rationale": "A mechanically visible negation prevents positive credit."
+    },
+    {
+      "id": "SJ-SCORE-0009",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "exact",
+      "acceptedValues": ["6"],
+      "suppliedValue": "The maximum is 16 attempts.",
+      "expectedMatch": false,
+      "rationale": "A numeric canonical value cannot match a digit inside another number."
+    },
+    {
+      "id": "SJ-SCORE-0010",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "exact",
+      "acceptedValues": ["Error"],
+      "suppliedValue": "No Error is returned.",
+      "expectedMatch": false,
+      "rationale": "A negated canonical value is not a correct positive claim."
+    },
+    {
+      "id": "SJ-SCORE-0011",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "set_exact",
+      "acceptedValues": ["Alpha", "Beta"],
+      "suppliedValue": "`Beta` | \"Alpha\"",
+      "expectedMatch": true,
+      "rationale": "Exact sets are order-independent and ignore outer formatting."
+    },
+    {
+      "id": "SJ-SCORE-0012",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "set_exact",
+      "acceptedValues": ["Alpha", "Beta"],
+      "suppliedValue": "Alpha | Beta | Gamma",
+      "expectedMatch": false,
+      "rationale": "An extra set member prevents exact-set credit."
+    },
+    {
+      "id": "SJ-SCORE-0013",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "citation_only",
+      "acceptedValues": ["not-used"],
+      "suppliedValue": "Any schema-valid value",
+      "expectedMatch": true,
+      "rationale": "Citation-only claims are decided by evidence rather than claim text."
+    },
+    {
+      "id": "SJ-SCORE-0014",
+      "sourceKind": "semantic_holdout",
+      "matchMode": "exact",
+      "acceptedValues": ["an entry with undefined data"],
+      "suppliedValue": "The cache stores the source but leaves its payload empty.",
+      "expectedMatch": false,
+      "rationale": "A semantic paraphrase is not silently guessed; it needs a preregistered alias or blinded human review."
+    },
+    {
+      "id": "SJ-SCORE-0015",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "exact",
+      "acceptedValues": ["FastEndpoints.Mcp"],
+      "suppliedValue": "FastEndpoints.Mcp.Extensions",
+      "expectedMatch": false,
+      "rationale": "A dotted canonical prefix cannot stand in for a longer qualified type."
+    },
+    {
+      "id": "SJ-SCORE-0016",
+      "sourceKind": "synthetic_adversarial",
+      "matchMode": "exact",
+      "acceptedValues": ["CalculateNextDelay"],
+      "suppliedValue": "calculatenextdelay",
+      "expectedMatch": false,
+      "rationale": "Exact code identifiers remain case-sensitive."
+    }
+  ]
+}
