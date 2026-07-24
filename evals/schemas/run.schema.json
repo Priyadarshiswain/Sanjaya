@@ -35,7 +35,8 @@
       "enum": [
         "native",
         "sanjaya_available",
-        "sanjaya_guided"
+        "sanjaya_guided",
+        "evidence_first_skill"
       ]
     },
     "repetition": {
@@ -111,6 +112,12 @@
           "type": "integer",
           "minimum": 1,
           "maximum": 86400
+        },
+        "pluginManifestSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "skillSha256": {
+          "$ref": "#/$defs/sha256"
         }
       }
     },
@@ -286,6 +293,9 @@
           "$ref": "#/$defs/nonNegativeInteger"
         },
         "wallTimeMs": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "indexWrites": {
           "$ref": "#/$defs/nonNegativeInteger"
         }
       }

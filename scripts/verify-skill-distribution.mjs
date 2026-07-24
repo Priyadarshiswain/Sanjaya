@@ -103,7 +103,7 @@ for (const boundary of [
   "Plugin versions and npm server versions are independent SemVer streams.",
   "Exact installation commands and clickable links remain intentionally absent",
   "This check does not invoke Codex, register a marketplace, install or enable the plugin, mutate personal configuration, contact a network, or create a publishable marketplace artifact.",
-  "Public marketplace creation remains blocked until interactive disable/re-enable and a fresh authenticated agent invocation are reviewed separately.",
+  "Public marketplace creation remains blocked until interactive disable/re-enable is reviewed separately and the preregistered Evidence-First skill evaluation completes.",
   "Approval of a skills-only plugin does not pre-approve that expansion.",
   "The local plugin exists only as reviewed repository source.",
   "Approval of this implementation does not authorize installation, marketplace publication, hosted-directory submission, or MCP bundling.",

@@ -5,6 +5,8 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readdirSync,
+  realpathSync,
   rmSync,
   statSync,
   writeFileSync,
@@ -18,14 +20,25 @@ import {
 } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
+import {
+  createMarketplaceFixture,
+  expectedPluginFiles,
+  fileManifest,
+  marketplaceName,
+  removeMarketplaceFixture,
+} from "../scripts/plugin-marketplace-contract.mjs";
 import { withSanjaya } from "./mcp-client.mjs";
 import { prepareControlledFixture } from "./prepare-controlled-fixture.mjs";
 import { scoreAnswer } from "./scorer.mjs";
+import { scoreAnswerV1_1 } from "./scorer-v1.1.mjs";
 
 const evalRoot = resolve(dirname(fileURLToPath(import.meta.url)));
+const repositoryRoot = dirname(evalRoot);
 const study = optionalArgument("--study") ?? "pilot";
-if (!["pilot", "guided"].includes(study)) {
-  throw new Error("--study must be pilot or guided.");
+if (!["pilot", "guided", "evidence-first-skill"].includes(study)) {
+  throw new Error(
+    "--study must be pilot, guided, or evidence-first-skill.",
+  );
 }
 const protocol = readJson(join(evalRoot, "protocol", `${study}.json`));
 const manifest = readJson(join(evalRoot, "repositories", "manifest.json"));
@@ -45,12 +58,47 @@ const validateAnswer = new Ajv2020({
   allErrors: true,
   strict: true,
 }).compile(readJson(join(evalRoot, protocol.controls.validationSchema)));
-const corpusRoot = resolve(requiredArgument("--corpus-root"));
+const verifySetupOnly = process.argv.includes("--verify-skill-setup-only");
+const corpusRootValue = optionalArgument("--corpus-root");
+if (!verifySetupOnly && !corpusRootValue) {
+  throw new Error("--corpus-root is required.");
+}
+const corpusRoot = corpusRootValue ? resolve(corpusRootValue) : null;
 const limitValue = optionalArgument("--limit");
 const limit = limitValue ? Number.parseInt(limitValue, 10) : Number.POSITIVE_INFINITY;
+const repetitionsValue = optionalArgument("--repetitions");
+const repetitions = repetitionsValue
+  ? Number.parseInt(repetitionsValue, 10)
+  : protocol.design.repetitions;
+const maxTotalTokensValue = optionalArgument("--max-total-tokens");
+const maxTotalTokens = maxTotalTokensValue
+  ? Number.parseInt(maxTotalTokensValue, 10)
+  : null;
 const dryRun = process.argv.includes("--dry-run");
 if (!Number.isInteger(limit) && limit !== Number.POSITIVE_INFINITY) {
   throw new Error("--limit must be a positive integer.");
+}
+if (
+  !Number.isInteger(repetitions)
+  || repetitions < 1
+  || repetitions > protocol.design.repetitions
+) {
+  throw new Error(
+    `--repetitions must be between 1 and ${protocol.design.repetitions}.`,
+  );
+}
+if (maxTotalTokens !== null && (!Number.isInteger(maxTotalTokens) || maxTotalTokens < 1)) {
+  throw new Error("--max-total-tokens must be a positive integer.");
+}
+if (
+  study === "evidence-first-skill"
+  && !dryRun
+  && !verifySetupOnly
+  && maxTotalTokens === null
+) {
+  throw new Error(
+    "--max-total-tokens is required for an Evidence-First skill model run.",
+  );
 }
 
 const resultsRoot = join(evalRoot, "results", "v0.1.2", study);
@@ -64,63 +112,112 @@ const tasksById = new Map(pilot.tasks.map((task) => [task.id, task]));
 const repositoriesById = new Map(
   manifest.repositories.map((repository) => [repository.id, repository]),
 );
+const marketplaceFixture = study === "evidence-first-skill"
+  ? createMarketplaceFixture(repositoryRoot)
+  : null;
 const plan = buildPlan();
 
 try {
-  await prepareSnapshots();
-  const indexing = await prepareWarmIndexes();
-  writeFileSync(
-    join(resultsRoot, "indexing.json"),
-    `${JSON.stringify(indexing, null, 2)}\n`,
-    "utf8",
-  );
-
-  if (dryRun) {
+  verifyCodexVersion();
+  if (verifySetupOnly) {
+    if (study !== "evidence-first-skill") {
+      throw new Error(
+        "--verify-skill-setup-only requires --study evidence-first-skill.",
+      );
+    }
+    const setupRoot = mkdtempSync(join(tmpdir(), "sanjaya-skill-setup-"));
+    try {
+      installSkillPlugin(setupRoot);
+    } finally {
+      rmSync(setupRoot, { recursive: true, force: true });
+    }
     process.stdout.write(
-      `Dry run verified ${plan.length} planned runs and all snapshots/indexes.\n`,
+      "Verified exact plugin installation in a disposable Codex home without "
+      + "calling a model.\n",
     );
-    process.exitCode = 0;
   } else {
-    let executed = 0;
-    for (const planned of plan) {
-      if (executed >= limit) {
-        break;
-      }
-      const outputPath = join(runsRoot, `${planned.runId}.json`);
-      if (existsSync(outputPath)) {
-        process.stdout.write(`skip ${planned.runId} existing\n`);
-        continue;
-      }
-      const task = tasksById.get(planned.taskId);
-      const snapshot = snapshots.get(task.repository.id);
-      const treatmentRoot = snapshot.treatments.get(task.indexState);
-      if (task.indexState === "none") {
-        rmSync(join(treatmentRoot, ".sanjaya"), {
-          recursive: true,
-          force: true,
+    await prepareSnapshots();
+    const indexing = await prepareWarmIndexes();
+    writeFileSync(
+      join(resultsRoot, "indexing.json"),
+      `${JSON.stringify(indexing, null, 2)}\n`,
+      "utf8",
+    );
+
+    if (dryRun) {
+      process.stdout.write(
+        `Dry run verified ${plan.length} planned runs and all snapshots/indexes.\n`,
+      );
+      process.exitCode = 0;
+    } else {
+      let executed = 0;
+      let consumedTokens = existingStudyTokens();
+      let consecutiveSessionFailures = 0;
+      for (const planned of plan) {
+        if (executed >= limit) {
+          break;
+        }
+        if (maxTotalTokens !== null && consumedTokens >= maxTotalTokens) {
+          process.stdout.write(
+            `stop aggregate token ceiling reached: ${consumedTokens}/`
+            + `${maxTotalTokens}\n`,
+          );
+          break;
+        }
+        const outputPath = join(runsRoot, `${planned.runId}.json`);
+        if (existsSync(outputPath)) {
+          process.stdout.write(`skip ${planned.runId} existing\n`);
+          continue;
+        }
+        const task = tasksById.get(planned.taskId);
+        const snapshot = snapshots.get(task.repository.id);
+        const treatmentRoot = snapshot.treatments.get(task.indexState);
+        if (task.indexState === "none") {
+          rmSync(join(treatmentRoot, ".sanjaya"), {
+            recursive: true,
+            force: true,
+          });
+        }
+        process.stdout.write(
+          `start ${planned.runId} ${planned.taskId} ${planned.arm} `
+          + `rep=${planned.repetition}\n`,
+        );
+        const run = await executeRun({
+          planned,
+          task,
+          agentRoot: snapshot.agent,
+          treatmentRoot,
         });
+        writeFileSync(outputPath, `${JSON.stringify(run, null, 2)}\n`, "utf8");
+        process.stdout.write(
+          `done ${planned.runId} status=${run.status} `
+          + `strict=${run.scores?.strictSuccess ?? "n/a"} `
+          + `wallMs=${run.metrics.wallTimeMs}\n`,
+        );
+        executed += 1;
+        consumedTokens += totalTokens(run);
+        consecutiveSessionFailures = run.status === "completed"
+          ? 0
+          : consecutiveSessionFailures + 1;
+        if (
+          protocol.controls.maxConsecutiveSessionFailures
+          && consecutiveSessionFailures
+            >= protocol.controls.maxConsecutiveSessionFailures
+        ) {
+          process.stdout.write(
+            "stop consecutive session-failure ceiling reached: "
+            + `${consecutiveSessionFailures}\n`,
+          );
+          break;
+        }
       }
-      process.stdout.write(
-        `start ${planned.runId} ${planned.taskId} ${planned.arm} `
-        + `rep=${planned.repetition}\n`,
-      );
-      const run = await executeRun({
-        planned,
-        task,
-        agentRoot: snapshot.agent,
-        treatmentRoot,
-      });
-      writeFileSync(outputPath, `${JSON.stringify(run, null, 2)}\n`, "utf8");
-      process.stdout.write(
-        `done ${planned.runId} status=${run.status} `
-        + `strict=${run.scores?.strictSuccess ?? "n/a"} `
-        + `wallMs=${run.metrics.wallTimeMs}\n`,
-      );
-      executed += 1;
     }
   }
 } finally {
   rmSync(workRoot, { recursive: true, force: true });
+  if (marketplaceFixture) {
+    removeMarketplaceFixture(repositoryRoot, marketplaceFixture);
+  }
 }
 
 async function prepareSnapshots() {
@@ -225,24 +322,38 @@ function buildPlan() {
     }
   }
   unsorted.sort((left, right) => left.orderHash.localeCompare(right.orderHash));
-  return unsorted.map((entry, index) => ({
-    ...entry,
-    runId:
-      `SJ-RUN-${String(
-        protocol.design.runNumberOffset + index + 1,
-      ).padStart(4, "0")}-`
-      + entry.orderHash.slice(0, 8).toUpperCase(),
-  }));
+  return unsorted
+    .map((entry, index) => ({
+      ...entry,
+      runId:
+        `SJ-RUN-${String(
+          protocol.design.runNumberOffset + index + 1,
+        ).padStart(4, "0")}-`
+        + entry.orderHash.slice(0, 8).toUpperCase(),
+    }))
+    .filter((entry) => entry.repetition <= repetitions);
 }
 
 async function executeRun({ planned, task, agentRoot, treatmentRoot }) {
   const prompt = buildPrompt(task);
   const promptSha256 = sha256Text(prompt);
   const rawRoot = mkdtempSync(join(tmpdir(), "sanjaya-pilot-run-"));
+  const codexHome = join(rawRoot, "codex-home");
+  mkdirSync(codexHome, { recursive: true });
   const finalPath = join(rawRoot, "final.json");
   const rawEventsPath = join(rawRoot, "events.jsonl");
   const traceFileName = `${planned.runId}.jsonl`;
   const traceAbsolutePath = join(tracesRoot, traceFileName);
+  let pluginEvidence = null;
+  let setupError = null;
+  if (planned.arm === "evidence_first_skill") {
+    try {
+      pluginEvidence = installSkillPlugin(codexHome);
+    } catch (error) {
+      setupError = error;
+    }
+  }
+  const indexBefore = indexFingerprint(treatmentRoot);
   const started = performance.now();
   let status = "agent_error";
   let answer = null;
@@ -252,11 +363,15 @@ async function executeRun({ planned, task, agentRoot, treatmentRoot }) {
   let timedOut = false;
 
   try {
+    if (setupError) {
+      throw setupError;
+    }
     const execution = await runCodex({
       prompt,
       agentRoot,
       treatmentRoot,
       arm: planned.arm,
+      codexHome,
       finalPath,
       rawEventsPath,
     });
@@ -278,7 +393,9 @@ async function executeRun({ planned, task, agentRoot, treatmentRoot }) {
         if (answer.taskId !== task.id) {
           throw new Error("Answer task ID did not match.");
         }
-        scores = scoreAnswer(task, answer, agentRoot);
+        scores = protocol.controls.scorerVersion === "1.1.0"
+          ? scoreAnswerV1_1(task, answer, agentRoot)
+          : scoreAnswer(task, answer, agentRoot);
         status = "completed";
       } catch {
         answer = null;
@@ -295,7 +412,9 @@ async function executeRun({ planned, task, agentRoot, treatmentRoot }) {
   const traceText = trace.map((event) => JSON.stringify(event)).join("\n")
     + (trace.length > 0 ? "\n" : "");
   writeFileSync(traceAbsolutePath, traceText, "utf8");
-  const metrics = deriveMetrics(events, trace, wallTimeMs);
+  const indexAfter = indexFingerprint(treatmentRoot);
+  const indexWrites = indexBefore === indexAfter ? 0 : 1;
+  const metrics = deriveMetrics(events, trace, wallTimeMs, indexWrites);
   rmSync(rawRoot, { recursive: true, force: true });
 
   return {
@@ -317,6 +436,7 @@ async function executeRun({ planned, task, agentRoot, treatmentRoot }) {
       networkAccess: false,
       maxTurns: protocol.controls.maxTurns,
       timeoutSeconds: protocol.controls.timeoutSeconds,
+      ...(pluginEvidence ?? {}),
     },
     status,
     answer,
@@ -335,13 +455,13 @@ function runCodex({
   agentRoot,
   treatmentRoot,
   arm,
+  codexHome,
   finalPath,
   rawEventsPath,
 }) {
   const args = [
     "exec",
     "--strict-config",
-    "--ignore-user-config",
     "--ignore-rules",
     "--ephemeral",
     "--sandbox",
@@ -364,6 +484,9 @@ function runCodex({
     "-c",
     "project_doc_max_bytes=0",
   ];
+  if (arm !== "evidence_first_skill") {
+    args.splice(2, 0, "--ignore-user-config");
+  }
   if (arm !== "native") {
     args.push(
       "-c",
@@ -385,7 +508,7 @@ function runCodex({
   return new Promise((resolvePromise) => {
     const child = spawn("codex", args, {
       cwd: agentRoot,
-      env: controlledEnvironment(),
+      env: controlledEnvironment(codexHome),
       stdio: ["ignore", "pipe", "pipe"],
       windowsHide: true,
     });
@@ -521,7 +644,7 @@ function toolTrace(toolFamily, toolName, inputBytes, outputBytes) {
   };
 }
 
-function deriveMetrics(events, trace, wallTimeMs) {
+function deriveMetrics(events, trace, wallTimeMs, indexWrites = 0) {
   const usage = events.findLast((event) => event.type === "turn.completed")?.usage
     ?? {};
   const toolEvents = trace.filter((event) => event.eventType === "tool_result");
@@ -552,6 +675,7 @@ function deriveMetrics(events, trace, wallTimeMs) {
     cachedInputTokens: usage.cached_input_tokens ?? 0,
     outputTokens: usage.output_tokens ?? 0,
     wallTimeMs,
+    indexWrites,
   };
 }
 
@@ -571,6 +695,22 @@ function parseJsonLines(path) {
     });
 }
 
+function existingStudyTokens() {
+  if (!existsSync(runsRoot)) {
+    return 0;
+  }
+  return readdirSync(runsRoot)
+    .filter((file) => file.endsWith(".json"))
+    .map((file) => readJson(join(runsRoot, file)))
+    .reduce((total, run) => total + totalTokens(run), 0);
+}
+
+function totalTokens(run) {
+  return (run.metrics?.uncachedInputTokens ?? 0)
+    + (run.metrics?.cachedInputTokens ?? 0)
+    + (run.metrics?.outputTokens ?? 0);
+}
+
 function runGit(args, cwd) {
   const result = spawnSync("git", args, {
     cwd,
@@ -587,7 +727,153 @@ function runGit(args, cwd) {
   return result.stdout;
 }
 
-function controlledEnvironment() {
+function verifyCodexVersion() {
+  const result = spawnSync("codex", ["--version"], {
+    cwd: repositoryRoot,
+    encoding: "utf8",
+    env: controlledEnvironment(),
+    windowsHide: true,
+  });
+  if (result.error || result.status !== 0) {
+    throw new Error("Unable to verify the pinned Codex CLI version.");
+  }
+  const expected = `${protocol.agent.name} ${protocol.agent.version}`;
+  if (result.stdout.trim() !== expected) {
+    throw new Error(
+      `Expected ${expected}, received ${result.stdout.trim() || "no version"}.`,
+    );
+  }
+}
+
+function installSkillPlugin(codexHome) {
+  if (!marketplaceFixture) {
+    throw new Error("The skill study requires a disposable marketplace.");
+  }
+  const added = runCodexSetupJson([
+    "plugin",
+    "marketplace",
+    "add",
+    marketplaceFixture.marketplaceRoot,
+    "--json",
+  ], codexHome);
+  if (added.marketplaceName !== marketplaceName || added.alreadyAdded !== false) {
+    throw new Error("The disposable marketplace was not added exactly once.");
+  }
+
+  const pluginId = `sanjaya@${marketplaceName}`;
+  const installed = runCodexSetupJson([
+    "plugin",
+    "add",
+    pluginId,
+    "--json",
+  ], codexHome);
+  const expectedRoot = join(
+    realpathSync(codexHome),
+    "plugins",
+    "cache",
+    marketplaceName,
+    protocol.target.plugin.name,
+    protocol.target.plugin.version,
+  );
+  if (
+    installed.pluginId !== pluginId
+    || installed.version !== protocol.target.plugin.version
+    || resolve(installed.installedPath) !== resolve(expectedRoot)
+  ) {
+    throw new Error(
+      "The installed skill plugin identity is not the frozen target: "
+      + JSON.stringify({
+        pluginId: installed.pluginId,
+        version: installed.version,
+        installedPath: installed.installedPath,
+        expectedRoot,
+      }),
+    );
+  }
+  const listed = runCodexSetupJson([
+    "plugin",
+    "list",
+    "--marketplace",
+    marketplaceName,
+    "--json",
+  ], codexHome);
+  const active = listed.installed?.find(
+    (plugin) => plugin.pluginId === pluginId,
+  );
+  if (!active?.installed || !active.enabled || listed.available?.length !== 0) {
+    throw new Error("The frozen skill plugin is not installed and enabled.");
+  }
+  const installedManifest = fileManifest(expectedRoot);
+  const canonicalManifest = fileManifest(
+    join(repositoryRoot, "plugins", "sanjaya"),
+  );
+  if (JSON.stringify(installedManifest) !== JSON.stringify(canonicalManifest)) {
+    throw new Error("The installed skill plugin differs from the reviewed source.");
+  }
+  if (
+    JSON.stringify(installedManifest.map(({ path }) => path))
+    !== JSON.stringify(expectedPluginFiles)
+  ) {
+    throw new Error("The installed skill plugin contains unexpected files.");
+  }
+
+  const manifestSha256 = sha256Text(
+    readFileSync(
+      join(expectedRoot, ".codex-plugin", "plugin.json"),
+      "utf8",
+    ),
+  );
+  const skillSha256 = sha256Text(
+    readFileSync(
+      join(
+        expectedRoot,
+        "skills",
+        "evidence-first-code-discovery",
+        "SKILL.md",
+      ),
+      "utf8",
+    ),
+  );
+  if (
+    manifestSha256 !== protocol.target.plugin.manifestSha256
+    || skillSha256 !== protocol.target.plugin.skillSha256
+  ) {
+    throw new Error("The installed skill plugin hash does not match the protocol.");
+  }
+  return {
+    pluginManifestSha256: manifestSha256,
+    skillSha256,
+  };
+}
+
+function runCodexSetupJson(args, codexHome) {
+  const result = spawnSync("codex", args, {
+    cwd: repositoryRoot,
+    encoding: "utf8",
+    env: controlledEnvironment(codexHome),
+    windowsHide: true,
+  });
+  if (result.error || result.status !== 0) {
+    throw new Error(
+      `codex ${args.slice(0, 2).join(" ")} failed before the measured run.`,
+    );
+  }
+  try {
+    return JSON.parse(result.stdout);
+  } catch {
+    throw new Error("Codex plugin setup returned invalid JSON.");
+  }
+}
+
+function indexFingerprint(repository) {
+  const indexRoot = join(repository, ".sanjaya");
+  if (!existsSync(indexRoot)) {
+    return "absent";
+  }
+  return sha256Text(JSON.stringify(fileManifest(indexRoot)));
+}
+
+function controlledEnvironment(codexHome = null) {
   const dotnetRoot = process.env.DOTNET_ROOT;
   return {
     ...process.env,
@@ -599,6 +885,7 @@ function controlledEnvironment() {
     LC_ALL: "C",
     LANG: "C",
     TZ: "UTC",
+    ...(codexHome ? { CODEX_HOME: codexHome } : {}),
   };
 }
 

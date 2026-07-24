@@ -8,11 +8,15 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import { scoreAnswer } from "./scorer.mjs";
+import { scoreAnswerV1_1 } from "./scorer-v1.1.mjs";
 
 const evalRoot = resolve(dirname(fileURLToPath(import.meta.url)));
 const studyIndex = process.argv.indexOf("--study");
 const study = studyIndex >= 0 ? process.argv[studyIndex + 1] : "pilot";
-assert.ok(["pilot", "guided"].includes(study), "Unknown result study.");
+assert.ok(
+  ["pilot", "guided", "evidence-first-skill"].includes(study),
+  "Unknown result study.",
+);
 const schemaRoot = join(evalRoot, "schemas");
 const resultsRoot = join(evalRoot, "results", "v0.1.2", study);
 const runsRoot = join(resultsRoot, "runs");
@@ -50,6 +54,14 @@ for (const file of runFiles) {
   const task = taskById.get(run.taskId);
   assert.ok(task, `${run.runId} references an unknown task.`);
   assert.equal(run.controls.repositoryCommit, task.repository.commit);
+  if (run.arm === "evidence_first_skill") {
+    assert.equal(
+      run.controls.pluginManifestSha256,
+      protocol.target.plugin.manifestSha256,
+    );
+    assert.equal(run.controls.skillSha256, protocol.target.plugin.skillSha256);
+    assert.ok(Number.isInteger(run.metrics.indexWrites));
+  }
 
   const tracePath = join(resultsRoot, run.trace.path);
   const traceText = readFileSync(tracePath, "utf8");
@@ -69,7 +81,10 @@ for (const file of runFiles) {
 
   if (run.status === "completed") {
     completed += 1;
-    assert.deepEqual(run.scores, scoreAnswer(task, run.answer, null));
+    const expectedScores = protocol.controls.scorerVersion === "1.1.0"
+      ? scoreAnswerV1_1(task, run.answer, null)
+      : scoreAnswer(task, run.answer, null);
+    assert.deepEqual(run.scores, expectedScores);
   } else {
     failures += 1;
   }

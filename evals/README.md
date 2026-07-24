@@ -77,3 +77,48 @@ derived scores for audit. Reproduce or verify it with:
 npm run reanalyze:v1.1 --prefix evals
 npm run verify:reanalysis --prefix evals
 ```
+
+## Evidence-First skill study
+
+The proposed
+[`evidence_first_skill`](protocol/evidence-first-skill.json) study is separate
+from the frozen availability and guided records. It installs the exact reviewed
+three-file plugin into a fresh disposable `CODEX_HOME` for every treatment
+session. The matching control also uses a fresh home, but has no plugin or MCP
+server. Both arms receive the same task prompt; the prompt does not name the
+skill, plugin, or Sanjaya.
+
+The study uses all 12 frozen tasks, scorer 1.1.0, three repetitions, and a fresh
+native control: 72 runs in total. Execution is deliberately staged. The first
+stage runs one repetition in both arms (24 runs), after which routing,
+correctness, citations, side effects, failures, tokens, and latency are
+reviewed before the remaining 48 runs can be authorized.
+
+Validate the study contract without installing anything persistently or
+calling a model:
+
+```bash
+npm run verify:evidence-first-skill --prefix evals
+npm run verify:evidence-first-skill-runtime --prefix evals
+node --check evals/run-pilot.mjs
+node --check evals/analyze-evidence-first-skill.mjs
+```
+
+After the contract is merged, the owner must separately approve the run count,
+aggregate token ceiling, external monetary ceiling, and expected time window.
+Only then may stage one be started:
+
+```bash
+npm run run:evidence-first-skill --prefix evals -- \
+  --corpus-root /tmp/sanjaya-pilot-corpus \
+  --repetitions 1 \
+  --max-total-tokens <approved-ceiling>
+```
+
+Merging the evaluation contract does not authorize that command. A partial
+stage is a harness and routing check, not evidence for a marketplace claim.
+The aggregate ceiling includes cached, uncached, and output tokens already
+recorded in this study. The harness stops between runs when it reaches the
+ceiling; it cannot interrupt a model response already in progress.
+It also stops after two consecutive session failures so an authentication or
+runtime fault cannot consume the entire stage.

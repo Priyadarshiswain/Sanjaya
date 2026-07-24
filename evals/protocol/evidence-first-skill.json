@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0",
+  "status": "proposed_before_model_execution",
+  "relationship": "Separate forward evaluation; does not replace or rewrite the frozen native, sanjaya_available, or sanjaya_guided records.",
+  "target": {
+    "package": "sanjaya-mcp",
+    "version": "0.1.2",
+    "npmIntegrity": "sha512-oVto+HMIvSOA+ygCzfsJFpMW4s44lhp7UwIEA+EZITpv4qHBOm+5QbAfDsH9jhD8ylVYXrhI/xYM8HEHYqvnrg==",
+    "releaseCommit": "2e9ad78a78caa51e2991e0a8e00c4e58d71a65f8",
+    "plugin": {
+      "name": "sanjaya",
+      "version": "0.1.0",
+      "marketplace": "sanjaya-local-test",
+      "manifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+      "skill": "evidence-first-code-discovery",
+      "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+    }
+  },
+  "agent": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "medium",
+    "name": "codex-cli",
+    "version": "0.144.5",
+    "cleanDisposableHome": true,
+    "ignoreRules": true,
+    "ephemeralSessions": true
+  },
+  "design": {
+    "arms": [
+      "native",
+      "evidence_first_skill"
+    ],
+    "repetitions": 3,
+    "taskIds": [
+      "SJ-EVAL-0001",
+      "SJ-EVAL-0002",
+      "SJ-EVAL-0003",
+      "SJ-EVAL-0004",
+      "SJ-EVAL-0005",
+      "SJ-EVAL-0006",
+      "SJ-EVAL-0007",
+      "SJ-EVAL-0008",
+      "SJ-EVAL-0009",
+      "SJ-EVAL-0010",
+      "SJ-EVAL-0011",
+      "SJ-EVAL-0012"
+    ],
+    "totalRuns": 72,
+    "runNumberOffset": 2000,
+    "orderSeed": "sanjaya-evidence-first-skill-20260724",
+    "orderAlgorithm": "ascending SHA-256 of seed|taskId|repetition|arm",
+    "parallelism": 1,
+    "promptTreatment": "identical task prompt in both arms; no explicit skill name, plugin name, or Sanjaya-use instruction",
+    "stageOne": {
+      "repetitions": 1,
+      "runs": 24,
+      "reviewRequiredBeforeRemainingRuns": true
+    }
+  },
+  "controls": {
+    "sandbox": "read-only",
+    "repositoryToolNetworkAccess": false,
+    "modelTransportNetworkExcludedFromNetworkAccessField": true,
+    "timeoutSeconds": 300,
+    "maxTurns": 1,
+    "maxConsecutiveSessionFailures": 2,
+    "hardTokenLimit": null,
+    "hardTokenLimitReason": "codex-cli 0.144.5 does not expose a per-exec token cap; the harness stops between runs at the separately approved aggregate ceiling",
+    "locale": "C",
+    "timezone": "UTC",
+    "outputSchema": "schemas/answer.output.schema.json",
+    "validationSchema": "schemas/answer.schema.json",
+    "scorerVersion": "1.1.0",
+    "rawEvents": "temporary local files only; never committed",
+    "sanitizedTrace": "content-minimized events only",
+    "pluginInstallation": "exact reviewed local plugin installed into a new disposable CODEX_HOME before every skill-arm session",
+    "userConfiguration": "no personal CODEX_HOME, config.toml, rules, skills, plugins, memories, or session history is loaded"
+  },
+  "indexing": {
+    "warm": "built with the exact public package before the measured session in a separate treatment snapshot",
+    "none": "no index exists at session start",
+    "cost": "measured separately and never charged only to a query",
+    "sourceSnapshotIsolation": "the agent sees a pristine read-only snapshot; the MCP server uses an equivalent treatment snapshot so .sanjaya never leaks to the native arm",
+    "writeRule": "any measured index creation or mutation is recorded as an index write and fails the skill-side-effect gate"
+  },
+  "scoring": {
+    "structuredClaimsOnly": true,
+    "claimNormalization": "scorer 1.1.0 deterministic canonical-token normalization",
+    "citationRule": "same repository-relative path and overlapping accepted line range",
+    "forbiddenClaimRule": "only preregistered claim-key and rejected-value pairs are mechanically counted",
+    "proseLimitation": "free-form prose is retained for review but is not semantically judged by a model"
+  },
+  "gates": {
+    "correctness": "skill strict success and mean claim F1 must not regress against the fresh native control",
+    "citations": "mean citation validity must not regress against the fresh native control",
+    "selectiveRouting": "completed skill runs must include both native-only and Sanjaya-using sessions",
+    "sideEffects": "zero index writes during measured sessions",
+    "failures": "timeouts, invalid output, agent errors, harness errors, neutral results, and regressions remain in the denominator and report"
+  },
+  "authorization": {
+    "contractMergeDoesNotAuthorizeModelCalls": true,
+    "stageOneRequiresSeparateOwnerApproval": true,
+    "remainingRunsRequireSeparateOwnerApproval": true,
+    "requiredBeforeEachStage": [
+      "run count",
+      "aggregate token ceiling",
+      "external monetary ceiling",
+      "expected wall-clock window"
+    ]
+  }
+}
