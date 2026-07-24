@@ -1,0 +1,2393 @@
+{
+  "schemaVersion": "1.0",
+  "status": "post_pilot_additive_methodology_repair",
+  "inputFingerprint": "c3d4fd3526b32cb050ef151227955ce4bfd77168697ea04b0b34e3e15597ef0b",
+  "scorerVersions": [
+    "1.0.0",
+    "1.1.0"
+  ],
+  "records": [
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0001-043A6BD6",
+      "taskId": "SJ-EVAL-0010",
+      "arm": "native",
+      "repetition": 3,
+      "status": "agent_error",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": null,
+      "scorerV1_1": null
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0002-06BAD53A",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "native",
+      "repetition": 1,
+      "status": "agent_error",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": null,
+      "scorerV1_1": null
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0003-07C5326E",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "agent_error",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": null,
+      "scorerV1_1": null
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0004-0A1FBFE2",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0005-0A717E4D",
+      "taskId": "SJ-EVAL-0011",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0006-0BF16C08",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0007-1A157E94",
+      "taskId": "SJ-EVAL-0011",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0008-1B138C8D",
+      "taskId": "SJ-EVAL-0011",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0009-1B794306",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0010-1BF87E89",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.8571428571428571,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.8571428571428571,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0011-1DED8FC3",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0012-278538E2",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0013-2B554CA9",
+      "taskId": "SJ-EVAL-0004",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0014-2C70749E",
+      "taskId": "SJ-EVAL-0006",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0015-308402E7",
+      "taskId": "SJ-EVAL-0010",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0016-34338632",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0017-347FCC1C",
+      "taskId": "SJ-EVAL-0011",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0018-35CA2C7F",
+      "taskId": "SJ-EVAL-0012",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0019-3656E2BE",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0020-38297D8A",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.6666666666666666,
+        "claimRecall": 0.6666666666666666,
+        "claimF1": 0.6666666666666666,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0021-3EF4DBD8",
+      "taskId": "SJ-EVAL-0012",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0022-3FAF83C0",
+      "taskId": "SJ-EVAL-0007",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0023-40B929BA",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0024-45A982C2",
+      "taskId": "SJ-EVAL-0004",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0025-474FCA85",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0026-49167427",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0027-51528644",
+      "taskId": "SJ-EVAL-0011",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0028-54F48319",
+      "taskId": "SJ-EVAL-0011",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0029-565F1B99",
+      "taskId": "SJ-EVAL-0012",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0030-5899033D",
+      "taskId": "SJ-EVAL-0004",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0031-5B092998",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0032-5FF9CCD3",
+      "taskId": "SJ-EVAL-0004",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0033-6364FA9A",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0034-649660A0",
+      "taskId": "SJ-EVAL-0006",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0035-66927245",
+      "taskId": "SJ-EVAL-0012",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0036-678884EC",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 0.5555555555555556,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5555555555555556,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0037-6B552F55",
+      "taskId": "SJ-EVAL-0007",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0038-6C1E6DAC",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0039-6F10F3EF",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5714285714285714,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 0.5714285714285714,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0040-7421845E",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0041-7C30B25D",
+      "taskId": "SJ-EVAL-0012",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0042-8077EF9E",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.625,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 0.625,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0043-8175CC7E",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.6666666666666666,
+        "claimRecall": 0.6666666666666666,
+        "claimF1": 0.6666666666666666,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0044-81F176F3",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0045-89DF7D7E",
+      "taskId": "SJ-EVAL-0004",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0046-8C0A8059",
+      "taskId": "SJ-EVAL-0007",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0047-96C8BE38",
+      "taskId": "SJ-EVAL-0006",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0048-9B7DD0DD",
+      "taskId": "SJ-EVAL-0010",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0049-A78387DC",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0050-AE0EFB0F",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0051-AFDD975E",
+      "taskId": "SJ-EVAL-0006",
+      "arm": "sanjaya_available",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0052-B1CD66D7",
+      "taskId": "SJ-EVAL-0010",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0053-B6E29B6D",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.7142857142857143,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 0.7142857142857143,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0054-CE603131",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.8571428571428571,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.8571428571428571,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0055-D09BDC9F",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0056-D10994BF",
+      "taskId": "SJ-EVAL-0010",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0057-D144619C",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "native",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0058-D3AF069B",
+      "taskId": "SJ-EVAL-0007",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.6666666666666666,
+        "claimRecall": 0.6666666666666666,
+        "claimF1": 0.6666666666666666,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0059-D6088FF0",
+      "taskId": "SJ-EVAL-0006",
+      "arm": "sanjaya_available",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0060-D9AA11F7",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0061-E0B0EBE0",
+      "taskId": "SJ-EVAL-0010",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0062-E168E400",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.6666666666666666,
+        "claimRecall": 0.6666666666666666,
+        "claimF1": 0.6666666666666666,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0063-E1FA4738",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.6666666666666666,
+        "claimRecall": 0.6666666666666666,
+        "claimF1": 0.6666666666666666,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0064-E3CA3FAB",
+      "taskId": "SJ-EVAL-0012",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.5,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0065-EBD6E7AE",
+      "taskId": "SJ-EVAL-0004",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.25,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0066-EE2052D2",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0067-F36F777B",
+      "taskId": "SJ-EVAL-0007",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.8333333333333334,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 0.8333333333333334,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0068-F5D5A2B4",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0069-F9DA951E",
+      "taskId": "SJ-EVAL-0006",
+      "arm": "sanjaya_available",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0070-FC1BDD54",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.8571428571428571,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.8571428571428571,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0071-FE1EA03D",
+      "taskId": "SJ-EVAL-0007",
+      "arm": "native",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "pilot",
+      "runId": "SJ-RUN-0072-FFA195E5",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "native",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 0,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 0.8,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1001-1673E23D",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "sanjaya_guided",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 5,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1002-2B519E51",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "sanjaya_guided",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 10,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1003-2EB4C3AC",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "sanjaya_guided",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 4,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1004-345482DA",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "sanjaya_guided",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 5,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1005-46808A62",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "sanjaya_guided",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 8,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.75,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1006-50E5FC63",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "sanjaya_guided",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 5,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1007-5C1CDD25",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "sanjaya_guided",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 3,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.6666666666666666,
+        "claimRecall": 0.6666666666666666,
+        "claimF1": 0.6666666666666666,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1008-89E01D2C",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "sanjaya_guided",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 3,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.6666666666666666,
+        "claimRecall": 0.6666666666666666,
+        "claimF1": 0.6666666666666666,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1009-91DB0F9C",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "sanjaya_guided",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 6,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1010-9A58F2DA",
+      "taskId": "SJ-EVAL-0001",
+      "arm": "sanjaya_guided",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 3,
+      "scorerV1_0": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 0.6,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1011-A44D9167",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "sanjaya_guided",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 5,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1012-B694BA14",
+      "taskId": "SJ-EVAL-0009",
+      "arm": "sanjaya_guided",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 3,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1013-BA173948",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "sanjaya_guided",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 10,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1014-C4A4E16C",
+      "taskId": "SJ-EVAL-0005",
+      "arm": "sanjaya_guided",
+      "repetition": 2,
+      "status": "completed",
+      "sanjayaToolCalls": 10,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.5,
+        "claimRecall": 0.5,
+        "claimF1": 0.5,
+        "citationValidity": 0.6666666666666666,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1015-C9F71C35",
+      "taskId": "SJ-EVAL-0002",
+      "arm": "sanjaya_guided",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 6,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1016-CCD1028C",
+      "taskId": "SJ-EVAL-0003",
+      "arm": "sanjaya_guided",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 4,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0.3333333333333333,
+        "claimRecall": 0.3333333333333333,
+        "claimF1": 0.3333333333333333,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1017-D64CC2DD",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "sanjaya_guided",
+      "repetition": 1,
+      "status": "completed",
+      "sanjayaToolCalls": 3,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    },
+    {
+      "study": "guided",
+      "runId": "SJ-RUN-1018-F449EA16",
+      "taskId": "SJ-EVAL-0008",
+      "arm": "sanjaya_guided",
+      "repetition": 3,
+      "status": "completed",
+      "sanjayaToolCalls": 3,
+      "scorerV1_0": {
+        "strictSuccess": false,
+        "claimPrecision": 0,
+        "claimRecall": 0,
+        "claimF1": 0,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.0.0"
+      },
+      "scorerV1_1": {
+        "strictSuccess": false,
+        "claimPrecision": 0.75,
+        "claimRecall": 0.75,
+        "claimF1": 0.75,
+        "citationValidity": 1,
+        "criticalForbiddenClaims": 0,
+        "scorerVersion": "1.1.0"
+      }
+    }
+  ]
+}
