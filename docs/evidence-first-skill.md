@@ -1,11 +1,13 @@
 # Evidence-First Code Discovery skill contract
 
-Status: design only; no installable skill is included or published.
+Status: approved contract with repository-local source implementation; the
+skill is not installed or published.
 
-This contract defines the future portable skill that will teach an AI coding
-agent when and how to use Sanjaya. It does not change the Sanjaya MCP server,
-make Sanjaya mandatory, or claim that guided use is already more accurate or
-efficient than native repository tools.
+This contract defines the portable skill that teaches an AI coding agent when
+and how to use Sanjaya. Its source lives under
+`skills/evidence-first-code-discovery/`. It does not change the Sanjaya MCP
+server, make Sanjaya mandatory, or claim that guided use is already more
+accurate or efficient than native repository tools.
 
 ## Why this is separate from the MCP server
 
@@ -23,11 +25,11 @@ time, and input tokens. The skill must therefore solve two problems together:
 The skill will be evaluated as its own named treatment. Its results must not be
 presented as evidence for MCP availability alone.
 
-## Proposed identity and trigger
+## Implemented identity and trigger
 
-The proposed skill name is `evidence-first-code-discovery`.
+The skill name is `evidence-first-code-discovery`.
 
-The proposed `SKILL.md` metadata is:
+The implemented `SKILL.md` metadata is:
 
 ```yaml
 ---
@@ -159,13 +161,14 @@ separately requests that action.
 
 ## Initial packaging boundary
 
-The first implementation should contain only:
+The first implementation contains only:
 
 ```text
-evidence-first-code-discovery/
-├── SKILL.md
-└── agents/
-    └── openai.yaml
+skills/
+└── evidence-first-code-discovery/
+    ├── SKILL.md
+    └── agents/
+        └── openai.yaml
 ```
 
 No script, asset, reference bundle, model dependency, telemetry, or generated
@@ -175,8 +178,8 @@ client-specific tool prefixes so the instructions can work across MCP clients.
 
 The skill should target Sanjaya `0.1.2` or newer while treating the live
 `capabilities` response—not a version assumption—as the source of truth.
-Installation location and distribution channel require separate owner review
-before implementation.
+Installing the skill into a user environment and selecting a distribution
+channel require separate owner review.
 
 ## Evaluation contract
 
@@ -203,9 +206,9 @@ the intended answer or the author’s diagnosis. Any externally billed run needs
 an explicit model, effort, run count, token cap, and cost ceiling approved by
 the owner.
 
-## Review gates before implementation
+## Implementation status and remaining gates
 
-The owner should approve:
+The owner approved the following contract in pull request 30:
 
 1. the proposed name and trigger boundary;
 2. the capability-selection table;
@@ -215,6 +218,6 @@ The owner should approve:
 6. the initial two-file packaging boundary; and
 7. the separate evaluation treatment.
 
-Only after that review should the skill directory be initialized, validated,
-and forward-tested. Skill installation or publication is a later explicit
-decision.
+The repository-local skill directory is now initialized and must remain
+validated against this contract. Forward-testing, installation, model
+evaluation, and publication are later explicit decisions.

@@ -6,9 +6,11 @@ Sanjaya provides local-first codebase discovery for AI agents, with precise
 navigation and verifiable evidence such as repository-relative paths, symbols,
 and line ranges.
 
-The first delivery is a .NET Model Context Protocol (MCP) server. A portable
-evidence-first code-discovery skill has a proposed contract but is not
-included in the current development build. See the
+The first delivery is a .NET Model Context Protocol (MCP) server. The repository
+also contains the portable
+[`evidence-first-code-discovery`](skills/evidence-first-code-discovery/SKILL.md)
+skill source. The skill is separate from the npm server package and is not
+automatically installed or published. See the
 [skill contract](docs/evidence-first-skill.md).
 
 In the Mahabharata, Sanjaya could perceive events that others could not see
@@ -105,8 +107,9 @@ See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 [VS Code integration](docs/vscode.md), and
 [registry metadata](docs/registry.md) for the public server contract. The
 [Evidence-First skill contract](docs/evidence-first-skill.md) defines a
-separate, not-yet-implemented agent-orchestration boundary. Release operators
-should use the [v0.1.2 approval-gated release runbook](docs/releasing-0.1.2.md).
+separate repository-local agent-orchestration source that is not installed or
+published. Release operators should use the
+[v0.1.2 approval-gated release runbook](docs/releasing-0.1.2.md).
 
 ## Approved v0.1 MCP tools
 

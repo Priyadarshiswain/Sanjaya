@@ -70,10 +70,10 @@ package ownership fields, exact candidate version, stdio transport, required
 repository-root input, and 4 KiB metadata ceiling. The public
 [registry metadata guide](registry.md) describes the publication boundary.
 
-`verify:skill-contract` checks that the design covers every public v0.1 tool,
-retains its indexing, model-run, installation, and publication approval gates,
-and does not add an installable `SKILL.md`. The skill remains a proposed design
-until a separate implementation approval.
+`verify:skill-contract` checks the exact two-file skill layout, approved
+metadata, every public v0.1 tool, indexing and cost controls, native fallbacks,
+UI metadata, and exclusion from the npm server package. It does not install or
+publish the skill.
 
 ## Run from an MCP client
 

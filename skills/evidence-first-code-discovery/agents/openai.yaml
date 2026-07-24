@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evidence-First Code Discovery"
+  short_description: "Ground code discovery in verifiable evidence"
+  default_prompt: "Use $evidence-first-code-discovery to locate the relevant implementation and explain it with repository-relative evidence."
