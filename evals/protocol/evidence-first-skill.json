@@ -103,6 +103,14 @@
     "contractMergeDoesNotAuthorizeModelCalls": true,
     "stageOneRequiresSeparateOwnerApproval": true,
     "remainingRunsRequireSeparateOwnerApproval": true,
+    "remainingRunsApproval": {
+      "date": "2026-07-25",
+      "scope": "Complete repetitions 2 and 3: 48 additional sessions.",
+      "cumulativeTokenCeiling": 7000000,
+      "externalPurchaseCeiling": "No purchase of extra credits.",
+      "expectedWallClockWindow": "30 to 60 minutes",
+      "ownerInstruction": "Complete the test before closing for the day."
+    },
     "requiredBeforeEachStage": [
       "run count",
       "aggregate token ceiling",

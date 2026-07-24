@@ -58,6 +58,14 @@ assert.equal(
   protocol.authorization.remainingRunsRequireSeparateOwnerApproval,
   true,
 );
+assert.equal(
+  protocol.authorization.remainingRunsApproval.cumulativeTokenCeiling,
+  7000000,
+);
+assert.ok(
+  protocol.authorization.remainingRunsApproval.externalPurchaseCeiling
+    .includes("No purchase"),
+);
 
 assert.ok(tasks.some(({ indexState }) => indexState === "warm"));
 assert.ok(tasks.some(({ indexState }) => indexState === "none"));
