@@ -113,7 +113,9 @@ separate local skills-only agent-orchestration plugin that is not installed,
 marketplace-listed, or published. Its
 [distribution contract](docs/skill-distribution.md) keeps the plugin
 skills-only until a portable active-project root binding is documented and
-verified. Release operators should use the
+verified. The [local lifecycle evidence](docs/plugin-lifecycle.md) records the
+container-isolated checks and remaining manual gates. Release operators should
+use the
 [v0.1.2 approval-gated release runbook](docs/releasing-0.1.2.md).
 
 ## Approved v0.1 MCP tools

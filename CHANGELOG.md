@@ -20,6 +20,9 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 - Add an offline verifier that generates, validates, and removes an exact
   test-only local marketplace without invoking Codex or modifying personal
   plugin state.
+- Add a Docker-contained Codex lifecycle verifier for offline discovery,
+  install, cachebuster update, reinstall, removal, and cleanup, with
+  interactive and authenticated gaps reported explicitly.
 
 ### Changed
 

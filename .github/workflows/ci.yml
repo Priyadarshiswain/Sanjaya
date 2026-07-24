@@ -82,6 +82,9 @@ jobs:
       - name: Verify disposable plugin marketplace
         run: npm run verify:plugin-marketplace
 
+      - name: Check local plugin lifecycle verifier syntax
+        run: node --check scripts/verify-plugin-lifecycle.mjs
+
       - name: Build framework-dependent npm payload
         run: npm run build -- --no-restore
 

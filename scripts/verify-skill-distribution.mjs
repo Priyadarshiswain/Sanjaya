@@ -16,6 +16,15 @@ const contract = readFileSync(resolve(repositoryRoot, contractPath), "utf8");
 const normalizedContract = normalize(contract);
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 const readme = readFileSync(resolve(repositoryRoot, "README.md"), "utf8");
+const lifecycleDocument = readFileSync(
+  resolve(repositoryRoot, "docs", "plugin-lifecycle.md"),
+  "utf8",
+);
+const normalizedLifecycleDocument = normalize(lifecycleDocument);
+const lifecycleScript = readFileSync(
+  resolve(repositoryRoot, "scripts", "verify-plugin-lifecycle.mjs"),
+  "utf8",
+);
 const packageDocument = JSON.parse(
   readFileSync(resolve(repositoryRoot, "package.json"), "utf8"),
 );
@@ -78,6 +87,7 @@ for (const heading of [
   "## Identity and versioning",
   "## Intended user lifecycle",
   "## Disposable marketplace verification",
+  "## Clean-environment lifecycle verification",
   "## Trust and privacy review",
   "## Publication gates",
   "## Current local-only state",
@@ -93,6 +103,7 @@ for (const boundary of [
   "Plugin versions and npm server versions are independent SemVer streams.",
   "Exact installation commands and clickable links remain intentionally absent",
   "This check does not invoke Codex, register a marketplace, install or enable the plugin, mutate personal configuration, contact a network, or create a publishable marketplace artifact.",
+  "Public marketplace creation remains blocked until interactive disable/re-enable and a fresh authenticated agent invocation are reviewed separately.",
   "Approval of a skills-only plugin does not pre-approve that expansion.",
   "The local plugin exists only as reviewed repository source.",
   "Approval of this implementation does not authorize installation, marketplace publication, hosted-directory submission, or MCP bundling.",
@@ -175,6 +186,38 @@ assert.ok(
   "README.md must link to the single canonical plugin skill.",
 );
 assert.ok(
+  readme.includes("[local lifecycle evidence](docs/plugin-lifecycle.md)"),
+  "README.md must link to the local lifecycle evidence.",
+);
+for (const boundary of [
+  "Interactive disable/re-enable and an authenticated agent invocation remain unverified manual gates.",
+  "No host Codex configuration, cache, credential, home directory, or repository is mounted into the container.",
+  "The lifecycle verifier intentionally is not run in hosted CI",
+  "The test does not edit config.toml by hand to manufacture a passing result.",
+  "These two manual checks remain required before a public Git marketplace entry or active installation instructions can be approved.",
+]) {
+  assert.ok(
+    normalizedLifecycleDocument.includes(boundary),
+    `docs/plugin-lifecycle.md lost the verification boundary: ${boundary}`,
+  );
+}
+for (const implementationLock of [
+  "@openai/codex@0.144.5",
+  "network\", \"disconnect\", \"bridge",
+  "--cachebuster-helper",
+  "update_plugin_cachebuster.py",
+  "Interactive disable remains",
+]) {
+  assert.ok(
+    lifecycleScript.includes(implementationLock),
+    `The lifecycle verifier lost its implementation lock: ${implementationLock}`,
+  );
+}
+assert.ok(
+  !lifecycleScript.includes("writeFileSync"),
+  "The lifecycle verifier must not edit Codex configuration or marketplace metadata directly.",
+);
+assert.ok(
   packageDocument.files.every(
     (path) =>
       path !== "skills"
@@ -194,6 +237,11 @@ assert.equal(
   "node scripts/verify-plugin-marketplace.mjs",
   "package.json must expose the disposable marketplace verifier.",
 );
+assert.equal(
+  packageDocument.scripts["verify:plugin-lifecycle"],
+  "node scripts/verify-plugin-lifecycle.mjs",
+  "package.json must expose the Docker lifecycle verifier.",
+);
 assert.ok(
   workflow.includes("npm run verify:skill-distribution"),
   "CI must enforce the local skills-only plugin contract.",
@@ -201,6 +249,10 @@ assert.ok(
 assert.ok(
   workflow.includes("npm run verify:plugin-marketplace"),
   "CI must enforce the disposable marketplace contract.",
+);
+assert.ok(
+  workflow.includes("node --check scripts/verify-plugin-lifecycle.mjs"),
+  "CI must check the lifecycle verifier without running Docker.",
 );
 
 console.log(
