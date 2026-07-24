@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "status": "proposed_before_model_execution",
+  "status": "frozen_before_model_execution",
   "relationship": "Separate forward evaluation; does not replace or rewrite the frozen native, sanjaya_available, or sanjaya_guided records.",
   "target": {
     "package": "sanjaya-mcp",

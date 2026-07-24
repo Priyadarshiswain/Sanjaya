@@ -13,7 +13,7 @@ const pilotProtocol = readJson(join(evalRoot, "protocol", "pilot.json"));
 const tasks = readJson(join(evalRoot, "tasks", "pilot.json")).tasks;
 const taskIds = tasks.map(({ id }) => id);
 
-assert.equal(protocol.status, "proposed_before_model_execution");
+assert.equal(protocol.status, "frozen_before_model_execution");
 assert.deepEqual(protocol.design.arms, ["native", "evidence_first_skill"]);
 assert.deepEqual(protocol.design.taskIds, taskIds);
 assert.equal(protocol.design.repetitions, 3);
@@ -77,7 +77,7 @@ assert.equal(
 );
 
 console.log(
-  "Verified the proposed 72-run evidence-first skill study, including its "
+  "Verified the frozen 72-run evidence-first skill study, including its "
   + "fresh control, 24-run review gate, exact plugin hashes, scorer 1.1, "
   + "selective-routing criterion, side-effect guard, and separate model-call "
   + "authorization boundary.",
