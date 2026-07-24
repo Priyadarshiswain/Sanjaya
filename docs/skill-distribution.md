@@ -142,6 +142,27 @@ Exact installation commands and clickable links remain intentionally absent
 until a built plugin and marketplace entry have passed clean-machine
 verification.
 
+## Disposable marketplace verification
+
+The repository verifier may construct one test-only marketplace under a newly
+created operating-system temporary directory. The fixture contains the exact
+three-file plugin plus `.agents/plugins/marketplace.json` with:
+
+- marketplace name `sanjaya-local-test`;
+- local source `./plugins/sanjaya`;
+- installation policy `AVAILABLE`;
+- authentication policy `ON_INSTALL`; and
+- category `Developer Tools`.
+
+The verifier compares every copied plugin file by path, byte length, and
+SHA-256 digest, then removes the complete temporary directory. It fails if a
+repository marketplace exists before or after the check.
+
+This check does not invoke Codex, register a marketplace, install or enable the
+plugin, mutate personal configuration, contact a network, or create a
+publishable marketplace artifact. It proves only that a correctly shaped local
+marketplace can reference the reviewed plugin without changing it.
+
 ## Trust and privacy review
 
 Before installation, a user must be able to verify:
@@ -162,16 +183,17 @@ behavior. Approval of a skills-only plugin does not pre-approve that expansion.
 
 ## Publication gates
 
-The owner approved a local implementation proposal covering the first two
-steps. Merging that proposal approves the reviewed repository source only. Each
-remaining step still requires separate owner approval and a separate pull
-request:
+The owner approved local implementation proposals covering the first three
+steps. Merging each proposal approves only its reviewed repository source and
+offline verifier. Every remaining step still requires separate owner approval
+and a separate pull request:
 
 1. **Implemented locally:** move the canonical skill into a plugin directory
    and add the manifest.
 2. **Implemented locally:** validate the local plugin without installing it
    into the owner's normal environment.
-3. Create a test-only local marketplace entry in ignored temporary state.
+3. **Implemented locally:** create, verify, and remove a test-only marketplace
+   in operating-system temporary state.
 4. Run clean-environment install, discovery, upgrade, disable, and removal
    checks.
 5. Add the public Git marketplace entry.
@@ -196,6 +218,10 @@ It must not add `.mcp.json`, `.app.json`, hooks, scripts, assets, telemetry,
 `.agents/plugins/marketplace.json`,
 `.agents/skills/evidence-first-code-discovery`, an active marketplace command
 or installation link, or a plugin publication or submission workflow.
+
+The repository may contain the offline marketplace verifier under `scripts/`,
+but that script is outside the plugin and npm payload. Its generated marketplace
+exists only for the duration of the check.
 
 The local plugin exists only as reviewed repository source. Approval of this
 implementation does not authorize installation, marketplace publication,
