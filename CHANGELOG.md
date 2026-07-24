@@ -7,6 +7,16 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Verify install-once workspace switching with two independent Sanjaya MCP
+  processes and explicit cross-root isolation on Linux, macOS, and Windows.
+
+### Changed
+
+- Record `0.1.2` as the independently verified npm release and prevent the
+  publication workflow from rebuilding its immutable version.
+
 ## [0.1.2] - 2026-07-23
 
 ### Fixed
