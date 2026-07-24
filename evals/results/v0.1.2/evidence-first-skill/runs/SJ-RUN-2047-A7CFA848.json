@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2047-A7CFA848",
+  "taskId": "SJ-EVAL-0011",
+  "arm": "evidence_first_skill",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "b87c9be43b79a79a0295b1af87ddc3d51f7262019e017bc81699241fa897d547",
+    "repositoryCommit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0011",
+    "answer": "The cancellation cleanup path is in `AppHostLauncher.LaunchAndWaitForBackchannelAsync`; it calls `RequestGracefulShutdownThenForceKillAsync`, which invokes shutdown with `CancellationToken.None`, not the caller's cancelled token.",
+    "claims": [
+      {
+        "key": "containing_method",
+        "value": "AppHostLauncher.LaunchAndWaitForBackchannelAsync",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 372,
+            "endLine": 379
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          }
+        ]
+      },
+      {
+        "key": "cleanup_helper",
+        "value": "RequestGracefulShutdownThenForceKillAsync",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      },
+      {
+        "key": "shutdown_token",
+        "value": "No. The shutdown helper receives CancellationToken.None rather than the caller's cancelled cancellationToken.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 372,
+            "endLine": 379
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.42857142857142855,
+    "criticalForbiddenClaims": 1,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 6,
+    "nativeToolCalls": 6,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 263738,
+    "toolResponseBytes": 263738,
+    "uncachedInputTokens": 37666,
+    "cachedInputTokens": 161536,
+    "outputTokens": 1321,
+    "wallTimeMs": 47059,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2047-A7CFA848.jsonl",
+    "sha256": "4d17f8340479517b33d2b532431005351b6b679821d85a15ce7d788226c27e71",
+    "eventCount": 10
+  }
+}

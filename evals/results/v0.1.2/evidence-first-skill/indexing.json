@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "package": "sanjaya-mcp@0.1.2",
-  "generatedAt": "2026-07-24T19:56:02.722Z",
+  "generatedAt": "2026-07-24T20:14:57.197Z",
   "records": [
     {
       "repositoryId": "signaldesk-core",
@@ -12,7 +12,7 @@
       "filesIndexed": 25,
       "chunksIndexed": 84,
       "sourceBytes": 9721,
-      "durationMs": 1509,
+      "durationMs": 1062,
       "indexBytes": 54880
     },
     {
@@ -26,7 +26,7 @@
       "filesIndexed": 884,
       "chunksIndexed": 9702,
       "sourceBytes": 3257191,
-      "durationMs": 4204,
+      "durationMs": 3338,
       "indexBytes": 14018617
     },
     {
@@ -40,7 +40,7 @@
       "filesIndexed": 2307,
       "chunksIndexed": 11744,
       "sourceBytes": 5712432,
-      "durationMs": 4678,
+      "durationMs": 2875,
       "indexBytes": 8544541
     },
     {
@@ -54,7 +54,7 @@
       "filesIndexed": 768,
       "chunksIndexed": 7350,
       "sourceBytes": 5261523,
-      "durationMs": 8022,
+      "durationMs": 3934,
       "indexBytes": 16957414
     }
   ]

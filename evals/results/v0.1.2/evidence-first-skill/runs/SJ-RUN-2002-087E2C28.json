@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2002-087E2C28",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "evidence_first_skill",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "30a00cff5660743c6aeac7a79a5cbe08efddaee857da712a5b83c2942f409b72",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0008",
+    "answer": "The VM worker starts prewarming in `runVmTests` immediately after loading its environment.",
+    "claims": [
+      {
+        "key": "containing_function",
+        "value": "`runVmTests` in `packages/vitest/src/runtime/workers/vm.ts` initiates the prewarm call.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 30,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "rpc_method",
+        "value": "It calls `rpc.prewarmModuleGraph(environment.viteEnvironment || environment.name, ctx.files.map(file => file.filepath))`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 43,
+            "endLine": 46
+          },
+          {
+            "path": "packages/vitest/src/types/rpc.ts",
+            "startLine": 23,
+            "endLine": 28
+          }
+        ]
+      },
+      {
+        "key": "overlapped_work",
+        "value": "The server transforms the test files’ import graphs while the worker imports the environment package; the resulting transforms are included in the warm-modules snapshot so later worker fetches can use disk reads.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 42
+          },
+          {
+            "path": "packages/vitest/src/types/rpc.ts",
+            "startLine": 23,
+            "endLine": 26
+          }
+        ]
+      },
+      {
+        "key": "failure_policy",
+        "value": "Failures are deliberately swallowed with `.catch(() => {})`; the worker’s own fetch is expected to report the error with the proper import context.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 41,
+            "endLine": 46
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.5,
+    "claimRecall": 0.5,
+    "claimF1": 0.5,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 67638,
+    "toolResponseBytes": 67638,
+    "uncachedInputTokens": 18219,
+    "cachedInputTokens": 53760,
+    "outputTokens": 1135,
+    "wallTimeMs": 28855,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2002-087E2C28.jsonl",
+    "sha256": "6ec2661682b994c51a7e6f8bb67f34489931494a076fa87fd26e5c6e4ac436eb",
+    "eventCount": 7
+  }
+}

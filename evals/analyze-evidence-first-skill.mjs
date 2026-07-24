@@ -51,6 +51,7 @@ const summary = {
   native: summarize(native),
   evidenceFirstSkill: summarize(skill),
   completedPairs: summarizePairs(pairs),
+  activeSanjayaPairs: activeSanjayaPairs(native, skill),
   routing: {
     nativeOnlySkillRuns: skill.filter(
       (run) =>
@@ -172,6 +173,41 @@ function completedPairs(nativeRuns, skillRuns) {
   });
 }
 
+function activeSanjayaPairs(nativeRuns, skillRuns) {
+  const nativeByIdentity = new Map(
+    nativeRuns.map(
+      (run) => [`${run.taskId}|${run.repetition}`, run],
+    ),
+  );
+  return skillRuns
+    .filter(
+      (run) =>
+        run.status === "completed" && run.metrics.sanjayaToolCalls > 0,
+    )
+    .map((skillRun) => {
+      const nativeRun = nativeByIdentity.get(
+        `${skillRun.taskId}|${skillRun.repetition}`,
+      );
+      return {
+        taskId: skillRun.taskId,
+        repetition: skillRun.repetition,
+        nativeStrict: nativeRun?.scores?.strictSuccess ?? null,
+        skillStrict: skillRun.scores.strictSuccess,
+        sanjayaToolCalls: skillRun.metrics.sanjayaToolCalls,
+        nativeTokens: nativeRun ? runTokens(nativeRun) : null,
+        skillTokens: runTokens(skillRun),
+        nativeWallTimeMs: nativeRun?.metrics?.wallTimeMs ?? null,
+        skillWallTimeMs: skillRun.metrics.wallTimeMs,
+      };
+    });
+}
+
+function runTokens(run) {
+  return run.metrics.uncachedInputTokens
+    + run.metrics.cachedInputTokens
+    + run.metrics.outputTokens;
+}
+
 function strictCount(records, taskId) {
   return records.filter(
     (run) => run.taskId === taskId && run.scores?.strictSuccess,
@@ -190,6 +226,12 @@ function report(document) {
     (task) =>
       `| ${task.taskId} | ${task.nativeStrict} | ${task.skillStrict} | `
       + `${task.skillRunsUsingSanjaya}/${task.skillRuns} |`,
+  ).join("\n");
+  const activePairRows = document.activeSanjayaPairs.map(
+    (pair) =>
+      `| ${pair.taskId} | ${pair.repetition} | ${pair.nativeStrict} | `
+      + `${pair.skillStrict} | ${pair.sanjayaToolCalls} | `
+      + `${pair.nativeTokens ?? "n/a"} | ${pair.skillTokens} |`,
   ).join("\n");
   return `# Evidence-First Code Discovery skill evaluation
 
@@ -210,7 +252,8 @@ does not name the skill or tell the agent to use Sanjaya.
 ${document.recordedRuns}/${document.plannedRuns} planned records are present.
 There are ${document.completedPairs.count} completed same-task,
 same-repetition pairs. The skill arm has
-${document.completedPairs.skillStrictWins} strict wins,
+${document.completedPairs.skillStrictWins} strict
+${document.completedPairs.skillStrictWins === 1 ? "win" : "wins"},
 ${document.completedPairs.nativeStrictWins} strict losses, and
 ${document.completedPairs.strictTies} ties.
 
@@ -225,6 +268,14 @@ The stage consumed ${document.usage.aggregateTokens} aggregate recorded tokens:
 ${document.usage.uncachedInputTokens} uncached input,
 ${document.usage.cachedInputTokens} cached input, and
 ${document.usage.outputTokens} output.
+
+## Verdict
+
+The current skill-enabled Sanjaya experience did not demonstrate a correctness
+or efficiency benefit. Strict success and mean claim F1 were lower than the
+fresh native control. Mean citation validity was slightly higher, but median
+tool calls, wall time, input tokens, and output tokens were also higher. This
+result does not support a marketplace benefit claim.
 
 ## Comparison
 
@@ -244,6 +295,12 @@ Paired mean claim-F1 delta (skill minus native):
 ${signed(document.completedPairs.meanClaimF1Delta)}. Paired mean citation
 delta: ${signed(document.completedPairs.meanCitationValidityDelta)}.
 
+## Active Sanjaya pairs
+
+| Task | Repetition | Native strict | Skill strict | Sanjaya calls | Native tokens | Skill tokens |
+|---|---:|---:|---:|---:|---:|---:|
+${activePairRows}
+
 ## Task-level routing and strict results
 
 | Task | Native strict | Skill strict | Skill runs using Sanjaya |
@@ -252,10 +309,12 @@ ${taskRows}
 
 ## Interpretation boundary
 
-Failures, neutral results, regressions, and index writes remain visible. A
-partial stage is a harness and routing check, not a marketplace claim. Even a
-completed 72-run study supports conclusions only for the pinned agent, model,
-repositories, tasks, MCP package, and skill version recorded here.
+Failures, neutral results, regressions, and index writes remain visible.
+${document.status === "full_study_complete"
+    ? "The completed study supports no broader or model-independent claim."
+    : "A partial stage is a harness and routing check, not a marketplace claim."}
+Even a completed 72-run study supports conclusions only for the pinned agent,
+model, repositories, tasks, MCP package, and skill version recorded here.
 `;
 }
 

@@ -275,18 +275,23 @@ complete. A separate `evidence_first_skill` protocol defines a fresh
 native control and skill arm across the 12 frozen tasks, beginning with a
 24-run review stage.
 
-That first stage is now recorded in the
+The completed study is recorded in the
 [evaluation report](../evals/results/v0.1.2/evidence-first-skill/REPORT.md):
-22/24 sessions completed, with one retained authentication failure in each
-arm. Native and skill arms each achieved 7/12 strict successes. The skill arm
-had slightly higher mean claim F1 and citation validity, but higher median tool
-calls, input tokens, output tokens, and wall time. Ten completed skill sessions
-used native tools only; one used four Sanjaya calls and did not achieve strict
-success. No measured session wrote an index.
+70/72 sessions completed, with one retained authentication failure in each
+arm. Native achieved 25/36 strict successes and the skill arm achieved 22/36.
+Across 34 completed pairs, the skill had one strict win, four strict losses,
+and 29 ties. Mean claim F1 decreased by 0.027 while mean citation validity
+increased by 0.014. The skill arm also had higher median tool calls, input
+tokens, output tokens, and wall time.
 
-This partial stage validates the harness and selective-routing behavior; it
-does not establish a marketplace benefit claim. The remaining 48 runs require
-separate owner approval after review. Marketplace creation and publication
-remain blocked pending that reviewed outcome and the separate distribution
+Thirty-one completed skill sessions used native tools only. Four used 16
+Sanjaya calls in total; two of those four achieved strict success. No measured
+session wrote an index. The 72 records consumed 5,755,266 aggregate recorded
+tokens, below the approved 7,000,000-token ceiling.
+
+This study validates selective routing and the opt-in indexing boundary, but it
+does not establish a correctness or efficiency benefit for the current
+skill-enabled experience. Marketplace creation and publication remain blocked
+pending a separately reviewed product response and the remaining distribution
 gates. Installation, marketplace creation, model evaluation, and publication
 remain later explicit decisions.

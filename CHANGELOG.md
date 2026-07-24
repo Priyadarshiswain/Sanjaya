@@ -27,10 +27,10 @@ and releases will follow [Semantic Versioning](https://semver.org/).
   native control, disposable per-session plugin installation, scorer 1.1,
   selective-routing and side-effect gates, and a 24-run review stage before
   the remaining 48 runs can be authorized.
-- Record the 24-run Evidence-First skill review stage, including two retained
-  authentication failures, unchanged strict-success totals, selective native
-  routing, one active Sanjaya session, zero index writes, and complete token,
-  latency, trace, and privacy evidence.
+- Record all 72 Evidence-First skill evaluation runs, including two retained
+  authentication failures, lower strict success in the skill arm, selective
+  native routing, four active Sanjaya sessions, zero index writes, and complete
+  token, latency, trace, and privacy evidence.
 
 ### Changed
 

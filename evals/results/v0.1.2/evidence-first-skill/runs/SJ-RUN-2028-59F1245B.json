@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2028-59F1245B",
+  "taskId": "SJ-EVAL-0009",
+  "arm": "evidence_first_skill",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "d7b08725f97e30201f76be4003a8594ba5b9528ad102d583612d4ad967856ec4",
+    "repositoryCommit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0009",
+    "answer": "The TypeScript writer is Kiota.Builder.Writers.TypeScript.CodeMethodWriter. In WriteCodeElement, when the parent is a CodeClass, it writes the method documentation and prototype, then throws InvalidOperationException stating that TypeScript generates no method implementations.",
+    "claims": [
+      {
+        "key": "writer_type",
+        "value": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 9,
+            "endLine": 13
+          }
+        ]
+      },
+      {
+        "key": "class_parent_behavior",
+        "value": "After WriteMethodDocumentation and WriteMethodPrototype, a CodeClass parent causes InvalidOperationException: \"No method implementations are generated in typescript: either functions or constants.\"",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 20,
+            "endLine": 27
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.5,
+    "claimRecall": 0.5,
+    "claimF1": 0.5,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 11014,
+    "toolResponseBytes": 11014,
+    "uncachedInputTokens": 7613,
+    "cachedInputTokens": 44032,
+    "outputTokens": 838,
+    "wallTimeMs": 25524,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2028-59F1245B.jsonl",
+    "sha256": "1336cd5a6e4ce78083a78dddbfdfa35ed0bd2283f34e8c6571dd326b91d06743",
+    "eventCount": 7
+  }
+}

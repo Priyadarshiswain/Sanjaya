@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2057-D2F25C16",
+  "taskId": "SJ-EVAL-0006",
+  "arm": "evidence_first_skill",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "b9f8be42547ad795402a518545ad6b03d509c54e18fe08bf322aa58943ecdff8",
+    "repositoryCommit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0006",
+    "answer": "AddMcp is defined by FastEndpoints.Mcp.Extensions; AddA2A is defined by FastEndpoints.A2A.Extensions.",
+    "claims": [
+      {
+        "key": "add_mcp_container",
+        "value": "FastEndpoints.Mcp.Extensions defines AddMcp.",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 10,
+            "endLine": 10
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 24,
+            "endLine": 24
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 33,
+            "endLine": 33
+          }
+        ]
+      },
+      {
+        "key": "add_a2a_container",
+        "value": "FastEndpoints.A2A.Extensions defines AddA2A.",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 6,
+            "endLine": 6
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 20,
+            "endLine": 20
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 28,
+            "endLine": 28
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 10007,
+    "toolResponseBytes": 10007,
+    "uncachedInputTokens": 7283,
+    "cachedInputTokens": 30976,
+    "outputTokens": 695,
+    "wallTimeMs": 20780,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2057-D2F25C16.jsonl",
+    "sha256": "3607382d1ffe22a83265d539d87ea868bb1875028338d1004754d67c349fff46",
+    "eventCount": 6
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2029-5CA6E58D",
+  "taskId": "SJ-EVAL-0012",
+  "arm": "evidence_first_skill",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "c7255bbc2cd77b7dc9ac1a1cb5acf90d48701910388b5222f541af86c43bcd5d",
+    "repositoryCommit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0012",
+    "answer": "Detached Aspire CLI child processes remove environment variables whose names start with `ASPIRE_EXTENSION_` (case-insensitive). `DEBUG_SESSION_*` variables are not removed; they are intentionally retained.",
+    "claims": [
+      {
+        "key": "removed_prefix",
+        "value": "`ASPIRE_EXTENSION_` (matched case-insensitively) is removed from detached child CLI processes.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 339,
+            "endLine": 353
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 387,
+            "endLine": 398
+          },
+          {
+            "path": "src/Aspire.Cli/DotNet/ProcessExecutionFactory.cs",
+            "startLine": 154,
+            "endLine": 173
+          }
+        ]
+      },
+      {
+        "key": "debug_session_removed",
+        "value": "No. `DEBUG_SESSION_*` variables are explicitly kept intact for the launched AppHost.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 340,
+            "endLine": 346
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.5,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 6,
+    "nativeToolCalls": 6,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 651836,
+    "toolResponseBytes": 651836,
+    "uncachedInputTokens": 43276,
+    "cachedInputTokens": 175872,
+    "outputTokens": 1281,
+    "wallTimeMs": 39220,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2029-5CA6E58D.jsonl",
+    "sha256": "48254194dd359ed79cb24dbd0b755f92669e898fee9e7b25c0a7fa330eed40ee",
+    "eventCount": 10
+  }
+}
