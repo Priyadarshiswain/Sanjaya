@@ -73,6 +73,9 @@ jobs:
       - name: Verify Official MCP Registry metadata
         run: npm run verify:registry-metadata
 
+      - name: Verify design-only skill contract
+        run: npm run verify:skill-contract
+
       - name: Build framework-dependent npm payload
         run: npm run build -- --no-restore
 
