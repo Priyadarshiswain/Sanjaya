@@ -21,6 +21,10 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 
 - Record `0.1.2` as the independently verified npm release and prevent the
   publication workflow from rebuilding its immutable version.
+- Refine the Evidence-First skill after clean forward testing so clients can
+  fall back to live tool schemas when `capabilities` is not exposed, native
+  tools retrieve only missing evidence, and unrequested Git identity or
+  metadata is omitted.
 
 ## [0.1.2] - 2026-07-23
 
