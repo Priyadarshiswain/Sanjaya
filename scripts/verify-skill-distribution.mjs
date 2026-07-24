@@ -5,13 +5,16 @@ import { publishedVersion } from "./release-contract.mjs";
 
 const repositoryRoot = resolve(".");
 const contractPath = "docs/skill-distribution.md";
+const pluginRoot = resolve(repositoryRoot, "plugins", "sanjaya");
 const skillRoot = resolve(
-  repositoryRoot,
+  pluginRoot,
   "skills",
   "evidence-first-code-discovery",
 );
+const manifestPath = resolve(pluginRoot, ".codex-plugin", "plugin.json");
 const contract = readFileSync(resolve(repositoryRoot, contractPath), "utf8");
 const normalizedContract = normalize(contract);
+const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 const readme = readFileSync(resolve(repositoryRoot, "README.md"), "utf8");
 const packageDocument = JSON.parse(
   readFileSync(resolve(repositoryRoot, "package.json"), "utf8"),
@@ -22,9 +25,50 @@ const workflow = readFileSync(
 );
 
 assert.deepEqual(
+  listFiles(pluginRoot),
+  [
+    ".codex-plugin/plugin.json",
+    "skills/evidence-first-code-discovery/SKILL.md",
+    "skills/evidence-first-code-discovery/agents/openai.yaml",
+  ],
+  "The local plugin must remain one manifest plus one reviewed two-file skill.",
+);
+assert.deepEqual(
   listFiles(skillRoot),
   ["SKILL.md", "agents/openai.yaml"],
-  "The pre-plugin canonical skill must remain one reviewed two-file source.",
+  "The canonical plugin skill must remain one reviewed two-file source.",
+);
+assert.deepEqual(
+  manifest,
+  {
+    name: "sanjaya",
+    version: "0.1.0",
+    description: "Evidence-first codebase discovery workflow for AI coding agents.",
+    author: {
+      name: "Priyadarshi Swain",
+      url: "https://github.com/Priyadarshiswain",
+    },
+    homepage: "https://github.com/Priyadarshiswain/Sanjaya#readme",
+    repository: "https://github.com/Priyadarshiswain/Sanjaya",
+    license: "Apache-2.0",
+    keywords: ["code-discovery", "evidence", "coding-agents"],
+    skills: "./skills/",
+    interface: {
+      displayName: "Sanjaya",
+      shortDescription: "Ground code discovery in verifiable evidence",
+      longDescription: "Guides AI coding agents to choose fitting Sanjaya or "
+        + "native discovery tools and report repository-relative evidence.",
+      developerName: "Priyadarshi Swain",
+      category: "Developer Tools",
+      capabilities: ["Skills"],
+      websiteURL: "https://github.com/Priyadarshiswain/Sanjaya",
+      defaultPrompt: [
+        "Use $evidence-first-code-discovery to investigate this codebase with "
+          + "repository-relative evidence.",
+      ],
+    },
+  },
+  "The local plugin manifest drifted from the reviewed skills-only identity.",
 );
 
 for (const heading of [
@@ -35,20 +79,21 @@ for (const heading of [
   "## Intended user lifecycle",
   "## Trust and privacy review",
   "## Publication gates",
-  "## Current non-publication state",
+  "## Current local-only state",
 ]) {
   assert.ok(contract.includes(heading), `${contractPath} is missing ${heading}.`);
 }
 
 for (const boundary of [
-  "No plugin, marketplace entry, installation, or skill publication has been created by this contract.",
+  "No marketplace entry, installation, or skill publication has been created.",
   "The preferred Codex distribution is a minimal skills-only plugin.",
-  "it must not create a second maintained copy.",
+  "it did not create a second maintained copy.",
   "the first plugin must not declare mcpServers or include .mcp.json.",
   "Plugin versions and npm server versions are independent SemVer streams.",
   "Exact installation commands and clickable links remain intentionally absent",
   "Approval of a skills-only plugin does not pre-approve that expansion.",
-  "It does not authorize installation, marketplace publication, hosted-directory submission, or MCP bundling.",
+  "The local plugin exists only as reviewed repository source.",
+  "Approval of this implementation does not authorize installation, marketplace publication, hosted-directory submission, or MCP bundling.",
 ]) {
   assert.ok(
     normalizedContract.includes(boundary),
@@ -78,15 +123,38 @@ assert.equal(
 );
 
 for (const forbiddenPath of [
-  ".codex-plugin/plugin.json",
   ".mcp.json",
-  ".agents/plugins/marketplace.json",
-  ".agents/skills/evidence-first-code-discovery/SKILL.md",
-  "plugins/sanjaya/.codex-plugin/plugin.json",
+  "skills/evidence-first-code-discovery/SKILL.md",
+  "plugins/sanjaya/.mcp.json",
+  "plugins/sanjaya/.app.json",
+  "plugins/sanjaya/hooks.json",
+  "plugins/sanjaya/scripts",
+  "plugins/sanjaya/assets",
 ]) {
   assert.ok(
     !existsSync(resolve(repositoryRoot, forbiddenPath)),
-    `Design-only distribution work created forbidden artifact ${forbiddenPath}.`,
+    `Local-only plugin work created forbidden artifact ${forbiddenPath}.`,
+  );
+}
+
+for (const forbiddenField of [
+  "apps",
+  "mcpServers",
+  "hooks",
+]) {
+  assert.ok(
+    !Object.hasOwn(manifest, forbiddenField),
+    `The skills-only manifest must not declare ${forbiddenField}.`,
+  );
+}
+
+for (const forbiddenPath of [
+  ".agents/plugins/marketplace.json",
+  ".agents/skills/evidence-first-code-discovery",
+]) {
+  assert.ok(
+    !existsSync(resolve(repositoryRoot, forbiddenPath)),
+    `Repository auto-discovery or marketplace artifact exists at ${forbiddenPath}.`,
   );
 }
 
@@ -97,6 +165,12 @@ assert.ok(
 assert.ok(
   readme.includes("[distribution contract](docs/skill-distribution.md)"),
   "README.md must link to the skill distribution contract.",
+);
+assert.ok(
+  readme.includes(
+    "[`evidence-first-code-discovery`](plugins/sanjaya/skills/evidence-first-code-discovery/SKILL.md)",
+  ),
+  "README.md must link to the single canonical plugin skill.",
 );
 assert.ok(
   packageDocument.files.every(
@@ -115,12 +189,12 @@ assert.equal(
 );
 assert.ok(
   workflow.includes("npm run verify:skill-distribution"),
-  "CI must enforce the design-only skill distribution contract.",
+  "CI must enforce the local skills-only plugin contract.",
 );
 
 console.log(
-  "Skill distribution channels, root-binding deferral, canonical source, "
-  + "and non-publication locks verified.",
+  "Local skills-only plugin identity, exact layout, npm separation, "
+  + "root-binding deferral, and non-publication locks verified.",
 );
 
 function normalize(value) {

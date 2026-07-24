@@ -29,6 +29,7 @@ npm run verify:diagnostics
 npm run verify:vscode-install
 npm run verify:registry-metadata
 npm run verify:skill-contract
+npm run verify:skill-distribution
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
@@ -70,10 +71,13 @@ package ownership fields, exact candidate version, stdio transport, required
 repository-root input, and 4 KiB metadata ceiling. The public
 [registry metadata guide](registry.md) describes the publication boundary.
 
-`verify:skill-contract` checks the exact two-file skill layout, approved
-metadata, every public v0.1 tool, indexing and cost controls, native fallbacks,
-UI metadata, and exclusion from the npm server package. It does not install or
-publish the skill.
+`verify:skill-contract` checks the exact two-file skill layout inside the local
+plugin, approved metadata, every public v0.1 tool, indexing and cost controls,
+native fallbacks, UI metadata, and exclusion from the npm server package.
+`verify:skill-distribution` checks the exact skills-only plugin manifest and
+layout, rejects duplicate skill source, MCP/app/hook/script and marketplace
+artifacts, and preserves the independent npm payload. Neither check installs,
+lists, or publishes the plugin.
 
 ## Run from an MCP client
 

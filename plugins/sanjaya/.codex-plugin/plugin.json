@@ -1,0 +1,32 @@
+{
+  "name": "sanjaya",
+  "version": "0.1.0",
+  "description": "Evidence-first codebase discovery workflow for AI coding agents.",
+  "author": {
+    "name": "Priyadarshi Swain",
+    "url": "https://github.com/Priyadarshiswain"
+  },
+  "homepage": "https://github.com/Priyadarshiswain/Sanjaya#readme",
+  "repository": "https://github.com/Priyadarshiswain/Sanjaya",
+  "license": "Apache-2.0",
+  "keywords": [
+    "code-discovery",
+    "evidence",
+    "coding-agents"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Sanjaya",
+    "shortDescription": "Ground code discovery in verifiable evidence",
+    "longDescription": "Guides AI coding agents to choose fitting Sanjaya or native discovery tools and report repository-relative evidence.",
+    "developerName": "Priyadarshi Swain",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Skills"
+    ],
+    "websiteURL": "https://github.com/Priyadarshiswain/Sanjaya",
+    "defaultPrompt": [
+      "Use $evidence-first-code-discovery to investigate this codebase with repository-relative evidence."
+    ]
+  }
+}

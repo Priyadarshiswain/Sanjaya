@@ -6,6 +6,8 @@ const repositoryRoot = resolve(".");
 const contractPath = "docs/evidence-first-skill.md";
 const skillRoot = resolve(
   repositoryRoot,
+  "plugins",
+  "sanjaya",
   "skills",
   "evidence-first-code-discovery",
 );
@@ -38,7 +40,7 @@ const packageDocument = JSON.parse(
 assert.deepEqual(
   listSkillFiles(skillRoot),
   ["SKILL.md", "agents/openai.yaml"],
-  "The initial portable skill must contain exactly SKILL.md and agents/openai.yaml.",
+  "The plugin skill must contain exactly SKILL.md and agents/openai.yaml.",
 );
 
 const frontmatter = skill.match(
@@ -118,11 +120,11 @@ for (const heading of [
   assert.ok(contract.includes(heading), `${contractPath} is missing ${heading}.`);
 }
 for (const boundary of [
-  "the skill is not installed or published.",
+  "the skill is not installed, marketplace-listed, or published.",
   "The skill must not create or rebuild the index silently.",
   "This small qualitative check validates workflow comprehension only; it is not a preregistered benchmark or evidence of product benefit.",
   "Implementation approval does not authorize a paid model run or publication.",
-  "Installation, model evaluation, and publication remain later explicit decisions",
+  "Installation, marketplace creation, model evaluation, and publication remain later explicit decisions",
 ]) {
   assert.ok(
     normalizedContract.includes(boundary),
@@ -136,9 +138,9 @@ assert.ok(
 
 assert.ok(
   normalizedReadme.includes(
-    "The skill is separate from the npm server package and is not automatically",
+    "The plugin is separate from the npm server package and is not automatically installed, marketplace-listed, or published.",
   ),
-  "README.md must distinguish source availability from installation.",
+  "README.md must distinguish local plugin source from installation.",
 );
 assert.ok(
   readme.includes("[skill contract](docs/evidence-first-skill.md)"),
@@ -150,9 +152,13 @@ assert.ok(
 );
 assert.ok(
   packageDocument.files.every(
-    (path) => path !== "skills" && !path.startsWith("skills/"),
+    (path) =>
+      path !== "skills"
+      && !path.startsWith("skills/")
+      && path !== "plugins"
+      && !path.startsWith("plugins/"),
   ),
-  "The npm server package must not include the portable skill implicitly.",
+  "The npm server package must not include skill or plugin source implicitly.",
 );
 
 console.log(
