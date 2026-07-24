@@ -64,9 +64,17 @@ assert.ok(
   !contract.includes("sanjaya-mcp@latest"),
   `${contractPath} must not recommend a floating npm version.`,
 );
+const pluginDocumentationLink = contract.match(
+  /\[plugin authoring documentation\]\(([^)\s]+)\)/u,
+);
 assert.ok(
-  contract.includes("https://learn.chatgpt.com/docs/build-plugins"),
-  `${contractPath} must link to the current primary plugin documentation.`,
+  pluginDocumentationLink,
+  `${contractPath} must contain the primary plugin documentation link.`,
+);
+assert.equal(
+  pluginDocumentationLink[1],
+  "https://learn.chatgpt.com/docs/build-plugins",
+  `${contractPath} must use the exact trusted plugin documentation URL.`,
 );
 
 for (const forbiddenPath of [
