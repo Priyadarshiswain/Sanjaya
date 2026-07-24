@@ -1,7 +1,9 @@
 # Evidence-First Code Discovery skill contract
 
 Status: approved contract with repository-local source implementation; the
-skill is not installed or published.
+skill is not installed or published. Its proposed installation and publication
+boundaries are defined separately in the
+[distribution contract](skill-distribution.md).
 
 This contract defines the portable skill that teaches an AI coding agent when
 and how to use Sanjaya. Its source lives under
@@ -262,5 +264,6 @@ The owner approved the following contract in pull request 30:
 7. the separate evaluation treatment.
 
 The repository-local skill directory is now initialized and must remain
-validated against this contract. Forward-testing, installation, model
-evaluation, and publication are later explicit decisions.
+validated against this contract. The initial qualitative forward test is
+complete. Installation, model evaluation, and publication remain later
+explicit decisions governed by the separately reviewed distribution contract.

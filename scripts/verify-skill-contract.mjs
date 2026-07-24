@@ -122,7 +122,7 @@ for (const boundary of [
   "The skill must not create or rebuild the index silently.",
   "This small qualitative check validates workflow comprehension only; it is not a preregistered benchmark or evidence of product benefit.",
   "Implementation approval does not authorize a paid model run or publication.",
-  "Forward-testing, installation, model evaluation, and publication are later explicit decisions.",
+  "Installation, model evaluation, and publication remain later explicit decisions",
 ]) {
   assert.ok(
     normalizedContract.includes(boundary),
@@ -143,6 +143,10 @@ assert.ok(
 assert.ok(
   readme.includes("[skill contract](docs/evidence-first-skill.md)"),
   "README.md must link to the skill contract.",
+);
+assert.ok(
+  contract.includes("[distribution contract](skill-distribution.md)"),
+  `${contractPath} must link to the distribution contract.`,
 );
 assert.ok(
   packageDocument.files.every(
