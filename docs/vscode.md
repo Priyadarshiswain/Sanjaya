@@ -2,21 +2,20 @@
 
 ## Current status
 
-Sanjaya `0.1.1` is published and independently verified on npm. The reviewed
-VS Code configuration now targets the `0.1.2` compatibility
-candidate, so there is no public one-click installation button yet. Link
-activation remains a separate reviewed step after `0.1.2` npm publication and
-Official MCP Registry verification.
+Sanjaya `0.1.2` is published and independently verified on npm. The reviewed
+VS Code configuration targets that exact immutable version. There is no public
+one-click installation button yet because Official MCP Registry publication
+and verification remain separately approval-gated.
 
 Until that step is approved, users can configure the exact `npx` command in
 their MCP client as described in the project README.
 
 ## Intended single-folder experience
 
-After link activation, the Sanjaya documentation can provide a native VS Code
-MCP installation link. VS Code will show the proposed stdio server
-configuration and ask the user to trust it before startup. The reviewed
-configuration will:
+After registry verification and link activation, the Sanjaya documentation can
+provide a native VS Code MCP installation link. VS Code will show the proposed
+stdio server configuration and ask the user to trust it before startup. The
+reviewed configuration will:
 
 - invoke `npx` with one exact immutable `sanjaya-mcp` version;
 - pass `--root` and `${workspaceFolder}` as separate arguments;
@@ -33,6 +32,12 @@ When the user opens a different single-folder project, VS Code substitutes
 that folder and launches a separate Sanjaya process. Each process retains one
 immutable repository root. Sanjaya does not remember the previous project,
 guess from the working directory, or rewrite editor configuration.
+
+The repository verifies this install-once contract on Linux, macOS, and
+Windows. The test binds the same reviewed configuration to two different
+synthetic workspace folders, launches two independent MCP processes, confirms
+that each finds its own marker, and confirms that neither can find or expose
+the other workspace.
 
 Node.js 22.13 or newer and the .NET 8 runtime are prerequisites. Git is
 optional and is required only for `recent_changes`. Acquiring the npm package

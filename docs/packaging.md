@@ -1,10 +1,8 @@
 # Packaging contract
 
-Sanjaya `0.1.1` is published with npm provenance. The repository now builds the
-`0.1.2` compatibility candidate, which fixes index freshness across nested
-paths, includes supported source under `packages/`, and prevents invalid
-unnamed C# chunks. Preparing that candidate alone does not make it available
-from npm.
+Sanjaya `0.1.2` is published with npm provenance and independently verified.
+It fixes index freshness across nested paths, includes supported source under
+`packages/`, and prevents invalid unnamed C# chunks.
 
 ## Runtime boundary
 
@@ -59,15 +57,16 @@ compares file paths, per-file SHA-256 values, npm integrity and shasum values,
 and the raw tarball SHA-256. CI runs the package and installed-launcher checks on
 Ubuntu, macOS, and Windows with Node.js 22 and .NET 8.
 
-`npm run release:candidate` first proves two clean package builds are identical,
-then writes the exact tarball, per-file manifest, source commit, npm integrity,
-and SHA-256/SHA-512 evidence to ignored `dist/release`. The companion
-`npm run verify:release-candidate` check validates that evidence without
-repacking the artifact.
+For an unpublished version, `npm run release:candidate` first proves two clean
+package builds are identical, then writes the exact tarball, per-file manifest,
+source commit, npm integrity, and SHA-256/SHA-512 evidence to ignored
+`dist/release`. It rejects the already published and immutable `0.1.2`
+version. The companion `npm run verify:release-candidate` check validates
+prepared evidence without repacking the artifact.
 
-These checks create evidence for publication review. They do not reserve the
-npm name, create a registry entry, tag a release, dispatch a workflow, or
-publish an artifact.
+For a new version, these checks create evidence for publication review. They do
+not reserve the npm name, create a registry entry, tag a release, dispatch a
+workflow, or publish an artifact.
 
 `npm run verify:registry-metadata` separately proves that the repository's
 Official MCP Registry identity, npm ownership fields, exact package version,
@@ -80,5 +79,6 @@ field, package name, version, and license.
 
 The future VS Code installation configuration references the exact published
 package version verified by this process. Its generated installation URL
-remains inactive pending separate review and Official MCP Registry verification.
-Package publication and link activation are separate release actions.
+remains inactive pending Official MCP Registry publication and verification.
+Package publication, registry publication, and link activation are separate
+release actions.

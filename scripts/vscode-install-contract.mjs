@@ -1,3 +1,5 @@
+import { isAbsolute } from "node:path";
+
 const installScheme = "vscode:mcp/install?";
 const packageName = "sanjaya-mcp";
 const serverName = "sanjaya";
@@ -23,6 +25,25 @@ export function createVsCodeServerConfiguration(version) {
 export function createVsCodeInstallUrl(version) {
   const configuration = createVsCodeServerConfiguration(version);
   return `${installScheme}${encodeURIComponent(JSON.stringify(configuration))}`;
+}
+
+export function createBoundVsCodeServerConfiguration(version, workspaceFolder) {
+  if (
+    typeof workspaceFolder !== "string"
+    || workspaceFolder.includes("\0")
+    || !isAbsolute(workspaceFolder)
+  ) {
+    throw new Error("VS Code workspace binding requires one absolute folder.");
+  }
+
+  const configuration = createVsCodeServerConfiguration(version);
+  return Object.freeze({
+    ...configuration,
+    args: Object.freeze(
+      configuration.args.map((argument) =>
+        argument === workspaceFolderVariable ? workspaceFolder : argument),
+    ),
+  });
 }
 
 export function parseVsCodeInstallUrl(url) {

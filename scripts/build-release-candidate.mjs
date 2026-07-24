@@ -16,12 +16,15 @@ import { fileURLToPath } from "node:url";
 import { approvedPackageFiles, assertEqual, verifyPackedFiles } from "./package-contract.mjs";
 import {
   assertReleasePackage,
+  assertUnpublishedRelease,
   publicationState,
   releaseArtifactDirectory,
   releaseTag,
   releaseTarballName,
   releaseVersion,
 } from "./release-contract.mjs";
+
+assertUnpublishedRelease();
 
 const npmCli = process.env.npm_execpath;
 if (!npmCli) {

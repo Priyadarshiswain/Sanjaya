@@ -1,11 +1,9 @@
 # Official MCP Registry metadata
 
-Sanjaya has a reviewed `server.json` candidate pinned to `0.1.2`, but it has not
-been submitted to the Official MCP Registry. The independently verified
-[`sanjaya-mcp@0.1.1`](https://www.npmjs.com/package/sanjaya-mcp) package remains
-public and contains the canonical case-sensitive GitHub namespace identity.
-The `0.1.2` candidate retains that identity while adding the reviewed indexing
-compatibility fixes.
+Sanjaya has a reviewed `server.json` document pinned to `0.1.2`, but it has not
+been submitted to the Official MCP Registry. The independently verified public
+[`sanjaya-mcp@0.1.2`](https://www.npmjs.com/package/sanjaya-mcp) package contains
+the canonical case-sensitive GitHub namespace identity.
 
 The registry is currently in preview and stores server metadata rather than
 the package artifact. Its [publishing quickstart](https://modelcontextprotocol.io/registry/quickstart)
@@ -58,18 +56,13 @@ contract avoids making ordinary builds depend on a mutable network response.
 
 ## Separately approved release order
 
-The npm publication and verification steps are complete for `0.1.1`.
-The compatibility-focused `0.1.2` package must complete the same evidence and
-approval process before registry submission receives separate owner approval.
+The npm publication and independent verification steps are complete for
+`0.1.2`. Registry submission remains a separate approval-gated operation.
 
-1. Review the exact stable version in `package.json`, `package-lock.json`, and
-   `server.json`, then re-run every release check.
-2. Build and approve the reproducible npm artifact for that exact version.
-3. Publish the approved npm artifact and verify its installed diagnostics and
-   MCP workflow from the public registry.
-4. After a separate explicit owner approval, authenticate and submit the same
-   version's metadata to the Official MCP Registry.
-5. Verify the registry record before activating installation links or making
+1. Re-run the offline metadata and package-identity checks.
+2. After a separate explicit owner approval, authenticate and submit `0.1.2`
+   metadata to the Official MCP Registry.
+3. Verify the registry record before activating installation links or making
    downstream gallery claims.
 
 The registry requires a unique version for each publication, and published

@@ -24,14 +24,13 @@ npm run build
 npm run verify:typescript
 npm run verify:typescript-worker
 npm run verify:launcher
+npm run verify:workspace-switching
 npm run verify:diagnostics
 npm run verify:vscode-install
 npm run verify:registry-metadata
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
-npm run release:candidate
-npm run verify:release-candidate
 ```
 
 `npm run build` deletes and recreates only the ignored `dist/dotnet` staging
@@ -49,18 +48,20 @@ npm integrity value, and tarball hash.
 See the [packaging contract](packaging.md) for the distribution boundary and
 the exact verification guarantees.
 
-The package metadata is pinned to the `0.1.2` compatibility candidate; `0.1.1`
-remains the independently verified public release until publication completes.
-Candidate creation, tag creation, workflow dispatch, environment approval, npm
-publication, registry submission, and installation-link activation remain
-separate owner-approved actions. See the
-[v0.1.2 release runbook](releasing-0.1.2.md).
+The package metadata is pinned to the independently verified public `0.1.2`
+release. Registry submission and installation-link activation remain separate
+owner-approved actions. The [v0.1.2 release runbook](releasing-0.1.2.md) is the
+historical publication record. The publication-evidence builder now rejects
+`0.1.2` because released npm versions are immutable; preparing another npm
+release requires a new version and a separately reviewed release contract.
 
 `verify:vscode-install` proves the future VS Code user-profile configuration
 pins one exact release, passes `${workspaceFolder}` as the immutable root, and
-keeps the live installation URL out of public docs while activation is pending.
-The public [VS Code integration guide](vscode.md) remains non-installing until
-link activation is separately approved after registry verification.
+keeps the live installation URL out of public docs while registry verification
+is pending. `verify:workspace-switching` launches two independent MCP processes
+against distinct synthetic repositories and proves root isolation. The public
+[VS Code integration guide](vscode.md) remains non-installing until link
+activation is separately approved after registry verification.
 
 `verify:registry-metadata` checks `server.json` without contacting a registry.
 It locks the official schema URL, GitHub identity and repository id, npm

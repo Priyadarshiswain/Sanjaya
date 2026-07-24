@@ -85,16 +85,17 @@ jobs:
       - name: Verify npm launcher MCP handshake
         run: npm run verify:launcher
 
+      - name: Verify isolated workspace switching
+        run: npm run verify:workspace-switching
+
       - name: Verify first-run diagnostics
         run: npm run verify:diagnostics
 
       - name: Inspect package contents
         run: npm run verify:package
 
-      - name: Build and verify exact release candidate
-        run: |
-          npm run release:candidate
-          npm run verify:release-candidate -- --require-clean
+      - name: Verify reproducible npm payload
+        run: npm run verify:reproducible-package
 
   package-portability:
     name: Package (${{ matrix.os }})
@@ -148,3 +149,6 @@ jobs:
 
       - name: Install tarball offline and verify MCP
         run: npm run verify:installed-package
+
+      - name: Verify isolated workspace switching
+        run: npm run verify:workspace-switching

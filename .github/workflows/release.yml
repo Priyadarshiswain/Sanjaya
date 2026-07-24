@@ -23,6 +23,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Refuse the immutable published release
+        if: ${{ inputs.tag == 'v0.1.2' }}
+        run: |
+          echo "v0.1.2 is already published and cannot be rebuilt or republished." >&2
+          echo "Prepare and review a new version before using this workflow." >&2
+          exit 1
+
       - name: Check out the exact release tag
         uses: actions/checkout@v7
         with:
@@ -78,6 +85,7 @@ jobs:
           npm run verify:typescript
           npm run verify:typescript-worker
           npm run verify:launcher
+          npm run verify:workspace-switching
           npm run verify:diagnostics
           npm run verify:package
           npm run verify:installed-package
