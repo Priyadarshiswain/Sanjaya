@@ -43,6 +43,7 @@
     "verify:typescript": "node scripts/verify-typescript-artifact.mjs",
     "verify:package": "node scripts/verify-package-contents.mjs",
     "verify:registry-metadata": "node scripts/verify-registry-metadata.mjs",
+    "verify:skill-contract": "node scripts/verify-skill-contract.mjs",
     "verify:workspace-switching": "node scripts/verify-workspace-switching.mjs",
     "verify:vscode-install": "node scripts/verify-vscode-install-contract.mjs"
   },

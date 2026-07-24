@@ -28,6 +28,7 @@ npm run verify:workspace-switching
 npm run verify:diagnostics
 npm run verify:vscode-install
 npm run verify:registry-metadata
+npm run verify:skill-contract
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
@@ -68,6 +69,11 @@ It locks the official schema URL, GitHub identity and repository id, npm
 package ownership fields, exact candidate version, stdio transport, required
 repository-root input, and 4 KiB metadata ceiling. The public
 [registry metadata guide](registry.md) describes the publication boundary.
+
+`verify:skill-contract` checks that the design covers every public v0.1 tool,
+retains its indexing, model-run, installation, and publication approval gates,
+and does not add an installable `SKILL.md`. The skill remains a proposed design
+until a separate implementation approval.
 
 ## Run from an MCP client
 

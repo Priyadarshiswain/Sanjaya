@@ -11,6 +11,9 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 
 - Verify install-once workspace switching with two independent Sanjaya MCP
   processes and explicit cross-root isolation on Linux, macOS, and Windows.
+- Define the design-only Evidence-First Code Discovery skill contract,
+  including capability-aware routing, native fallbacks, opt-in indexing,
+  evidence requirements, stopping rules, and a separate evaluation boundary.
 
 ### Changed
 

@@ -7,8 +7,9 @@ navigation and verifiable evidence such as repository-relative paths, symbols,
 and line ranges.
 
 The first delivery is a .NET Model Context Protocol (MCP) server. A portable
-evidence-first code-discovery skill is planned for a later release and is not
-included in the current development build.
+evidence-first code-discovery skill has a proposed contract but is not
+included in the current development build. See the
+[skill contract](docs/evidence-first-skill.md).
 
 In the Mahabharata, Sanjaya could perceive events that others could not see
 directly and report them faithfully. This project serves a similar role for AI
@@ -102,7 +103,9 @@ trust prompt. To remove Sanjaya, remove or disable its MCP server configuration;
 See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 [privacy](docs/privacy.md), [packaging](docs/packaging.md), and
 [VS Code integration](docs/vscode.md), and
-[registry metadata](docs/registry.md) for the public contract. Release operators
+[registry metadata](docs/registry.md) for the public server contract. The
+[Evidence-First skill contract](docs/evidence-first-skill.md) defines a
+separate, not-yet-implemented agent-orchestration boundary. Release operators
 should use the [v0.1.2 approval-gated release runbook](docs/releasing-0.1.2.md).
 
 ## Approved v0.1 MCP tools
