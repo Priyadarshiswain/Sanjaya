@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2033-654294F0",
+  "taskId": "SJ-EVAL-0011",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "b87c9be43b79a79a0295b1af87ddc3d51f7262019e017bc81699241fa897d547",
+    "repositoryCommit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0011",
+    "answer": "After the detached child has started, cancellation in AppHostLauncher.LaunchAndWaitForBackchannelAsync invokes RequestGracefulShutdownThenForceKillAsync. That helper calls StopProcessTreeAsync with CancellationToken.None, so it does not receive the caller's cancelled token.",
+    "claims": [
+      {
+        "key": "containing_method",
+        "value": "AppHostLauncher.LaunchAndWaitForBackchannelAsync handles OperationCanceledException after starting the detached child and invokes cleanup.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 400,
+            "endLine": 423
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          }
+        ]
+      },
+      {
+        "key": "cleanup_helper",
+        "value": "RequestGracefulShutdownThenForceKillAsync",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      },
+      {
+        "key": "shutdown_token",
+        "value": "No. The helper passes CancellationToken.None to StopProcessTreeAsync rather than the caller's cancelled token.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.4,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 7,
+    "nativeToolCalls": 7,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 672171,
+    "toolResponseBytes": 672171,
+    "uncachedInputTokens": 53969,
+    "cachedInputTokens": 265728,
+    "outputTokens": 1651,
+    "wallTimeMs": 46860,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2033-654294F0.jsonl",
+    "sha256": "be63f1ccbb89772df46e8bab31a12c2ee4308f22ee492a3520db426aa134bdd8",
+    "eventCount": 10
+  }
+}

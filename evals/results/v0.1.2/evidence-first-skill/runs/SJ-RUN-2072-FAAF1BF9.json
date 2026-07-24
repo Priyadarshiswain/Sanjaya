@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2072-FAAF1BF9",
+  "taskId": "SJ-EVAL-0011",
+  "arm": "native",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "b87c9be43b79a79a0295b1af87ddc3d51f7262019e017bc81699241fa897d547",
+    "repositoryCommit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0011",
+    "answer": "Cancellation after the detached child starts is handled by LaunchAndWaitForBackchannelAsync, which invokes RequestGracefulShutdownThenForceKillAsync. The shutdown operation is deliberately given CancellationToken.None, not the caller’s cancelled token.",
+    "claims": [
+      {
+        "key": "containing_method",
+        "value": "AppHostLauncher.LaunchAndWaitForBackchannelAsync",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 372,
+            "endLine": 379
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          }
+        ]
+      },
+      {
+        "key": "cleanup_helper",
+        "value": "AppHostLauncher.RequestGracefulShutdownThenForceKillAsync",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 549,
+            "endLine": 552
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      },
+      {
+        "key": "shutdown_token",
+        "value": "No. RequestGracefulShutdownThenForceKillAsync passes CancellationToken.None to StopProcessTreeAsync rather than the caller's cancelled token.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.6,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 4,
+    "nativeToolCalls": 4,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 651651,
+    "toolResponseBytes": 651651,
+    "uncachedInputTokens": 28116,
+    "cachedInputTokens": 102656,
+    "outputTokens": 1012,
+    "wallTimeMs": 28184,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2072-FAAF1BF9.jsonl",
+    "sha256": "d9e4462f3c386247d4041a139e185cb6d52bb2dd18fc9b1f1e1f32ebc2109c53",
+    "eventCount": 7
+  }
+}

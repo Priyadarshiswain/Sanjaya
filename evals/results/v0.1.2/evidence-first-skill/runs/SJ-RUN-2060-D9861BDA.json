@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2060-D9861BDA",
+  "taskId": "SJ-EVAL-0003",
+  "arm": "native",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "529a0441ae3e4f90a3f75beb40bd7ea280fed3d24464599fe49fab14ebf34dec",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0003",
+    "answer": "The frontend retry-delay preview function is `calculateRetryPreview`; it caps `attempt` with `Math.min(attempt, config.maximumRetryAttempts)` and returns `config.retryBaseSeconds * 2 ** boundedAttempt`.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "calculateRetryPreview",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 3,
+            "endLine": 6
+          }
+        ]
+      },
+      {
+        "key": "bounded_attempt",
+        "value": "const boundedAttempt = Math.min(attempt, config.maximumRetryAttempts);",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 7,
+            "endLine": 7
+          }
+        ]
+      },
+      {
+        "key": "delay_expression",
+        "value": "config.retryBaseSeconds * 2 ** boundedAttempt",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 8,
+            "endLine": 8
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 2,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 1802,
+    "toolResponseBytes": 1802,
+    "uncachedInputTokens": 8492,
+    "cachedInputTokens": 25344,
+    "outputTokens": 470,
+    "wallTimeMs": 15002,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2060-D9861BDA.jsonl",
+    "sha256": "426c2bd8f63c541e4ad9d3b9b80f81961eb75df7e49c85a35a9fb5100c22fe8b",
+    "eventCount": 5
+  }
+}

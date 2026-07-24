@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2013-2EE1CEAC",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "evidence_first_skill",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "30a00cff5660743c6aeac7a79a5cbe08efddaee857da712a5b83c2942f409b72",
+    "repositoryCommit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0008",
+    "answer": "VM workers initiate module-graph prewarming in `runVmTests` immediately after loading the environment and before VM setup.",
+    "claims": [
+      {
+        "key": "containing_function",
+        "value": "`runVmTests` in `packages/vitest/src/runtime/workers/vm.ts`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 30,
+            "endLine": 35
+          }
+        ]
+      },
+      {
+        "key": "rpc_method",
+        "value": "`rpc.prewarmModuleGraph(environment.viteEnvironment || environment.name, ctx.files.map(file => file.filepath))`.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 43,
+            "endLine": 46
+          }
+        ]
+      },
+      {
+        "key": "overlapped_work",
+        "value": "Server transformation of each test file’s import graph overlaps with the worker importing its environment package, before environment/VM setup.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 37,
+            "endLine": 40
+          },
+          {
+            "path": "packages/vitest/src/types/rpc.ts",
+            "startLine": 23,
+            "endLine": 28
+          }
+        ]
+      },
+      {
+        "key": "failure_policy",
+        "value": "The prewarm call is fire-and-forget and its failures are swallowed with `.catch(() => {})`; the worker’s own fetch later reports failures with import context.",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/workers/vm.ts",
+            "startLine": 41,
+            "endLine": 46
+          },
+          {
+            "path": "test/e2e/test/vm-threads.test.ts",
+            "startLine": 85,
+            "endLine": 101
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.5,
+    "claimRecall": 0.5,
+    "claimF1": 0.5,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 4,
+    "nativeToolCalls": 4,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 29666,
+    "toolResponseBytes": 29666,
+    "uncachedInputTokens": 23634,
+    "cachedInputTokens": 82176,
+    "outputTokens": 1090,
+    "wallTimeMs": 33677,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2013-2EE1CEAC.jsonl",
+    "sha256": "30f7c7adb459a12629bfe23ce9958ae4d8920bca06df56ee74641e2cc6492a88",
+    "eventCount": 8
+  }
+}

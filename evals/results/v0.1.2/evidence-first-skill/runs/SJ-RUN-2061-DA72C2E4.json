@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2061-DA72C2E4",
+  "taskId": "SJ-EVAL-0005",
+  "arm": "native",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "9dc243917abb6c9683440252ecaf53abb4aafda3510807071f6026185aafa658",
+    "repositoryCommit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0005",
+    "answer": "The shared in-process engine is FastEndpoints.Agents.EndpointInvoker, invoked through InvokeAsync(...). It is registered by the FastEndpoints.Mcp and FastEndpoints.A2A integrations.",
+    "claims": [
+      {
+        "key": "engine_type",
+        "value": "FastEndpoints.Agents.EndpointInvoker (sealed class)",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 6,
+            "endLine": 15
+          }
+        ]
+      },
+      {
+        "key": "invocation_method",
+        "value": "EndpointInvoker.InvokeAsync(EndpointDefinition definition, JsonElement args, ClaimsPrincipal? principal, CancellationToken ct); it creates an endpoint and executes endpoint.ExecAsync(ct).",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 28,
+            "endLine": 28
+          },
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 55,
+            "endLine": 58
+          }
+        ]
+      },
+      {
+        "key": "mcp_namespace",
+        "value": "FastEndpoints.Mcp; AddMcp registers EndpointInvoker as a singleton and its tool handler invokes InvokeAsync.",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 10,
+            "endLine": 10
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 33,
+            "endLine": 43
+          },
+          {
+            "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+            "startLine": 140,
+            "endLine": 145
+          }
+        ]
+      },
+      {
+        "key": "a2a_namespace",
+        "value": "FastEndpoints.A2A; AddA2A registers EndpointInvoker as a singleton and its skill dispatcher invokes InvokeAsync.",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 6,
+            "endLine": 6
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 28,
+            "endLine": 38
+          },
+          {
+            "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+            "startLine": 46,
+            "endLine": 49
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 6,
+    "nativeToolCalls": 6,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 59899,
+    "toolResponseBytes": 59899,
+    "uncachedInputTokens": 20709,
+    "cachedInputTokens": 61952,
+    "outputTokens": 1368,
+    "wallTimeMs": 32785,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2061-DA72C2E4.jsonl",
+    "sha256": "94ecc1efa70ec09f10fcd2adeca07319d983301549461821fb7ed8198cb64566",
+    "eventCount": 10
+  }
+}

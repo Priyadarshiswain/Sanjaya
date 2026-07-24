@@ -122,3 +122,24 @@ recorded in this study. The harness stops between runs when it reaches the
 ceiling; it cannot interrupt a model response already in progress.
 It also stops after two consecutive session failures so an authentication or
 runtime fault cannot consume the entire stage.
+
+The first stage-one attempt stopped exactly this way after its initial native
+and skill sessions. A clean `CODEX_HOME` had also hidden the existing ChatGPT
+login. The frozen protocol records the amendment: both arms now receive only a
+temporary, user-private symlink to the existing `auth.json`, while personal
+configuration, rules, skills, plugins, memories, and sessions remain excluded.
+The two failed records are retained unchanged.
+
+The owner subsequently approved the remaining 48 sessions under a cumulative
+7,000,000-token ceiling with no purchase of extra credits. The completed study
+contains all 72 planned records and consumed 5,755,266 aggregate recorded
+tokens. Reproduce its deterministic report and verify every record with:
+
+```bash
+npm run analyze:evidence-first-skill --prefix evals
+npm run verify:evidence-first-skill-results --prefix evals
+```
+
+The result does not establish a correctness or efficiency benefit for the
+current skill-enabled experience. See the checked-in report for the complete
+arm, routing, side-effect, and task-level evidence.

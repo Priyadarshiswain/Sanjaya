@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "status": "proposed_before_model_execution",
+  "status": "frozen_before_model_execution",
   "relationship": "Separate forward evaluation; does not replace or rewrite the frozen native, sanjaya_available, or sanjaya_guided records.",
   "target": {
     "package": "sanjaya-mcp",
@@ -75,7 +75,8 @@
     "rawEvents": "temporary local files only; never committed",
     "sanitizedTrace": "content-minimized events only",
     "pluginInstallation": "exact reviewed local plugin installed into a new disposable CODEX_HOME before every skill-arm session",
-    "userConfiguration": "no personal CODEX_HOME, config.toml, rules, skills, plugins, memories, or session history is loaded"
+    "userConfiguration": "no personal config.toml, rules, skills, plugins, memories, or session history is loaded",
+    "authentication": "both arms receive the same temporary user-private symlink to the existing ChatGPT auth.json; credentials are not copied into results or retained after the session"
   },
   "indexing": {
     "warm": "built with the exact public package before the measured session in a separate treatment snapshot",
@@ -102,11 +103,31 @@
     "contractMergeDoesNotAuthorizeModelCalls": true,
     "stageOneRequiresSeparateOwnerApproval": true,
     "remainingRunsRequireSeparateOwnerApproval": true,
+    "remainingRunsApproval": {
+      "date": "2026-07-25",
+      "scope": "Complete repetitions 2 and 3: 48 additional sessions.",
+      "cumulativeTokenCeiling": 7000000,
+      "externalPurchaseCeiling": "No purchase of extra credits.",
+      "expectedWallClockWindow": "30 to 60 minutes",
+      "ownerInstruction": "Complete the test before closing for the day."
+    },
     "requiredBeforeEachStage": [
       "run count",
       "aggregate token ceiling",
       "external monetary ceiling",
       "expected wall-clock window"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "date": "2026-07-25",
+      "afterRunIds": [
+        "SJ-RUN-2006-0FBDF4F7",
+        "SJ-RUN-2007-18835DFA"
+      ],
+      "reason": "A clean CODEX_HOME also removed ChatGPT authentication, so the first native and skill sessions both exited with agent_error before producing events or token usage.",
+      "change": "Share only the existing auth.json through a temporary user-private symlink in both arms; continue excluding all personal configuration, skills, plugins, rules, memories, and sessions.",
+      "retention": "Both failed records remain unchanged in the stage-one denominator and result set."
+    }
+  ]
 }

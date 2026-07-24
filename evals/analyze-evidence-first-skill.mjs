@@ -38,9 +38,20 @@ const summary = {
   generatedAt: new Date().toISOString(),
   plannedRuns: protocol.design.totalRuns,
   recordedRuns: runs.length,
+  usage: {
+    uncachedInputTokens: sumMetric(runs, "uncachedInputTokens"),
+    cachedInputTokens: sumMetric(runs, "cachedInputTokens"),
+    outputTokens: sumMetric(runs, "outputTokens"),
+    aggregateTokens:
+      sumMetric(runs, "uncachedInputTokens")
+      + sumMetric(runs, "cachedInputTokens")
+      + sumMetric(runs, "outputTokens"),
+    wallTimeMs: sumMetric(runs, "wallTimeMs"),
+  },
   native: summarize(native),
   evidenceFirstSkill: summarize(skill),
   completedPairs: summarizePairs(pairs),
+  activeSanjayaPairs: activeSanjayaPairs(native, skill),
   routing: {
     nativeOnlySkillRuns: skill.filter(
       (run) =>
@@ -52,6 +63,16 @@ const summary = {
       (run) =>
         run.status === "completed" && run.metrics.sanjayaToolCalls > 0,
     ).length,
+    sanjayaUsingStrictSuccesses: skill.filter(
+      (run) =>
+        run.status === "completed"
+        && run.metrics.sanjayaToolCalls > 0
+        && run.scores.strictSuccess,
+    ).length,
+    sanjayaToolCalls: skill.reduce(
+      (total, run) => total + run.metrics.sanjayaToolCalls,
+      0,
+    ),
     indexWrites: skill.reduce(
       (total, run) => total + (run.metrics.indexWrites ?? 0),
       0,
@@ -152,10 +173,52 @@ function completedPairs(nativeRuns, skillRuns) {
   });
 }
 
+function activeSanjayaPairs(nativeRuns, skillRuns) {
+  const nativeByIdentity = new Map(
+    nativeRuns.map(
+      (run) => [`${run.taskId}|${run.repetition}`, run],
+    ),
+  );
+  return skillRuns
+    .filter(
+      (run) =>
+        run.status === "completed" && run.metrics.sanjayaToolCalls > 0,
+    )
+    .map((skillRun) => {
+      const nativeRun = nativeByIdentity.get(
+        `${skillRun.taskId}|${skillRun.repetition}`,
+      );
+      return {
+        taskId: skillRun.taskId,
+        repetition: skillRun.repetition,
+        nativeStrict: nativeRun?.scores?.strictSuccess ?? null,
+        skillStrict: skillRun.scores.strictSuccess,
+        sanjayaToolCalls: skillRun.metrics.sanjayaToolCalls,
+        nativeTokens: nativeRun ? runTokens(nativeRun) : null,
+        skillTokens: runTokens(skillRun),
+        nativeWallTimeMs: nativeRun?.metrics?.wallTimeMs ?? null,
+        skillWallTimeMs: skillRun.metrics.wallTimeMs,
+      };
+    });
+}
+
+function runTokens(run) {
+  return run.metrics.uncachedInputTokens
+    + run.metrics.cachedInputTokens
+    + run.metrics.outputTokens;
+}
+
 function strictCount(records, taskId) {
   return records.filter(
     (run) => run.taskId === taskId && run.scores?.strictSuccess,
   ).length;
+}
+
+function sumMetric(records, key) {
+  return records.reduce(
+    (total, run) => total + (run.metrics?.[key] ?? 0),
+    0,
+  );
 }
 
 function report(document) {
@@ -163,6 +226,12 @@ function report(document) {
     (task) =>
       `| ${task.taskId} | ${task.nativeStrict} | ${task.skillStrict} | `
       + `${task.skillRunsUsingSanjaya}/${task.skillRuns} |`,
+  ).join("\n");
+  const activePairRows = document.activeSanjayaPairs.map(
+    (pair) =>
+      `| ${pair.taskId} | ${pair.repetition} | ${pair.nativeStrict} | `
+      + `${pair.skillStrict} | ${pair.sanjayaToolCalls} | `
+      + `${pair.nativeTokens ?? "n/a"} | ${pair.skillTokens} |`,
   ).join("\n");
   return `# Evidence-First Code Discovery skill evaluation
 
@@ -172,8 +241,10 @@ and does not alter the frozen v0.1.2 availability or guided records.
 ## What this study tests
 
 The same ${document.model} agent receives the same task, repository snapshot,
-native tools, MCP server, scorer, and limits in both arms. The treatment
-difference is the exact installed \`${document.skill}\` skill. The task prompt
+native tools, scorer, and limits in both arms. The treatment adds the exact
+installed \`${document.skill}\` skill and the Sanjaya MCP server. It therefore
+measures the skill-enabled Sanjaya experience against native discovery; it
+does not isolate the skill instructions from MCP availability. The task prompt
 does not name the skill or tell the agent to use Sanjaya.
 
 ## Current outcome
@@ -181,14 +252,30 @@ does not name the skill or tell the agent to use Sanjaya.
 ${document.recordedRuns}/${document.plannedRuns} planned records are present.
 There are ${document.completedPairs.count} completed same-task,
 same-repetition pairs. The skill arm has
-${document.completedPairs.skillStrictWins} strict wins,
+${document.completedPairs.skillStrictWins} strict
+${document.completedPairs.skillStrictWins === 1 ? "win" : "wins"},
 ${document.completedPairs.nativeStrictWins} strict losses, and
 ${document.completedPairs.strictTies} ties.
 
 Selective routing is measured rather than assuming maximum MCP usage:
 ${document.routing.nativeOnlySkillRuns} completed skill sessions used native
 tools without Sanjaya, and ${document.routing.sanjayaUsingSkillRuns} used at
-least one Sanjaya tool. Measured index writes: ${document.routing.indexWrites}.
+least one Sanjaya tool (${document.routing.sanjayaToolCalls} calls total).
+${document.routing.sanjayaUsingStrictSuccesses} Sanjaya-using sessions achieved
+strict success. Measured index writes: ${document.routing.indexWrites}.
+
+The stage consumed ${document.usage.aggregateTokens} aggregate recorded tokens:
+${document.usage.uncachedInputTokens} uncached input,
+${document.usage.cachedInputTokens} cached input, and
+${document.usage.outputTokens} output.
+
+## Verdict
+
+The current skill-enabled Sanjaya experience did not demonstrate a correctness
+or efficiency benefit. Strict success and mean claim F1 were lower than the
+fresh native control. Mean citation validity was slightly higher, but median
+tool calls, wall time, input tokens, and output tokens were also higher. This
+result does not support a marketplace benefit claim.
 
 ## Comparison
 
@@ -208,6 +295,12 @@ Paired mean claim-F1 delta (skill minus native):
 ${signed(document.completedPairs.meanClaimF1Delta)}. Paired mean citation
 delta: ${signed(document.completedPairs.meanCitationValidityDelta)}.
 
+## Active Sanjaya pairs
+
+| Task | Repetition | Native strict | Skill strict | Sanjaya calls | Native tokens | Skill tokens |
+|---|---:|---:|---:|---:|---:|---:|
+${activePairRows}
+
 ## Task-level routing and strict results
 
 | Task | Native strict | Skill strict | Skill runs using Sanjaya |
@@ -216,10 +309,12 @@ ${taskRows}
 
 ## Interpretation boundary
 
-Failures, neutral results, regressions, and index writes remain visible. A
-partial stage is a harness and routing check, not a marketplace claim. Even a
-completed 72-run study supports conclusions only for the pinned agent, model,
-repositories, tasks, MCP package, and skill version recorded here.
+Failures, neutral results, regressions, and index writes remain visible.
+${document.status === "full_study_complete"
+    ? "The completed study supports no broader or model-independent claim."
+    : "A partial stage is a harness and routing check, not a marketplace claim."}
+Even a completed 72-run study supports conclusions only for the pinned agent,
+model, repositories, tasks, MCP package, and skill version recorded here.
 `;
 }
 

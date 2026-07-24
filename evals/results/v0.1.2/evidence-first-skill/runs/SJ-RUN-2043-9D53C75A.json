@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2043-9D53C75A",
+  "taskId": "SJ-EVAL-0012",
+  "arm": "native",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "c7255bbc2cd77b7dc9ac1a1cb5acf90d48701910388b5222f541af86c43bcd5d",
+    "repositoryCommit": "327570c17f4e337ea5ae4574a5fe6abee4a6838b",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0012",
+    "answer": "Detached Aspire CLI child processes remove environment variables whose names start with `ASPIRE_EXTENSION_` (case-insensitive). `DEBUG_SESSION_*` variables are retained.",
+    "claims": [
+      {
+        "key": "removed_prefix",
+        "value": "ASPIRE_EXTENSION_ (matched case-insensitively)",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 339,
+            "endLine": 353
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 387,
+            "endLine": 398
+          }
+        ]
+      },
+      {
+        "key": "debug_session_removed",
+        "value": "No. DEBUG_SESSION_* variables are explicitly kept intact.",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 339,
+            "endLine": 346
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 4,
+    "nativeToolCalls": 4,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 1074493,
+    "toolResponseBytes": 1074493,
+    "uncachedInputTokens": 33033,
+    "cachedInputTokens": 112384,
+    "outputTokens": 897,
+    "wallTimeMs": 25711,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2043-9D53C75A.jsonl",
+    "sha256": "ee892b9336d3ca1209f338422d1464669ecddb8b125fee03bb94db6411355d7d",
+    "eventCount": 7
+  }
+}

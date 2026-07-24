@@ -227,8 +227,11 @@ approval and a separate pull request:
 4. **Partially verified:** clean-environment discovery, install, cachebuster
    update, reinstall, removal, and cleanup pass. Interactive disable/re-enable
    remains a manual gate.
-5. **Proposed:** run the separately named `evidence_first_skill` evaluation
-   against a fresh native control, beginning with a 24-run review stage.
+5. **Evaluation complete:** the separately named `evidence_first_skill`
+   evaluation retained all 72 planned records against a fresh native control.
+   It did not establish a correctness or efficiency benefit for the current
+   skill-enabled experience, so marketplace release remains blocked pending a
+   separately reviewed product response.
 6. Add the public Git marketplace entry only if the reviewed evidence supports
    proceeding.
 7. Publish or submit the plugin to any hosted directory.

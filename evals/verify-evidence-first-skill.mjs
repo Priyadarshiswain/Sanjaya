@@ -13,7 +13,7 @@ const pilotProtocol = readJson(join(evalRoot, "protocol", "pilot.json"));
 const tasks = readJson(join(evalRoot, "tasks", "pilot.json")).tasks;
 const taskIds = tasks.map(({ id }) => id);
 
-assert.equal(protocol.status, "proposed_before_model_execution");
+assert.equal(protocol.status, "frozen_before_model_execution");
 assert.deepEqual(protocol.design.arms, ["native", "evidence_first_skill"]);
 assert.deepEqual(protocol.design.taskIds, taskIds);
 assert.equal(protocol.design.repetitions, 3);
@@ -46,11 +46,25 @@ assert.equal(protocol.controls.scorerVersion, "1.1.0");
 assert.equal(protocol.controls.sandbox, "read-only");
 assert.equal(protocol.controls.repositoryToolNetworkAccess, false);
 assert.equal(protocol.controls.maxConsecutiveSessionFailures, 2);
+assert.ok(protocol.controls.authentication.includes("temporary user-private symlink"));
+assert.deepEqual(protocol.amendments[0].afterRunIds, [
+  "SJ-RUN-2006-0FBDF4F7",
+  "SJ-RUN-2007-18835DFA",
+]);
+assert.ok(protocol.amendments[0].retention.includes("remain unchanged"));
 assert.equal(protocol.authorization.contractMergeDoesNotAuthorizeModelCalls, true);
 assert.equal(protocol.authorization.stageOneRequiresSeparateOwnerApproval, true);
 assert.equal(
   protocol.authorization.remainingRunsRequireSeparateOwnerApproval,
   true,
+);
+assert.equal(
+  protocol.authorization.remainingRunsApproval.cumulativeTokenCeiling,
+  7000000,
+);
+assert.ok(
+  protocol.authorization.remainingRunsApproval.externalPurchaseCeiling
+    .includes("No purchase"),
 );
 
 assert.ok(tasks.some(({ indexState }) => indexState === "warm"));
@@ -77,7 +91,7 @@ assert.equal(
 );
 
 console.log(
-  "Verified the proposed 72-run evidence-first skill study, including its "
+  "Verified the frozen 72-run evidence-first skill study, including its "
   + "fresh control, 24-run review gate, exact plugin hashes, scorer 1.1, "
   + "selective-routing criterion, side-effect guard, and separate model-call "
   + "authorization boundary.",

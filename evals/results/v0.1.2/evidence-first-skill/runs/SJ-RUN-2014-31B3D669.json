@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2014-31B3D669",
+  "taskId": "SJ-EVAL-0001",
+  "arm": "evidence_first_skill",
+  "repetition": 3,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "0bcacfe72cbcd2b7b5ee6a704300d101bc992a642efca188fc4500634c024c51",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0001",
+    "answer": "The production backend retry-delay method is CalculateNextDelay on SignalDesk.Relay.RetryPolicy; the configured maximum is 6 attempts.",
+    "claims": [
+      {
+        "key": "method_name",
+        "value": "CalculateNextDelay",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 8,
+            "endLine": 8
+          }
+        ]
+      },
+      {
+        "key": "container",
+        "value": "SignalDesk.Relay.RetryPolicy",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 1,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "maximum_attempts",
+        "value": "6",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 5,
+            "endLine": 5
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 7,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 5,
+    "repositorySourceBytesRead": 22765,
+    "toolResponseBytes": 22765,
+    "uncachedInputTokens": 16050,
+    "cachedInputTokens": 135936,
+    "outputTokens": 1049,
+    "wallTimeMs": 35957,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2014-31B3D669.jsonl",
+    "sha256": "a1838778f1c687907c4c4ad16d21166294b54c7ece8c2cc4ac7b403322b93daf",
+    "eventCount": 11
+  }
+}

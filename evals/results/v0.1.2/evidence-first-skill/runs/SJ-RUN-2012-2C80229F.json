@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2012-2C80229F",
+  "taskId": "SJ-EVAL-0004",
+  "arm": "evidence_first_skill",
+  "repetition": 2,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "7a432abe81f25f39900bf69960ab19663c037d430d00152a0e5ab54ba1ce6620",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0004",
+    "answer": "Latest commit c321a020bbb810ade59d63a48210de9fa84f0f52, “Align the retry preview default,” modified frontend/src/app/core/runtime-config.ts. Previous commit 78d0d8290a0300eda1b46569f853de36f65257f4, “Tune the runtime retry base delay,” modified config/runtime.json. Current working tree (not committed): modified docs/operator-runbook.md; untracked local-observation.txt.",
+    "claims": [
+      {
+        "key": "latest_commit",
+        "value": "c321a020bbb810ade59d63a48210de9fa84f0f52 — Align the retry preview default; modified frontend/src/app/core/runtime-config.ts.",
+        "evidence": [
+          {
+            "path": ".git/logs/HEAD",
+            "startLine": 3,
+            "endLine": 3
+          },
+          {
+            "path": "frontend/src/app/core/runtime-config.ts",
+            "startLine": 7,
+            "endLine": 10
+          }
+        ]
+      },
+      {
+        "key": "previous_commit",
+        "value": "78d0d8290a0300eda1b46569f853de36f65257f4 — Tune the runtime retry base delay; modified config/runtime.json.",
+        "evidence": [
+          {
+            "path": ".git/logs/HEAD",
+            "startLine": 2,
+            "endLine": 2
+          },
+          {
+            "path": "config/runtime.json",
+            "startLine": 1,
+            "endLine": 6
+          }
+        ]
+      },
+      {
+        "key": "modified_path",
+        "value": "Working-tree modified path (not committed): docs/operator-runbook.md.",
+        "evidence": [
+          {
+            "path": "docs/operator-runbook.md",
+            "startLine": 10,
+            "endLine": 13
+          }
+        ]
+      },
+      {
+        "key": "untracked_path",
+        "value": "Working-tree untracked path (not committed): local-observation.txt.",
+        "evidence": [
+          {
+            "path": "local-observation.txt",
+            "startLine": 1,
+            "endLine": 1
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.97
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.3333333333333333,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 10068,
+    "toolResponseBytes": 10068,
+    "uncachedInputTokens": 8173,
+    "cachedInputTokens": 44544,
+    "outputTokens": 1538,
+    "wallTimeMs": 45603,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2012-2C80229F.jsonl",
+    "sha256": "723a05d84e633e4a4f42d4dbce0e1f03027e8e81e25c79d0aa89a61952aded5e",
+    "eventCount": 6
+  }
+}
