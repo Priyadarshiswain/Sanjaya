@@ -23,6 +23,10 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 - Add a Docker-contained Codex lifecycle verifier for offline discovery,
   install, cachebuster update, reinstall, removal, and cleanup, with
   interactive and authenticated gaps reported explicitly.
+- Add a preregistered Evidence-First skill evaluation contract with a fresh
+  native control, disposable per-session plugin installation, scorer 1.1,
+  selective-routing and side-effect gates, and a 24-run review stage before
+  the remaining 48 runs can be authorized.
 
 ### Changed
 

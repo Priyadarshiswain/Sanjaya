@@ -186,7 +186,10 @@ verifier records both checks as manual rather than editing Codex configuration
 or fabricating an authenticated result.
 
 Public marketplace creation remains blocked until interactive disable/re-enable
-and a fresh authenticated agent invocation are reviewed separately.
+is reviewed separately and the preregistered Evidence-First skill evaluation
+completes. That evaluation supplies the fresh authenticated agent invocation
+while also measuring selective routing, correctness, citations, side effects,
+tokens, and latency against a fresh native control.
 
 ## Trust and privacy review
 
@@ -211,8 +214,9 @@ behavior. Approval of a skills-only plugin does not pre-approve that expansion.
 The owner approved local implementation proposals through the fourth step.
 Merging each proposal approves only its reviewed repository source and
 verification evidence. The first three steps are complete; the fourth remains
-partially verified. Every later step still requires separate owner approval and
-a separate pull request:
+partially verified. The fifth is now proposed as a separate contract and still
+requires explicit run-budget approval. Every later step requires separate owner
+approval and a separate pull request:
 
 1. **Implemented locally:** move the canonical skill into a plugin directory
    and add the manifest.
@@ -222,10 +226,13 @@ a separate pull request:
    in operating-system temporary state.
 4. **Partially verified:** clean-environment discovery, install, cachebuster
    update, reinstall, removal, and cleanup pass. Interactive disable/re-enable
-   and authenticated fresh-agent invocation remain manual gates.
-5. Add the public Git marketplace entry.
-6. Publish or submit the plugin to any hosted directory.
-7. Add active installation commands, badges, or links to public
+   remains a manual gate.
+5. **Proposed:** run the separately named `evidence_first_skill` evaluation
+   against a fresh native control, beginning with a 24-run review stage.
+6. Add the public Git marketplace entry only if the reviewed evidence supports
+   proceeding.
+7. Publish or submit the plugin to any hosted directory.
+8. Add active installation commands, badges, or links to public
    documentation.
 
 The implementation PR must fail if it duplicates the canonical skill, changes

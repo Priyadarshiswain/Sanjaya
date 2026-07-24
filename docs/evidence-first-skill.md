@@ -271,6 +271,11 @@ The owner approved the following contract in pull request 30:
 
 The canonical skill is now packaged in a minimal local plugin and must remain
 validated against this contract. The initial qualitative forward test is
-complete. Installation, marketplace creation, model evaluation, and
-publication remain later explicit decisions governed by the separately
-reviewed distribution contract.
+complete. A separate `evidence_first_skill` protocol now proposes a fresh
+native control and skill arm across the 12 frozen tasks, beginning with a
+24-run review stage. Merging that protocol does not authorize model calls:
+run count, aggregate token ceiling, external monetary ceiling, and expected
+time window require separate owner approval. Marketplace creation and
+publication remain blocked pending the reviewed evaluation outcome and the
+separate distribution gates. Installation, marketplace creation, model
+evaluation, and publication remain later explicit decisions.

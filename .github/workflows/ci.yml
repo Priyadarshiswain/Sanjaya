@@ -40,6 +40,9 @@ jobs:
       - name: Verify evaluation contract
         run: npm run verify --prefix evals
 
+      - name: Verify Evidence-First skill evaluation contract
+        run: npm run verify:evidence-first-skill --prefix evals
+
       - name: Verify evaluation scorers
         run: npm run test:scorer --prefix evals
 
