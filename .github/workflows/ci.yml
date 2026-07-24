@@ -76,6 +76,9 @@ jobs:
       - name: Verify design-only skill contract
         run: npm run verify:skill-contract
 
+      - name: Verify design-only skill distribution
+        run: npm run verify:skill-distribution
+
       - name: Build framework-dependent npm payload
         run: npm run build -- --no-restore
 

@@ -44,6 +44,7 @@
     "verify:package": "node scripts/verify-package-contents.mjs",
     "verify:registry-metadata": "node scripts/verify-registry-metadata.mjs",
     "verify:skill-contract": "node scripts/verify-skill-contract.mjs",
+    "verify:skill-distribution": "node scripts/verify-skill-distribution.mjs",
     "verify:workspace-switching": "node scripts/verify-workspace-switching.mjs",
     "verify:vscode-install": "node scripts/verify-vscode-install-contract.mjs"
   },
