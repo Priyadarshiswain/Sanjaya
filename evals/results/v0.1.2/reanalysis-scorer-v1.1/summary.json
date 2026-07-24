@@ -1,0 +1,409 @@
+{
+  "schemaVersion": "1.0",
+  "status": "post_pilot_additive_methodology_repair",
+  "package": "sanjaya-mcp@0.1.2",
+  "model": "gpt-5.6-terra",
+  "agent": "codex-cli 0.144.5",
+  "effort": "medium",
+  "methodology": {
+    "originalScorer": "1.0.0",
+    "correctedScorer": "1.1.0",
+    "originalResultsOverwritten": false,
+    "newModelCalls": 0,
+    "semanticJudgeUsed": false,
+    "reviewProtocol": "independent_arm_blind"
+  },
+  "input": {
+    "fingerprintAlgorithm": "sha256",
+    "fingerprint": "c3d4fd3526b32cb050ef151227955ce4bfd77168697ea04b0b34e3e15597ef0b",
+    "modelRecords": 90,
+    "completedRecords": 87,
+    "retainedFailures": 3
+  },
+  "headlineAvailability": {
+    "relationship": "post_pilot_rescore_of_original_headline",
+    "treatmentRunsUsingSanjaya": 0,
+    "native": {
+      "planned": 36,
+      "completed": 34,
+      "retainedFailures": 2,
+      "scorerV1_0": {
+        "strictSuccesses": 6,
+        "strictSuccessRatePlanned": 0.16666666666666666,
+        "meanClaimF1Completed": 0.25490196078431376,
+        "meanCitationValidityCompleted": 0.7798319327731094
+      },
+      "scorerV1_1": {
+        "strictSuccesses": 25,
+        "strictSuccessRatePlanned": 0.6944444444444444,
+        "meanClaimF1Completed": 0.9044117647058824,
+        "meanCitationValidityCompleted": 0.7798319327731094
+      },
+      "transitions": {
+        "gainedStrictSuccess": 19,
+        "lostStrictSuccess": 0,
+        "unchangedStrictSuccess": 6,
+        "unchangedStrictFailure": 9
+      }
+    },
+    "sanjayaAvailable": {
+      "planned": 36,
+      "completed": 35,
+      "retainedFailures": 1,
+      "scorerV1_0": {
+        "strictSuccesses": 6,
+        "strictSuccessRatePlanned": 0.16666666666666666,
+        "meanClaimF1Completed": 0.3261904761904762,
+        "meanCitationValidityCompleted": 0.8001927437641724
+      },
+      "scorerV1_1": {
+        "strictSuccesses": 24,
+        "strictSuccessRatePlanned": 0.6666666666666666,
+        "meanClaimF1Completed": 0.9095238095238096,
+        "meanCitationValidityCompleted": 0.8001927437641724
+      },
+      "transitions": {
+        "gainedStrictSuccess": 18,
+        "lostStrictSuccess": 0,
+        "unchangedStrictSuccess": 6,
+        "unchangedStrictFailure": 11
+      }
+    },
+    "completedPairs": {
+      "count": 33,
+      "scorerV1_0": {
+        "leftStrictWins": 0,
+        "rightStrictWins": 0,
+        "strictTies": 33,
+        "meanClaimF1RightMinusLeft": 0.08333333333333333
+      },
+      "scorerV1_1": {
+        "leftStrictWins": 1,
+        "rightStrictWins": 1,
+        "strictTies": 31,
+        "meanClaimF1RightMinusLeft": 0.017676767676767676
+      }
+    },
+    "tasks": [
+      {
+        "taskId": "SJ-EVAL-0001",
+        "title": "Locate the production retry-delay implementation",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 3,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 3,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0002",
+        "title": "Resolve duplicate C# RetryPolicy declarations",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 3,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 3,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0003",
+        "title": "Explain the frontend retry preview calculation",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0004",
+        "title": "Recover recent committed and working-tree changes",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 1
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 1
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0005",
+        "title": "Locate the shared agent endpoint engine",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 2
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0006",
+        "title": "Disambiguate integration extension classes",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0007",
+        "title": "Explain Vitest VM code-cache validity",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0008",
+        "title": "Locate VM module-graph prewarming",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0009",
+        "title": "Disambiguate Kiota TypeScript method writer",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0010",
+        "title": "Trace Kiota RPC connection cleanup",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0011",
+        "title": "Find detached-launch cancellation cleanup",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0012",
+        "title": "Identify detached-child environment filtering",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      }
+    ]
+  },
+  "guidedDiagnostic": {
+    "relationship": "post_pilot_rescore_of_separate_diagnostic",
+    "guidedRunsUsingSanjaya": 18,
+    "matchingNative": {
+      "planned": 18,
+      "completed": 17,
+      "retainedFailures": 1,
+      "scorerV1_0": {
+        "strictSuccesses": 6,
+        "strictSuccessRatePlanned": 0.3333333333333333,
+        "meanClaimF1Completed": 0.48039215686274517,
+        "meanCitationValidityCompleted": 0.8763305322128853
+      },
+      "scorerV1_1": {
+        "strictSuccesses": 15,
+        "strictSuccessRatePlanned": 0.8333333333333334,
+        "meanClaimF1Completed": 0.9558823529411765,
+        "meanCitationValidityCompleted": 0.8763305322128853
+      },
+      "transitions": {
+        "gainedStrictSuccess": 9,
+        "lostStrictSuccess": 0,
+        "unchangedStrictSuccess": 6,
+        "unchangedStrictFailure": 2
+      }
+    },
+    "sanjayaGuided": {
+      "planned": 18,
+      "completed": 18,
+      "retainedFailures": 0,
+      "scorerV1_0": {
+        "strictSuccesses": 3,
+        "strictSuccessRatePlanned": 0.16666666666666666,
+        "meanClaimF1Completed": 0.38425925925925924,
+        "meanCitationValidityCompleted": 0.9268518518518517
+      },
+      "scorerV1_1": {
+        "strictSuccesses": 14,
+        "strictSuccessRatePlanned": 0.7777777777777778,
+        "meanClaimF1Completed": 0.9166666666666666,
+        "meanCitationValidityCompleted": 0.9268518518518517
+      },
+      "transitions": {
+        "gainedStrictSuccess": 11,
+        "lostStrictSuccess": 0,
+        "unchangedStrictSuccess": 3,
+        "unchangedStrictFailure": 4
+      }
+    },
+    "completedPairs": {
+      "count": 17,
+      "scorerV1_0": {
+        "leftStrictWins": 3,
+        "rightStrictWins": 0,
+        "strictTies": 14,
+        "meanClaimF1RightMinusLeft": -0.0735294117647059
+      },
+      "scorerV1_1": {
+        "leftStrictWins": 1,
+        "rightStrictWins": 0,
+        "strictTies": 16,
+        "meanClaimF1RightMinusLeft": -0.029411764705882353
+      }
+    },
+    "tasks": [
+      {
+        "taskId": "SJ-EVAL-0001",
+        "title": "Locate the production retry-delay implementation",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 3,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 3,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0002",
+        "title": "Resolve duplicate C# RetryPolicy declarations",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 3,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0003",
+        "title": "Explain the frontend retry preview calculation",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0005",
+        "title": "Locate the shared agent endpoint engine",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 2
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0008",
+        "title": "Locate VM module-graph prewarming",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 0
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0009",
+        "title": "Disambiguate Kiota TypeScript method writer",
+        "left": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        },
+        "right": {
+          "planned": 3,
+          "scorerV1_0": 0,
+          "scorerV1_1": 3
+        }
+      }
+    ]
+  }
+}

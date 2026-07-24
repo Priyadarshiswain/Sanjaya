@@ -16,12 +16,14 @@
     "run:guided": "node run-pilot.mjs --study guided",
     "analyze:pilot": "node analyze-pilot.mjs",
     "analyze:guided": "node analyze-guided.mjs",
+    "reanalyze:v1.1": "node reanalyze-v1.1.mjs",
     "test:scorer": "node scorer.test.mjs && node scorer-v1.1.test.mjs",
     "verify": "node verify-contract.mjs",
     "verify:fixture": "node verify-controlled-fixture.mjs",
     "verify:guided": "node verify-guided.mjs",
     "verify:guided-results": "node verify-results.mjs --study guided",
     "verify:pilot": "node verify-pilot.mjs",
+    "verify:reanalysis": "node reanalyze-v1.1.mjs --check",
     "verify:results": "node verify-results.mjs"
   },
   "devDependencies": {

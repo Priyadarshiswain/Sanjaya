@@ -43,6 +43,9 @@ jobs:
       - name: Verify evaluation scorers
         run: npm run test:scorer --prefix evals
 
+      - name: Verify scorer v1.1 reanalysis
+        run: npm run verify:reanalysis --prefix evals
+
       - name: Verify controlled fixture with public npm artifact
         run: npm run verify:fixture --prefix evals
 
