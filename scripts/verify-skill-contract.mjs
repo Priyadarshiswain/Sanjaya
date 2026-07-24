@@ -1,27 +1,57 @@
 import assert from "node:assert/strict";
-import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { readFileSync, readdirSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
 
 const repositoryRoot = resolve(".");
 const contractPath = "docs/evidence-first-skill.md";
-const contract = readFileSync(resolve(repositoryRoot, contractPath), "utf8");
-const normalizedContract = contract.replace(/\s+/gu, " ");
-const readme = readFileSync(resolve(repositoryRoot, "README.md"), "utf8");
+const skillRoot = resolve(
+  repositoryRoot,
+  "skills",
+  "evidence-first-code-discovery",
+);
+const skillPath = relative(repositoryRoot, join(skillRoot, "SKILL.md"));
+const interfacePath = relative(
+  repositoryRoot,
+  join(skillRoot, "agents", "openai.yaml"),
+);
+const expectedDescription = "Discover and explain unfamiliar codebases with "
+  + "verifiable repository-relative evidence. Use when locating "
+  + "implementations, declarations, candidate references, structure, recent "
+  + "changes, or code evidence for an explanation, review, or planned edit; "
+  + "choose capability-fitting Sanjaya MCP tools when available and fall back "
+  + "to native exact search, file reading, and read-only Git when they are not.";
 
-const requiredHeadings = [
-  "## Why this is separate from the MCP server",
-  "## Proposed identity and trigger",
-  "## Required workflow",
-  "## Cost and stopping rules",
-  "## Failure and fallback contract",
-  "## Initial packaging boundary",
-  "## Evaluation contract",
-  "## Review gates before implementation",
-];
-for (const heading of requiredHeadings) {
-  assert.ok(contract.includes(heading), `${contractPath} is missing ${heading}.`);
-}
+const contract = readFileSync(resolve(repositoryRoot, contractPath), "utf8");
+const normalizedContract = normalize(contract);
+const skill = readFileSync(resolve(repositoryRoot, skillPath), "utf8");
+const normalizedSkill = normalize(skill);
+const interfaceDocument = readFileSync(
+  resolve(repositoryRoot, interfacePath),
+  "utf8",
+);
+const readme = readFileSync(resolve(repositoryRoot, "README.md"), "utf8");
+const normalizedReadme = normalize(readme);
+const packageDocument = JSON.parse(
+  readFileSync(resolve(repositoryRoot, "package.json"), "utf8"),
+);
+
+assert.deepEqual(
+  listSkillFiles(skillRoot),
+  ["SKILL.md", "agents/openai.yaml"],
+  "The initial portable skill must contain exactly SKILL.md and agents/openai.yaml.",
+);
+
+const frontmatter = skill.match(
+  /^---\r?\nname: ([^\r\n]+)\r?\ndescription: ([^\r\n]+)\r?\n---\r?\n/u,
+);
+assert.ok(frontmatter, `${skillPath} must have only name and description frontmatter.`);
+assert.equal(frontmatter[1], "evidence-first-code-discovery");
+assert.equal(frontmatter[2], expectedDescription);
+assert.ok(
+  skill.split(/\r?\n/u).length <= 150,
+  `${skillPath} must remain concise enough for progressive disclosure.`,
+);
+assert.ok(!skill.includes("TODO"), `${skillPath} contains template text.`);
 
 const publicTools = [
   "capabilities",
@@ -37,45 +67,111 @@ const publicTools = [
 ];
 for (const tool of publicTools) {
   assert.ok(
-    contract.includes(`\`${tool}\``),
-    `${contractPath} does not classify the public ${tool} tool.`,
+    skill.includes(`\`${tool}\``),
+    `${skillPath} does not classify the public ${tool} tool.`,
   );
 }
 
 for (const boundary of [
-  "Status: design only; no installable skill is included or published.",
+  "call `capabilities` once",
+  "ask for approval before calling `index_codebase`",
+  "Do not retry the same call unchanged.",
+  "After three Sanjaya discovery calls, reassess",
+  "Treat three as a review point, not a hard limit",
+  "Never expose an absolute repository path.",
+  "Do not treat this skill invocation as permission to install software, contact the network, edit source",
+]) {
+  assert.ok(
+    normalizedSkill.includes(boundary),
+    `${skillPath} lost the behavior boundary: ${boundary}`,
+  );
+}
+
+const expectedInterface = [
+  "interface:",
+  '  display_name: "Evidence-First Code Discovery"',
+  '  short_description: "Ground code discovery in verifiable evidence"',
+  '  default_prompt: "Use $evidence-first-code-discovery to locate the relevant implementation and explain it with repository-relative evidence."',
+  "",
+].join("\n");
+assert.equal(
+  interfaceDocument.replace(/\r\n/gu, "\n"),
+  expectedInterface,
+  `${interfacePath} drifted from the generated reviewed interface metadata.`,
+);
+
+for (const heading of [
+  "## Why this is separate from the MCP server",
+  "## Implemented identity and trigger",
+  "## Required workflow",
+  "## Cost and stopping rules",
+  "## Failure and fallback contract",
+  "## Initial packaging boundary",
+  "## Evaluation contract",
+  "## Implementation status and remaining gates",
+]) {
+  assert.ok(contract.includes(heading), `${contractPath} is missing ${heading}.`);
+}
+for (const boundary of [
+  "the skill is not installed or published.",
   "The skill must not create or rebuild the index silently.",
-  "Three is a review point, not a hard limit",
   "Implementation approval does not authorize a paid model run or publication.",
-  "Skill installation or publication is a later explicit decision.",
+  "Forward-testing, installation, model evaluation, and publication are later explicit decisions.",
 ]) {
   assert.ok(
     normalizedContract.includes(boundary),
     `${contractPath} lost the approval boundary: ${boundary}`,
   );
 }
+assert.ok(
+  contract.includes(`description: ${expectedDescription}`),
+  `${contractPath} and ${skillPath} metadata disagree.`,
+);
 
+assert.ok(
+  normalizedReadme.includes(
+    "The skill is separate from the npm server package and is not automatically",
+  ),
+  "README.md must distinguish source availability from installation.",
+);
 assert.ok(
   readme.includes("[skill contract](docs/evidence-first-skill.md)"),
-  "README.md must link to the design-only skill contract.",
+  "README.md must link to the skill contract.",
 );
 assert.ok(
-  readme.includes("not-yet-implemented agent-orchestration boundary"),
-  "README.md must distinguish the skill design from shipped functionality.",
-);
-
-const trackedFiles = execFileSync(
-  "git",
-  ["ls-files", "-z"],
-  { cwd: repositoryRoot, encoding: "utf8" },
-).split("\0").filter(Boolean);
-assert.deepEqual(
-  trackedFiles.filter((path) => path.endsWith("/SKILL.md") || path === "SKILL.md"),
-  [],
-  "The design-only review must not include an installable SKILL.md.",
+  packageDocument.files.every(
+    (path) => path !== "skills" && !path.startsWith("skills/"),
+  ),
+  "The npm server package must not include the portable skill implicitly.",
 );
 
 console.log(
-  "Evidence-First skill design, tool coverage, approval gates, and "
-  + "no-implementation boundary verified.",
+  "Evidence-First skill layout, metadata, tool routing, approval gates, "
+  + "and npm exclusion verified.",
 );
+
+function normalize(value) {
+  return value.replace(/\s+/gu, " ").trim();
+}
+
+function listSkillFiles(root) {
+  const files = [];
+  visit(root);
+  return files.sort();
+
+  function visit(directory) {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (entry.isSymbolicLink()) {
+        throw new Error(`Skill package must not contain symlink ${path}.`);
+      }
+      if (entry.isDirectory()) {
+        visit(path);
+      } else if (entry.isFile()) {
+        files.push(relative(root, path).replaceAll("\\", "/"));
+      } else {
+        throw new Error(`Skill package contains unsupported entry ${path}.`);
+      }
+    }
+  }
+}
