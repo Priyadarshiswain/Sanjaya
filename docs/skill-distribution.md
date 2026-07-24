@@ -1,10 +1,10 @@
 # Evidence-First skill distribution contract
 
-Status: proposed design for owner review. No plugin, marketplace entry,
-installation, or skill publication has been created by this contract.
+Status: local skills-only plugin implemented for owner review. No marketplace
+entry, installation, or skill publication has been created.
 
 This document defines how the
-[`evidence-first-code-discovery`](../skills/evidence-first-code-discovery/SKILL.md)
+[`evidence-first-code-discovery`](../plugins/sanjaya/skills/evidence-first-code-discovery/SKILL.md)
 skill can become installable without confusing it with the separately published
 Sanjaya MCP server. It is a release contract, not an active installation guide.
 
@@ -29,21 +29,7 @@ skill or a Codex plugin as an undeclared payload change.
 
 ### Canonical source
 
-Until a plugin is approved, the only canonical skill source is:
-
-```text
-skills/
-└── evidence-first-code-discovery/
-    ├── SKILL.md
-    └── agents/
-        └── openai.yaml
-```
-
-Repository links may let people inspect this source. They must not describe the
-source directory as installed, marketplace-listed, or automatically active.
-
-When the first plugin is implemented, its reviewed plugin directory should
-become the canonical location:
+The local plugin directory is the only canonical skill source:
 
 ```text
 plugins/
@@ -57,9 +43,11 @@ plugins/
                 └── openai.yaml
 ```
 
-That implementation should move the two existing source files; it must not
-create a second maintained copy. A Git marketplace entry may then point to
-`plugins/sanjaya/` after separate publication approval.
+The implementation moved the two existing source files; it did not create a
+second maintained copy. Repository links may let people inspect this source.
+They must not describe the plugin as installed, marketplace-listed,
+automatically active, or published. A Git marketplace entry may point to
+`plugins/sanjaya/` only after separate publication approval.
 
 ### Primary Codex distribution
 
@@ -68,7 +56,7 @@ The preferred Codex distribution is a minimal skills-only plugin. OpenAI's
 defines plugins as the installable unit for sharing stable skills and requires
 a `.codex-plugin/plugin.json` manifest.
 
-The initial plugin should contain only:
+The local initial plugin contains only:
 
 - one manifest;
 - the existing two-file skill; and
@@ -117,7 +105,7 @@ neither process can discover the other project.
 
 ## Identity and versioning
 
-The intended initial plugin identity is:
+The implemented local plugin identity is:
 
 - plugin name: `sanjaya`;
 - plugin version: `0.1.0`;
@@ -174,35 +162,41 @@ behavior. Approval of a skills-only plugin does not pre-approve that expansion.
 
 ## Publication gates
 
-The following steps require separate owner approval and separate pull requests:
+The owner approved a local implementation proposal covering the first two
+steps. Merging that proposal approves the reviewed repository source only. Each
+remaining step still requires separate owner approval and a separate pull
+request:
 
-1. move the canonical skill into a plugin directory and add the manifest;
-2. validate the local plugin without installing it into the owner's normal
-   environment;
-3. create a test-only local marketplace entry in ignored temporary state;
-4. run clean-environment install, discovery, upgrade, disable, and removal
-   checks;
-5. add the public Git marketplace entry;
-6. publish or submit the plugin to any hosted directory; and
-7. add active installation commands, badges, or links to public documentation.
+1. **Implemented locally:** move the canonical skill into a plugin directory
+   and add the manifest.
+2. **Implemented locally:** validate the local plugin without installing it
+   into the owner's normal environment.
+3. Create a test-only local marketplace entry in ignored temporary state.
+4. Run clean-environment install, discovery, upgrade, disable, and removal
+   checks.
+5. Add the public Git marketplace entry.
+6. Publish or submit the plugin to any hosted directory.
+7. Add active installation commands, badges, or links to public
+   documentation.
 
 The implementation PR must fail if it duplicates the canonical skill, changes
 the npm package payload, silently adds MCP configuration, or creates a
 repository-level `.agents/skills` copy that would auto-activate the skill for
 contributors.
 
-## Current non-publication state
+## Current local-only state
 
-This design PR may add this document, cross-links, and an offline verifier only.
-It must not add:
+The local implementation consists only of:
 
-- `.codex-plugin/plugin.json`;
-- `.mcp.json`;
-- `.agents/plugins/marketplace.json`;
-- `.agents/skills/evidence-first-code-discovery`;
-- an active marketplace command or installation link; or
-- a plugin publication or submission workflow.
+- `plugins/sanjaya/.codex-plugin/plugin.json`;
+- `plugins/sanjaya/skills/evidence-first-code-discovery/SKILL.md`; and
+- `plugins/sanjaya/skills/evidence-first-code-discovery/agents/openai.yaml`.
 
-Owner approval of this contract authorizes only the next local plugin
-implementation proposal. It does not authorize installation, marketplace
-publication, hosted-directory submission, or MCP bundling.
+It must not add `.mcp.json`, `.app.json`, hooks, scripts, assets, telemetry,
+`.agents/plugins/marketplace.json`,
+`.agents/skills/evidence-first-code-discovery`, an active marketplace command
+or installation link, or a plugin publication or submission workflow.
+
+The local plugin exists only as reviewed repository source. Approval of this
+implementation does not authorize installation, marketplace publication,
+hosted-directory submission, or MCP bundling.

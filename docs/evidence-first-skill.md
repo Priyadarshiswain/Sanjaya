@@ -1,15 +1,15 @@
 # Evidence-First Code Discovery skill contract
 
-Status: approved contract with repository-local source implementation; the
-skill is not installed or published. Its proposed installation and publication
-boundaries are defined separately in the
+Status: approved contract with a local skills-only plugin implementation; the
+skill is not installed, marketplace-listed, or published. Its installation and
+publication boundaries are defined separately in the
 [distribution contract](skill-distribution.md).
 
 This contract defines the portable skill that teaches an AI coding agent when
-and how to use Sanjaya. Its source lives under
-`skills/evidence-first-code-discovery/`. It does not change the Sanjaya MCP
-server, make Sanjaya mandatory, or claim that guided use is already more
-accurate or efficient than native repository tools.
+and how to use Sanjaya. Its canonical source lives under
+`plugins/sanjaya/skills/evidence-first-code-discovery/`. It does not change the
+Sanjaya MCP server, make Sanjaya mandatory, or claim that guided use is already
+more accurate or efficient than native repository tools.
 
 ## Why this is separate from the MCP server
 
@@ -178,17 +178,23 @@ separately requests that action.
 The first implementation contains only:
 
 ```text
-skills/
-└── evidence-first-code-discovery/
-    ├── SKILL.md
-    └── agents/
-        └── openai.yaml
+plugins/
+└── sanjaya/
+    ├── .codex-plugin/
+    │   └── plugin.json
+    └── skills/
+        └── evidence-first-code-discovery/
+            ├── SKILL.md
+            └── agents/
+                └── openai.yaml
 ```
 
-No script, asset, reference bundle, model dependency, telemetry, or generated
-index belongs in the initial skill unless later testing demonstrates a concrete
-need. The body should remain concise and use capability names rather than
-client-specific tool prefixes so the instructions can work across MCP clients.
+No MCP configuration, script, hook, app, asset, reference bundle, model
+dependency, telemetry, marketplace entry, or generated index belongs in the
+initial plugin unless later testing demonstrates a concrete need and receives
+separate approval. The body should remain concise and use capability names
+rather than client-specific tool prefixes so the instructions can work across
+MCP clients.
 
 The skill should target Sanjaya `0.1.2` or newer while treating the live
 `capabilities` response—not a version assumption—as the source of truth.
@@ -263,7 +269,8 @@ The owner approved the following contract in pull request 30:
 6. the initial two-file packaging boundary; and
 7. the separate evaluation treatment.
 
-The repository-local skill directory is now initialized and must remain
+The canonical skill is now packaged in a minimal local plugin and must remain
 validated against this contract. The initial qualitative forward test is
-complete. Installation, model evaluation, and publication remain later
-explicit decisions governed by the separately reviewed distribution contract.
+complete. Installation, marketplace creation, model evaluation, and
+publication remain later explicit decisions governed by the separately
+reviewed distribution contract.

@@ -7,13 +7,13 @@ navigation and verifiable evidence such as repository-relative paths, symbols,
 and line ranges.
 
 The first delivery is a .NET Model Context Protocol (MCP) server. The repository
-also contains the portable
-[`evidence-first-code-discovery`](skills/evidence-first-code-discovery/SKILL.md)
-skill source. The skill is separate from the npm server package and is not
-automatically installed or published. See the
-[skill contract](docs/evidence-first-skill.md) and its proposed
-[distribution contract](docs/skill-distribution.md). No plugin or marketplace
-entry exists yet.
+also contains a local skills-only Codex plugin with the portable
+[`evidence-first-code-discovery`](plugins/sanjaya/skills/evidence-first-code-discovery/SKILL.md)
+skill. The plugin is separate from the npm server package and is not
+automatically installed, marketplace-listed, or published. See the
+[skill contract](docs/evidence-first-skill.md) and its
+[distribution contract](docs/skill-distribution.md). No marketplace entry or
+active plugin installation guide exists yet.
 
 In the Mahabharata, Sanjaya could perceive events that others could not see
 directly and report them faithfully. This project serves a similar role for AI
@@ -109,10 +109,11 @@ See [capabilities](docs/capabilities.md), [architecture](docs/architecture.md),
 [VS Code integration](docs/vscode.md), and
 [registry metadata](docs/registry.md) for the public server contract. The
 [Evidence-First skill contract](docs/evidence-first-skill.md) defines a
-separate repository-local agent-orchestration source that is not installed or
-published. Its [distribution contract](docs/skill-distribution.md) keeps the
-first proposed plugin skills-only until a portable active-project root binding
-is documented and verified. Release operators should use the
+separate local skills-only agent-orchestration plugin that is not installed,
+marketplace-listed, or published. Its
+[distribution contract](docs/skill-distribution.md) keeps the plugin
+skills-only until a portable active-project root binding is documented and
+verified. Release operators should use the
 [v0.1.2 approval-gated release runbook](docs/releasing-0.1.2.md).
 
 ## Approved v0.1 MCP tools

@@ -14,8 +14,9 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 - Define the design-only Evidence-First Code Discovery skill contract,
   including capability-aware routing, native fallbacks, opt-in indexing,
   evidence requirements, stopping rules, and a separate evaluation boundary.
-- Add the contract-matched two-file `evidence-first-code-discovery` skill
-  source without installing it or including it in the npm server package.
+- Add the contract-matched two-file `evidence-first-code-discovery` skill in a
+  minimal local skills-only Codex plugin without installing, marketplace
+  listing, publishing, or including it in the npm server package.
 
 ### Changed
 
