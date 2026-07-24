@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "1.0",
+  "status": "partial_stage",
+  "package": "sanjaya-mcp@0.1.2",
+  "plugin": "sanjaya@0.1.0",
+  "skill": "evidence-first-code-discovery",
+  "model": "gpt-5.6-terra",
+  "agent": "codex-cli 0.144.5",
+  "effort": "medium",
+  "generatedAt": "2026-07-24T20:08:53.834Z",
+  "plannedRuns": 72,
+  "recordedRuns": 24,
+  "usage": {
+    "uncachedInputTokens": 407831,
+    "cachedInputTokens": 1509376,
+    "outputTokens": 20379,
+    "aggregateTokens": 1937586,
+    "wallTimeMs": 699110
+  },
+  "native": {
+    "planned": 12,
+    "completed": 11,
+    "retainedFailures": 1,
+    "strictSuccesses": 7,
+    "meanClaimF1": 0.8712121212121211,
+    "meanCitationValidity": 0.7670995670995672,
+    "medianToolCalls": 2,
+    "medianWallTimeMs": 22605,
+    "medianInputTokens": 46541,
+    "medianOutputTokens": 748
+  },
+  "evidenceFirstSkill": {
+    "planned": 12,
+    "completed": 11,
+    "retainedFailures": 1,
+    "strictSuccesses": 7,
+    "meanClaimF1": 0.8787878787878789,
+    "meanCitationValidity": 0.8142857142857145,
+    "medianToolCalls": 3,
+    "medianWallTimeMs": 30629,
+    "medianInputTokens": 55827,
+    "medianOutputTokens": 919
+  },
+  "completedPairs": {
+    "count": 10,
+    "skillStrictWins": 1,
+    "nativeStrictWins": 1,
+    "strictTies": 8,
+    "meanClaimF1Delta": 0.008333333333333331,
+    "meanCitationValidityDelta": 0.051904761904761884
+  },
+  "routing": {
+    "nativeOnlySkillRuns": 10,
+    "sanjayaUsingSkillRuns": 1,
+    "sanjayaUsingStrictSuccesses": 0,
+    "sanjayaToolCalls": 4,
+    "indexWrites": 0
+  },
+  "tasks": [
+    {
+      "taskId": "SJ-EVAL-0001",
+      "title": "Locate the production retry-delay implementation",
+      "nativeStrict": 0,
+      "skillStrict": 1,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0002",
+      "title": "Resolve duplicate C# RetryPolicy declarations",
+      "nativeStrict": 1,
+      "skillStrict": 1,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0003",
+      "title": "Explain the frontend retry preview calculation",
+      "nativeStrict": 1,
+      "skillStrict": 0,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0004",
+      "title": "Recover recent committed and working-tree changes",
+      "nativeStrict": 1,
+      "skillStrict": 1,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0005",
+      "title": "Locate the shared agent endpoint engine",
+      "nativeStrict": 1,
+      "skillStrict": 0,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 1
+    },
+    {
+      "taskId": "SJ-EVAL-0006",
+      "title": "Disambiguate integration extension classes",
+      "nativeStrict": 1,
+      "skillStrict": 1,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0007",
+      "title": "Explain Vitest VM code-cache validity",
+      "nativeStrict": 0,
+      "skillStrict": 0,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0008",
+      "title": "Locate VM module-graph prewarming",
+      "nativeStrict": 0,
+      "skillStrict": 0,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0009",
+      "title": "Disambiguate Kiota TypeScript method writer",
+      "nativeStrict": 1,
+      "skillStrict": 1,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0010",
+      "title": "Trace Kiota RPC connection cleanup",
+      "nativeStrict": 0,
+      "skillStrict": 0,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0011",
+      "title": "Find detached-launch cancellation cleanup",
+      "nativeStrict": 0,
+      "skillStrict": 1,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    },
+    {
+      "taskId": "SJ-EVAL-0012",
+      "title": "Identify detached-child environment filtering",
+      "nativeStrict": 1,
+      "skillStrict": 1,
+      "skillRuns": 1,
+      "skillRunsUsingSanjaya": 0
+    }
+  ]
+}

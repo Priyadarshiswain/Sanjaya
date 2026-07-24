@@ -271,11 +271,22 @@ The owner approved the following contract in pull request 30:
 
 The canonical skill is now packaged in a minimal local plugin and must remain
 validated against this contract. The initial qualitative forward test is
-complete. A separate `evidence_first_skill` protocol now proposes a fresh
+complete. A separate `evidence_first_skill` protocol defines a fresh
 native control and skill arm across the 12 frozen tasks, beginning with a
-24-run review stage. Merging that protocol does not authorize model calls:
-run count, aggregate token ceiling, external monetary ceiling, and expected
-time window require separate owner approval. Marketplace creation and
-publication remain blocked pending the reviewed evaluation outcome and the
-separate distribution gates. Installation, marketplace creation, model
-evaluation, and publication remain later explicit decisions.
+24-run review stage.
+
+That first stage is now recorded in the
+[evaluation report](../evals/results/v0.1.2/evidence-first-skill/REPORT.md):
+22/24 sessions completed, with one retained authentication failure in each
+arm. Native and skill arms each achieved 7/12 strict successes. The skill arm
+had slightly higher mean claim F1 and citation validity, but higher median tool
+calls, input tokens, output tokens, and wall time. Ten completed skill sessions
+used native tools only; one used four Sanjaya calls and did not achieve strict
+success. No measured session wrote an index.
+
+This partial stage validates the harness and selective-routing behavior; it
+does not establish a marketplace benefit claim. The remaining 48 runs require
+separate owner approval after review. Marketplace creation and publication
+remain blocked pending that reviewed outcome and the separate distribution
+gates. Installation, marketplace creation, model evaluation, and publication
+remain later explicit decisions.

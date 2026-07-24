@@ -38,6 +38,16 @@ const summary = {
   generatedAt: new Date().toISOString(),
   plannedRuns: protocol.design.totalRuns,
   recordedRuns: runs.length,
+  usage: {
+    uncachedInputTokens: sumMetric(runs, "uncachedInputTokens"),
+    cachedInputTokens: sumMetric(runs, "cachedInputTokens"),
+    outputTokens: sumMetric(runs, "outputTokens"),
+    aggregateTokens:
+      sumMetric(runs, "uncachedInputTokens")
+      + sumMetric(runs, "cachedInputTokens")
+      + sumMetric(runs, "outputTokens"),
+    wallTimeMs: sumMetric(runs, "wallTimeMs"),
+  },
   native: summarize(native),
   evidenceFirstSkill: summarize(skill),
   completedPairs: summarizePairs(pairs),
@@ -52,6 +62,16 @@ const summary = {
       (run) =>
         run.status === "completed" && run.metrics.sanjayaToolCalls > 0,
     ).length,
+    sanjayaUsingStrictSuccesses: skill.filter(
+      (run) =>
+        run.status === "completed"
+        && run.metrics.sanjayaToolCalls > 0
+        && run.scores.strictSuccess,
+    ).length,
+    sanjayaToolCalls: skill.reduce(
+      (total, run) => total + run.metrics.sanjayaToolCalls,
+      0,
+    ),
     indexWrites: skill.reduce(
       (total, run) => total + (run.metrics.indexWrites ?? 0),
       0,
@@ -158,6 +178,13 @@ function strictCount(records, taskId) {
   ).length;
 }
 
+function sumMetric(records, key) {
+  return records.reduce(
+    (total, run) => total + (run.metrics?.[key] ?? 0),
+    0,
+  );
+}
+
 function report(document) {
   const taskRows = document.tasks.map(
     (task) =>
@@ -172,8 +199,10 @@ and does not alter the frozen v0.1.2 availability or guided records.
 ## What this study tests
 
 The same ${document.model} agent receives the same task, repository snapshot,
-native tools, MCP server, scorer, and limits in both arms. The treatment
-difference is the exact installed \`${document.skill}\` skill. The task prompt
+native tools, scorer, and limits in both arms. The treatment adds the exact
+installed \`${document.skill}\` skill and the Sanjaya MCP server. It therefore
+measures the skill-enabled Sanjaya experience against native discovery; it
+does not isolate the skill instructions from MCP availability. The task prompt
 does not name the skill or tell the agent to use Sanjaya.
 
 ## Current outcome
@@ -188,7 +217,14 @@ ${document.completedPairs.strictTies} ties.
 Selective routing is measured rather than assuming maximum MCP usage:
 ${document.routing.nativeOnlySkillRuns} completed skill sessions used native
 tools without Sanjaya, and ${document.routing.sanjayaUsingSkillRuns} used at
-least one Sanjaya tool. Measured index writes: ${document.routing.indexWrites}.
+least one Sanjaya tool (${document.routing.sanjayaToolCalls} calls total).
+${document.routing.sanjayaUsingStrictSuccesses} Sanjaya-using sessions achieved
+strict success. Measured index writes: ${document.routing.indexWrites}.
+
+The stage consumed ${document.usage.aggregateTokens} aggregate recorded tokens:
+${document.usage.uncachedInputTokens} uncached input,
+${document.usage.cachedInputTokens} cached input, and
+${document.usage.outputTokens} output.
 
 ## Comparison
 

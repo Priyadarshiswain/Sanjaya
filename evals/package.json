@@ -27,6 +27,7 @@
     "verify:evidence-first-skill": "node verify-evidence-first-skill.mjs",
     "verify:evidence-first-skill-runtime": "node run-pilot.mjs --study evidence-first-skill --verify-skill-setup-only",
     "verify:evidence-first-skill-results": "node verify-results.mjs --study evidence-first-skill",
+    "verify:evidence-first-skill-stage-one": "node verify-results.mjs --study evidence-first-skill --repetitions 1",
     "verify:pilot": "node verify-pilot.mjs",
     "verify:reanalysis": "node reanalyze-v1.1.mjs --check",
     "verify:results": "node verify-results.mjs"

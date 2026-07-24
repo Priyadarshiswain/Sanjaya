@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2006-0FBDF4F7",
+  "taskId": "SJ-EVAL-0001",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "0bcacfe72cbcd2b7b5ee6a704300d101bc992a642efca188fc4500634c024c51",
+    "repositoryCommit": "c321a020bbb810ade59d63a48210de9fa84f0f52",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300
+  },
+  "status": "agent_error",
+  "answer": null,
+  "scores": null,
+  "metrics": {
+    "turns": 0,
+    "toolCalls": 0,
+    "nativeToolCalls": 0,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 0,
+    "toolResponseBytes": 0,
+    "uncachedInputTokens": 0,
+    "cachedInputTokens": 0,
+    "outputTokens": 0,
+    "wallTimeMs": 24283,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2006-0FBDF4F7.jsonl",
+    "sha256": "0060ba4a5d83106efb2edc48b663814d8dfc6d5320dbbe16b21eac2874d4f5c0",
+    "eventCount": 2
+  }
+}

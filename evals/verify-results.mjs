@@ -13,6 +13,7 @@ import { scoreAnswerV1_1 } from "./scorer-v1.1.mjs";
 const evalRoot = resolve(dirname(fileURLToPath(import.meta.url)));
 const studyIndex = process.argv.indexOf("--study");
 const study = studyIndex >= 0 ? process.argv[studyIndex + 1] : "pilot";
+const repetitionsIndex = process.argv.indexOf("--repetitions");
 assert.ok(
   ["pilot", "guided", "evidence-first-skill"].includes(study),
   "Unknown result study.",
@@ -23,6 +24,15 @@ const runsRoot = join(resultsRoot, "runs");
 const tasks = readJson(join(evalRoot, "tasks", "pilot.json")).tasks;
 const taskById = new Map(tasks.map((task) => [task.id, task]));
 const protocol = readJson(join(evalRoot, "protocol", `${study}.json`));
+const expectedRepetitions = repetitionsIndex >= 0
+  ? Number.parseInt(process.argv[repetitionsIndex + 1], 10)
+  : protocol.design.repetitions;
+assert.ok(
+  Number.isInteger(expectedRepetitions)
+  && expectedRepetitions >= 1
+  && expectedRepetitions <= protocol.design.repetitions,
+  "Invalid result repetition ceiling.",
+);
 const answerSchema = readJson(join(schemaRoot, "answer.schema.json"));
 const runSchema = readJson(join(schemaRoot, "run.schema.json"));
 const traceSchema = readJson(join(schemaRoot, "trace-event.schema.json"));
@@ -34,8 +44,10 @@ const runFiles = readdirSync(runsRoot).filter((file) => file.endsWith(".json"));
 
 assert.equal(
   runFiles.length,
-  protocol.design.totalRuns,
-  `Expected all ${protocol.design.totalRuns} planned run records.`,
+  protocol.design.taskIds.length
+    * protocol.design.arms.length
+    * expectedRepetitions,
+  "Unexpected number of planned run records for the selected repetitions.",
 );
 const identities = new Set();
 const runIds = new Set();
@@ -46,6 +58,10 @@ for (const file of runFiles) {
   const run = readJson(join(runsRoot, file));
   assert.ok(validateRun(run), `${file}: ${formatErrors(validateRun.errors)}`);
   assert.equal(file, `${run.runId}.json`);
+  assert.ok(
+    run.repetition <= expectedRepetitions,
+    `${run.runId} exceeds the selected repetition ceiling.`,
+  );
   assert.ok(!runIds.has(run.runId), `Duplicate run ID ${run.runId}.`);
   runIds.add(run.runId);
   const identity = `${run.taskId}|${run.arm}|${run.repetition}`;
@@ -94,7 +110,7 @@ for (const taskId of protocol.design.taskIds) {
   for (const arm of protocol.design.arms) {
     for (
       let repetition = 1;
-      repetition <= protocol.design.repetitions;
+      repetition <= expectedRepetitions;
       repetition += 1
     ) {
       assert.ok(

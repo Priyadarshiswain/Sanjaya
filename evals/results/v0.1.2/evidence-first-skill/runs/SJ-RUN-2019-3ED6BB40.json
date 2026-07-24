@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "SJ-RUN-2019-3ED6BB40",
+  "taskId": "SJ-EVAL-0009",
+  "arm": "evidence_first_skill",
+  "repetition": 1,
+  "model": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-terra",
+    "agent": "codex-cli",
+    "agentVersion": "0.144.5",
+    "effort": "medium"
+  },
+  "controls": {
+    "promptSha256": "d7b08725f97e30201f76be4003a8594ba5b9528ad102d583612d4ad967856ec4",
+    "repositoryCommit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+    "networkAccess": false,
+    "maxTurns": 1,
+    "timeoutSeconds": 300,
+    "pluginManifestSha256": "66b3787a4252d399e92f9de63d0ab62e83d8631d14ca1c18ab80c074144deb93",
+    "skillSha256": "53c9d462120bc08d3351d6a24edd4bb8292f9db21409b6a4c5c7b591597d9418"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0009",
+    "answer": "The TypeScript writer is Kiota.Builder.Writers.TypeScript.CodeMethodWriter. After writing method documentation and the method prototype, WriteCodeElement throws InvalidOperationException when the parent is a CodeClass, because TypeScript method implementations are not generated.",
+    "claims": [
+      {
+        "key": "writer_type",
+        "value": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 9,
+            "endLine": 13
+          }
+        ]
+      },
+      {
+        "key": "class_parent_behavior",
+        "value": "When codeElement.Parent is CodeClass, WriteCodeElement writes the documentation and prototype first, then throws InvalidOperationException stating that TypeScript method implementations are not generated.",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 20,
+            "endLine": 26
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.1.0"
+  },
+  "metrics": {
+    "turns": 1,
+    "toolCalls": 3,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "repositorySourceBytesRead": 14754,
+    "toolResponseBytes": 14754,
+    "uncachedInputTokens": 15775,
+    "cachedInputTokens": 36608,
+    "outputTokens": 755,
+    "wallTimeMs": 26595,
+    "indexWrites": 0
+  },
+  "trace": {
+    "path": "traces/SJ-RUN-2019-3ED6BB40.jsonl",
+    "sha256": "749100debafc8d540e896344cdd3d4e71c5da2828d13846918fa309a07555e88",
+    "eventCount": 7
+  }
+}
