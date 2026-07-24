@@ -163,6 +163,31 @@ plugin, mutate personal configuration, contact a network, or create a
 publishable marketplace artifact. It proves only that a correctly shaped local
 marketplace can reference the reviewed plugin without changing it.
 
+## Clean-environment lifecycle verification
+
+The [local lifecycle evidence](plugin-lifecycle.md) records a real Codex CLI
+test inside a disposable Docker container. The verifier mounts only the
+temporary marketplace read-only, installs the pinned CLI inside the container,
+disconnects it from the network, and verifies:
+
+- marketplace registration and uninstalled-plugin discovery;
+- exact three-file installation and enabled state from a fresh process;
+- update through the official plugin cachebuster helper;
+- reinstall with removal of the previous version cache;
+- plugin uninstall and cache removal;
+- marketplace removal and empty final plugin configuration; and
+- deletion of the container and temporary marketplace.
+
+The test does not mount account credentials or host Codex state. Therefore it
+does not claim an authenticated model selected the installed skill. The
+noninteractive CLI also exposes no plugin disable command, while official
+documentation places disable/re-enable in the interactive plugin browser. The
+verifier records both checks as manual rather than editing Codex configuration
+or fabricating an authenticated result.
+
+Public marketplace creation remains blocked until interactive disable/re-enable
+and a fresh authenticated agent invocation are reviewed separately.
+
 ## Trust and privacy review
 
 Before installation, a user must be able to verify:
@@ -183,10 +208,11 @@ behavior. Approval of a skills-only plugin does not pre-approve that expansion.
 
 ## Publication gates
 
-The owner approved local implementation proposals covering the first three
-steps. Merging each proposal approves only its reviewed repository source and
-offline verifier. Every remaining step still requires separate owner approval
-and a separate pull request:
+The owner approved local implementation proposals through the fourth step.
+Merging each proposal approves only its reviewed repository source and
+verification evidence. The first three steps are complete; the fourth remains
+partially verified. Every later step still requires separate owner approval and
+a separate pull request:
 
 1. **Implemented locally:** move the canonical skill into a plugin directory
    and add the manifest.
@@ -194,8 +220,9 @@ and a separate pull request:
    into the owner's normal environment.
 3. **Implemented locally:** create, verify, and remove a test-only marketplace
    in operating-system temporary state.
-4. Run clean-environment install, discovery, upgrade, disable, and removal
-   checks.
+4. **Partially verified:** clean-environment discovery, install, cachebuster
+   update, reinstall, removal, and cleanup pass. Interactive disable/re-enable
+   and authenticated fresh-agent invocation remain manual gates.
 5. Add the public Git marketplace entry.
 6. Publish or submit the plugin to any hosted directory.
 7. Add active installation commands, badges, or links to public

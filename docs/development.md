@@ -87,6 +87,20 @@ repository marketplace already exists or if any temporary marketplace remains.
 It does not call Codex, install the plugin, mutate personal configuration, or
 contact a network.
 
+The separately approval-gated Docker lifecycle check is:
+
+```bash
+npm run verify:plugin-lifecycle -- \
+  --cachebuster-helper /absolute/path/to/update_plugin_cachebuster.py
+```
+
+It installs a pinned Codex CLI only inside a disposable container, disconnects
+the container from the network, and verifies marketplace registration,
+discovery, install, fresh-process enablement, cachebuster reinstall, removal,
+and cleanup. See the [lifecycle evidence](plugin-lifecycle.md) for the isolation
+model and the two remaining interactive/authenticated checks. Hosted CI checks
+the verifier's syntax but does not run Docker or depend on a local Codex skill.
+
 ## Run from an MCP client
 
 After `npm run build`, the development launcher is:
