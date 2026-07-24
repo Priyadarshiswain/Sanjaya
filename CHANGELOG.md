@@ -17,6 +17,9 @@ and releases will follow [Semantic Versioning](https://semver.org/).
 - Add the contract-matched two-file `evidence-first-code-discovery` skill in a
   minimal local skills-only Codex plugin without installing, marketplace
   listing, publishing, or including it in the npm server package.
+- Add an offline verifier that generates, validates, and removes an exact
+  test-only local marketplace without invoking Codex or modifying personal
+  plugin state.
 
 ### Changed
 

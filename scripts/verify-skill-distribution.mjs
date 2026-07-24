@@ -77,6 +77,7 @@ for (const heading of [
   "## Why MCP bundling is deferred",
   "## Identity and versioning",
   "## Intended user lifecycle",
+  "## Disposable marketplace verification",
   "## Trust and privacy review",
   "## Publication gates",
   "## Current local-only state",
@@ -91,6 +92,7 @@ for (const boundary of [
   "the first plugin must not declare mcpServers or include .mcp.json.",
   "Plugin versions and npm server versions are independent SemVer streams.",
   "Exact installation commands and clickable links remain intentionally absent",
+  "This check does not invoke Codex, register a marketplace, install or enable the plugin, mutate personal configuration, contact a network, or create a publishable marketplace artifact.",
   "Approval of a skills-only plugin does not pre-approve that expansion.",
   "The local plugin exists only as reviewed repository source.",
   "Approval of this implementation does not authorize installation, marketplace publication, hosted-directory submission, or MCP bundling.",
@@ -187,9 +189,18 @@ assert.equal(
   "node scripts/verify-skill-distribution.mjs",
   "package.json must expose the distribution verifier.",
 );
+assert.equal(
+  packageDocument.scripts["verify:plugin-marketplace"],
+  "node scripts/verify-plugin-marketplace.mjs",
+  "package.json must expose the disposable marketplace verifier.",
+);
 assert.ok(
   workflow.includes("npm run verify:skill-distribution"),
   "CI must enforce the local skills-only plugin contract.",
+);
+assert.ok(
+  workflow.includes("npm run verify:plugin-marketplace"),
+  "CI must enforce the disposable marketplace contract.",
 );
 
 console.log(

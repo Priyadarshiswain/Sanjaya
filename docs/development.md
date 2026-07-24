@@ -30,6 +30,7 @@ npm run verify:vscode-install
 npm run verify:registry-metadata
 npm run verify:skill-contract
 npm run verify:skill-distribution
+npm run verify:plugin-marketplace
 npm run verify:package
 npm run verify:installed-package
 npm run verify:reproducible-package
@@ -78,6 +79,13 @@ native fallbacks, UI metadata, and exclusion from the npm server package.
 layout, rejects duplicate skill source, MCP/app/hook/script and marketplace
 artifacts, and preserves the independent npm payload. Neither check installs,
 lists, or publishes the plugin.
+
+`verify:plugin-marketplace` copies the reviewed plugin into a newly created
+temporary marketplace, writes the exact local marketplace metadata, verifies
+every file and SHA-256 digest, and removes the whole fixture. It fails if a
+repository marketplace already exists or if any temporary marketplace remains.
+It does not call Codex, install the plugin, mutate personal configuration, or
+contact a network.
 
 ## Run from an MCP client
 

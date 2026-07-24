@@ -79,6 +79,9 @@ jobs:
       - name: Verify local skills-only plugin
         run: npm run verify:skill-distribution
 
+      - name: Verify disposable plugin marketplace
+        run: npm run verify:plugin-marketplace
+
       - name: Build framework-dependent npm payload
         run: npm run build -- --no-restore
 
