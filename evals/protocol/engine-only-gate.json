@@ -1,0 +1,458 @@
+{
+  "schemaVersion": "1.0",
+  "status": "frozen_before_execution",
+  "purpose": "Model-free comparison of native exact search and Sanjaya structural discovery on identical evidence targets.",
+  "package": {
+    "name": "sanjaya-mcp",
+    "version": "0.1.2",
+    "npmIntegrity": "sha512-oVto+HMIvSOA+ygCzfsJFpMW4s44lhp7UwIEA+EZITpv4qHBOm+5QbAfDsH9jhD8ylVYXrhI/xYM8HEHYqvnrg=="
+  },
+  "controls": {
+    "modelCalls": 0,
+    "networkDuringRun": false,
+    "repositorySnapshots": "Pinned public commits already frozen in repositories/manifest.json.",
+    "repositoryIsolation": "Each repository is cloned locally into separate native and Sanjaya snapshots.",
+    "indexing": "One Sanjaya index build per repository before measured queries; native snapshots contain no index.",
+    "queryRepetitions": 5,
+    "routeOrder": "Alternates native-first and Sanjaya-first by repetition.",
+    "nativeExecutable": "rg",
+    "nativeOutput": "Compact repository-relative path:line:text rendered from ripgrep JSON events.",
+    "sanjayaOutput": "Complete MCP call result including compact text content and structured content.",
+    "storedEvidence": "Only paths, ranges, counts, statuses, byte sizes, and timings; no source snippets.",
+    "maximumResults": 100
+  },
+  "scoring": {
+    "targetRecall": "Fraction of preregistered evidence ranges overlapped by at least one returned candidate.",
+    "candidatePrecision": "Fraction of returned candidates overlapping any preregistered evidence range.",
+    "responseBytes": "UTF-8 bytes delivered to the caller after route-specific compact rendering.",
+    "queryLatency": "Wall-clock duration of one rg process or one MCP tool call.",
+    "amortization": "Index-build duration is divided across the five unique repository queries, never across timing repetitions.",
+    "proceedCriterion": {
+      "recallNonInferiority": "Mean Sanjaya target recall must be no more than 0.05 below native.",
+      "materialBenefit": "Mean candidate precision improves by at least 0.15 or median response bytes are at most 75% of native.",
+      "indexReadiness": "Every repository index must produce a ready state."
+    }
+  },
+  "repositories": [
+    {
+      "id": "fastendpoints",
+      "commit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+      "tasks": [
+        {
+          "id": "EO-FAST-001",
+          "intent": "Locate the EndpointInvoker class declaration.",
+          "native": {
+            "pattern": "\\bclass\\s+EndpointInvoker\\b",
+            "globs": ["*.cs"],
+            "scopes": ["Src"]
+          },
+          "sanjaya": {
+            "tool": "find_definition",
+            "arguments": {
+              "name": "EndpointInvoker",
+              "kind": "class",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "Src/Agents/Shared/EndpointInvoker.cs",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-002",
+          "intent": "Locate EndpointInvoker.InvokeAsync.",
+          "native": {
+            "pattern": "\\bInvokeAsync\\s*\\(",
+            "globs": ["*.cs"],
+            "scopes": ["Src/Agents"]
+          },
+          "sanjaya": {
+            "tool": "find_definition",
+            "arguments": {
+              "name": "InvokeAsync",
+              "kind": "method",
+              "container": "FastEndpoints.Agents.EndpointInvoker",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "Src/Agents/Shared/EndpointInvoker.cs",
+              "startLine": 28,
+              "endLine": 28
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-003",
+          "intent": "Locate the AddMcp registration method.",
+          "native": {
+            "pattern": "\\bAddMcp\\s*\\(",
+            "globs": ["*.cs"],
+            "scopes": ["Src/Agents"]
+          },
+          "sanjaya": {
+            "tool": "find_definition",
+            "arguments": {
+              "name": "AddMcp",
+              "kind": "method",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "Src/Agents/Mcp/Extensions.cs",
+              "startLine": 33,
+              "endLine": 33
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-004",
+          "intent": "Locate the AddA2A registration method.",
+          "native": {
+            "pattern": "\\bAddA2A\\s*\\(",
+            "globs": ["*.cs"],
+            "scopes": ["Src/Agents"]
+          },
+          "sanjaya": {
+            "tool": "find_definition",
+            "arguments": {
+              "name": "AddA2A",
+              "kind": "method",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "Src/Agents/A2A/Extensions.cs",
+              "startLine": 28,
+              "endLine": 28
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-005",
+          "intent": "Recover production EndpointInvoker syntax references across both integrations.",
+          "native": {
+            "pattern": "\\bEndpointInvoker\\b",
+            "globs": ["*.cs"],
+            "scopes": ["Src/Agents"]
+          },
+          "sanjaya": {
+            "tool": "find_references",
+            "arguments": {
+              "name": "EndpointInvoker",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "Src/Agents/Mcp/Extensions.cs",
+              "startLine": 38,
+              "endLine": 38
+            },
+            {
+              "path": "Src/Agents/A2A/Extensions.cs",
+              "startLine": 33,
+              "endLine": 33
+            },
+            {
+              "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+              "startLine": 64,
+              "endLine": 97
+            },
+            {
+              "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vitest",
+      "commit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+      "tasks": [
+        {
+          "id": "EO-VITEST-001",
+          "intent": "Locate the worker-wide CodeCache declaration.",
+          "native": {
+            "pattern": "\\bclass\\s+CodeCache\\b",
+            "globs": ["*.ts", "*.js"],
+            "scopes": ["packages/vitest/src"]
+          },
+          "sanjaya": {
+            "tool": "search_code",
+            "arguments": {
+              "query": "CodeCache",
+              "caseSensitive": true,
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+              "startLine": 18,
+              "endLine": 18
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-002",
+          "intent": "Locate the exact source guard in CodeCache.",
+          "native": {
+            "pattern": "entry\\.source\\s*===\\s*source",
+            "globs": ["*.ts", "*.js"],
+            "scopes": ["packages/vitest/src"]
+          },
+          "sanjaya": {
+            "tool": "search_code",
+            "arguments": {
+              "query": "entry source",
+              "caseSensitive": true,
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+              "startLine": 21,
+              "endLine": 24
+            },
+            {
+              "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+              "startLine": 34,
+              "endLine": 37
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-003",
+          "intent": "Locate the runVmTests function declaration.",
+          "native": {
+            "pattern": "\\bfunction\\s+runVmTests\\b",
+            "globs": ["*.ts", "*.js"],
+            "scopes": ["packages/vitest/src"]
+          },
+          "sanjaya": {
+            "tool": "search_code",
+            "arguments": {
+              "query": "runVmTests",
+              "caseSensitive": true,
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "packages/vitest/src/runtime/workers/vm.ts",
+              "startLine": 30,
+              "endLine": 30
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-004",
+          "intent": "Locate prewarmModuleGraph inside runVmTests.",
+          "native": {
+            "pattern": "\\bprewarmModuleGraph\\s*\\(",
+            "globs": ["*.ts", "*.js"],
+            "scopes": ["packages/vitest/src/runtime/workers"]
+          },
+          "sanjaya": {
+            "tool": "search_code",
+            "arguments": {
+              "query": "prewarmModuleGraph runVmTests",
+              "caseSensitive": true,
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "packages/vitest/src/runtime/workers/vm.ts",
+              "startLine": 37,
+              "endLine": 46
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-005",
+          "intent": "Recover the worker and server fetchWarmModules implementations.",
+          "native": {
+            "pattern": "\\bfetchWarmModules\\s*\\(",
+            "globs": ["*.ts", "*.js"],
+            "scopes": ["packages/vitest/src"]
+          },
+          "sanjaya": {
+            "tool": "search_code",
+            "arguments": {
+              "query": "fetchWarmModules",
+              "caseSensitive": true,
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+              "startLine": 69,
+              "endLine": 78
+            },
+            {
+              "path": "packages/vitest/src/node/pools/rpc.ts",
+              "startLine": 106,
+              "endLine": 174
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kiota",
+      "commit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+      "tasks": [
+        {
+          "id": "EO-KIOTA-001",
+          "intent": "Resolve the TypeScript CodeMethodWriter declaration.",
+          "native": {
+            "pattern": "\\bclass\\s+CodeMethodWriter\\b",
+            "globs": ["*.cs"],
+            "scopes": ["src/Kiota.Builder/Writers/TypeScript"]
+          },
+          "sanjaya": {
+            "tool": "find_definition",
+            "arguments": {
+              "name": "CodeMethodWriter",
+              "kind": "class",
+              "container": "Kiota.Builder.Writers.TypeScript",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+              "startLine": 11,
+              "endLine": 11
+            }
+          ]
+        },
+        {
+          "id": "EO-KIOTA-002",
+          "intent": "Recover every language-specific CodeMethodWriter declaration.",
+          "native": {
+            "pattern": "^public\\s+(?:partial\\s+)?class\\s+CodeMethodWriter\\b",
+            "globs": ["*.cs"],
+            "scopes": ["src/Kiota.Builder/Writers"]
+          },
+          "sanjaya": {
+            "tool": "find_definition",
+            "arguments": {
+              "name": "CodeMethodWriter",
+              "kind": "class",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {"path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs", "startLine": 10, "endLine": 10},
+            {"path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs", "startLine": 10, "endLine": 10},
+            {"path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs", "startLine": 11, "endLine": 11},
+            {"path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs", "startLine": 11, "endLine": 11},
+            {"path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs", "startLine": 9, "endLine": 9},
+            {"path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs", "startLine": 12, "endLine": 12},
+            {"path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs", "startLine": 11, "endLine": 11},
+            {"path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs", "startLine": 9, "endLine": 9}
+          ]
+        },
+        {
+          "id": "EO-KIOTA-003",
+          "intent": "Locate TypeScript CodeMethodWriter.WriteCodeElement.",
+          "native": {
+            "pattern": "\\bWriteCodeElement\\s*\\(",
+            "globs": ["*.cs"],
+            "scopes": ["src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs"]
+          },
+          "sanjaya": {
+            "tool": "find_definition",
+            "arguments": {
+              "name": "WriteCodeElement",
+              "kind": "method",
+              "container": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter",
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+              "startLine": 13,
+              "endLine": 13
+            }
+          ]
+        },
+        {
+          "id": "EO-KIOTA-004",
+          "intent": "Locate the connectToKiota helper declaration.",
+          "native": {
+            "pattern": "\\bfunction\\s+connectToKiota\\b",
+            "globs": ["*.ts", "*.js"],
+            "scopes": ["vscode/packages/npm-package/lib"]
+          },
+          "sanjaya": {
+            "tool": "search_code",
+            "arguments": {
+              "query": "connectToKiota",
+              "caseSensitive": true,
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "vscode/packages/npm-package/lib/connect.ts",
+              "startLine": 6,
+              "endLine": 6
+            }
+          ]
+        },
+        {
+          "id": "EO-KIOTA-005",
+          "intent": "Locate both child-process cleanup operations in connectToKiota.",
+          "native": {
+            "pattern": "childProcess\\.(?:stdin|kill)",
+            "globs": ["*.ts", "*.js"],
+            "scopes": ["vscode/packages/npm-package/lib"]
+          },
+          "sanjaya": {
+            "tool": "search_code",
+            "arguments": {
+              "query": "childProcess stdin kill",
+              "caseSensitive": true,
+              "maxResults": 100
+            }
+          },
+          "targets": [
+            {
+              "path": "vscode/packages/npm-package/lib/connect.ts",
+              "startLine": 33,
+              "endLine": 33
+            },
+            {
+              "path": "vscode/packages/npm-package/lib/connect.ts",
+              "startLine": 34,
+              "endLine": 34
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "interpretationBoundary": [
+    "This gate tests deterministic retrieval, not natural-language answer quality or implicit skill activation.",
+    "Tool-specific queries are frozen before execution and represent a reasonable direct route for each engine.",
+    "The public package is tested only within its current 5,000-file, 64-MiB-source, 50,000-chunk, and 20,000-entry index envelope.",
+    "A pass authorizes designing—not automatically running—a separate agent study.",
+    "A stop result blocks further routing work on the current product hypothesis but does not erase other Sanjaya use cases."
+  ]
+}
