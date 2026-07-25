@@ -1,0 +1,131 @@
+{
+  "scorerVersion": "1.2.0",
+  "cases": [
+    {
+      "id": "V12-HIT-GUARD-OBSERVED",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "all_of",
+      "acceptedValues": [["identifier"], ["source"]],
+      "suppliedValue": "The module identifier selects the entry, and the entry's source must exactly equal the requested source (`entry.source === source`).",
+      "expectedMatch": true,
+      "rationale": "Observed correct phrasing names both the identifier and the source guard."
+    },
+    {
+      "id": "V12-HIT-GUARD-FROZEN",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "all_of",
+      "acceptedValues": [["identifier"], ["source"]],
+      "suppliedValue": "module identifier and exact source text",
+      "expectedMatch": true,
+      "rationale": "The original frozen accepted phrase must remain accepted (additivity)."
+    },
+    {
+      "id": "V12-HIT-GUARD-HALF",
+      "sourceKind": "semantic_holdout",
+      "matchMode": "all_of",
+      "acceptedValues": [["identifier"], ["source"]],
+      "suppliedValue": "The lookup uses the module identifier only.",
+      "expectedMatch": false,
+      "rationale": "Naming only one of the two guard values must not pass all_of."
+    },
+    {
+      "id": "V12-PRODUCE-FAILURE-INLINE",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["an entry with undefined data", "data: undefined", "set to `undefined`", "set to undefined"],
+      "suppliedValue": "An entry is stored as { source, data: undefined }.",
+      "expectedMatch": true,
+      "rationale": "Observed literal object form of the undefined-data entry."
+    },
+    {
+      "id": "V12-PRODUCE-FAILURE-BACKTICKS",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["an entry with undefined data", "data: undefined", "set to `undefined`", "set to undefined"],
+      "suppliedValue": "An entry is stored with `data` set to `undefined` (alongside the source).",
+      "expectedMatch": true,
+      "rationale": "Observed phrasing with inline code formatting around undefined."
+    },
+    {
+      "id": "V12-PRODUCE-FAILURE-WRONG",
+      "sourceKind": "semantic_holdout",
+      "matchMode": "exact",
+      "acceptedValues": ["an entry with undefined data", "data: undefined", "set to `undefined`", "set to undefined"],
+      "suppliedValue": "The thrown error is rethrown to the caller.",
+      "expectedMatch": false,
+      "rationale": "A semantically wrong failure description must stay rejected."
+    },
+    {
+      "id": "V12-OVERLAP-OBSERVED",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["environment package loading", "environment package"],
+      "suppliedValue": "Server transformation of each test file's import graph overlaps the worker importing the environment package.",
+      "expectedMatch": true,
+      "rationale": "Observed correct phrasing uses importing rather than loading."
+    },
+    {
+      "id": "V12-OVERLAP-WRONG",
+      "sourceKind": "semantic_holdout",
+      "matchMode": "exact",
+      "acceptedValues": ["environment package loading", "environment package"],
+      "suppliedValue": "It overlaps with test file collection.",
+      "expectedMatch": false,
+      "rationale": "A wrong overlapped-work description must stay rejected."
+    },
+    {
+      "id": "V12-FAILURE-POLICY-SWALLOWED",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["ignored", "swallowed", "ignores"],
+      "suppliedValue": "Failures are deliberately swallowed with `.catch(() => {})`; the worker's own fetch is expected to report the error with the proper import context.",
+      "expectedMatch": true,
+      "rationale": "Observed correct phrasing says swallowed instead of ignored."
+    },
+    {
+      "id": "V12-FAILURE-POLICY-IGNORES",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "exact",
+      "acceptedValues": ["ignored", "swallowed", "ignores"],
+      "suppliedValue": "The worker ignores rejection from the prewarm RPC (`.catch(() => {})`).",
+      "expectedMatch": true,
+      "rationale": "Observed correct phrasing uses the present-tense ignores."
+    },
+    {
+      "id": "V12-FAILURE-POLICY-NEGATED",
+      "sourceKind": "semantic_holdout",
+      "matchMode": "exact",
+      "acceptedValues": ["ignored", "swallowed", "ignores"],
+      "suppliedValue": "Failures are not swallowed; they are rethrown to the caller.",
+      "expectedMatch": false,
+      "rationale": "The negation guard must keep rejecting the opposite claim."
+    },
+    {
+      "id": "V12-CLEANUP-METHODS",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "all_of",
+      "acceptedValues": [["stdin"], ["kill", "kills"]],
+      "suppliedValue": "Calls childProcess.stdin?.end() and childProcess.kill() in finally.",
+      "expectedMatch": true,
+      "rationale": "Observed correct phrasing uses the concrete method calls."
+    },
+    {
+      "id": "V12-CLEANUP-PROSE",
+      "sourceKind": "observed_arm_hidden",
+      "matchMode": "all_of",
+      "acceptedValues": [["stdin"], ["kill", "kills"]],
+      "suppliedValue": "Disposes the input reader, output writer, and connection; then ends child stdin and kills the child process.",
+      "expectedMatch": true,
+      "rationale": "Observed prose phrasing uses kills, which the kill group must accept."
+    },
+    {
+      "id": "V12-CLEANUP-HALF",
+      "sourceKind": "semantic_holdout",
+      "matchMode": "all_of",
+      "acceptedValues": [["stdin"], ["kill", "kills"]],
+      "suppliedValue": "It kills the child process.",
+      "expectedMatch": false,
+      "rationale": "Omitting the stdin half of the cleanup must not pass all_of."
+    }
+  ]
+}

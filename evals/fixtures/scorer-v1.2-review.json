@@ -1,0 +1,317 @@
+[
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "A cache hit is validated by the module `identifier` and exact `source` text: the entry is retrieved by identifier and returned only when `entry.source === source`."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "Module identifier and exact source text (`entry.source === source`)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The cache looks up by `identifier` and accepts the hit only when `entry.source === source` (exact source text)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The cache lookup uses the module `identifier` to retrieve an entry, then requires `entry.source === source` for a hit."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module `identifier` locates the entry, and `entry.source === source` requires the exact source text to match."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module `identifier` selects the entry, and `entry.source === source` requires exact source-text equality."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module identifier and exact source text (`entry.source === source`)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module identifier and exact source text (entry.source === source)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module identifier and the exact source text (`entry.source === source`)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module identifier locates the entry, and the entry's source must exactly equal the supplied source text."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module identifier selects the entry, and its `source` must exactly equal the requested source."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "hit_guard",
+    "value": "The module identifier selects the entry, and the entry's source must exactly equal the requested source (`entry.source === source`)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An empty cache entry is stored: `{ source, data: undefined }`."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry `{ source, data: undefined }` is stored."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry containing the source and data: undefined ({ source, data })."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry is stored as { source, data: undefined }."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry is stored as `{ source, data: undefined }` (an empty cache-data entry)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry is stored with `data` set to `undefined` (alongside the source)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry is stored with `data` set to `undefined` (with the identifier and source retained)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry is stored with the requested source and `data` set to `undefined`."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "An entry is stored with the supplied source and `data` set to `undefined` (an empty entry)."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "It stores `{ source, data }` with `data` set to `undefined`, creating an empty entry."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "It stores `{ source, data: undefined }`—an empty cache entry—when `produce()` throws."
+  },
+  {
+    "taskId": "SJ-EVAL-0007",
+    "key": "produce_failure",
+    "value": "When `produce()` throws, the cache stores `{ source, data: undefined }` (an empty entry)."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Errors from prewarming are ignored via `.catch(() => {})`; the worker's own fetch subsequently reports failures with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures are deliberately swallowed with `.catch(() => {})`; the worker’s own fetch is expected to report the error with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures are ignored by attaching `.catch(() => {})`; the normal worker fetch is intended to report them with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures are ignored by attaching `.catch(() => {})`; the worker’s own fetch later reports them with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures are ignored via `.catch(() => {})`; the worker’s own fetch is expected to report them with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures are intentionally ignored via `.catch(() => {})`; the worker’s normal fetch is expected to report failures with proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures are intentionally ignored via `.catch(() => {})`; the worker’s normal fetch path reports them with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures are swallowed with `.catch(() => {})`; the worker’s own fetch is responsible for reporting them with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Failures from prewarming are ignored (`.catch(() => {})`), because the worker’s own fetch is expected to report them with the proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Prewarm failures are ignored via `.catch(() => {})`; normal worker fetching later reports the error with proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "Prewarm failures are swallowed with .catch(() => {}); the worker's own fetch is expected to report failures with proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "The prewarm call is fire-and-forget and its failures are swallowed with `.catch(() => {})`; the worker’s own fetch later reports failures with import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "The returned promise is not awaited and any rejection is swallowed with `.catch(() => {})`; failures are deferred to the worker's own fetch, which reports them with proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "failure_policy",
+    "value": "The worker ignores rejection from the prewarm RPC (`.catch(() => {})`). The server-side prewarm also catches individual module transform/fetch errors; normal worker fetching is responsible for surfacing them with proper import context."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "It overlaps server transformation of the test file import graph with the worker importing/loading the environment package (noted as costly for jsdom); transformed results enter the `fetchWarmModules` snapshot so later worker fetches can use disk reads."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "It overlaps server transformation of the test file’s import graph with the worker importing the environment package."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "It overlaps server-side transformation of each test file’s import graph with the worker importing its environment package / proceeding to VM environment setup."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server transformation of each test file’s import graph is started without awaiting it while the worker continues environment work; the stated intent is to overlap it with importing the environment package, and VM environment setup follows immediately."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server transformation of each test file's import graph overlaps the worker importing the environment package."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server transformation of each test file’s import graph overlaps with the worker importing its environment package, before environment/VM setup."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server transformation of each test file's import graph overlaps with the worker importing its environment package; the resulting transforms are included in the `fetchWarmModules` snapshot so later worker fetches can use disk reads."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server transformation of each test file’s import graph overlaps with the worker importing the environment package (and proceeding into environment setup)."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server transformation of the test file's import graph overlaps with the worker importing the environment package (notably jsdom); the resulting transforms are available to the worker's later fetches."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server-side transformation of each test file’s import graph is overlapped with the worker importing the environment package; warmed transforms are then available through the `fetchWarmModules` snapshot."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server-side transformation of the test file import graph overlaps with the worker importing the environment package."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "Server-side transformation of the test files’ import graphs overlaps the VM worker importing its environment package (and preceding environment setup)."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "The server transforms each test file’s import graph while the VM worker imports its environment package, before environment setup; warm transforms allow the worker’s subsequent fetches to short-circuit to disk reads."
+  },
+  {
+    "taskId": "SJ-EVAL-0008",
+    "key": "overlapped_work",
+    "value": "The server transforms the test files’ import graphs while the worker imports the environment package; the resulting transforms are included in the warm-modules snapshot so later worker fetches can use disk reads."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "Calls `childProcess.stdin?.end()` and then `childProcess.kill()` in `finally`."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "Calls `childProcess.stdin?.end()` and then `childProcess.kill()` in `finally`."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "Calls childProcess.stdin?.end() and childProcess.kill() in finally."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "Disposes `inputReader`, `outputWriter`, and `connection`; then ends `childProcess.stdin` and calls `childProcess.kill()`."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "Disposes the input reader, output writer, and connection; then ends child stdin and kills the child process."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "In `finally`, it calls `childProcess.stdin?.end()` and `childProcess.kill()`."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "In `finally`, it calls `childProcess.stdin?.end()` and then `childProcess.kill()`."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "In `finally`, it ends `childProcess.stdin` and calls `childProcess.kill()` (after disposing the RPC reader, writer, and connection)."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "In `finally`, it ends `childProcess.stdin` and calls `childProcess.kill()` (after disposing the RPC reader, writer, and connection)."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "In `finally`, it ends `childProcess.stdin` when available and calls `childProcess.kill()`."
+  },
+  {
+    "taskId": "SJ-EVAL-0010",
+    "key": "child_cleanup",
+    "value": "In finally, ends childProcess.stdin (when present) and calls childProcess.kill()."
+  }
+]
