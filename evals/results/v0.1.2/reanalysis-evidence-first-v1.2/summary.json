@@ -53,13 +53,13 @@
         "meanCitationValidityCompleted": 0.8005442176870747
       },
       "scorerV1_2": {
-        "strictSuccesses": 30,
-        "strictSuccessRatePlanned": 0.8333333333333334,
-        "meanClaimF1Completed": 0.9714285714285714,
+        "strictSuccesses": 31,
+        "strictSuccessRatePlanned": 0.8611111111111112,
+        "meanClaimF1Completed": 0.9785714285714285,
         "meanCitationValidityCompleted": 0.8005442176870747
       },
       "transitions": {
-        "gainedStrictSuccess": 8,
+        "gainedStrictSuccess": 9,
         "lostStrictSuccess": 0
       }
     },
@@ -72,10 +72,10 @@
         "meanClaimF1SkillMinusNative": -0.02696078431372549
       },
       "scorerV1_2": {
-        "nativeStrictWins": 5,
+        "nativeStrictWins": 4,
         "skillStrictWins": 1,
-        "strictTies": 28,
-        "meanClaimF1SkillMinusNative": -0.029411764705882353
+        "strictTies": 29,
+        "meanClaimF1SkillMinusNative": -0.022058823529411766
       }
     },
     "tasks": [
@@ -188,7 +188,7 @@
         "evidenceFirstSkill": {
           "planned": 3,
           "scorerV1_1": 0,
-          "scorerV1_2": 2
+          "scorerV1_2": 3
         }
       },
       {

@@ -36,6 +36,9 @@ Scorer 1.2 is scorer 1.1 plus two additive mechanisms:
    values, or converts a phrase claim to `all_of`, for exactly the five claims
    above. Every original frozen phrase still matches after amendment, so no
    result that passed scorer 1.1 can fail scorer 1.2.
+3. The v1.1 negation guard is scoped to the current conjunct: the lookback clause 
+   is cut at a coordinating conjunction (and, but), so negation of one verb no longer 
+   rejects a later affirmative match.   
 
 All other claims, all citation checks, forbidden-claim checks, duplicate-claim
 rejection, and path containment are byte-identical to scorer 1.1.

@@ -21,16 +21,16 @@ The three tasks with zero strict successes under scorer 1.1 were limited by
 over-rigid accepted phrases, not by agent comprehension. Scorer 1.2 raises
 absolute strict success in both arms symmetrically
 (native 25/36 to 34/36;
-skill 22/36 to 30/36).
+skill 22/36 to 31/36).
 0 previously
 successful records lost strict success, confirming additivity.
 
 Across 34 completed pairs, scorer 1.2 finds
 1 skill-favoring pairs,
-5 native-favoring pairs,
-and 28 ties. The paired mean
+4 native-favoring pairs,
+and 29 ties. The paired mean
 claim-F1 delta (skill minus native) is
--0.029.
+-0.022.
 Only 4 completed skill sessions used any
 Sanjaya tool, so this remains primarily a routing observation rather than a
 test of active Sanjaya use.
@@ -39,8 +39,8 @@ test of active Sanjaya use.
 
 | Measure | Native 1.1 | Native 1.2 | Skill 1.1 | Skill 1.2 |
 |---|---:|---:|---:|---:|
-| Strict success / planned | 25/36 | 34/36 | 22/36 | 30/36 |
-| Mean claim F1 / completed | 0.893 | 1.000 | 0.867 | 0.971 |
+| Strict success / planned | 25/36 | 34/36 | 22/36 | 31/36 |
+| Mean claim F1 / completed | 0.893 | 1.000 | 0.867 | 0.979 |
 | Mean citation validity / completed | 0.787 | 0.787 | 0.801 | 0.801 |
 
 ### Task-level strict results
@@ -54,7 +54,7 @@ test of active Sanjaya use.
 | SJ-EVAL-0005 | 3/3 | 3/3 | 2/3 | 2/3 |
 | SJ-EVAL-0006 | 3/3 | 3/3 | 3/3 | 3/3 |
 | SJ-EVAL-0007 | 0/3 | 3/3 | 0/3 | 3/3 |
-| SJ-EVAL-0008 | 0/3 | 3/3 | 0/3 | 2/3 |
+| SJ-EVAL-0008 | 0/3 | 3/3 | 0/3 | 3/3 |
 | SJ-EVAL-0009 | 3/3 | 3/3 | 2/3 | 2/3 |
 | SJ-EVAL-0010 | 0/3 | 3/3 | 0/3 | 3/3 |
 | SJ-EVAL-0011 | 2/3 | 2/3 | 2/3 | 2/3 |

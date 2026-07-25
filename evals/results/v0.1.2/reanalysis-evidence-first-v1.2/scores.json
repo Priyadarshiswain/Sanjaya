@@ -928,10 +928,10 @@
         "scorerVersion": "1.1.0"
       },
       "scorerV1_2": {
-        "strictSuccess": false,
-        "claimPrecision": 0.75,
-        "claimRecall": 0.75,
-        "claimF1": 0.75,
+        "strictSuccess": true,
+        "claimPrecision": 1,
+        "claimRecall": 1,
+        "claimF1": 1,
         "citationValidity": 0.6666666666666666,
         "criticalForbiddenClaims": 0,
         "scorerVersion": "1.2.0"

@@ -211,6 +211,8 @@ function isNegated(supplied, matchStart) {
   const clause = supplied
     .slice(Math.max(0, matchStart - 80), matchStart)
     .split(/[.;:!?]/u)
+    .at(-1)
+    .split(/\b(?:and|but)\b/u)
     .at(-1);
   return /\b(?:no|not|never|without|isn't|doesn't|didn't|won't|cannot|can't)\b[^,]{0,48}$/iu
     .test(clause);
