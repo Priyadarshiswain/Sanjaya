@@ -155,3 +155,44 @@ unchanged. Reproduce or verify with:
 npm run reanalyze:evidence-first-v1.2 --prefix evals
 npm run verify:reanalysis-v1.2 --prefix evals
 ```
+
+## Engine-only hypothesis gate
+
+The frozen
+[`engine-only-gate`](protocol/engine-only-gate.json) removes the model and skill
+router from the comparison. It measures one direct ripgrep route and one direct
+Sanjaya route against the same 15 preregistered evidence targets across
+FastEndpoints, Vitest, and Kiota. Each repository receives five related
+queries, one prebuilt index, five timing repetitions, and isolated native and
+Sanjaya snapshots.
+
+Validate the protocol without a model, repository clone, index, or query:
+
+```bash
+npm run verify:engine-only-gate --prefix evals
+```
+
+After acquiring the already pinned public snapshots, run and analyze the
+model-free gate:
+
+```bash
+npm run run:engine-only-gate --prefix evals -- \
+  --corpus-root /tmp/sanjaya-pilot-corpus
+npm run analyze:engine-only-gate --prefix evals
+npm run verify:engine-only-results --prefix evals
+```
+
+The runner stores paths, line ranges, counts, statuses, byte sizes, and
+timings. It does not store source snippets or raw tool responses. A proceed
+decision authorizes designing a later agent study; it is not itself a product
+benefit claim.
+
+The completed gate reached its preregistered stop decision. Both routes
+recovered all 15 target sets, but Sanjaya did not produce an aggregate
+precision or response-size benefit: mean candidate precision was 0.714 versus
+0.800 for native, median response size was 1,588 versus 217 bytes, and median
+query latency was 197.417 versus 11.456 milliseconds. The
+[complete report](results/v0.1.2/engine-only-gate/REPORT.md) preserves the
+repository and task breakdown. FastEndpoints C# queries show a narrower
+Roslyn-backed precision signal, while TypeScript structural search accounts
+for most of the aggregate noise; neither changes the frozen gate decision.

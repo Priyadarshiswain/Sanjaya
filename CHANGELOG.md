@@ -31,6 +31,10 @@ and releases will follow [Semantic Versioning](https://semver.org/).
   authentication failures, lower strict success in the skill arm, selective
   native routing, four active Sanjaya sessions, zero index writes, and complete
   token, latency, trace, and privacy evidence.
+- Add a model-free engine gate over 15 frozen evidence targets and record its
+  stop decision: native and Sanjaya both achieved full target recall, while
+  Sanjaya did not achieve the preregistered aggregate precision or
+  response-size benefit required to justify another agent-routing study.
 
 ### Changed
 

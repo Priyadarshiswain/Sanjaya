@@ -38,11 +38,15 @@ export async function withSanjaya({
 
   const client = {
     async call(name, args = {}) {
+      const result = await this.callResult(name, args);
+      return result?.structuredContent;
+    },
+    async callResult(name, args = {}) {
       const response = await request("tools/call", {
         name,
         arguments: args,
       });
-      return response?.result?.structuredContent;
+      return response?.result;
     },
     async listTools() {
       const response = await request("tools/list", {});

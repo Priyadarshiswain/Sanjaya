@@ -1,0 +1,5017 @@
+{
+  "schemaVersion": "1.0",
+  "status": "complete",
+  "generatedAt": "2026-07-25T14:55:26.440Z",
+  "protocolSha256": "3e46cc8dd51a91db4705095029f95a25af8654cd2adf66fb6cbfc25c6b281557",
+  "package": "sanjaya-mcp@0.1.2",
+  "environment": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "node": "v22.22.1",
+    "ripgrep": "ripgrep 15.1.0 (rev af60c2de9d)"
+  },
+  "controls": {
+    "modelCalls": 0,
+    "queryRepetitions": 5,
+    "rawSourceStored": false,
+    "rawToolResponsesStored": false
+  },
+  "repositories": [
+    {
+      "id": "fastendpoints",
+      "commit": "4ba1c939f3c2c6de2c2a5a8c141cb82cad289b09",
+      "index": {
+        "status": "partial",
+        "state": "ready",
+        "durationMs": 1807.43,
+        "responseBytes": 1049,
+        "indexBytes": 14018617,
+        "filesIndexed": 884,
+        "chunksIndexed": 9702,
+        "sourceBytes": 3257191,
+        "warnings": [
+          "excluded_directories_skipped:5",
+          "index_directory_not_explicitly_ignored",
+          "syntax_diagnostics_recovered:212"
+        ],
+        "errorCode": null
+      },
+      "tasks": [
+        {
+          "id": "EO-FAST-001",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 29.601,
+              "responseBytes": 104,
+              "candidateCount": 1,
+              "outputFingerprint": "bfeea3be2ed82a6b8c462026227b6463d3a3dccb2a3f1bc8fcaa4df2d61f21cb",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 14.142,
+              "responseBytes": 104,
+              "candidateCount": 1,
+              "outputFingerprint": "bfeea3be2ed82a6b8c462026227b6463d3a3dccb2a3f1bc8fcaa4df2d61f21cb",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 14.035,
+              "responseBytes": 104,
+              "candidateCount": 1,
+              "outputFingerprint": "bfeea3be2ed82a6b8c462026227b6463d3a3dccb2a3f1bc8fcaa4df2d61f21cb",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 19.82,
+              "responseBytes": 104,
+              "candidateCount": 1,
+              "outputFingerprint": "bfeea3be2ed82a6b8c462026227b6463d3a3dccb2a3f1bc8fcaa4df2d61f21cb",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 18.988,
+              "responseBytes": 104,
+              "candidateCount": 1,
+              "outputFingerprint": "bfeea3be2ed82a6b8c462026227b6463d3a3dccb2a3f1bc8fcaa4df2d61f21cb",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 428.745,
+              "responseBytes": 1477,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "cb4fd7b4158cf5b604e23474915f122b9b209e176a49fbd61af4ac179ce31c8b",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 101
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 181.095,
+              "responseBytes": 1477,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "cb4fd7b4158cf5b604e23474915f122b9b209e176a49fbd61af4ac179ce31c8b",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 101
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 198.022,
+              "responseBytes": 1477,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "cb4fd7b4158cf5b604e23474915f122b9b209e176a49fbd61af4ac179ce31c8b",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 101
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 178.966,
+              "responseBytes": 1477,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "cb4fd7b4158cf5b604e23474915f122b9b209e176a49fbd61af4ac179ce31c8b",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 101
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 271.685,
+              "responseBytes": 1477,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "cb4fd7b4158cf5b604e23474915f122b9b209e176a49fbd61af4ac179ce31c8b",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 101
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-002",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 10.625,
+              "responseBytes": 546,
+              "candidateCount": 4,
+              "outputFingerprint": "2011d473e370cf0de6dd2201919dea8d63464997bd306562254444b6d8a928f9",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 82,
+                  "endLine": 82
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 144,
+                  "endLine": 144
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 47,
+                  "endLine": 47
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 7.005,
+              "responseBytes": 546,
+              "candidateCount": 4,
+              "outputFingerprint": "2011d473e370cf0de6dd2201919dea8d63464997bd306562254444b6d8a928f9",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 82,
+                  "endLine": 82
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 144,
+                  "endLine": 144
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 47,
+                  "endLine": 47
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 23.731,
+              "responseBytes": 546,
+              "candidateCount": 4,
+              "outputFingerprint": "2011d473e370cf0de6dd2201919dea8d63464997bd306562254444b6d8a928f9",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 82,
+                  "endLine": 82
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 144,
+                  "endLine": 144
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 47,
+                  "endLine": 47
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 10.802,
+              "responseBytes": 546,
+              "candidateCount": 4,
+              "outputFingerprint": "2011d473e370cf0de6dd2201919dea8d63464997bd306562254444b6d8a928f9",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 82,
+                  "endLine": 82
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 144,
+                  "endLine": 144
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 47,
+                  "endLine": 47
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 13.836,
+              "responseBytes": 546,
+              "candidateCount": 4,
+              "outputFingerprint": "d5fb4c9ae6926b3b557d76ea6225e0ce97c6b3f2b7dbc824ef03c684682d01ec",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 47,
+                  "endLine": 47
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 144,
+                  "endLine": 144
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 82,
+                  "endLine": 82
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 394.162,
+              "responseBytes": 1512,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "74e2c117219671e0c3731b194c74ffbb1f416cef3b23063413f4fdcafc82a9c0",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 100
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 181.269,
+              "responseBytes": 1512,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "74e2c117219671e0c3731b194c74ffbb1f416cef3b23063413f4fdcafc82a9c0",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 100
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 288.466,
+              "responseBytes": 1512,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "74e2c117219671e0c3731b194c74ffbb1f416cef3b23063413f4fdcafc82a9c0",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 100
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 180.508,
+              "responseBytes": 1512,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "74e2c117219671e0c3731b194c74ffbb1f416cef3b23063413f4fdcafc82a9c0",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 100
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 181.557,
+              "responseBytes": 1512,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "74e2c117219671e0c3731b194c74ffbb1f416cef3b23063413f4fdcafc82a9c0",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 28,
+                  "endLine": 100
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-003",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 6.851,
+              "responseBytes": 357,
+              "candidateCount": 3,
+              "outputFingerprint": "06c34bf9b8a03c80bf16a65017fd2dc5e4074dfc10f9ff7baff7e9272a2cc70c",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/McpOptions.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 8.496,
+              "responseBytes": 357,
+              "candidateCount": 3,
+              "outputFingerprint": "06c34bf9b8a03c80bf16a65017fd2dc5e4074dfc10f9ff7baff7e9272a2cc70c",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/McpOptions.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 12.327,
+              "responseBytes": 357,
+              "candidateCount": 3,
+              "outputFingerprint": "06c34bf9b8a03c80bf16a65017fd2dc5e4074dfc10f9ff7baff7e9272a2cc70c",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/McpOptions.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 8.294,
+              "responseBytes": 357,
+              "candidateCount": 3,
+              "outputFingerprint": "06c34bf9b8a03c80bf16a65017fd2dc5e4074dfc10f9ff7baff7e9272a2cc70c",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/McpOptions.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 9.143,
+              "responseBytes": 357,
+              "candidateCount": 3,
+              "outputFingerprint": "06c34bf9b8a03c80bf16a65017fd2dc5e4074dfc10f9ff7baff7e9272a2cc70c",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/McpOptions.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 396.975,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "02c29c99369ae955e20449a810e5085bf318caddbf843ce1ace8e7580311922e",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 46
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 177.745,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "02c29c99369ae955e20449a810e5085bf318caddbf843ce1ace8e7580311922e",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 46
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 185.462,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "02c29c99369ae955e20449a810e5085bf318caddbf843ce1ace8e7580311922e",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 46
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 197.417,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "02c29c99369ae955e20449a810e5085bf318caddbf843ce1ace8e7580311922e",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 46
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 240.04,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "02c29c99369ae955e20449a810e5085bf318caddbf843ce1ace8e7580311922e",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 46
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-004",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 7.637,
+              "responseBytes": 199,
+              "candidateCount": 2,
+              "outputFingerprint": "a48188188e2094bd30868e6e5c15c7c4e213636a20418f7f24ac33a141c6a4dd",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 8.098,
+              "responseBytes": 199,
+              "candidateCount": 2,
+              "outputFingerprint": "a48188188e2094bd30868e6e5c15c7c4e213636a20418f7f24ac33a141c6a4dd",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 8.023,
+              "responseBytes": 199,
+              "candidateCount": 2,
+              "outputFingerprint": "a48188188e2094bd30868e6e5c15c7c4e213636a20418f7f24ac33a141c6a4dd",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 8.545,
+              "responseBytes": 199,
+              "candidateCount": 2,
+              "outputFingerprint": "a48188188e2094bd30868e6e5c15c7c4e213636a20418f7f24ac33a141c6a4dd",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 12.065,
+              "responseBytes": 199,
+              "candidateCount": 2,
+              "outputFingerprint": "a48188188e2094bd30868e6e5c15c7c4e213636a20418f7f24ac33a141c6a4dd",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 28
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 232.846,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "6381a3f7220dac7a76fd745e7c36519a2a69b6c74e83dcffbbfa98b6a08ec617",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 39
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 175.604,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "6381a3f7220dac7a76fd745e7c36519a2a69b6c74e83dcffbbfa98b6a08ec617",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 39
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 173.734,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "6381a3f7220dac7a76fd745e7c36519a2a69b6c74e83dcffbbfa98b6a08ec617",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 39
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 188.395,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "6381a3f7220dac7a76fd745e7c36519a2a69b6c74e83dcffbbfa98b6a08ec617",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 39
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 196.303,
+              "responseBytes": 1430,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "6381a3f7220dac7a76fd745e7c36519a2a69b6c74e83dcffbbfa98b6a08ec617",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 28,
+                  "endLine": 39
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-FAST-005",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 6.979,
+              "responseBytes": 1159,
+              "candidateCount": 10,
+              "outputFingerprint": "d0fe5073200d945ac2c459c472786aad6919721c4b0554f4968af024c4804950",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 103,
+                  "endLine": 103
+                },
+                {
+                  "path": "Src/Agents/Shared/AssemblyAttributes.cs",
+                  "startLine": 4,
+                  "endLine": 4
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 27,
+                  "endLine": 27
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 8.815,
+              "responseBytes": 1159,
+              "candidateCount": 10,
+              "outputFingerprint": "d0fe5073200d945ac2c459c472786aad6919721c4b0554f4968af024c4804950",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 103,
+                  "endLine": 103
+                },
+                {
+                  "path": "Src/Agents/Shared/AssemblyAttributes.cs",
+                  "startLine": 4,
+                  "endLine": 4
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 27,
+                  "endLine": 27
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 8.607,
+              "responseBytes": 1159,
+              "candidateCount": 10,
+              "outputFingerprint": "d0fe5073200d945ac2c459c472786aad6919721c4b0554f4968af024c4804950",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 103,
+                  "endLine": 103
+                },
+                {
+                  "path": "Src/Agents/Shared/AssemblyAttributes.cs",
+                  "startLine": 4,
+                  "endLine": 4
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 27,
+                  "endLine": 27
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 7.777,
+              "responseBytes": 1159,
+              "candidateCount": 10,
+              "outputFingerprint": "d0fe5073200d945ac2c459c472786aad6919721c4b0554f4968af024c4804950",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 103,
+                  "endLine": 103
+                },
+                {
+                  "path": "Src/Agents/Shared/AssemblyAttributes.cs",
+                  "startLine": 4,
+                  "endLine": 4
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 27,
+                  "endLine": 27
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 8.208,
+              "responseBytes": 1159,
+              "candidateCount": 10,
+              "outputFingerprint": "d0fe5073200d945ac2c459c472786aad6919721c4b0554f4968af024c4804950",
+              "candidates": [
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 14,
+                  "endLine": 14
+                },
+                {
+                  "path": "Src/Agents/Shared/EndpointInvoker.cs",
+                  "startLine": 103,
+                  "endLine": 103
+                },
+                {
+                  "path": "Src/Agents/Shared/AssemblyAttributes.cs",
+                  "startLine": 4,
+                  "endLine": 4
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 27,
+                  "endLine": 27
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 644.038,
+              "responseBytes": 4037,
+              "candidateCount": 7,
+              "totalMatches": 7,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0cbe51b889787b25065b1caf0785801fc511dadb6a10b9fc6c66623e3632c483",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerBindingTests.cs",
+                  "startLine": 98,
+                  "endLine": 98
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerExecutionSemanticsTests.cs",
+                  "startLine": 105,
+                  "endLine": 105
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 351.267,
+              "responseBytes": 4037,
+              "candidateCount": 7,
+              "totalMatches": 7,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0cbe51b889787b25065b1caf0785801fc511dadb6a10b9fc6c66623e3632c483",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerBindingTests.cs",
+                  "startLine": 98,
+                  "endLine": 98
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerExecutionSemanticsTests.cs",
+                  "startLine": 105,
+                  "endLine": 105
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 347.118,
+              "responseBytes": 4037,
+              "candidateCount": 7,
+              "totalMatches": 7,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0cbe51b889787b25065b1caf0785801fc511dadb6a10b9fc6c66623e3632c483",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerBindingTests.cs",
+                  "startLine": 98,
+                  "endLine": 98
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerExecutionSemanticsTests.cs",
+                  "startLine": 105,
+                  "endLine": 105
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 338.458,
+              "responseBytes": 4037,
+              "candidateCount": 7,
+              "totalMatches": 7,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0cbe51b889787b25065b1caf0785801fc511dadb6a10b9fc6c66623e3632c483",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerBindingTests.cs",
+                  "startLine": 98,
+                  "endLine": 98
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerExecutionSemanticsTests.cs",
+                  "startLine": 105,
+                  "endLine": 105
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 366.985,
+              "responseBytes": 4037,
+              "candidateCount": 7,
+              "totalMatches": 7,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0cbe51b889787b25065b1caf0785801fc511dadb6a10b9fc6c66623e3632c483",
+              "candidates": [
+                {
+                  "path": "Src/Agents/A2A/A2ASkillDispatcher.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "Src/Agents/A2A/Extensions.cs",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 64,
+                  "endLine": 64
+                },
+                {
+                  "path": "Src/Agents/Mcp/EndpointMcpToolSource.cs",
+                  "startLine": 97,
+                  "endLine": 97
+                },
+                {
+                  "path": "Src/Agents/Mcp/Extensions.cs",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerBindingTests.cs",
+                  "startLine": 98,
+                  "endLine": 98
+                },
+                {
+                  "path": "Tests/IntegrationTests/FastEndpoints.Agents/EndpointInvokerExecutionSemanticsTests.cs",
+                  "startLine": 105,
+                  "endLine": 105
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vitest",
+      "commit": "d8b040c63aaffad22aa9921536ae201cff53cc0f",
+      "index": {
+        "status": "partial",
+        "state": "ready",
+        "durationMs": 1604.176,
+        "responseBytes": 1055,
+        "indexBytes": 8544541,
+        "filesIndexed": 2307,
+        "chunksIndexed": 11744,
+        "sourceBytes": 5712432,
+        "warnings": [
+          "excluded_directories_skipped:3",
+          "index_directory_not_explicitly_ignored",
+          "syntax_diagnostics_recovered:1"
+        ],
+        "errorCode": null
+      },
+      "tasks": [
+        {
+          "id": "EO-VITEST-001",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 24.059,
+              "responseBytes": 73,
+              "candidateCount": 1,
+              "outputFingerprint": "dee247270d60f5a7bf2e7a3bc2048fd93c18e4edb1063fb744e5dd3edc9fd0de",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 19.258,
+              "responseBytes": 73,
+              "candidateCount": 1,
+              "outputFingerprint": "dee247270d60f5a7bf2e7a3bc2048fd93c18e4edb1063fb744e5dd3edc9fd0de",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 10.759,
+              "responseBytes": 73,
+              "candidateCount": 1,
+              "outputFingerprint": "dee247270d60f5a7bf2e7a3bc2048fd93c18e4edb1063fb744e5dd3edc9fd0de",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 11.647,
+              "responseBytes": 73,
+              "candidateCount": 1,
+              "outputFingerprint": "dee247270d60f5a7bf2e7a3bc2048fd93c18e4edb1063fb744e5dd3edc9fd0de",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 14.549,
+              "responseBytes": 73,
+              "candidateCount": 1,
+              "outputFingerprint": "dee247270d60f5a7bf2e7a3bc2048fd93c18e4edb1063fb744e5dd3edc9fd0de",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 581.184,
+              "responseBytes": 10263,
+              "candidateCount": 17,
+              "totalMatches": 17,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "54729381694e3a75636077c7e4111be1489518aa1a8150063e4d357fd7567b9a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 1,
+                  "endLine": 4
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 2,
+                  "endLine": 2
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 3,
+                  "endLine": 3
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 19,
+                  "endLine": 19
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 49,
+                  "endLine": 51
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 28,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 31,
+                  "endLine": 31
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 55,
+                  "endLine": 270
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 61,
+                  "endLine": 61
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 9,
+                  "endLine": 15
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 25,
+                  "endLine": 416
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 26,
+                  "endLine": 26
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 207.094,
+              "responseBytes": 10263,
+              "candidateCount": 17,
+              "totalMatches": 17,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "54729381694e3a75636077c7e4111be1489518aa1a8150063e4d357fd7567b9a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 1,
+                  "endLine": 4
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 2,
+                  "endLine": 2
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 3,
+                  "endLine": 3
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 19,
+                  "endLine": 19
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 49,
+                  "endLine": 51
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 28,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 31,
+                  "endLine": 31
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 55,
+                  "endLine": 270
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 61,
+                  "endLine": 61
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 9,
+                  "endLine": 15
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 25,
+                  "endLine": 416
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 26,
+                  "endLine": 26
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 186.788,
+              "responseBytes": 10263,
+              "candidateCount": 17,
+              "totalMatches": 17,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "54729381694e3a75636077c7e4111be1489518aa1a8150063e4d357fd7567b9a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 1,
+                  "endLine": 4
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 2,
+                  "endLine": 2
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 3,
+                  "endLine": 3
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 19,
+                  "endLine": 19
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 49,
+                  "endLine": 51
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 28,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 31,
+                  "endLine": 31
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 55,
+                  "endLine": 270
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 61,
+                  "endLine": 61
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 9,
+                  "endLine": 15
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 25,
+                  "endLine": 416
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 26,
+                  "endLine": 26
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 200.12,
+              "responseBytes": 10263,
+              "candidateCount": 17,
+              "totalMatches": 17,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "54729381694e3a75636077c7e4111be1489518aa1a8150063e4d357fd7567b9a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 1,
+                  "endLine": 4
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 2,
+                  "endLine": 2
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 3,
+                  "endLine": 3
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 19,
+                  "endLine": 19
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 49,
+                  "endLine": 51
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 28,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 31,
+                  "endLine": 31
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 55,
+                  "endLine": 270
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 61,
+                  "endLine": 61
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 9,
+                  "endLine": 15
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 25,
+                  "endLine": 416
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 26,
+                  "endLine": 26
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 201.902,
+              "responseBytes": 10263,
+              "candidateCount": 17,
+              "totalMatches": 17,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "54729381694e3a75636077c7e4111be1489518aa1a8150063e4d357fd7567b9a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 1,
+                  "endLine": 4
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 2,
+                  "endLine": 2
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 3,
+                  "endLine": 3
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 19,
+                  "endLine": 19
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 49,
+                  "endLine": 51
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 28,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 31,
+                  "endLine": 31
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 55,
+                  "endLine": 270
+                },
+                {
+                  "path": "packages/vitest/src/runtime/external-executor.ts",
+                  "startLine": 61,
+                  "endLine": 61
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 9,
+                  "endLine": 15
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 25,
+                  "endLine": 416
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/commonjs-executor.ts",
+                  "startLine": 38,
+                  "endLine": 38
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 26,
+                  "endLine": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-002",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 11.293,
+              "responseBytes": 184,
+              "candidateCount": 2,
+              "outputFingerprint": "53555f5cf3a96819f613710ada97323632a3f05a2884b774908030c6a2bda08a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 36,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 12.676,
+              "responseBytes": 184,
+              "candidateCount": 2,
+              "outputFingerprint": "53555f5cf3a96819f613710ada97323632a3f05a2884b774908030c6a2bda08a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 36,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 12.702,
+              "responseBytes": 184,
+              "candidateCount": 2,
+              "outputFingerprint": "53555f5cf3a96819f613710ada97323632a3f05a2884b774908030c6a2bda08a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 36,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 10.734,
+              "responseBytes": 184,
+              "candidateCount": 2,
+              "outputFingerprint": "53555f5cf3a96819f613710ada97323632a3f05a2884b774908030c6a2bda08a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 36,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 14.537,
+              "responseBytes": 184,
+              "candidateCount": 2,
+              "outputFingerprint": "53555f5cf3a96819f613710ada97323632a3f05a2884b774908030c6a2bda08a",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 23,
+                  "endLine": 23
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 36,
+                  "endLine": 36
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 384.032,
+              "responseBytes": 8875,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0f291a90f701890aea42f1b9a0455671ff9d0457957dafd68c3d55eefdc1b3a6",
+              "candidates": [
+                {
+                  "path": "packages/browser/src/node/commands/trace.ts",
+                  "startLine": 63,
+                  "endLine": 82
+                },
+                {
+                  "path": "packages/browser/src/node/index.ts",
+                  "startLine": 45,
+                  "endLine": 394
+                },
+                {
+                  "path": "packages/vitest/src/node/core.ts",
+                  "startLine": 72,
+                  "endLine": 1695
+                },
+                {
+                  "path": "packages/vitest/src/node/coverage.ts",
+                  "startLine": 82,
+                  "endLine": 792
+                },
+                {
+                  "path": "packages/vitest/src/node/project.ts",
+                  "startLine": 34,
+                  "endLine": 598
+                },
+                {
+                  "path": "packages/vitest/src/node/projects/resolveProjects.ts",
+                  "startLine": 915,
+                  "endLine": 991
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/native.ts",
+                  "startLine": 20,
+                  "endLine": 126
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 226.304,
+              "responseBytes": 8875,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0f291a90f701890aea42f1b9a0455671ff9d0457957dafd68c3d55eefdc1b3a6",
+              "candidates": [
+                {
+                  "path": "packages/browser/src/node/commands/trace.ts",
+                  "startLine": 63,
+                  "endLine": 82
+                },
+                {
+                  "path": "packages/browser/src/node/index.ts",
+                  "startLine": 45,
+                  "endLine": 394
+                },
+                {
+                  "path": "packages/vitest/src/node/core.ts",
+                  "startLine": 72,
+                  "endLine": 1695
+                },
+                {
+                  "path": "packages/vitest/src/node/coverage.ts",
+                  "startLine": 82,
+                  "endLine": 792
+                },
+                {
+                  "path": "packages/vitest/src/node/project.ts",
+                  "startLine": 34,
+                  "endLine": 598
+                },
+                {
+                  "path": "packages/vitest/src/node/projects/resolveProjects.ts",
+                  "startLine": 915,
+                  "endLine": 991
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/native.ts",
+                  "startLine": 20,
+                  "endLine": 126
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 206.658,
+              "responseBytes": 8875,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0f291a90f701890aea42f1b9a0455671ff9d0457957dafd68c3d55eefdc1b3a6",
+              "candidates": [
+                {
+                  "path": "packages/browser/src/node/commands/trace.ts",
+                  "startLine": 63,
+                  "endLine": 82
+                },
+                {
+                  "path": "packages/browser/src/node/index.ts",
+                  "startLine": 45,
+                  "endLine": 394
+                },
+                {
+                  "path": "packages/vitest/src/node/core.ts",
+                  "startLine": 72,
+                  "endLine": 1695
+                },
+                {
+                  "path": "packages/vitest/src/node/coverage.ts",
+                  "startLine": 82,
+                  "endLine": 792
+                },
+                {
+                  "path": "packages/vitest/src/node/project.ts",
+                  "startLine": 34,
+                  "endLine": 598
+                },
+                {
+                  "path": "packages/vitest/src/node/projects/resolveProjects.ts",
+                  "startLine": 915,
+                  "endLine": 991
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/native.ts",
+                  "startLine": 20,
+                  "endLine": 126
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 192.222,
+              "responseBytes": 8875,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0f291a90f701890aea42f1b9a0455671ff9d0457957dafd68c3d55eefdc1b3a6",
+              "candidates": [
+                {
+                  "path": "packages/browser/src/node/commands/trace.ts",
+                  "startLine": 63,
+                  "endLine": 82
+                },
+                {
+                  "path": "packages/browser/src/node/index.ts",
+                  "startLine": 45,
+                  "endLine": 394
+                },
+                {
+                  "path": "packages/vitest/src/node/core.ts",
+                  "startLine": 72,
+                  "endLine": 1695
+                },
+                {
+                  "path": "packages/vitest/src/node/coverage.ts",
+                  "startLine": 82,
+                  "endLine": 792
+                },
+                {
+                  "path": "packages/vitest/src/node/project.ts",
+                  "startLine": 34,
+                  "endLine": 598
+                },
+                {
+                  "path": "packages/vitest/src/node/projects/resolveProjects.ts",
+                  "startLine": 915,
+                  "endLine": 991
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/native.ts",
+                  "startLine": 20,
+                  "endLine": 126
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 211.917,
+              "responseBytes": 8875,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "0f291a90f701890aea42f1b9a0455671ff9d0457957dafd68c3d55eefdc1b3a6",
+              "candidates": [
+                {
+                  "path": "packages/browser/src/node/commands/trace.ts",
+                  "startLine": 63,
+                  "endLine": 82
+                },
+                {
+                  "path": "packages/browser/src/node/index.ts",
+                  "startLine": 45,
+                  "endLine": 394
+                },
+                {
+                  "path": "packages/vitest/src/node/core.ts",
+                  "startLine": 72,
+                  "endLine": 1695
+                },
+                {
+                  "path": "packages/vitest/src/node/coverage.ts",
+                  "startLine": 82,
+                  "endLine": 792
+                },
+                {
+                  "path": "packages/vitest/src/node/project.ts",
+                  "startLine": 34,
+                  "endLine": 598
+                },
+                {
+                  "path": "packages/vitest/src/node/projects/resolveProjects.ts",
+                  "startLine": 915,
+                  "endLine": 991
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 18,
+                  "endLine": 52
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 21,
+                  "endLine": 27
+                },
+                {
+                  "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+                  "startLine": 34,
+                  "endLine": 47
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/native.ts",
+                  "startLine": 20,
+                  "endLine": 126
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-003",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 12.759,
+              "responseBytes": 164,
+              "candidateCount": 1,
+              "outputFingerprint": "d5b57a1b5b5a069b6831b196333d1eeb13f4087cb5de75ca66c36c043e42e9ba",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 30
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 13.243,
+              "responseBytes": 164,
+              "candidateCount": 1,
+              "outputFingerprint": "d5b57a1b5b5a069b6831b196333d1eeb13f4087cb5de75ca66c36c043e42e9ba",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 30
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 11.821,
+              "responseBytes": 164,
+              "candidateCount": 1,
+              "outputFingerprint": "d5b57a1b5b5a069b6831b196333d1eeb13f4087cb5de75ca66c36c043e42e9ba",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 30
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 12.061,
+              "responseBytes": 164,
+              "candidateCount": 1,
+              "outputFingerprint": "d5b57a1b5b5a069b6831b196333d1eeb13f4087cb5de75ca66c36c043e42e9ba",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 30
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 11.326,
+              "responseBytes": 164,
+              "candidateCount": 1,
+              "outputFingerprint": "d5b57a1b5b5a069b6831b196333d1eeb13f4087cb5de75ca66c36c043e42e9ba",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 30
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 272.987,
+              "responseBytes": 4418,
+              "candidateCount": 6,
+              "totalMatches": 6,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "a4d7b35da909d525a2c61ceafb1850422527f169785b1c49b004d394dd886a25",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 25,
+                  "endLine": 130
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 132,
+                  "endLine": 134
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 136,
+                  "endLine": 138
+                },
+                {
+                  "path": "packages/vitest/rollup.config.js",
+                  "startLine": 18,
+                  "endLine": 43
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 22,
+                  "endLine": 22
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 191.415,
+              "responseBytes": 4418,
+              "candidateCount": 6,
+              "totalMatches": 6,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "a4d7b35da909d525a2c61ceafb1850422527f169785b1c49b004d394dd886a25",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 25,
+                  "endLine": 130
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 132,
+                  "endLine": 134
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 136,
+                  "endLine": 138
+                },
+                {
+                  "path": "packages/vitest/rollup.config.js",
+                  "startLine": 18,
+                  "endLine": 43
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 22,
+                  "endLine": 22
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 193.887,
+              "responseBytes": 4418,
+              "candidateCount": 6,
+              "totalMatches": 6,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "a4d7b35da909d525a2c61ceafb1850422527f169785b1c49b004d394dd886a25",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 25,
+                  "endLine": 130
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 132,
+                  "endLine": 134
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 136,
+                  "endLine": 138
+                },
+                {
+                  "path": "packages/vitest/rollup.config.js",
+                  "startLine": 18,
+                  "endLine": 43
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 22,
+                  "endLine": 22
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 187.263,
+              "responseBytes": 4418,
+              "candidateCount": 6,
+              "totalMatches": 6,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "a4d7b35da909d525a2c61ceafb1850422527f169785b1c49b004d394dd886a25",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 25,
+                  "endLine": 130
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 132,
+                  "endLine": 134
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 136,
+                  "endLine": 138
+                },
+                {
+                  "path": "packages/vitest/rollup.config.js",
+                  "startLine": 18,
+                  "endLine": 43
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 22,
+                  "endLine": 22
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 197.383,
+              "responseBytes": 4418,
+              "candidateCount": 6,
+              "totalMatches": 6,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "a4d7b35da909d525a2c61ceafb1850422527f169785b1c49b004d394dd886a25",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 25,
+                  "endLine": 130
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 132,
+                  "endLine": 134
+                },
+                {
+                  "path": "packages/vitest/src/runtime/runVmTests.ts",
+                  "startLine": 136,
+                  "endLine": 138
+                },
+                {
+                  "path": "packages/vitest/rollup.config.js",
+                  "startLine": 18,
+                  "endLine": 43
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 22,
+                  "endLine": 22
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-004",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 8.545,
+              "responseBytes": 71,
+              "candidateCount": 1,
+              "outputFingerprint": "c24cab8d40a95c1d3fde747f16b2be48b5b5ff0329b2770c4455fbae61258842",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 43,
+                  "endLine": 43
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 8.246,
+              "responseBytes": 71,
+              "candidateCount": 1,
+              "outputFingerprint": "c24cab8d40a95c1d3fde747f16b2be48b5b5ff0329b2770c4455fbae61258842",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 43,
+                  "endLine": 43
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 9.735,
+              "responseBytes": 71,
+              "candidateCount": 1,
+              "outputFingerprint": "c24cab8d40a95c1d3fde747f16b2be48b5b5ff0329b2770c4455fbae61258842",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 43,
+                  "endLine": 43
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 6.88,
+              "responseBytes": 71,
+              "candidateCount": 1,
+              "outputFingerprint": "c24cab8d40a95c1d3fde747f16b2be48b5b5ff0329b2770c4455fbae61258842",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 43,
+                  "endLine": 43
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 11.862,
+              "responseBytes": 71,
+              "candidateCount": 1,
+              "outputFingerprint": "c24cab8d40a95c1d3fde747f16b2be48b5b5ff0329b2770c4455fbae61258842",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 43,
+                  "endLine": 43
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 235.668,
+              "responseBytes": 1392,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8f0df6be196a947f08f0acd3f329203e4af452329a3907d95cecaec6534c42f8",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 194.869,
+              "responseBytes": 1392,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8f0df6be196a947f08f0acd3f329203e4af452329a3907d95cecaec6534c42f8",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 184.498,
+              "responseBytes": 1392,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8f0df6be196a947f08f0acd3f329203e4af452329a3907d95cecaec6534c42f8",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 193.308,
+              "responseBytes": 1392,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8f0df6be196a947f08f0acd3f329203e4af452329a3907d95cecaec6534c42f8",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 196.356,
+              "responseBytes": 1392,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8f0df6be196a947f08f0acd3f329203e4af452329a3907d95cecaec6534c42f8",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-VITEST-005",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 16.44,
+              "responseBytes": 482,
+              "candidateCount": 4,
+              "outputFingerprint": "6326170d142028f4a6fcc0686bcb3ff2a2b80ace1a00be493082206796908d3f",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 106
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 69
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 74,
+                  "endLine": 74
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 176,
+                  "endLine": 176
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 11.456,
+              "responseBytes": 482,
+              "candidateCount": 4,
+              "outputFingerprint": "0f053464116291daebe2af8c78ec2c5cd8ac2ee3abfc7b5a2683337ee6cd506e",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 69
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 74,
+                  "endLine": 74
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 176,
+                  "endLine": 176
+                },
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 106
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 10.781,
+              "responseBytes": 482,
+              "candidateCount": 4,
+              "outputFingerprint": "6326170d142028f4a6fcc0686bcb3ff2a2b80ace1a00be493082206796908d3f",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 106
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 69
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 74,
+                  "endLine": 74
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 176,
+                  "endLine": 176
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 11.341,
+              "responseBytes": 482,
+              "candidateCount": 4,
+              "outputFingerprint": "6326170d142028f4a6fcc0686bcb3ff2a2b80ace1a00be493082206796908d3f",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 106
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 69
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 74,
+                  "endLine": 74
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 176,
+                  "endLine": 176
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 12.205,
+              "responseBytes": 482,
+              "candidateCount": 4,
+              "outputFingerprint": "0f053464116291daebe2af8c78ec2c5cd8ac2ee3abfc7b5a2683337ee6cd506e",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 69
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 74,
+                  "endLine": 74
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 176,
+                  "endLine": 176
+                },
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 106
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 278.942,
+              "responseBytes": 9003,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "beb915858ceaed4cd8756bdeaca305a0dc9a5284de1b0f98cedb6b0e9d9b2698",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 174
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 79
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 21,
+                  "endLine": 21
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 33,
+                  "endLine": 420
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 52,
+                  "endLine": 166
+                },
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 34,
+                  "endLine": 377
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 40,
+                  "endLine": 251
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 108,
+                  "endLine": 236
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 7,
+                  "endLine": 50
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 208.823,
+              "responseBytes": 9003,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "beb915858ceaed4cd8756bdeaca305a0dc9a5284de1b0f98cedb6b0e9d9b2698",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 174
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 79
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 21,
+                  "endLine": 21
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 33,
+                  "endLine": 420
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 52,
+                  "endLine": 166
+                },
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 34,
+                  "endLine": 377
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 40,
+                  "endLine": 251
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 108,
+                  "endLine": 236
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 7,
+                  "endLine": 50
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 201.144,
+              "responseBytes": 9003,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "beb915858ceaed4cd8756bdeaca305a0dc9a5284de1b0f98cedb6b0e9d9b2698",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 174
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 79
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 21,
+                  "endLine": 21
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 33,
+                  "endLine": 420
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 52,
+                  "endLine": 166
+                },
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 34,
+                  "endLine": 377
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 40,
+                  "endLine": 251
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 108,
+                  "endLine": 236
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 7,
+                  "endLine": 50
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 190.562,
+              "responseBytes": 9003,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "beb915858ceaed4cd8756bdeaca305a0dc9a5284de1b0f98cedb6b0e9d9b2698",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 174
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 79
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 21,
+                  "endLine": 21
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 33,
+                  "endLine": 420
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 52,
+                  "endLine": 166
+                },
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 34,
+                  "endLine": 377
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 40,
+                  "endLine": 251
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 108,
+                  "endLine": 236
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 7,
+                  "endLine": 50
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 194.326,
+              "responseBytes": 9003,
+              "candidateCount": 10,
+              "totalMatches": 10,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "beb915858ceaed4cd8756bdeaca305a0dc9a5284de1b0f98cedb6b0e9d9b2698",
+              "candidates": [
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 106,
+                  "endLine": 174
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 69,
+                  "endLine": 79
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 21,
+                  "endLine": 21
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 33,
+                  "endLine": 420
+                },
+                {
+                  "path": "packages/vitest/src/node/environments/fetchModule.ts",
+                  "startLine": 52,
+                  "endLine": 166
+                },
+                {
+                  "path": "packages/vitest/src/node/pools/rpc.ts",
+                  "startLine": 34,
+                  "endLine": 377
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 40,
+                  "endLine": 251
+                },
+                {
+                  "path": "packages/vitest/src/runtime/moduleRunner/startVitestModuleRunner.ts",
+                  "startLine": 108,
+                  "endLine": 236
+                },
+                {
+                  "path": "packages/vitest/src/runtime/workers/vm.ts",
+                  "startLine": 30,
+                  "endLine": 175
+                },
+                {
+                  "path": "packages/vitest/src/types/rpc.ts",
+                  "startLine": 7,
+                  "endLine": 50
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kiota",
+      "commit": "b9e61265f8394a6c5d0358e89e037873375b017a",
+      "index": {
+        "status": "partial",
+        "state": "ready",
+        "durationMs": 2435.605,
+        "responseBytes": 1048,
+        "indexBytes": 16957414,
+        "filesIndexed": 768,
+        "chunksIndexed": 7350,
+        "sourceBytes": 5261523,
+        "warnings": [
+          "excluded_directories_skipped:3",
+          "index_directory_not_explicitly_ignored",
+          "chunk_content_truncated:28"
+        ],
+        "errorCode": null
+      },
+      "tasks": [
+        {
+          "id": "EO-KIOTA-001",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 14.213,
+              "responseBytes": 217,
+              "candidateCount": 1,
+              "outputFingerprint": "94b04a91d110334f97bc6a874c636c6366e59a1395037a0f7c78493b1d5d8c2c",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 29.875,
+              "responseBytes": 217,
+              "candidateCount": 1,
+              "outputFingerprint": "94b04a91d110334f97bc6a874c636c6366e59a1395037a0f7c78493b1d5d8c2c",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 11.209,
+              "responseBytes": 217,
+              "candidateCount": 1,
+              "outputFingerprint": "94b04a91d110334f97bc6a874c636c6366e59a1395037a0f7c78493b1d5d8c2c",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 11.082,
+              "responseBytes": 217,
+              "candidateCount": 1,
+              "outputFingerprint": "94b04a91d110334f97bc6a874c636c6366e59a1395037a0f7c78493b1d5d8c2c",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 10.605,
+              "responseBytes": 217,
+              "candidateCount": 1,
+              "outputFingerprint": "94b04a91d110334f97bc6a874c636c6366e59a1395037a0f7c78493b1d5d8c2c",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 466.352,
+              "responseBytes": 1550,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f75215641b17a59eca4a3330d241077613a683aa73183688b0512cfbc6c036a4",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 205.15,
+              "responseBytes": 1550,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f75215641b17a59eca4a3330d241077613a683aa73183688b0512cfbc6c036a4",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 192.957,
+              "responseBytes": 1550,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f75215641b17a59eca4a3330d241077613a683aa73183688b0512cfbc6c036a4",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 189.359,
+              "responseBytes": 1550,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f75215641b17a59eca4a3330d241077613a683aa73183688b0512cfbc6c036a4",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 174.997,
+              "responseBytes": 1550,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f75215641b17a59eca4a3330d241077613a683aa73183688b0512cfbc6c036a4",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-KIOTA-002",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 14.166,
+              "responseBytes": 1198,
+              "candidateCount": 8,
+              "outputFingerprint": "42fd5d541f07614b5b396ef10f5dfc1e23de67d023870e8fae187593d1cf5599",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 13.792,
+              "responseBytes": 1198,
+              "candidateCount": 8,
+              "outputFingerprint": "a4858ce9b8433b6d99691e32709ee37ec2550faaf3b6e96a4fbd44bef761cbc4",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 14.628,
+              "responseBytes": 1198,
+              "candidateCount": 8,
+              "outputFingerprint": "fad48a421e0c470f93ebc88fdd17a0612383d7fc4d1244c454af02f764f06ba0",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 12.972,
+              "responseBytes": 1198,
+              "candidateCount": 8,
+              "outputFingerprint": "812f251e8fdd55bce178424e68235724f3cd8986a316a938a90ac4fcd3ff0d1d",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 14.515,
+              "responseBytes": 1198,
+              "candidateCount": 8,
+              "outputFingerprint": "23c06a26ef3061d2b001878282cc8a8b32c5b6edbaee68faa1d6bf7090238a93",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 10
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 12
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 9
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 11
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 392.299,
+              "responseBytes": 8062,
+              "candidateCount": 8,
+              "totalMatches": 8,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "fd49f21ca87edf852fd652bd2904e76387bba3e2039eb645cc29da2aa0670c0f",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 712
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 900
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 1171
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 849
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 1051
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 875
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 485
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 240.244,
+              "responseBytes": 8062,
+              "candidateCount": 8,
+              "totalMatches": 8,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "fd49f21ca87edf852fd652bd2904e76387bba3e2039eb645cc29da2aa0670c0f",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 712
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 900
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 1171
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 849
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 1051
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 875
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 485
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 195.504,
+              "responseBytes": 8062,
+              "candidateCount": 8,
+              "totalMatches": 8,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "fd49f21ca87edf852fd652bd2904e76387bba3e2039eb645cc29da2aa0670c0f",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 712
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 900
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 1171
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 849
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 1051
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 875
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 485
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 208.898,
+              "responseBytes": 8062,
+              "candidateCount": 8,
+              "totalMatches": 8,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "fd49f21ca87edf852fd652bd2904e76387bba3e2039eb645cc29da2aa0670c0f",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 712
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 900
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 1171
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 849
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 1051
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 875
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 485
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 230.128,
+              "responseBytes": 8062,
+              "candidateCount": 8,
+              "totalMatches": 8,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "fd49f21ca87edf852fd652bd2904e76387bba3e2039eb645cc29da2aa0670c0f",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/CSharp/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 712
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Dart/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 900
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Go/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 1171
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Java/CodeMethodWriter.cs",
+                  "startLine": 12,
+                  "endLine": 849
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Php/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 1051
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Python/CodeMethodWriter.cs",
+                  "startLine": 9,
+                  "endLine": 875
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/Ruby/CodeMethodWriter.cs",
+                  "startLine": 10,
+                  "endLine": 485
+                },
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 11,
+                  "endLine": 96
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-KIOTA-003",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 6.274,
+              "responseBytes": 149,
+              "candidateCount": 1,
+              "outputFingerprint": "8777ed6f16a8c9798e9e56815e022fc3f99858480d0abe1333d77bb471c8e6c3",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 13
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 5.614,
+              "responseBytes": 149,
+              "candidateCount": 1,
+              "outputFingerprint": "8777ed6f16a8c9798e9e56815e022fc3f99858480d0abe1333d77bb471c8e6c3",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 13
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 5.846,
+              "responseBytes": 149,
+              "candidateCount": 1,
+              "outputFingerprint": "8777ed6f16a8c9798e9e56815e022fc3f99858480d0abe1333d77bb471c8e6c3",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 13
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 7.623,
+              "responseBytes": 149,
+              "candidateCount": 1,
+              "outputFingerprint": "8777ed6f16a8c9798e9e56815e022fc3f99858480d0abe1333d77bb471c8e6c3",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 13
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 7.548,
+              "responseBytes": 149,
+              "candidateCount": 1,
+              "outputFingerprint": "8777ed6f16a8c9798e9e56815e022fc3f99858480d0abe1333d77bb471c8e6c3",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 13
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 409.492,
+              "responseBytes": 1588,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8cbe57d87ef574ad31d2c8948da471dfd48cbbd18aafb9a86f691267d3617d91",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 27
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 192.345,
+              "responseBytes": 1588,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8cbe57d87ef574ad31d2c8948da471dfd48cbbd18aafb9a86f691267d3617d91",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 27
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 187.656,
+              "responseBytes": 1588,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8cbe57d87ef574ad31d2c8948da471dfd48cbbd18aafb9a86f691267d3617d91",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 27
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 185.872,
+              "responseBytes": 1588,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8cbe57d87ef574ad31d2c8948da471dfd48cbbd18aafb9a86f691267d3617d91",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 27
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 190.306,
+              "responseBytes": 1588,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8cbe57d87ef574ad31d2c8948da471dfd48cbbd18aafb9a86f691267d3617d91",
+              "candidates": [
+                {
+                  "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+                  "startLine": 13,
+                  "endLine": 27
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-KIOTA-004",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 11.859,
+              "responseBytes": 242,
+              "candidateCount": 1,
+              "outputFingerprint": "3365723c81b24f7895dd8d376d45ccfc5124d8999f1ea73e17cb9fab8ac8a4ee",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 6
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 10.643,
+              "responseBytes": 242,
+              "candidateCount": 1,
+              "outputFingerprint": "3365723c81b24f7895dd8d376d45ccfc5124d8999f1ea73e17cb9fab8ac8a4ee",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 6
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 11.872,
+              "responseBytes": 242,
+              "candidateCount": 1,
+              "outputFingerprint": "3365723c81b24f7895dd8d376d45ccfc5124d8999f1ea73e17cb9fab8ac8a4ee",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 6
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 11.079,
+              "responseBytes": 242,
+              "candidateCount": 1,
+              "outputFingerprint": "3365723c81b24f7895dd8d376d45ccfc5124d8999f1ea73e17cb9fab8ac8a4ee",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 6
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 13.038,
+              "responseBytes": 242,
+              "candidateCount": 1,
+              "outputFingerprint": "3365723c81b24f7895dd8d376d45ccfc5124d8999f1ea73e17cb9fab8ac8a4ee",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 6
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 369.324,
+              "responseBytes": 13913,
+              "candidateCount": 15,
+              "totalMatches": 15,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f4c55b731de5911c86ef0b81b1aa531ba7403530797cabaacb6a787f6a1f060e",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generateClient.ts",
+                  "startLine": 57,
+                  "endLine": 100
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generatePlugin.ts",
+                  "startLine": 50,
+                  "endLine": 98
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaTree.ts",
+                  "startLine": 26,
+                  "endLine": 45
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaVersion.ts",
+                  "startLine": 11,
+                  "endLine": 29
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getManifestDetails.ts",
+                  "startLine": 22,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getPluginManifest.ts",
+                  "startLine": 18,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 20,
+                  "endLine": 35
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 48,
+                  "endLine": 66
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/migrateFromLockFile.ts",
+                  "startLine": 17,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 29,
+                  "endLine": 53
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 65,
+                  "endLine": 89
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/searchDescription.ts",
+                  "startLine": 20,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/updateClients.ts",
+                  "startLine": 24,
+                  "endLine": 42
+                },
+                {
+                  "path": "vscode/packages/npm-package/tests/unit/stubs.util.ts",
+                  "startLine": 4,
+                  "endLine": 20
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 176.185,
+              "responseBytes": 13913,
+              "candidateCount": 15,
+              "totalMatches": 15,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f4c55b731de5911c86ef0b81b1aa531ba7403530797cabaacb6a787f6a1f060e",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generateClient.ts",
+                  "startLine": 57,
+                  "endLine": 100
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generatePlugin.ts",
+                  "startLine": 50,
+                  "endLine": 98
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaTree.ts",
+                  "startLine": 26,
+                  "endLine": 45
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaVersion.ts",
+                  "startLine": 11,
+                  "endLine": 29
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getManifestDetails.ts",
+                  "startLine": 22,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getPluginManifest.ts",
+                  "startLine": 18,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 20,
+                  "endLine": 35
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 48,
+                  "endLine": 66
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/migrateFromLockFile.ts",
+                  "startLine": 17,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 29,
+                  "endLine": 53
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 65,
+                  "endLine": 89
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/searchDescription.ts",
+                  "startLine": 20,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/updateClients.ts",
+                  "startLine": 24,
+                  "endLine": 42
+                },
+                {
+                  "path": "vscode/packages/npm-package/tests/unit/stubs.util.ts",
+                  "startLine": 4,
+                  "endLine": 20
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 174.827,
+              "responseBytes": 13913,
+              "candidateCount": 15,
+              "totalMatches": 15,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f4c55b731de5911c86ef0b81b1aa531ba7403530797cabaacb6a787f6a1f060e",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generateClient.ts",
+                  "startLine": 57,
+                  "endLine": 100
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generatePlugin.ts",
+                  "startLine": 50,
+                  "endLine": 98
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaTree.ts",
+                  "startLine": 26,
+                  "endLine": 45
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaVersion.ts",
+                  "startLine": 11,
+                  "endLine": 29
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getManifestDetails.ts",
+                  "startLine": 22,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getPluginManifest.ts",
+                  "startLine": 18,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 20,
+                  "endLine": 35
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 48,
+                  "endLine": 66
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/migrateFromLockFile.ts",
+                  "startLine": 17,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 29,
+                  "endLine": 53
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 65,
+                  "endLine": 89
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/searchDescription.ts",
+                  "startLine": 20,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/updateClients.ts",
+                  "startLine": 24,
+                  "endLine": 42
+                },
+                {
+                  "path": "vscode/packages/npm-package/tests/unit/stubs.util.ts",
+                  "startLine": 4,
+                  "endLine": 20
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 206.117,
+              "responseBytes": 13913,
+              "candidateCount": 15,
+              "totalMatches": 15,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f4c55b731de5911c86ef0b81b1aa531ba7403530797cabaacb6a787f6a1f060e",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generateClient.ts",
+                  "startLine": 57,
+                  "endLine": 100
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generatePlugin.ts",
+                  "startLine": 50,
+                  "endLine": 98
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaTree.ts",
+                  "startLine": 26,
+                  "endLine": 45
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaVersion.ts",
+                  "startLine": 11,
+                  "endLine": 29
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getManifestDetails.ts",
+                  "startLine": 22,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getPluginManifest.ts",
+                  "startLine": 18,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 20,
+                  "endLine": 35
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 48,
+                  "endLine": 66
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/migrateFromLockFile.ts",
+                  "startLine": 17,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 29,
+                  "endLine": 53
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 65,
+                  "endLine": 89
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/searchDescription.ts",
+                  "startLine": 20,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/updateClients.ts",
+                  "startLine": 24,
+                  "endLine": 42
+                },
+                {
+                  "path": "vscode/packages/npm-package/tests/unit/stubs.util.ts",
+                  "startLine": 4,
+                  "endLine": 20
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 180.173,
+              "responseBytes": 13913,
+              "candidateCount": 15,
+              "totalMatches": 15,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "f4c55b731de5911c86ef0b81b1aa531ba7403530797cabaacb6a787f6a1f060e",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generateClient.ts",
+                  "startLine": 57,
+                  "endLine": 100
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/generatePlugin.ts",
+                  "startLine": 50,
+                  "endLine": 98
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaTree.ts",
+                  "startLine": 26,
+                  "endLine": 45
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getKiotaVersion.ts",
+                  "startLine": 11,
+                  "endLine": 29
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getManifestDetails.ts",
+                  "startLine": 22,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/getPluginManifest.ts",
+                  "startLine": 18,
+                  "endLine": 36
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 20,
+                  "endLine": 35
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/languageInformation.ts",
+                  "startLine": 48,
+                  "endLine": 66
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/migrateFromLockFile.ts",
+                  "startLine": 17,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 29,
+                  "endLine": 53
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/removeItem.ts",
+                  "startLine": 65,
+                  "endLine": 89
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/searchDescription.ts",
+                  "startLine": 20,
+                  "endLine": 41
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/updateClients.ts",
+                  "startLine": 24,
+                  "endLine": 42
+                },
+                {
+                  "path": "vscode/packages/npm-package/tests/unit/stubs.util.ts",
+                  "startLine": 4,
+                  "endLine": 20
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "EO-KIOTA-005",
+          "native": [
+            {
+              "repetition": 1,
+              "status": "ok",
+              "durationMs": 11.857,
+              "responseBytes": 266,
+              "candidateCount": 3,
+              "outputFingerprint": "c721761d779509c99ad94c1a1d27497f83e13f7a699f912f69e739ddde20b450",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 34,
+                  "endLine": 34
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "ok",
+              "durationMs": 12.967,
+              "responseBytes": 266,
+              "candidateCount": 3,
+              "outputFingerprint": "c721761d779509c99ad94c1a1d27497f83e13f7a699f912f69e739ddde20b450",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 34,
+                  "endLine": 34
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "ok",
+              "durationMs": 22.852,
+              "responseBytes": 266,
+              "candidateCount": 3,
+              "outputFingerprint": "c721761d779509c99ad94c1a1d27497f83e13f7a699f912f69e739ddde20b450",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 34,
+                  "endLine": 34
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "ok",
+              "durationMs": 11.851,
+              "responseBytes": 266,
+              "candidateCount": 3,
+              "outputFingerprint": "c721761d779509c99ad94c1a1d27497f83e13f7a699f912f69e739ddde20b450",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 34,
+                  "endLine": 34
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "ok",
+              "durationMs": 12.398,
+              "responseBytes": 266,
+              "candidateCount": 3,
+              "outputFingerprint": "c721761d779509c99ad94c1a1d27497f83e13f7a699f912f69e739ddde20b450",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 18,
+                  "endLine": 18
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 33,
+                  "endLine": 33
+                },
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 34,
+                  "endLine": 34
+                }
+              ]
+            }
+          ],
+          "sanjaya": [
+            {
+              "repetition": 1,
+              "status": "partial",
+              "durationMs": 226.283,
+              "responseBytes": 1383,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8d8395c9cf652607713701875483c96b8da4147f701e8b2d2d559c2f9bf2c056",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 2,
+              "status": "partial",
+              "durationMs": 199.309,
+              "responseBytes": 1383,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8d8395c9cf652607713701875483c96b8da4147f701e8b2d2d559c2f9bf2c056",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 3,
+              "status": "partial",
+              "durationMs": 211.199,
+              "responseBytes": 1383,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8d8395c9cf652607713701875483c96b8da4147f701e8b2d2d559c2f9bf2c056",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 4,
+              "status": "partial",
+              "durationMs": 210.924,
+              "responseBytes": 1383,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8d8395c9cf652607713701875483c96b8da4147f701e8b2d2d559c2f9bf2c056",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                }
+              ]
+            },
+            {
+              "repetition": 5,
+              "status": "partial",
+              "durationMs": 223.255,
+              "responseBytes": 1383,
+              "candidateCount": 1,
+              "totalMatches": 1,
+              "truncated": false,
+              "errorCode": null,
+              "outputFingerprint": "8d8395c9cf652607713701875483c96b8da4147f701e8b2d2d559c2f9bf2c056",
+              "candidates": [
+                {
+                  "path": "vscode/packages/npm-package/lib/connect.ts",
+                  "startLine": 6,
+                  "endLine": 36
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

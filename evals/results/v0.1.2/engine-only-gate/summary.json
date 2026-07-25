@@ -1,0 +1,582 @@
+{
+  "schemaVersion": "1.0",
+  "status": "stop_current_product_hypothesis",
+  "package": "sanjaya-mcp@0.1.2",
+  "inputFingerprint": "a6afa37ca3fc169be821925202108b10802d6fbfab962875a1b83e739a6905bc",
+  "controls": {
+    "modelCalls": 0,
+    "queryRepetitions": 5,
+    "rawSourceStored": false,
+    "rawToolResponsesStored": false
+  },
+  "analysis": {
+    "candidateComparison": "order_insensitive_multiset",
+    "reason": "Parallel ripgrep traversal may return the same candidate set in a different presentation order."
+  },
+  "environment": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "node": "v22.22.1",
+    "ripgrep": "ripgrep 15.1.0 (rev af60c2de9d)"
+  },
+  "taskCount": 15,
+  "criteria": {
+    "indexReadiness": true,
+    "recallNonInferiority": true,
+    "precisionBenefit": false,
+    "responseByteBenefit": false,
+    "materialBenefit": false,
+    "proceed": false
+  },
+  "comparison": {
+    "native": {
+      "meanTargetRecall": 1,
+      "meanCandidatePrecision": 0.7999999999999999,
+      "medianResponseBytes": 217,
+      "medianQueryDurationMs": 11.456,
+      "tasksWithFullRecall": 15
+    },
+    "sanjaya": {
+      "meanTargetRecall": 1,
+      "meanCandidatePrecision": 0.7137628384687209,
+      "medianResponseBytes": 1588,
+      "medianQueryDurationMs": 197.417,
+      "tasksWithFullRecall": 15
+    }
+  },
+  "repositories": [
+    {
+      "id": "fastendpoints",
+      "index": {
+        "status": "partial",
+        "state": "ready",
+        "durationMs": 1807.43,
+        "responseBytes": 1049,
+        "indexBytes": 14018617,
+        "filesIndexed": 884,
+        "chunksIndexed": 9702,
+        "sourceBytes": 3257191,
+        "warnings": [
+          "excluded_directories_skipped:5",
+          "index_directory_not_explicitly_ignored",
+          "syntax_diagnostics_recovered:212"
+        ],
+        "errorCode": null
+      },
+      "taskCount": 5,
+      "native": {
+        "meanTargetRecall": 1,
+        "meanCandidatePrecision": 0.5166666666666666,
+        "medianResponseBytes": 357,
+        "medianQueryDurationMs": 8.496,
+        "tasksWithFullRecall": 5
+      },
+      "sanjaya": {
+        "meanTargetRecall": 1,
+        "meanCandidatePrecision": 0.9428571428571428,
+        "medianResponseBytes": 1477,
+        "medianQueryDurationMs": 197.417,
+        "tasksWithFullRecall": 5
+      },
+      "nativeQueryDurationMs": 54.592,
+      "sanjayaQueryDurationMs": 1116.658,
+      "sanjayaAmortizedDurationMs": 2924.0879999999997
+    },
+    {
+      "id": "vitest",
+      "index": {
+        "status": "partial",
+        "state": "ready",
+        "durationMs": 1604.176,
+        "responseBytes": 1055,
+        "indexBytes": 8544541,
+        "filesIndexed": 2307,
+        "chunksIndexed": 11744,
+        "sourceBytes": 5712432,
+        "warnings": [
+          "excluded_directories_skipped:3",
+          "index_directory_not_explicitly_ignored",
+          "syntax_diagnostics_recovered:1"
+        ],
+        "errorCode": null
+      },
+      "taskCount": 5,
+      "native": {
+        "meanTargetRecall": 1,
+        "meanCandidatePrecision": 0.95,
+        "medianResponseBytes": 164,
+        "medianQueryDurationMs": 12.061,
+        "tasksWithFullRecall": 5
+      },
+      "sanjaya": {
+        "meanTargetRecall": 1,
+        "meanCandidatePrecision": 0.38509803921568625,
+        "medianResponseBytes": 8875,
+        "medianQueryDurationMs": 201.144,
+        "tasksWithFullRecall": 5
+      },
+      "nativeQueryDurationMs": 59.287000000000006,
+      "sanjayaQueryDurationMs": 1003.7189999999999,
+      "sanjayaAmortizedDurationMs": 2607.895
+    },
+    {
+      "id": "kiota",
+      "index": {
+        "status": "partial",
+        "state": "ready",
+        "durationMs": 2435.605,
+        "responseBytes": 1048,
+        "indexBytes": 16957414,
+        "filesIndexed": 768,
+        "chunksIndexed": 7350,
+        "sourceBytes": 5261523,
+        "warnings": [
+          "excluded_directories_skipped:3",
+          "index_directory_not_explicitly_ignored",
+          "chunk_content_truncated:28"
+        ],
+        "errorCode": null
+      },
+      "taskCount": 5,
+      "native": {
+        "meanTargetRecall": 1,
+        "meanCandidatePrecision": 0.9333333333333333,
+        "medianResponseBytes": 242,
+        "medianQueryDurationMs": 11.859,
+        "tasksWithFullRecall": 5
+      },
+      "sanjaya": {
+        "meanTargetRecall": 1,
+        "meanCandidatePrecision": 0.8133333333333332,
+        "medianResponseBytes": 1588,
+        "medianQueryDurationMs": 192.957,
+        "tasksWithFullRecall": 5
+      },
+      "nativeQueryDurationMs": 55.906000000000006,
+      "sanjayaQueryDurationMs": 1004.7629999999999,
+      "sanjayaAmortizedDurationMs": 3440.368
+    }
+  ],
+  "tasks": [
+    {
+      "id": "EO-FAST-001",
+      "repositoryId": "fastendpoints",
+      "intent": "Locate the EndpointInvoker class declaration.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 104,
+        "medianResponseBytes": 104,
+        "medianDurationMs": 18.988
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1477,
+        "medianResponseBytes": 1477,
+        "medianDurationMs": 198.022
+      }
+    },
+    {
+      "id": "EO-FAST-002",
+      "repositoryId": "fastendpoints",
+      "intent": "Locate EndpointInvoker.InvokeAsync.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 4,
+        "relevantCandidates": 1,
+        "candidatePrecision": 0.25,
+        "responseBytes": 546,
+        "medianResponseBytes": 546,
+        "medianDurationMs": 10.802
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1512,
+        "medianResponseBytes": 1512,
+        "medianDurationMs": 181.557
+      }
+    },
+    {
+      "id": "EO-FAST-003",
+      "repositoryId": "fastendpoints",
+      "intent": "Locate the AddMcp registration method.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 3,
+        "relevantCandidates": 1,
+        "candidatePrecision": 0.3333333333333333,
+        "responseBytes": 357,
+        "medianResponseBytes": 357,
+        "medianDurationMs": 8.496
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1430,
+        "medianResponseBytes": 1430,
+        "medianDurationMs": 197.417
+      }
+    },
+    {
+      "id": "EO-FAST-004",
+      "repositoryId": "fastendpoints",
+      "intent": "Locate the AddA2A registration method.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 2,
+        "relevantCandidates": 1,
+        "candidatePrecision": 0.5,
+        "responseBytes": 199,
+        "medianResponseBytes": 199,
+        "medianDurationMs": 8.098
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1430,
+        "medianResponseBytes": 1430,
+        "medianDurationMs": 188.395
+      }
+    },
+    {
+      "id": "EO-FAST-005",
+      "repositoryId": "fastendpoints",
+      "intent": "Recover production EndpointInvoker syntax references across both integrations.",
+      "targetCount": 4,
+      "native": {
+        "status": "ok",
+        "targetHits": 4,
+        "targetRecall": 1,
+        "candidateCount": 10,
+        "relevantCandidates": 5,
+        "candidatePrecision": 0.5,
+        "responseBytes": 1159,
+        "medianResponseBytes": 1159,
+        "medianDurationMs": 8.208
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 4,
+        "targetRecall": 1,
+        "candidateCount": 7,
+        "relevantCandidates": 5,
+        "candidatePrecision": 0.7142857142857143,
+        "responseBytes": 4037,
+        "medianResponseBytes": 4037,
+        "medianDurationMs": 351.267
+      }
+    },
+    {
+      "id": "EO-VITEST-001",
+      "repositoryId": "vitest",
+      "intent": "Locate the worker-wide CodeCache declaration.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 73,
+        "medianResponseBytes": 73,
+        "medianDurationMs": 14.549
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 17,
+        "relevantCandidates": 1,
+        "candidatePrecision": 0.058823529411764705,
+        "responseBytes": 10263,
+        "medianResponseBytes": 10263,
+        "medianDurationMs": 201.902
+      }
+    },
+    {
+      "id": "EO-VITEST-002",
+      "repositoryId": "vitest",
+      "intent": "Locate the exact source guard in CodeCache.",
+      "targetCount": 2,
+      "native": {
+        "status": "ok",
+        "targetHits": 2,
+        "targetRecall": 1,
+        "candidateCount": 2,
+        "relevantCandidates": 2,
+        "candidatePrecision": 1,
+        "responseBytes": 184,
+        "medianResponseBytes": 184,
+        "medianDurationMs": 12.676
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 2,
+        "targetRecall": 1,
+        "candidateCount": 10,
+        "relevantCandidates": 3,
+        "candidatePrecision": 0.3,
+        "responseBytes": 8875,
+        "medianResponseBytes": 8875,
+        "medianDurationMs": 211.917
+      }
+    },
+    {
+      "id": "EO-VITEST-003",
+      "repositoryId": "vitest",
+      "intent": "Locate the runVmTests function declaration.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 164,
+        "medianResponseBytes": 164,
+        "medianDurationMs": 12.061
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 6,
+        "relevantCandidates": 1,
+        "candidatePrecision": 0.16666666666666666,
+        "responseBytes": 4418,
+        "medianResponseBytes": 4418,
+        "medianDurationMs": 193.887
+      }
+    },
+    {
+      "id": "EO-VITEST-004",
+      "repositoryId": "vitest",
+      "intent": "Locate prewarmModuleGraph inside runVmTests.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 71,
+        "medianResponseBytes": 71,
+        "medianDurationMs": 8.545
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1392,
+        "medianResponseBytes": 1392,
+        "medianDurationMs": 194.869
+      }
+    },
+    {
+      "id": "EO-VITEST-005",
+      "repositoryId": "vitest",
+      "intent": "Recover the worker and server fetchWarmModules implementations.",
+      "targetCount": 2,
+      "native": {
+        "status": "ok",
+        "targetHits": 2,
+        "targetRecall": 1,
+        "candidateCount": 4,
+        "relevantCandidates": 3,
+        "candidatePrecision": 0.75,
+        "responseBytes": 482,
+        "medianResponseBytes": 482,
+        "medianDurationMs": 11.456
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 2,
+        "targetRecall": 1,
+        "candidateCount": 10,
+        "relevantCandidates": 4,
+        "candidatePrecision": 0.4,
+        "responseBytes": 9003,
+        "medianResponseBytes": 9003,
+        "medianDurationMs": 201.144
+      }
+    },
+    {
+      "id": "EO-KIOTA-001",
+      "repositoryId": "kiota",
+      "intent": "Resolve the TypeScript CodeMethodWriter declaration.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 217,
+        "medianResponseBytes": 217,
+        "medianDurationMs": 11.209
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1550,
+        "medianResponseBytes": 1550,
+        "medianDurationMs": 192.957
+      }
+    },
+    {
+      "id": "EO-KIOTA-002",
+      "repositoryId": "kiota",
+      "intent": "Recover every language-specific CodeMethodWriter declaration.",
+      "targetCount": 8,
+      "native": {
+        "status": "ok",
+        "targetHits": 8,
+        "targetRecall": 1,
+        "candidateCount": 8,
+        "relevantCandidates": 8,
+        "candidatePrecision": 1,
+        "responseBytes": 1198,
+        "medianResponseBytes": 1198,
+        "medianDurationMs": 14.166
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 8,
+        "targetRecall": 1,
+        "candidateCount": 8,
+        "relevantCandidates": 8,
+        "candidatePrecision": 1,
+        "responseBytes": 8062,
+        "medianResponseBytes": 8062,
+        "medianDurationMs": 230.128
+      }
+    },
+    {
+      "id": "EO-KIOTA-003",
+      "repositoryId": "kiota",
+      "intent": "Locate TypeScript CodeMethodWriter.WriteCodeElement.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 149,
+        "medianResponseBytes": 149,
+        "medianDurationMs": 6.274
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1588,
+        "medianResponseBytes": 1588,
+        "medianDurationMs": 190.306
+      }
+    },
+    {
+      "id": "EO-KIOTA-004",
+      "repositoryId": "kiota",
+      "intent": "Locate the connectToKiota helper declaration.",
+      "targetCount": 1,
+      "native": {
+        "status": "ok",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 242,
+        "medianResponseBytes": 242,
+        "medianDurationMs": 11.859
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 1,
+        "targetRecall": 1,
+        "candidateCount": 15,
+        "relevantCandidates": 1,
+        "candidatePrecision": 0.06666666666666667,
+        "responseBytes": 13913,
+        "medianResponseBytes": 13913,
+        "medianDurationMs": 180.173
+      }
+    },
+    {
+      "id": "EO-KIOTA-005",
+      "repositoryId": "kiota",
+      "intent": "Locate both child-process cleanup operations in connectToKiota.",
+      "targetCount": 2,
+      "native": {
+        "status": "ok",
+        "targetHits": 2,
+        "targetRecall": 1,
+        "candidateCount": 3,
+        "relevantCandidates": 2,
+        "candidatePrecision": 0.6666666666666666,
+        "responseBytes": 266,
+        "medianResponseBytes": 266,
+        "medianDurationMs": 12.398
+      },
+      "sanjaya": {
+        "status": "partial",
+        "targetHits": 2,
+        "targetRecall": 1,
+        "candidateCount": 1,
+        "relevantCandidates": 1,
+        "candidatePrecision": 1,
+        "responseBytes": 1383,
+        "medianResponseBytes": 1383,
+        "medianDurationMs": 211.199
+      }
+    }
+  ]
+}
