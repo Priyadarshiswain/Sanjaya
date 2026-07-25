@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0010-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0010",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0010",
+    "answer": "The npm-package helper is the connectToKiota function in vscode/packages/npm-package/lib/connect.ts, which spawns a child process with the 'rpc' argument, returns an Error object when the callback throws, and cleans up the child process and connection streams in the finally block.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "connectToKiota",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 6,
+            "endLine": 6
+          }
+        ]
+      },
+      {
+        "key": "child_argument",
+        "value": "[\"rpc\"]",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 9,
+            "endLine": 9
+          }
+        ]
+      },
+      {
+        "key": "callback_error_result",
+        "value": "new Error(errorMessage)",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 23,
+            "endLine": 27
+          }
+        ]
+      },
+      {
+        "key": "child_cleanup",
+        "value": "inputReader.dispose(), outputWriter.dispose(), connection.dispose(), childProcess.stdin?.end(), childProcess.kill()",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 28,
+            "endLine": 35
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 13,
+    "nativeToolCalls": 12,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 67,
+    "cacheCreationInputTokens": 12751,
+    "cacheReadInputTokens": 219153,
+    "outputTokens": 1940,
+    "totalCostUsd": 0.058082299999999996,
+    "apiDurationMs": 34252,
+    "wallTimeMs": 38011,
+    "permissionDenials": 0
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0003-NATIVE",
+  "taskId": "SJ-EVAL-0003",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0003",
+    "answer": "The exported function calculateRetryPreview previews retry delay by bounding the attempt to maximumRetryAttempts and returning the delay as config.retryBaseSeconds * 2 ** boundedAttempt.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "calculateRetryPreview",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 3,
+            "endLine": 9
+          }
+        ]
+      },
+      {
+        "key": "bounded_attempt",
+        "value": "Math.min(attempt, config.maximumRetryAttempts)",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 7,
+            "endLine": 7
+          }
+        ]
+      },
+      {
+        "key": "delay_expression",
+        "value": "config.retryBaseSeconds * 2 ** boundedAttempt",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 8,
+            "endLine": 8
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 5,
+    "nativeToolCalls": 4,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 29,
+    "cacheCreationInputTokens": 7202,
+    "cacheReadInputTokens": 77392,
+    "outputTokens": 795,
+    "totalCostUsd": 0.0269832,
+    "apiDurationMs": 14654,
+    "wallTimeMs": 15853,
+    "permissionDenials": 0
+  }
+}

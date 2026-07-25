@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0006-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0006",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0006",
+    "answer": "AddMcp is defined in FastEndpoints.Mcp.Extensions at Src/Agents/Mcp/Extensions.cs:33, and AddA2A is defined in FastEndpoints.A2A.Extensions at Src/Agents/A2A/Extensions.cs:28.",
+    "claims": [
+      {
+        "key": "add_mcp_container",
+        "value": "FastEndpoints.Mcp.Extensions",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 33,
+            "endLine": 33
+          }
+        ]
+      },
+      {
+        "key": "add_a2a_container",
+        "value": "FastEndpoints.A2A.Extensions",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 28,
+            "endLine": 28
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 9,
+    "nativeToolCalls": 4,
+    "sanjayaToolCalls": 4,
+    "sanjayaToolNames": [
+      "find_definition",
+      "find_definition",
+      "get_source",
+      "get_source"
+    ],
+    "inputTokens": 51,
+    "cacheCreationInputTokens": 13729,
+    "cacheReadInputTokens": 123197,
+    "outputTokens": 1631,
+    "totalCostUsd": 0.0489137,
+    "apiDurationMs": 28361,
+    "wallTimeMs": 26534,
+    "permissionDenials": 0
+  }
+}

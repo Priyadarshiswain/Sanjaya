@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0003-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0003",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0003",
+    "answer": "The frontend function calculateRetryPreview previews retry delays by bounding attempts to maximumRetryAttempts and computing delay as retryBaseSeconds multiplied by 2 raised to the bounded attempt power.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "calculateRetryPreview",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "bounded_attempt",
+        "value": "Math.min(attempt, config.maximumRetryAttempts)",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 7,
+            "endLine": 7
+          }
+        ]
+      },
+      {
+        "key": "delay_expression",
+        "value": "config.retryBaseSeconds * 2 ** boundedAttempt",
+        "evidence": [
+          {
+            "path": "frontend/src/app/services/retry-preview.ts",
+            "startLine": 8,
+            "endLine": 8
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.99
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 10,
+    "nativeToolCalls": 5,
+    "sanjayaToolCalls": 4,
+    "sanjayaToolNames": [
+      "search_code",
+      "search_code",
+      "search_text",
+      "get_source"
+    ],
+    "inputTokens": 78,
+    "cacheCreationInputTokens": 17761,
+    "cacheReadInputTokens": 224713,
+    "outputTokens": 1822,
+    "totalCostUsd": 0.06804430000000002,
+    "apiDurationMs": 34774,
+    "wallTimeMs": 36172,
+    "permissionDenials": 0
+  }
+}

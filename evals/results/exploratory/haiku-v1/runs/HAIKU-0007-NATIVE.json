@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0007-NATIVE",
+  "taskId": "SJ-EVAL-0007",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0007",
+    "answer": "The CodeCache class caches V8 code buffers using module identifier and source text validation; failed produce calls store undefined data.",
+    "claims": [
+      {
+        "key": "cache_class",
+        "value": "CodeCache",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 18,
+            "endLine": 18
+          }
+        ]
+      },
+      {
+        "key": "hit_guard",
+        "value": "identifier and source",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 21,
+            "endLine": 27
+          }
+        ]
+      },
+      {
+        "key": "produce_failure",
+        "value": "undefined",
+        "evidence": [
+          {
+            "path": "packages/vitest/src/runtime/vm/code-cache.ts",
+            "startLine": 40,
+            "endLine": 46
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.6666666666666666,
+    "claimRecall": 0.6666666666666666,
+    "claimF1": 0.6666666666666666,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 6,
+    "nativeToolCalls": 5,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 24,
+    "cacheCreationInputTokens": 12214,
+    "cacheReadInputTokens": 58337,
+    "outputTokens": 929,
+    "totalCostUsd": 0.0357907,
+    "apiDurationMs": 15189,
+    "wallTimeMs": 16983,
+    "permissionDenials": 0
+  }
+}

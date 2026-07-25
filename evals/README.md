@@ -155,3 +155,14 @@ unchanged. Reproduce or verify with:
 npm run reanalyze:evidence-first-v1.2 --prefix evals
 npm run verify:reanalysis-v1.2 --prefix evals
 ```
+
+## Exploratory small-model run
+
+[`results/exploratory/haiku-v1/`](results/exploratory/haiku-v1/REPORT.md)
+records an unregistered, single-repetition run of the 12 frozen tasks with
+`claude-haiku-4-5` under Claude Code headless, native versus Sanjaya-guided.
+It is labeled exploratory throughout: strict success tied 6/12 in both arms,
+mean claim F1 rose from 0.811 to 0.925 with Sanjaya, and 8 of 12 guided
+sessions used Sanjaya voluntarily. It supports no benefit claim; it exists
+to decide whether a preregistered small-model or map-in-context study is
+worth designing.

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0009-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0009",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0009",
+    "answer": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter is responsible for TypeScript output. WriteCodeElement throws an InvalidOperationException when the method's parent is a CodeClass, indicating that no method implementations are generated in TypeScript for class methods.",
+    "claims": [
+      {
+        "key": "writer_type",
+        "value": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 11,
+            "endLine": 11
+          }
+        ]
+      },
+      {
+        "key": "class_parent_behavior",
+        "value": "Throws InvalidOperationException with message 'No method implementations are generated in typescript: either functions or constants.'",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 25,
+            "endLine": 26
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.5,
+    "claimRecall": 0.5,
+    "claimF1": 0.5,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 3,
+    "nativeToolCalls": 2,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 21,
+    "cacheCreationInputTokens": 8975,
+    "cacheReadInputTokens": 56290,
+    "outputTokens": 892,
+    "totalCostUsd": 0.02895,
+    "apiDurationMs": 16281,
+    "wallTimeMs": 18800,
+    "permissionDenials": 0
+  }
+}

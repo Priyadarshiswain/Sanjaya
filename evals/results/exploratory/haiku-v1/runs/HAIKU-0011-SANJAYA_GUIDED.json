@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0011-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0011",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0011",
+    "answer": "When detached AppHost launch is cancelled after child starts, LaunchAndWaitForBackchannelAsync catches the cancellation at line 549 and calls RequestGracefulShutdownThenForceKillAsync, which invokes StopProcessTreeAsync with CancellationToken.None rather than the caller's token.",
+    "claims": [
+      {
+        "key": "containing_method",
+        "value": "LaunchAndWaitForBackchannelAsync",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 372,
+            "endLine": 559
+          }
+        ]
+      },
+      {
+        "key": "cleanup_helper",
+        "value": "RequestGracefulShutdownThenForceKillAsync",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 578,
+            "endLine": 585
+          }
+        ]
+      },
+      {
+        "key": "shutdown_token",
+        "value": "CancellationToken.None",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 584,
+            "endLine": 584
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 15,
+    "nativeToolCalls": 13,
+    "sanjayaToolCalls": 1,
+    "sanjayaToolNames": [
+      "search_code"
+    ],
+    "inputTokens": 91,
+    "cacheCreationInputTokens": 42199,
+    "cacheReadInputTokens": 533569,
+    "outputTokens": 2670,
+    "totalCostUsd": 0.1520929,
+    "apiDurationMs": 48233,
+    "wallTimeMs": 51184,
+    "permissionDenials": 0
+  }
+}

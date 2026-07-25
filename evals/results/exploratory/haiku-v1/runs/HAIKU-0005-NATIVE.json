@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0005-NATIVE",
+  "taskId": "SJ-EVAL-0005",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0005",
+    "answer": "EndpointInvoker is the sealed in-process endpoint execution engine shared by FastEndpoints.Mcp and FastEndpoints.A2A, invoked via the InvokeAsync method.",
+    "claims": [
+      {
+        "key": "engine_type",
+        "value": "EndpointInvoker",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 14,
+            "endLine": 14
+          }
+        ]
+      },
+      {
+        "key": "invocation_method",
+        "value": "InvokeAsync",
+        "evidence": [
+          {
+            "path": "Src/Agents/Shared/EndpointInvoker.cs",
+            "startLine": 28,
+            "endLine": 28
+          }
+        ]
+      },
+      {
+        "key": "mcp_namespace",
+        "value": "FastEndpoints.Mcp",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 10,
+            "endLine": 10
+          },
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 38,
+            "endLine": 38
+          }
+        ]
+      },
+      {
+        "key": "a2a_namespace",
+        "value": "FastEndpoints.A2A",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 6,
+            "endLine": 6
+          },
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 33,
+            "endLine": 33
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.75,
+    "claimRecall": 0.75,
+    "claimF1": 0.75,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 8,
+    "nativeToolCalls": 7,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 40,
+    "cacheCreationInputTokens": 13589,
+    "cacheReadInputTokens": 132921,
+    "outputTokens": 1455,
+    "totalCostUsd": 0.0486741,
+    "apiDurationMs": 22974,
+    "wallTimeMs": 23597,
+    "permissionDenials": 0
+  }
+}

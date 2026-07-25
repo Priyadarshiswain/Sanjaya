@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0012-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0012",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0012",
+    "answer": "Environment variable names starting with 'ASPIRE_EXTENSION_' are removed from detached Aspire CLI child processes; DEBUG_SESSION_* variables are NOT removed.",
+    "claims": [
+      {
+        "key": "removed_prefix",
+        "value": "ASPIRE_EXTENSION_",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 346,
+            "endLine": 346
+          },
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 352,
+            "endLine": 353
+          }
+        ]
+      },
+      {
+        "key": "debug_session_removed",
+        "value": "false",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 343,
+            "endLine": 344
+          },
+          {
+            "path": "src/Shared/KnownConfigNames.cs",
+            "startLine": 111,
+            "endLine": 115
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.75,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 17,
+    "nativeToolCalls": 14,
+    "sanjayaToolCalls": 2,
+    "sanjayaToolNames": [
+      "search_code",
+      "search_text"
+    ],
+    "inputTokens": 104,
+    "cacheCreationInputTokens": 48519,
+    "cacheReadInputTokens": 602811,
+    "outputTokens": 2962,
+    "totalCostUsd": 0.17310309999999998,
+    "apiDurationMs": 52429,
+    "wallTimeMs": 56256,
+    "permissionDenials": 0
+  }
+}

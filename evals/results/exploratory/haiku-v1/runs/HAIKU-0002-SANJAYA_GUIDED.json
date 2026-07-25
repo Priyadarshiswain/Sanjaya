@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0002-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0002",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0002",
+    "answer": "Two C# classes named RetryPolicy are declared in this repository: SignalDesk.Legacy.RetryPolicy (obsolete) and SignalDesk.Relay.RetryPolicy (production).",
+    "claims": [
+      {
+        "key": "declaration_count",
+        "value": "2",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Legacy/RetryPolicy.cs",
+            "startLine": 4,
+            "endLine": 4
+          },
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "production_type",
+        "value": "SignalDesk.Relay.RetryPolicy",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "obsolete_type",
+        "value": "SignalDesk.Legacy.RetryPolicy",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Legacy/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 7,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 3,
+    "sanjayaToolNames": [
+      "find_definition",
+      "get_source",
+      "get_source"
+    ],
+    "inputTokens": 39,
+    "cacheCreationInputTokens": 9704,
+    "cacheReadInputTokens": 100884,
+    "outputTokens": 1138,
+    "totalCostUsd": 0.0360974,
+    "apiDurationMs": 18044,
+    "wallTimeMs": 19758,
+    "permissionDenials": 0
+  }
+}

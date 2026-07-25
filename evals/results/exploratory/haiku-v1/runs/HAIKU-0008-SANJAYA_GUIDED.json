@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0008-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0008",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "invalid_output",
+  "answer": null,
+  "scores": null,
+  "validationErrors": null,
+  "metrics": {
+    "turns": 8,
+    "nativeToolCalls": 7,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 40,
+    "cacheCreationInputTokens": 17242,
+    "cacheReadInputTokens": 143005,
+    "outputTokens": 1622,
+    "totalCostUsd": 0.0578245,
+    "apiDurationMs": 24222,
+    "wallTimeMs": 26216,
+    "permissionDenials": 0
+  }
+}

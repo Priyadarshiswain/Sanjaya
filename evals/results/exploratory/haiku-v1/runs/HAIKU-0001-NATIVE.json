@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0001-NATIVE",
+  "taskId": "SJ-EVAL-0001",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0001",
+    "answer": "The production backend method CalculateNextDelay in the SignalDesk.Relay.RetryPolicy class calculates the next retry delay using exponential backoff with jitter, with a maximum of 6 configured retry attempts.",
+    "claims": [
+      {
+        "key": "method_name",
+        "value": "CalculateNextDelay",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 8,
+            "endLine": 8
+          }
+        ]
+      },
+      {
+        "key": "container",
+        "value": "SignalDesk.Relay.RetryPolicy",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 1,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "maximum_attempts",
+        "value": "6",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 5,
+            "endLine": 5
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.98
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 17,
+    "nativeToolCalls": 16,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 50,
+    "cacheCreationInputTokens": 10088,
+    "cacheReadInputTokens": 146908,
+    "outputTokens": 1717,
+    "totalCostUsd": 0.0443298,
+    "apiDurationMs": 28358,
+    "wallTimeMs": 27099,
+    "permissionDenials": 0
+  }
+}
