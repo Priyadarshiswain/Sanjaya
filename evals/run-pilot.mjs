@@ -206,7 +206,7 @@ try {
         if (
           protocol.controls.maxConsecutiveSessionFailures
           && consecutiveSessionFailures
-            >= protocol.controls.maxConsecutiveSessionFailures
+          >= protocol.controls.maxConsecutiveSessionFailures
         ) {
           process.stdout.write(
             "stop consecutive session-failure ceiling reached: "
@@ -489,6 +489,10 @@ function runCodex({
     "-c",
     "project_doc_max_bytes=0",
   ];
+  // CODEX_HOME already points at a disposable per-run home containing only
+  // the auth.json symlink, so this flag is isolation hygiene, not the
+  // isolation boundary. The skill arm must omit it so Codex reads the
+  // installed plugin from that same disposable home.
   if (arm !== "evidence_first_skill") {
     args.splice(2, 0, "--ignore-user-config");
   }

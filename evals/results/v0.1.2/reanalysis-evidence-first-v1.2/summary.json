@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "1.0",
+  "status": "post_study_additive_methodology_repair",
+  "package": "sanjaya-mcp@0.1.2",
+  "model": "gpt-5.6-terra",
+  "methodology": {
+    "originalScorer": "1.1.0",
+    "correctedScorer": "1.2.0",
+    "originalResultsOverwritten": false,
+    "newModelCalls": 0,
+    "semanticJudgeUsed": false,
+    "reviewProtocol": "arm_blind_supplied_value_review",
+    "reviewInput": "fixtures/scorer-v1.2-review.json"
+  },
+  "input": {
+    "fingerprintAlgorithm": "sha256",
+    "fingerprint": "b8afaff8d3a81f2ae888aa7abd4475fb8e3b1d458e58e4c07b8f6608a8483543",
+    "modelRecords": 72,
+    "completedRecords": 70,
+    "retainedFailures": 2
+  },
+  "comparison": {
+    "skillRunsUsingSanjaya": 4,
+    "native": {
+      "planned": 36,
+      "completed": 35,
+      "retainedFailures": 1,
+      "scorerV1_1": {
+        "strictSuccesses": 25,
+        "strictSuccessRatePlanned": 0.6944444444444444,
+        "meanClaimF1Completed": 0.8928571428571428,
+        "meanCitationValidityCompleted": 0.7870068027210886
+      },
+      "scorerV1_2": {
+        "strictSuccesses": 34,
+        "strictSuccessRatePlanned": 0.9444444444444444,
+        "meanClaimF1Completed": 1,
+        "meanCitationValidityCompleted": 0.7870068027210886
+      },
+      "transitions": {
+        "gainedStrictSuccess": 9,
+        "lostStrictSuccess": 0
+      }
+    },
+    "evidenceFirstSkill": {
+      "planned": 36,
+      "completed": 35,
+      "retainedFailures": 1,
+      "scorerV1_1": {
+        "strictSuccesses": 22,
+        "strictSuccessRatePlanned": 0.6111111111111112,
+        "meanClaimF1Completed": 0.8666666666666667,
+        "meanCitationValidityCompleted": 0.8005442176870747
+      },
+      "scorerV1_2": {
+        "strictSuccesses": 31,
+        "strictSuccessRatePlanned": 0.8611111111111112,
+        "meanClaimF1Completed": 0.9785714285714285,
+        "meanCitationValidityCompleted": 0.8005442176870747
+      },
+      "transitions": {
+        "gainedStrictSuccess": 9,
+        "lostStrictSuccess": 0
+      }
+    },
+    "completedPairs": {
+      "count": 34,
+      "scorerV1_1": {
+        "nativeStrictWins": 4,
+        "skillStrictWins": 1,
+        "strictTies": 29,
+        "meanClaimF1SkillMinusNative": -0.02696078431372549
+      },
+      "scorerV1_2": {
+        "nativeStrictWins": 4,
+        "skillStrictWins": 1,
+        "strictTies": 29,
+        "meanClaimF1SkillMinusNative": -0.022058823529411766
+      }
+    },
+    "tasks": [
+      {
+        "taskId": "SJ-EVAL-0001",
+        "title": "Locate the production retry-delay implementation",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 2,
+          "scorerV1_2": 2
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0002",
+        "title": "Resolve duplicate C# RetryPolicy declarations",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0003",
+        "title": "Explain the frontend retry preview calculation",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 2,
+          "scorerV1_2": 2
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0004",
+        "title": "Recover recent committed and working-tree changes",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 2,
+          "scorerV1_2": 2
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0005",
+        "title": "Locate the shared agent endpoint engine",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 2,
+          "scorerV1_2": 2
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0006",
+        "title": "Disambiguate integration extension classes",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0007",
+        "title": "Explain Vitest VM code-cache validity",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 0,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 0,
+          "scorerV1_2": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0008",
+        "title": "Locate VM module-graph prewarming",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 0,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 0,
+          "scorerV1_2": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0009",
+        "title": "Disambiguate Kiota TypeScript method writer",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 2,
+          "scorerV1_2": 2
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0010",
+        "title": "Trace Kiota RPC connection cleanup",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 0,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 0,
+          "scorerV1_2": 3
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0011",
+        "title": "Find detached-launch cancellation cleanup",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 2,
+          "scorerV1_2": 2
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 2,
+          "scorerV1_2": 2
+        }
+      },
+      {
+        "taskId": "SJ-EVAL-0012",
+        "title": "Identify detached-child environment filtering",
+        "native": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        },
+        "evidenceFirstSkill": {
+          "planned": 3,
+          "scorerV1_1": 3,
+          "scorerV1_2": 3
+        }
+      }
+    ]
+  }
+}

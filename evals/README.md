@@ -143,3 +143,15 @@ npm run verify:evidence-first-skill-results --prefix evals
 The result does not establish a correctness or efficiency benefit for the
 current skill-enabled experience. See the checked-in report for the complete
 arm, routing, side-effect, and task-level evidence.
+
+A post-study additive scorer repair
+([SCORER-V1.2.md](SCORER-V1.2.md)) rescored all 72 frozen records after an
+arm-blind review showed three tasks' accepted phrases rejected correct
+answers. Under scorer 1.2 both arms rise symmetrically (native 25→34,
+skill 22→31 of 36) with zero lost successes; the comparative verdict is
+unchanged. Reproduce or verify with:
+
+```bash
+npm run reanalyze:evidence-first-v1.2 --prefix evals
+npm run verify:reanalysis-v1.2 --prefix evals
+```
