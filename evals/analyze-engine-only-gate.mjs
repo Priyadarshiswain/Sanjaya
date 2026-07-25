@@ -24,6 +24,12 @@ const recordsText = readFileSync(join(resultsRoot, "records.json"), "utf8");
 const records = JSON.parse(recordsText);
 assert.equal(records.protocolSha256, sha256(protocolText));
 assert.equal(records.controls.modelCalls, 0);
+const userRootMarker = ["/", "Users", "/"].join("");
+const privateTemporaryMarker = ["/", "private", "/", "tmp", "/"].join("");
+assert.equal(recordsText.includes(userRootMarker), false);
+assert.equal(recordsText.includes(privateTemporaryMarker), false);
+assert.equal(recordsText.includes("sanjaya-engine-corpus"), false);
+assertNoRawPayloadKeys(records);
 
 const taskById = new Map(
   protocol.repositories.flatMap((repository) =>
@@ -64,10 +70,18 @@ for (const repository of records.repositories) {
     taskSummaries.push(summary);
   }
   assert.equal(repositoryTasks.length, protocolRepository.tasks.length);
+  const nativeAggregate = aggregate(
+    repositoryTasks.map((task) => task.native),
+  );
+  const sanjayaAggregate = aggregate(
+    repositoryTasks.map((task) => task.sanjaya),
+  );
   repositorySummaries.push({
     id: repository.id,
     index: repository.index,
     taskCount: repositoryTasks.length,
+    native: nativeAggregate,
+    sanjaya: sanjayaAggregate,
     nativeQueryDurationMs: sum(
       repositoryTasks.map((task) => task.native.medianDurationMs),
     ),
@@ -111,6 +125,11 @@ const summary = {
   package: records.package,
   inputFingerprint: sha256(`${protocolText}\0${recordsText}`),
   controls: records.controls,
+  analysis: {
+    candidateComparison: "order_insensitive_multiset",
+    reason:
+      "Parallel ripgrep traversal may return the same candidate set in a different presentation order.",
+  },
   environment: records.environment,
   taskCount: taskSummaries.length,
   criteria,
@@ -147,15 +166,10 @@ function summarizeRoute(observations, targets, repetitions) {
   assert.equal(observations.length, repetitions);
   const first = observations[0];
   for (const observation of observations.slice(1)) {
-    assert.equal(
-      observation.outputFingerprint,
-      first.outputFingerprint,
-      "Measured route output changed between timing repetitions.",
-    );
     assert.deepEqual(
-      observation.candidates,
-      first.candidates,
-      "Measured candidates changed between timing repetitions.",
+      canonicalCandidates(observation.candidates),
+      canonicalCandidates(first.candidates),
+      "Measured candidate set changed between timing repetitions.",
     );
   }
   const targetHits = targets.filter((target) =>
@@ -180,6 +194,13 @@ function summarizeRoute(observations, targets, repetitions) {
       observations.map((observation) => observation.durationMs),
     ),
   };
+}
+
+function canonicalCandidates(candidates) {
+  return [...candidates].sort((left, right) =>
+    normalizePath(left.path).localeCompare(normalizePath(right.path))
+    || left.startLine - right.startLine
+    || left.endLine - right.endLine);
 }
 
 function aggregate(routes) {
@@ -217,7 +238,12 @@ function report(document) {
     + `${format(task.sanjaya.medianDurationMs)} |`,
   ).join("\n");
   const repositoryRows = document.repositories.map((repository) =>
-    `| ${repository.id} | ${format(repository.index.durationMs)} | `
+    `| ${repository.id} | `
+    + `${format(repository.native.meanCandidatePrecision)} | `
+    + `${format(repository.sanjaya.meanCandidatePrecision)} | `
+    + `${repository.native.medianResponseBytes} | `
+    + `${repository.sanjaya.medianResponseBytes} | `
+    + `${format(repository.index.durationMs)} | `
     + `${repository.index.indexBytes} | `
     + `${format(repository.nativeQueryDurationMs)} | `
     + `${format(repository.sanjayaQueryDurationMs)} | `
@@ -230,6 +256,8 @@ Status: **${document.status}**
 This model-free gate compares one frozen native ripgrep route with one frozen
 Sanjaya route for each of ${document.taskCount} structural evidence targets.
 It does not measure answer writing, implicit skill activation, or model quality.
+Candidate sets are compared without presentation order because parallel
+ripgrep traversal can reorder otherwise identical results.
 
 ## Decision
 
@@ -257,8 +285,8 @@ It does not measure answer writing, implicit skill activation, or model quality.
 The measured repetitions stabilize query timing only. Index cost is amortized
 over each repository's five unique queries, never over repetitions.
 
-| Repository | Index build ms | Index bytes | Native five-query ms | Sanjaya query-only ms | Sanjaya including index ms |
-|---|---:|---:|---:|---:|---:|
+| Repository | Native precision | Sanjaya precision | Native median bytes | Sanjaya median bytes | Index build ms | Index bytes | Native five-query ms | Sanjaya query-only ms | Sanjaya including index ms |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 ${repositoryRows}
 
 ## Task detail
@@ -317,4 +345,24 @@ function yesNo(value) {
 
 function sha256(value) {
   return createHash("sha256").update(value, "utf8").digest("hex");
+}
+
+function assertNoRawPayloadKeys(value) {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      assertNoRawPayloadKeys(item);
+    }
+    return;
+  }
+  if (!value || typeof value !== "object") {
+    return;
+  }
+  for (const [key, child] of Object.entries(value)) {
+    assert.equal(
+      new Set(["snippet", "source", "content", "structuredContent"]).has(key),
+      false,
+      `Raw payload key ${key} must not be retained in engine-only records.`,
+    );
+    assertNoRawPayloadKeys(child);
+  }
 }

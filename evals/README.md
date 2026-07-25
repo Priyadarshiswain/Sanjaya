@@ -186,3 +186,13 @@ The runner stores paths, line ranges, counts, statuses, byte sizes, and
 timings. It does not store source snippets or raw tool responses. A proceed
 decision authorizes designing a later agent study; it is not itself a product
 benefit claim.
+
+The completed gate reached its preregistered stop decision. Both routes
+recovered all 15 target sets, but Sanjaya did not produce an aggregate
+precision or response-size benefit: mean candidate precision was 0.714 versus
+0.800 for native, median response size was 1,588 versus 217 bytes, and median
+query latency was 197.417 versus 11.456 milliseconds. The
+[complete report](results/v0.1.2/engine-only-gate/REPORT.md) preserves the
+repository and task breakdown. FastEndpoints C# queries show a narrower
+Roslyn-backed precision signal, while TypeScript structural search accounts
+for most of the aggregate noise; neither changes the frozen gate decision.

@@ -43,6 +43,12 @@ jobs:
       - name: Verify Evidence-First skill evaluation contract
         run: npm run verify:evidence-first-skill --prefix evals
 
+      - name: Verify model-free engine gate
+        run: npm run verify:engine-only-gate --prefix evals
+
+      - name: Verify model-free engine results
+        run: npm run verify:engine-only-results --prefix evals
+
       - name: Verify evaluation scorers
         run: npm run test:scorer --prefix evals
 
