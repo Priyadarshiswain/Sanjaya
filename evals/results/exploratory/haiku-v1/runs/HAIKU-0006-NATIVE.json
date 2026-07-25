@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0006-NATIVE",
+  "taskId": "SJ-EVAL-0006",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0006",
+    "answer": "AddMcp is defined in FastEndpoints.Mcp.Extensions at line 33, and AddA2A is defined in FastEndpoints.A2A.Extensions at line 28.",
+    "claims": [
+      {
+        "key": "add_mcp_container",
+        "value": "FastEndpoints.Mcp.Extensions.AddMcp",
+        "evidence": [
+          {
+            "path": "Src/Agents/Mcp/Extensions.cs",
+            "startLine": 33,
+            "endLine": 33
+          }
+        ]
+      },
+      {
+        "key": "add_a2a_container",
+        "value": "FastEndpoints.A2A.Extensions.AddA2A",
+        "evidence": [
+          {
+            "path": "Src/Agents/A2A/Extensions.cs",
+            "startLine": 28,
+            "endLine": 28
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0,
+    "claimRecall": 0,
+    "claimF1": 0,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 6,
+    "nativeToolCalls": 5,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 30,
+    "cacheCreationInputTokens": 9046,
+    "cacheReadInputTokens": 79011,
+    "outputTokens": 964,
+    "totalCostUsd": 0.031716100000000004,
+    "apiDurationMs": 15932,
+    "wallTimeMs": 17632,
+    "permissionDenials": 0
+  }
+}

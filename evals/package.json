@@ -15,6 +15,7 @@
     "run:pilot": "node run-pilot.mjs",
     "run:guided": "node run-pilot.mjs --study guided",
     "run:evidence-first-skill": "node run-pilot.mjs --study evidence-first-skill",
+    "run:haiku-exploratory": "node run-claude-haiku.mjs",
     "analyze:pilot": "node analyze-pilot.mjs",
     "analyze:guided": "node analyze-guided.mjs",
     "analyze:evidence-first-skill": "node analyze-evidence-first-skill.mjs",

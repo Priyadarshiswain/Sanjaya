@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0012-NATIVE",
+  "taskId": "SJ-EVAL-0012",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0012",
+    "answer": "Environment variables with prefix ASPIRE_EXTENSION_ are removed from detached Aspire CLI child processes, while DEBUG_SESSION_* variables are explicitly preserved.",
+    "claims": [
+      {
+        "key": "removed_prefix",
+        "value": "ASPIRE_EXTENSION_",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 346,
+            "endLine": 346
+          }
+        ]
+      },
+      {
+        "key": "debug_session_removed",
+        "value": "false",
+        "evidence": [
+          {
+            "path": "src/Aspire.Cli/Commands/AppHostLauncher.cs",
+            "startLine": 339,
+            "endLine": 345
+          },
+          {
+            "path": "tests/Aspire.Cli.Tests/Commands/AppHostLauncherTests.cs",
+            "startLine": 664,
+            "endLine": 675
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.6666666666666666,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 9,
+    "nativeToolCalls": 8,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 56,
+    "cacheCreationInputTokens": 50929,
+    "cacheReadInputTokens": 310811,
+    "outputTokens": 1798,
+    "totalCostUsd": 0.14282809999999999,
+    "apiDurationMs": 33382,
+    "wallTimeMs": 36390,
+    "permissionDenials": 0
+  }
+}

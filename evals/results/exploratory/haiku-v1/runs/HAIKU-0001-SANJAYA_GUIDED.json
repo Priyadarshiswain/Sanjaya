@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0001-SANJAYA_GUIDED",
+  "taskId": "SJ-EVAL-0001",
+  "arm": "sanjaya_guided",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0001",
+    "answer": "The production backend method CalculateNextDelay in SignalDesk.Relay.RetryPolicy calculates exponential backoff with jitter, with a maximum of 6 configured retry attempts.",
+    "claims": [
+      {
+        "key": "method_name",
+        "value": "CalculateNextDelay",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 8,
+            "endLine": 21
+          }
+        ]
+      },
+      {
+        "key": "container",
+        "value": "SignalDesk.Relay.RetryPolicy",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "maximum_attempts",
+        "value": "6",
+        "evidence": [
+          {
+            "path": "backend/src/SignalDesk.Application/Relay/RetryPolicy.cs",
+            "startLine": 5,
+            "endLine": 5
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 7,
+    "nativeToolCalls": 4,
+    "sanjayaToolCalls": 2,
+    "sanjayaToolNames": [
+      "capabilities",
+      "search_code"
+    ],
+    "inputTokens": 46,
+    "cacheCreationInputTokens": 13390,
+    "cacheReadInputTokens": 146597,
+    "outputTokens": 1125,
+    "totalCostUsd": 0.04796569999999999,
+    "apiDurationMs": 23738,
+    "wallTimeMs": 25388,
+    "permissionDenials": 0
+  }
+}

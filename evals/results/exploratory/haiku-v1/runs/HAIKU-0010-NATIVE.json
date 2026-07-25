@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0010-NATIVE",
+  "taskId": "SJ-EVAL-0010",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0010",
+    "answer": "The connectToKiota function spawns the Kiota process with 'rpc' argument, returns an Error object when the callback throws, and cleans up by ending stdin and killing the child process.",
+    "claims": [
+      {
+        "key": "function_name",
+        "value": "connectToKiota",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 6,
+            "endLine": 6
+          }
+        ]
+      },
+      {
+        "key": "child_argument",
+        "value": "rpc",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 9,
+            "endLine": 9
+          }
+        ]
+      },
+      {
+        "key": "callback_error_result",
+        "value": "new Error(errorMessage)",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 23,
+            "endLine": 27
+          }
+        ]
+      },
+      {
+        "key": "child_cleanup",
+        "value": "childProcess.stdin?.end() and childProcess.kill()",
+        "evidence": [
+          {
+            "path": "vscode/packages/npm-package/lib/connect.ts",
+            "startLine": 33,
+            "endLine": 34
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 1
+  },
+  "scores": {
+    "strictSuccess": true,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 4,
+    "nativeToolCalls": 3,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 26,
+    "cacheCreationInputTokens": 9008,
+    "cacheReadInputTokens": 80486,
+    "outputTokens": 1013,
+    "totalCostUsd": 0.032021600000000004,
+    "apiDurationMs": 16748,
+    "wallTimeMs": 18511,
+    "permissionDenials": 0
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0004-NATIVE",
+  "taskId": "SJ-EVAL-0004",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0004",
+    "answer": "The latest commit is 'Align the retry preview default' (c321a020...), the previous is 'Tune the runtime retry base delay' (78d0d829...), with modified file docs/operator-runbook.md and untracked file local-observation.txt.",
+    "claims": [
+      {
+        "key": "latest_commit",
+        "value": "Align the retry preview default",
+        "evidence": [
+          {
+            "path": ".git/logs/HEAD",
+            "startLine": 3,
+            "endLine": 3
+          }
+        ]
+      },
+      {
+        "key": "previous_commit",
+        "value": "Tune the runtime retry base delay",
+        "evidence": [
+          {
+            "path": ".git/logs/HEAD",
+            "startLine": 2,
+            "endLine": 2
+          }
+        ]
+      },
+      {
+        "key": "modified_path",
+        "value": "docs/operator-runbook.md",
+        "evidence": [
+          {
+            "path": ".git/index",
+            "startLine": 1,
+            "endLine": 1
+          }
+        ]
+      },
+      {
+        "key": "untracked_path",
+        "value": "local-observation.txt",
+        "evidence": [
+          {
+            "path": "local-observation.txt",
+            "startLine": 1,
+            "endLine": 1
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 1,
+    "claimRecall": 1,
+    "claimF1": 1,
+    "citationValidity": 0.25,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 10,
+    "nativeToolCalls": 9,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 58,
+    "cacheCreationInputTokens": 12545,
+    "cacheReadInputTokens": 197004,
+    "outputTokens": 1845,
+    "totalCostUsd": 0.05492639999999999,
+    "apiDurationMs": 31275,
+    "wallTimeMs": 36332,
+    "permissionDenials": 0
+  }
+}

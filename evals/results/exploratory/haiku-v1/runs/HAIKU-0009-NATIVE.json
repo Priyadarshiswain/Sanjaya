@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "exploratory-1.0",
+  "studyStatus": "exploratory_unregistered",
+  "runId": "HAIKU-0009-NATIVE",
+  "taskId": "SJ-EVAL-0009",
+  "arm": "native",
+  "repetition": 1,
+  "model": {
+    "requested": "claude-haiku-4-5",
+    "agent": "claude-code 2.1.220",
+    "scorerVersion": "1.2.0"
+  },
+  "status": "completed",
+  "answer": {
+    "schemaVersion": "1.0",
+    "taskId": "SJ-EVAL-0009",
+    "answer": "The TypeScript CodeMethodWriter throws an InvalidOperationException when WriteCodeElement encounters a method whose parent is a CodeClass, indicating that TypeScript generation only supports functions or constants, not class method implementations.",
+    "claims": [
+      {
+        "key": "writer_type",
+        "value": "Kiota.Builder.Writers.TypeScript.CodeMethodWriter",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 9,
+            "endLine": 11
+          }
+        ]
+      },
+      {
+        "key": "class_parent_behavior",
+        "value": "Throws InvalidOperationException with message 'No method implementations are generated in typescript: either functions or constants.'",
+        "evidence": [
+          {
+            "path": "src/Kiota.Builder/Writers/TypeScript/CodeMethodWriter.cs",
+            "startLine": 25,
+            "endLine": 26
+          }
+        ]
+      }
+    ],
+    "unknowns": [],
+    "confidence": 0.95
+  },
+  "scores": {
+    "strictSuccess": false,
+    "claimPrecision": 0.5,
+    "claimRecall": 0.5,
+    "claimF1": 0.5,
+    "citationValidity": 1,
+    "criticalForbiddenClaims": 0,
+    "scorerVersion": "1.2.0"
+  },
+  "validationErrors": null,
+  "metrics": {
+    "turns": 5,
+    "nativeToolCalls": 4,
+    "sanjayaToolCalls": 0,
+    "sanjayaToolNames": [],
+    "inputTokens": 28,
+    "cacheCreationInputTokens": 8988,
+    "cacheReadInputTokens": 79632,
+    "outputTokens": 917,
+    "totalCostUsd": 0.031415200000000004,
+    "apiDurationMs": 15269,
+    "wallTimeMs": 17386,
+    "permissionDenials": 0
+  }
+}
